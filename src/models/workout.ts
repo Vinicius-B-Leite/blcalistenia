@@ -5,6 +5,7 @@ type series = {
 }
 
 type exercises = {
+    _id: Number,
     name: String,
     anotation?: String,
     type: 'old' | 'rep',
@@ -12,6 +13,7 @@ type exercises = {
 }
 
 export type Workout = {
+    _id: Number,
     title: String,
     banner: string,
     exercises: exercises[]

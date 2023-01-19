@@ -5,10 +5,9 @@ import * as S from './styles'
 
 type Props = {
     data: Workout,
-    index: Number
 }
 
-const MyWorkout: React.FC<Props> = ({ data, index }) => {
+const MyWorkout: React.FC<Props> = ({ data }) => {
     return (
         <S.Container>
             <S.Banner
