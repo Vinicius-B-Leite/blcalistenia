@@ -1,0 +1,1 @@
+export const muscles = ['Peitoral', 'Dorsal', 'Bíceps', 'Tríceps', 'Abdômen', 'Panturrilha', 'Quadríceps', 'Glúteos', 'Trapézio', 'Ombro', 'Antebraço']
