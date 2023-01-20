@@ -7,13 +7,14 @@ import { useTheme } from 'styled-components/native';
 import { useNavigation } from '@react-navigation/native';
 import { StackScreenProps } from '@react-navigation/stack';
 import { RootStackParamList } from '../../routes/Models';
+import AddExercise from '../../components/AddExercise';
 
 type Navigation = StackScreenProps<RootStackParamList, 'CreateWorkout'>
 
 const CreateWorkout: React.FC<Navigation> = ({ route, navigation }) => {
     const theme = useTheme()
     const [showModal, setShowModal] = useState<boolean>(false)
-    
+
     return (
         <S.Container>
             <S.Header>
@@ -40,11 +41,13 @@ const CreateWorkout: React.FC<Navigation> = ({ route, navigation }) => {
                 data={[]}
                 renderItem={() => <View />}
                 ListFooterComponent={() => (
-                    <S.AddExerciseButton>
+                    <S.AddExerciseButton onPress={() => setShowModal(true)}>
                         <S.AddExerciseText>Adiconar exercício</S.AddExerciseText>
                     </S.AddExerciseButton>
                 )}
             />
+
+            <AddExercise visible={showModal} onRequestClose={() => setShowModal(false)} animationType='slide'  />
         </S.Container>
 
     )
