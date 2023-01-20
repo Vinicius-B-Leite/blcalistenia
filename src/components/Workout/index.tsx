@@ -1,13 +1,13 @@
 import React from 'react';
 import { View } from 'react-native';
-import { Workout } from '../../models/workout';
+import { WorkoutType } from '../../models/workout';
 import * as S from './styles'
 
 type Props = {
-    data: Workout,
+    data: WorkoutType,
 }
 
-const MyWorkout: React.FC<Props> = ({ data }) => {
+const Workout: React.FC<Props> = ({ data }) => {
     return (
         <S.Container>
             <S.Banner
@@ -21,4 +21,4 @@ const MyWorkout: React.FC<Props> = ({ data }) => {
     )
 }
 
-export default MyWorkout;
+export default Workout;

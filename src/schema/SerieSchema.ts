@@ -6,5 +6,4 @@ export const SerieSchema = {
         rep: 'int',
         rest: 'double'
     },
-    primaryKey: 'serie',
 };

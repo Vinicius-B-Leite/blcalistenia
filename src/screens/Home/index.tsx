@@ -1,66 +1,23 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import Container from '../../components/Container';
 import * as S from './styles'
 import AntDesign from 'react-native-vector-icons/AntDesign'
 import { useTheme } from 'styled-components/native';
 import { muscles } from '../../utils/muscles';
 import Muscle from '../../components/Muscle';
-import MyWorkout from '../../components/MyWorkout';
-import { Workout, Workouts } from '../../models/workout';
+import { WorkoutType } from '../../models/workout';
 import CreateWorkoutButton from '../../components/CreateWorkoutButton';
 import { getRealm } from '../../services/realm';
-import { Results } from 'realm';
+import Workout from '../../components/Workout';
+import { WorkoutContext } from '../../Contexts/WorkoutContext';
 
 
 
 const Home: React.FC = () => {
     const theme = useTheme()
-    const [workoutsList, setWorkoutList] = useState<Workout[]>();
+    const { getWorkouts, workoutsList } = useContext(WorkoutContext)
 
     useEffect(() => {
-
-        async function createWorkout() {
-            const realm = await getRealm()
-
-            let workout;
-
-            realm.write(() => {
-                workout = realm.create<Workout>('Workout', {
-                    _id: 0,
-                    title: 'Handstand Push up',
-                    banner: 'https://i1.sndcdn.com/artworks-3cmYJ11oNtnjKDIp-YAQ2fw-t500x500.jpg',
-                    exercises: [
-                        {
-                            name: 'Handstand push up',
-                            type: 'rep',
-                            _id: 1,
-                            series: [
-                                {
-                                    rep: 1,
-                                    rest: 60 * 2,
-                                    serie: 1
-                                }
-                            ]
-                        }
-                    ]
-
-                })
-            })
-            realm.close()
-            console.log(workout)
-
-        }
-
-        async function getWorkouts() {
-
-            const realm = await getRealm()
-
-            const w = realm.objects<Workout[]>('Workout').sorted('title').toJSON()
-            console.log("🚀 ~ file: index.tsx:59 ~ getWorkouts ~ w", w)
-
-            setWorkoutList(w as Workout[])
-        }
-
         getWorkouts()
     }, [])
     return (
@@ -106,7 +63,7 @@ const Home: React.FC = () => {
                         alignItems: 'center'
                     }}
                     ListHeaderComponent={() => <CreateWorkoutButton />}
-                    renderItem={({ item }) => <MyWorkout data={item} />}
+                    renderItem={({ item }) => <Workout data={item} />}
                 />
             </S.WorkoutContainer>
 
@@ -121,7 +78,7 @@ const Home: React.FC = () => {
                     data={workoutsList}
                     showsHorizontalScrollIndicator={false}
                     horizontal
-                    renderItem={({ item, index }) => <MyWorkout data={item} />}
+                    renderItem={({ item, index }) => <Workout data={item} />}
                 />
             </S.WorkoutContainer>
         </Container>

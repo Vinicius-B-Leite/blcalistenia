@@ -1,15 +1,11 @@
 
 export const ExerciseSchema = {
     name: "Exercise",
+    embedded: true,
     properties: {
-        _id:{
-            type: 'int',
-            indexed: true
-        },
         name: 'string',
         anotation: 'string?',
         type: 'string',
         series: 'Serie[]'
     },
-    primaryKey: "_id",
 };

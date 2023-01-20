@@ -1,5 +1,3 @@
-import { Workouts } from "../models/workout";
-
 export const WorkoutSchema = {
     name: "Workout",
     properties: {
