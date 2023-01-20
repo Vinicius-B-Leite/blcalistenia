@@ -1,3 +1,4 @@
+import { FlatList } from 'react-native'
 import styled from "styled-components/native";
 
 export const Container = styled.View`
@@ -17,7 +18,7 @@ export const InputArea = styled.View`
     width: 90%;
     margin-left: 5%;
     align-items: center;
-    border-radius: ${({theme}) => theme.sizes.borderRadius.sm}px;
+    border-radius: ${({ theme }) => theme.sizes.borderRadius.sm}px;
 `
 export const Input = styled.TextInput`
     flex: 1;
@@ -33,8 +34,22 @@ export const FilterButton = styled.TouchableOpacity`
     align-items: center;
 `
 export const FilterText = styled.Text`
-    color: ${({theme}) => theme.colors.text};
-    font-size: ${({theme}) => theme.sizes.fontSize.md}px;
+    color: ${({ theme }) => theme.colors.text};
+    font-size: ${({ theme }) => theme.sizes.fontSize.md}px;
 `
 
-export const ExerciseList = styled.FlatList``
+export const ExerciseList = (styled.FlatList`` as unknown) as typeof FlatList
+export const ExerciseContainer = styled.TouchableOpacity`
+    background-color: ${({ theme }) => theme.colors.darkBackground};
+    padding: ${({theme}) => theme.sizes.vw * 0.03}px ${({theme}) => theme.sizes.vw * 0.05}px;
+    border-radius: ${({theme}) => theme.sizes.borderRadius.sm}px;
+`
+export const ExerciseName = styled.Text`
+    font-size: ${({ theme }) => theme.sizes.fontSize.sm}px;
+    color: ${({ theme }) => theme.colors.text};
+    font-weight: 700;
+`
+export const ExerciseMuscles = styled.Text`
+    font-size: ${({ theme }) => theme.sizes.fontSize.vsm}px;
+    color: ${({ theme }) => theme.colors.text};
+`

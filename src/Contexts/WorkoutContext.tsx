@@ -1,6 +1,7 @@
 import React, { createContext, useState } from 'react';
 import { View } from 'react-native';
-import { exercises, WorkoutType } from '../models/workout';
+import { exercise } from '../models/exercise';
+import { WorkoutType } from '../models/workout';
 import { getRealm } from '../services/realm';
 
 type WorkoutContext = {
@@ -9,7 +10,7 @@ type WorkoutContext = {
     workoutsList: WorkoutType[]
 }
 
-type CreateWorkoutProps = { title: string, banner: string, exercises: exercises[] }
+type CreateWorkoutProps = { title: string, banner: string, exercises: exercise[] }
 
 export const WorkoutContext = createContext({} as WorkoutContext)
 

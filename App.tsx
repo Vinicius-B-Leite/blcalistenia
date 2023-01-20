@@ -4,13 +4,16 @@ import WorkoutProvider from './src/Contexts/WorkoutContext';
 import Routes from './src/routes';
 import { darkMode } from './src/theme/darkMode';
 import 'react-native-gesture-handler';
+import { ExerciseProvider } from './src/Contexts/ExerciseContext';
 
 
 const App = () => {
   return (
     <ThemeProvider theme={darkMode}>
       <WorkoutProvider>
-        <Routes />
+        <ExerciseProvider>
+          <Routes />
+        </ExerciseProvider>
       </WorkoutProvider>
     </ThemeProvider>
   )

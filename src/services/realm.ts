@@ -10,9 +10,8 @@ export function getRealm(): Promise<Realm> {
 
             const realm = await Realm.open({
                 schema: [WorkoutSchema, ExerciseSchema, SerieSchema],
-                schemaVersion: 7,
+                schemaVersion: 2,
             })
-
             resolve(realm)
 
         } catch (error) {
