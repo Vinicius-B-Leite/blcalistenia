@@ -41,8 +41,6 @@ const WorkoutProvider = ({ children }: { children: React.ReactNode }) => {
             _id: realm.objects('Workout').length + 1
         })
         realm.close()
-        console.log(workout)
-
     }
 
     return (
