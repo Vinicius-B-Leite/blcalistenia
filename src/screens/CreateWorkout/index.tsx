@@ -7,49 +7,50 @@ import { useTheme } from 'styled-components/native';
 import { useNavigation } from '@react-navigation/native';
 import { StackScreenProps } from '@react-navigation/stack';
 import { RootStackParamList } from '../../routes/Models';
-import AddExercise from '../../components/AddExercise';
+import AddExercise from '../AddExercise';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
 type Navigation = StackScreenProps<RootStackParamList, 'CreateWorkout'>
 
 const CreateWorkout: React.FC<Navigation> = ({ route, navigation }) => {
     const theme = useTheme()
-    const [showModal, setShowModal] = useState<boolean>(false)
 
     return (
-        <S.Container>
-            <S.Header>
-                <S.Left>
-                    <S.GoBack onPress={() => navigation.goBack()}>
-                        <AntDesign name='arrowleft' size={theme.sizes.icons.md} color={theme.colors.contrast} />
-                    </S.GoBack>
-                    <S.Title
-                        placeholder='Título do treino'
-                        placeholderTextColor={theme.colors.darkContrast}
+        <GestureHandlerRootView style={{ flex: 1 }}>
+            <S.Container>
+                <S.Header>
+                    <S.Left>
+                        <S.GoBack onPress={() => navigation.goBack()}>
+                            <AntDesign name='arrowleft' size={theme.sizes.icons.md} color={theme.colors.contrast} />
+                        </S.GoBack>
+                        <S.Title
+                            placeholder='Título do treino'
+                            placeholderTextColor={theme.colors.darkContrast}
+                        />
+                    </S.Left>
+                    <Feather name='image' size={theme.sizes.icons.sm} color={theme.colors.contrast} />
+                </S.Header>
+
+                <S.AnotationContainer>
+                    <S.Anotation
+                        placeholder='Anotação'
+                        placeholderTextColor={theme.colors.darkText}
                     />
-                </S.Left>
-                <Feather name='image' size={theme.sizes.icons.sm} color={theme.colors.contrast} />
-            </S.Header>
+                </S.AnotationContainer>
 
-            <S.AnotationContainer>
-                <S.Anotation
-                    placeholder='Anotação'
-                    placeholderTextColor={theme.colors.darkText}
+                <FlatList
+                    data={[]}
+                    renderItem={() => <View />}
+                    ListFooterComponent={() => (
+                        <S.AddExerciseButton onPress={() => navigation.navigate('AddExercise')}>
+                            <S.AddExerciseText>Adiconar exercício</S.AddExerciseText>
+                        </S.AddExerciseButton>
+                    )}
                 />
-            </S.AnotationContainer>
 
-            <FlatList
-                data={[]}
-                renderItem={() => <View />}
-                ListFooterComponent={() => (
-                    <S.AddExerciseButton onPress={() => setShowModal(true)}>
-                        <S.AddExerciseText>Adiconar exercício</S.AddExerciseText>
-                    </S.AddExerciseButton>
-                )}
-            />
+            </S.Container>
 
-            <AddExercise visible={showModal} onRequestClose={() => setShowModal(false)} animationType='slide'  />
-        </S.Container>
-
+        </GestureHandlerRootView>
     )
 }
 

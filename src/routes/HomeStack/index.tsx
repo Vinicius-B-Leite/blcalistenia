@@ -1,6 +1,7 @@
 import { createStackNavigator, CardStyleInterpolators } from '@react-navigation/stack';
 import React from 'react';
 import { View } from 'react-native';
+import AddExercise from '../../screens/AddExercise';
 import CreateWorkout from '../../screens/CreateWorkout';
 import Home from '../../screens/Home';
 import { RootStackParamList } from '../Models';
@@ -15,13 +16,14 @@ const HomeStack: React.FC = () => {
                 cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
                 headerShown: false,
                 detachPreviousScreen: false,
-                cardStyle:{
+                cardStyle: {
                     backgroundColor: 'transparent'
                 }
             }}
         >
             <Screen name='Home' component={Home} />
             <Screen name='CreateWorkout' component={CreateWorkout} />
+            <Screen name='AddExercise' component={AddExercise} />
         </Navigator>
     )
 }

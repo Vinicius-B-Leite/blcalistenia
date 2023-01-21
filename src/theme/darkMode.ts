@@ -18,6 +18,7 @@ export const darkMode = {
         icons: {
             sm: Dimensions.get('screen').width / 20,
             md: Dimensions.get('screen').width / 17,
+            xlg: Dimensions.get('screen').width / 10
         },
         image:{
             sm: Dimensions.get('screen').width / 9

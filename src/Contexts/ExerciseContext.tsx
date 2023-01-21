@@ -29,7 +29,6 @@ export const ExerciseProvider = ({ children }: { children: React.ReactNode }) =>
                 })
             }
 
-            console.log("🚀 ~ file: ExerciseContext.tsx:21 ~ returnnewPromise<void> ~ exercises", exercises)
             setExerciseList(exercises as exercise[])
             resolve()
         })
