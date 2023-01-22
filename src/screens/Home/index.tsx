@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState, useCallback } from 'react';
 import Container from '../../components/Container';
 import * as S from './styles'
 import AntDesign from 'react-native-vector-icons/AntDesign'
@@ -10,6 +10,7 @@ import CreateWorkoutButton from '../../components/CreateWorkoutButton';
 import { getRealm } from '../../services/realm';
 import Workout from '../../components/Workout';
 import { WorkoutContext } from '../../Contexts/WorkoutContext';
+import { useFocusEffect } from '@react-navigation/native';
 
 
 
@@ -17,9 +18,9 @@ const Home: React.FC = () => {
     const theme = useTheme()
     const { getWorkouts, workoutsList } = useContext(WorkoutContext)
 
-    useEffect(() => {
+    useFocusEffect(useCallback(() => {
         getWorkouts()
-    }, [])
+    }, []))
     return (
         <Container>
             <S.Header>

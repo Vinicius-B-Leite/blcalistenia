@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { FlatList, View, Text } from 'react-native';
 import * as S from './styles'
 import AntDesign from 'react-native-vector-icons/AntDesign'
@@ -10,12 +10,27 @@ import { RootStackParamList } from '../../routes/Models';
 import AddExercise from '../AddExercise';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { ExerciseContext } from '../../Contexts/ExerciseContext';
+import ExerciseInWorkoutItem from '../../components/ExerciseInWorkoutItem';
+import { WorkoutContext } from '../../Contexts/WorkoutContext';
 
 type Navigation = StackScreenProps<RootStackParamList, 'CreateWorkout'>
 
 const CreateWorkout: React.FC<Navigation> = ({ route, navigation }) => {
     const theme = useTheme()
     const { exercisesInWorkout } = useContext(ExerciseContext)
+    const { createWorkout } = useContext(WorkoutContext)
+
+    useEffect(() => {
+        navigation.addListener('blur', () => {
+            if (exercisesInWorkout.length > 0) {
+                createWorkout({
+                    banner: 'https://www.adobe.com/br/express/feature/image/media_1bb4d071398492506a1b76b3b6f9d69a5e96d7ffc.png?width=750&format=png&optimize=medium',
+                    title: 'dskjgghksdlghsdk',
+                    exercises: exercisesInWorkout
+                })
+            }
+        })
+    }, [])
 
     return (
         <GestureHandlerRootView style={{ flex: 1 }}>
@@ -42,21 +57,7 @@ const CreateWorkout: React.FC<Navigation> = ({ route, navigation }) => {
 
                 <FlatList
                     data={exercisesInWorkout}
-                    renderItem={({item}) => (
-                        <S.Exercise>
-                            <S.ExerciseName>{item.exercise_id}</S.ExerciseName>
-                            <FlatList
-                                data={item.series}
-                                renderItem={({item: serie}) => (
-                                    <S.Serie>
-                                        <S.SerieNumber>{String(serie.serie)}</S.SerieNumber>
-                                        <S.SerieRep>{String(serie.rep)}</S.SerieRep>
-                                        <S.SerieRest>{String(serie.rest)}</S.SerieRest>
-                                    </S.Serie>
-                                )}
-                            />
-                        </S.Exercise>
-                    )}
+                    renderItem={({ item }) => <ExerciseInWorkoutItem item={item} />}
                     ListFooterComponent={() => (
                         <S.AddExerciseButton onPress={() => navigation.navigate('AddExercise')}>
                             <S.AddExerciseText>Adiconar exercício</S.AddExerciseText>
