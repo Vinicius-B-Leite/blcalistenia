@@ -4,7 +4,8 @@ import { getRealm } from '../services/realm'
 
 type ExerciseContextType = {
     getExercises: () => Promise<void>,
-    exercisList: exercise[]
+    exercisList: exercise[],
+    createExercise: ({ name, muscles, type }: exercise) => Promise<void>
 }
 
 export const ExerciseContext = createContext({} as ExerciseContextType)
@@ -13,6 +14,24 @@ export const ExerciseProvider = ({ children }: { children: React.ReactNode }) =>
 
     const [exercisList, setExerciseList] = useState<exercise[]>([])
 
+    const createExercise = ({ name, muscles, type }: exercise) => {
+        return new Promise<void>(async (res, rej) => {
+            try {
+                const realm = await getRealm()
+
+                realm.write(() => {
+                    realm.create<exercise>('Exercise', {
+                        name,
+                        muscles,
+                        type
+                    })
+                })
+                res()
+            } catch (error) {
+                rej(error)
+            }
+        })
+    }
     const getExercises = async () => {
         return new Promise<void>(async (resolve, reject) => {
             const realm = await getRealm()
@@ -35,7 +54,7 @@ export const ExerciseProvider = ({ children }: { children: React.ReactNode }) =>
     }
 
     return (
-        <ExerciseContext.Provider value={{ getExercises, exercisList }}>
+        <ExerciseContext.Provider value={{ getExercises, exercisList, createExercise }}>
             {children}
         </ExerciseContext.Provider>
     )

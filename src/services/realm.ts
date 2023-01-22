@@ -1,5 +1,6 @@
 import Realm from "realm";
 import { ExerciseSchema } from "../schema/ExerciseSchema";
+import { ExerciseWorkout } from "../schema/ExerciseWorkoutSchema";
 import { SerieSchema } from "../schema/SerieSchema";
 import { WorkoutSchema } from '../schema/WorkoutSchema'
 
@@ -9,8 +10,8 @@ export function getRealm(): Promise<Realm> {
         try {
 
             const realm = await Realm.open({
-                schema: [WorkoutSchema, ExerciseSchema, SerieSchema],
-                schemaVersion: 2,
+                schema: [WorkoutSchema, ExerciseSchema, SerieSchema, ExerciseWorkout],
+                schemaVersion: 3,
             })
             resolve(realm)
 

@@ -6,9 +6,8 @@ export const ExerciseSchema = {
             type: 'string',
             indexed: true
         },
-        anotation: 'string?',
-        type: 'string',
-        muscles: 'string'
+        categories: 'string[]',
+        muscles: 'string[]'
     },
     primaryKey: 'name'
 };

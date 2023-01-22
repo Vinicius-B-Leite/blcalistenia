@@ -45,14 +45,14 @@ export const List = styled.View`
     flex-direction: row;
     flex-wrap: wrap;
     margin: 3% 0% 5% 0%;
-    row-gap: ${({theme}) => theme.sizes.vw * 0.03}px;
-    column-gap: ${({theme}) => theme.sizes.vw * 0.05}px;
+    row-gap: ${({ theme }) => theme.sizes.vw * 0.03}px;
+    column-gap: ${({ theme }) => theme.sizes.vw * 0.05}px;
 `
-
-export const ItemContainer = styled.TouchableOpacity`
-    background-color: ${({ theme }) => theme.colors.background};
+type ItemProps = { selected: boolean }
+export const ItemContainer = styled.TouchableOpacity<ItemProps>`
+    background-color: ${({ theme, selected }) => selected ? theme.colors.contrast : theme.colors.background};
     padding: 1% 5%;
-    border-radius: ${({theme})=>theme.sizes.borderRadius.full}px;
+    border-radius: ${({ theme }) => theme.sizes.borderRadius.full}px;
 `
 export const ItemName = styled.Text`
     color: ${({ theme }) => theme.colors.text};
@@ -61,15 +61,15 @@ export const ItemName = styled.Text`
 
 export const Butotn = styled.TouchableOpacity`
     width: 100%;
-    background-color: ${({theme}) => theme.colors.contrast};
+    background-color: ${({ theme }) => theme.colors.contrast};
     justify-content: center;
     align-items: center;
     padding: 3% 0%;
-    border-radius: ${({theme}) => theme.sizes.borderRadius.sm}px;
+    border-radius: ${({ theme }) => theme.sizes.borderRadius.sm}px;
     margin: 4% 0%;
 `
 export const ButotnText = styled.Text`
-    font-size: ${({theme}) => theme.sizes.fontSize.sm}px;
-    color: ${({theme}) => theme.colors.text};
+    font-size: ${({ theme }) => theme.sizes.fontSize.sm}px;
+    color: ${({ theme }) => theme.colors.text};
     font-weight: 600;
 `

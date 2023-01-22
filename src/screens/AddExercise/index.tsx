@@ -1,5 +1,5 @@
 import React, { useEffect, useContext, useCallback, useRef, useLayoutEffect, useState } from 'react';
-import { View, ModalProps, Alert } from 'react-native';
+import { View, ModalProps, FlatList } from 'react-native';
 import * as S from './styles'
 import AntDesign from 'react-native-vector-icons/AntDesign'
 import { useTheme } from 'styled-components';
@@ -75,7 +75,15 @@ const AddExercise: React.FC<Navigation> = ({ navigation }) => {
                         return (
                             <S.ExerciseContainer>
                                 <S.ExerciseName>{item.name}</S.ExerciseName>
-                                <S.ExerciseMuscles>{item.muscles}</S.ExerciseMuscles>
+                                <FlatList
+                                    data={item.muscles}
+                                    horizontal
+                                    contentContainerStyle={{columnGap: 10}}
+                                    renderItem={({item: m}) => (
+                                        <S.ExerciseMuscles>{m}</S.ExerciseMuscles>
+
+                                    )}
+                                />
                             </S.ExerciseContainer>
                         )
                     }}

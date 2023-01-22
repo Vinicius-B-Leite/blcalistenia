@@ -6,7 +6,7 @@ export const SerieSchema = {
         serie: 'int',
         rep: 'int',
         rest: 'double',
-        exercise: 'Exercise'
+        exercise: 'string' //id of exercise(name)
     },
     primaryKey: '_id'
 };

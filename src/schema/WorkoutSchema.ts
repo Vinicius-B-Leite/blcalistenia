@@ -7,7 +7,7 @@ export const WorkoutSchema = {
         },
         title: "string",
         banner: "string",
-        exercises: "Exercise[]",
+        exercises: "string[]",//id exerciese[]
     },
     primaryKey: "_id",
 };
