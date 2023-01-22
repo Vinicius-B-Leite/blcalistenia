@@ -11,7 +11,7 @@ export function getRealm(): Promise<Realm> {
 
             const realm = await Realm.open({
                 schema: [WorkoutSchema, ExerciseSchema, SerieSchema, ExerciseWorkout],
-                schemaVersion: 3,
+                schemaVersion: 4,
             })
             resolve(realm)
 

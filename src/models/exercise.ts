@@ -2,6 +2,6 @@ import { series } from "./workout"
 
 export type exercise = {
     name: String,
-    categories: string[],
+    categories: String[],
     muscles: String[]
 }

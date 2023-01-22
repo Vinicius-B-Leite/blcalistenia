@@ -15,9 +15,8 @@ type Navigation = StackScreenProps<RootStackParamList, 'AddExercise'>
 
 const AddExercise: React.FC<Navigation> = ({ navigation }) => {
     const theme = useTheme()
-    const { getExercises, exercisList } = useContext(ExerciseContext)
+    const { getExercises, exercisList, addExerciseToWorkout } = useContext(ExerciseContext)
     const bottomSheetRef = useRef<CreateExerciseRefProps>(null)
-    const [showFocusBg, setShowFocusBg] = useState(false)
 
     useEffect(() => {
         getExercises()
@@ -73,7 +72,7 @@ const AddExercise: React.FC<Navigation> = ({ navigation }) => {
                     keyExtractor={item => String(item.name)}
                     renderItem={({ item }) => {
                         return (
-                            <S.ExerciseContainer>
+                            <S.ExerciseContainer onPress={() => addExerciseToWorkout({exerciseId: item.name})}>
                                 <S.ExerciseName>{item.name}</S.ExerciseName>
                                 <FlatList
                                     data={item.muscles}
@@ -91,14 +90,13 @@ const AddExercise: React.FC<Navigation> = ({ navigation }) => {
             </S.Main>
 
             <S.FloatButton onPress={() => {
-                setShowFocusBg(true)
                 bottomSheetRef?.current?.scrollTo(theme.sizes.vh / 3, 1000)
             }}>
                 <S.FloatButtonIcon>+</S.FloatButtonIcon>
             </S.FloatButton>
 
             {
-                showFocusBg && <S.FocusBackground />
+                bottomSheetRef.current?.isVisible() && <S.FocusBackground />
             }
 
             <CreateExercise ref={bottomSheetRef} />

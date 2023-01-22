@@ -55,3 +55,10 @@ export const AddExerciseText = styled.Text`
     font-size: ${({theme}) => theme.sizes.fontSize.sm}px;
     text-decoration: underline;
 `
+export const Exercise = styled.View``
+export const ExerciseName = styled.Text``
+export const ExerciseAnotation = styled.Text``
+export const Serie = styled.View``
+export const SerieNumber = styled.Text``
+export const SerieRep = styled.Text``
+export const SerieRest = styled.Text``

@@ -1,12 +1,10 @@
 
 export const SerieSchema = {
     name: "Serie",
+    embedded: true, 
     properties: {
-        _id: 'int',
         serie: 'int',
         rep: 'int',
         rest: 'double',
-        exercise: 'string' //id of exercise(name)
     },
-    primaryKey: '_id'
 };
