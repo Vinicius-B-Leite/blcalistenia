@@ -1,5 +1,5 @@
-import React, { useEffect, useContext, useCallback, useRef, useLayoutEffect } from 'react';
-import { View, ModalProps, Modal } from 'react-native';
+import React, { useEffect, useContext, useCallback, useRef, useLayoutEffect, useState } from 'react';
+import { View, ModalProps, Alert } from 'react-native';
 import * as S from './styles'
 import AntDesign from 'react-native-vector-icons/AntDesign'
 import { useTheme } from 'styled-components';
@@ -17,15 +17,32 @@ const AddExercise: React.FC<Navigation> = ({ navigation }) => {
     const theme = useTheme()
     const { getExercises, exercisList } = useContext(ExerciseContext)
     const bottomSheetRef = useRef<CreateExerciseRefProps>(null)
-
+    const [showFocusBg, setShowFocusBg] = useState(false)
 
     useEffect(() => {
         getExercises()
+
+        navigation.addListener('beforeRemove', () => {
+            navigation.getParent()?.setOptions({
+                tabBarStyle: {
+                    display: 'flex',
+                    backgroundColor: theme.colors.darkBackground,
+                    height: theme.sizes.tabBar,
+                    justifyContent: 'center',
+                }
+            })
+        })
+    }, [])
+
+    useLayoutEffect(() => {
+        navigation.getParent()?.setOptions({
+            tabBarStyle: {
+                display: 'none'
+            }
+        })
     }, [])
 
     return (
-
-
         <S.Container>
             <S.Header>
                 <S.GoBack onPress={() => navigation.goBack()}>
@@ -65,11 +82,16 @@ const AddExercise: React.FC<Navigation> = ({ navigation }) => {
                 />
             </S.Main>
 
-            <S.FloatButton onPress={() => bottomSheetRef?.current?.scrollTo(theme.sizes.vh / 3, 1000)}>
+            <S.FloatButton onPress={() => {
+                setShowFocusBg(true)
+                bottomSheetRef?.current?.scrollTo(theme.sizes.vh / 3, 1000)
+            }}>
                 <S.FloatButtonIcon>+</S.FloatButtonIcon>
             </S.FloatButton>
 
-
+            {
+                showFocusBg && <S.FocusBackground />
+            }
 
             <CreateExercise ref={bottomSheetRef} />
         </S.Container>

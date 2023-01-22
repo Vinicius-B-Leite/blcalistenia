@@ -1,0 +1,1 @@
+export const category = ['empurrar', 'puxar', 'pernas', 'estático(hold)', 'dinâmico(rep)', 'peso']

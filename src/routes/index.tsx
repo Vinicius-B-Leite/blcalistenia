@@ -25,7 +25,7 @@ const Routes: React.FC = () => {
                     tabBarStyle: {
                         backgroundColor: theme.colors.darkBackground,
                         height: theme.sizes.tabBar,
-                        justifyContent: 'center'
+                        justifyContent: 'center',
                     },
                     tabBarActiveTintColor: theme.colors.contrast,
                     tabBarShowLabel: false
