@@ -21,30 +21,28 @@ const WorkoutProvider = ({ children }: { children: React.ReactNode }) => {
     async function getWorkouts() {
 
         const realm = await getRealm()
+        
 
         const workout = realm.objects<WorkoutType[]>('Workout').sorted('title').toJSON()
         console.log("🚀 ~ file: WorkoutContext.tsx:26 ~ getWorkouts ~ workout", workout)
 
         setWorkoutList(workout as WorkoutType[])
 
-        realm.close()
     }
 
     async function createWorkout({ title, banner, exercises }: CreateWorkoutProps) {
         const realm = await getRealm()
-
-        let workout;
+        
 
         realm.write(() => {
-            workout = realm.create<WorkoutType>('Workout', {
+            let workout = realm.create<WorkoutType>('Workout', {
                 title,
                 banner,
                 exercises,
-                _id: realm.objects('Workout').length + 1
+                _id: workoutsList.length + 1
             })
+            setWorkoutList(old => [...old, workout as WorkoutType])
         })
-        console.log("🚀 ~ file: WorkoutContext.tsx:48 ~ createWorkout ~ workout", workout)
-        realm.close()
     }
 
     return (

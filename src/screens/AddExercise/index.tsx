@@ -3,7 +3,7 @@ import { View, ModalProps, FlatList } from 'react-native';
 import * as S from './styles'
 import AntDesign from 'react-native-vector-icons/AntDesign'
 import { useTheme } from 'styled-components';
-import { ExerciseContext } from '../../Contexts/ExerciseContext';
+import { ExerciseContext } from '../../contexts/ExerciseContext';
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp, StackScreenProps } from '@react-navigation/stack';
 import { RootStackParamList } from '../../routes/Models';

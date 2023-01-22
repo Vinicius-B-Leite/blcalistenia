@@ -9,7 +9,7 @@ import { WorkoutType } from '../../models/workout';
 import CreateWorkoutButton from '../../components/CreateWorkoutButton';
 import { getRealm } from '../../services/realm';
 import Workout from '../../components/Workout';
-import { WorkoutContext } from '../../Contexts/WorkoutContext';
+import { WorkoutContext } from '../../contexts/WorkoutContext';
 import { useFocusEffect } from '@react-navigation/native';
 
 
@@ -18,9 +18,9 @@ const Home: React.FC = () => {
     const theme = useTheme()
     const { getWorkouts, workoutsList } = useContext(WorkoutContext)
 
-    useFocusEffect(useCallback(() => {
+    useEffect(() => {
         getWorkouts()
-    }, []))
+    }, [])
     return (
         <Container>
             <S.Header>

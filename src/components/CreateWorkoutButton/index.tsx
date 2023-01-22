@@ -2,7 +2,7 @@ import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigatorProps } from '@react-navigation/native-stack/lib/typescript/src/types';
 import React, { useContext } from 'react';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { WorkoutContext } from '../../Contexts/WorkoutContext';
+import { WorkoutContext } from '../../contexts/WorkoutContext';
 import { RootStackParamList } from '../../routes/Models';
 import * as S from './styles'
 

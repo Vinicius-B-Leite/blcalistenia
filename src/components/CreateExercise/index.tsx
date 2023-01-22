@@ -3,7 +3,7 @@ import { Dimensions, StyleSheet, View } from 'react-native';
 import { Gesture, GestureDetector } from 'react-native-gesture-handler';
 import Animated, { useAnimatedStyle, useSharedValue, withDecay, withTiming } from 'react-native-reanimated';
 import { useTheme } from 'styled-components/native';
-import { ExerciseContext } from '../../Contexts/ExerciseContext';
+import { ExerciseContext } from '../../contexts/ExerciseContext';
 import { category } from '../../utils/category';
 import { muscles } from '../../utils/muscles';
 import * as S from './styles'

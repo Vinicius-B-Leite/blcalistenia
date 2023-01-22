@@ -9,9 +9,9 @@ import { StackScreenProps } from '@react-navigation/stack';
 import { RootStackParamList } from '../../routes/Models';
 import AddExercise from '../AddExercise';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
-import { ExerciseContext } from '../../Contexts/ExerciseContext';
+import { ExerciseContext } from '../../contexts/ExerciseContext';
 import ExerciseInWorkoutItem from '../../components/ExerciseInWorkoutItem';
-import { WorkoutContext } from '../../Contexts/WorkoutContext';
+import { WorkoutContext } from '../../contexts/WorkoutContext';
 
 type Navigation = StackScreenProps<RootStackParamList, 'CreateWorkout'>
 
