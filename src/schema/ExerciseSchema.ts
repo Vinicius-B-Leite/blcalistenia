@@ -1,4 +1,5 @@
 
+
 export const ExerciseSchema = {
     name: "Exercise",
     properties: {
@@ -9,5 +10,6 @@ export const ExerciseSchema = {
         categories: 'string[]',
         muscles: 'string[]'
     },
-    primaryKey: 'name'
+    primaryKey: 'name',
+    
 };

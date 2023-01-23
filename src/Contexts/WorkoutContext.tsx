@@ -9,7 +9,7 @@ type WorkoutContext = {
     workoutsList: WorkoutType[]
 }
 
-type CreateWorkoutProps = { title: string, banner: string, exercises: exercisesInWorkout[] }
+type CreateWorkoutProps = { title: string, banner: string, exercises: exercisesInWorkout[], anotation?: string }
 
 export const WorkoutContext = createContext({} as WorkoutContext)
 
@@ -30,7 +30,7 @@ const WorkoutProvider = ({ children }: { children: React.ReactNode }) => {
 
     }
 
-    async function createWorkout({ title, banner, exercises }: CreateWorkoutProps) {
+    async function createWorkout({ title, banner, exercises, anotation }: CreateWorkoutProps) {
         const realm = await getRealm()
         
 
@@ -39,6 +39,7 @@ const WorkoutProvider = ({ children }: { children: React.ReactNode }) => {
                 title,
                 banner,
                 exercises,
+                anotation,
                 _id: workoutsList.length + 1
             })
             setWorkoutList(old => [...old, workout as WorkoutType])

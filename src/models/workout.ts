@@ -1,4 +1,3 @@
-import { exercise } from "./exercise"
 import { exercisesInWorkout } from "./exercisesInWorkout"
 
 export type series = {
@@ -11,6 +10,7 @@ export type WorkoutType = {
     _id: Number,
     title: String,
     banner: string,
-    exercises: exercisesInWorkout[]
+    exercises: exercisesInWorkout[],
+    anotation?: String
 }
 

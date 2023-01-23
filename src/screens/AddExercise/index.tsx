@@ -9,6 +9,7 @@ import { StackNavigationProp, StackScreenProps } from '@react-navigation/stack';
 import { RootStackParamList } from '../../routes/Models';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import CreateExercise, { CreateExerciseRefProps } from '../../components/CreateExercise';
+import Exercise from '../../components/Exercise';
 
 
 type Navigation = StackScreenProps<RootStackParamList, 'AddExercise'>
@@ -70,22 +71,7 @@ const AddExercise: React.FC<Navigation> = ({ navigation }) => {
                 <S.ExerciseList
                     data={exercisList}
                     keyExtractor={item => String(item.name)}
-                    renderItem={({ item }) => {
-                        return (
-                            <S.ExerciseContainer onPress={() => addExerciseToWorkout({exerciseId: item.name})}>
-                                <S.ExerciseName>{item.name}</S.ExerciseName>
-                                <FlatList
-                                    data={item.muscles}
-                                    horizontal
-                                    contentContainerStyle={{columnGap: 10}}
-                                    renderItem={({item: m}) => (
-                                        <S.ExerciseMuscles>{m}</S.ExerciseMuscles>
-
-                                    )}
-                                />
-                            </S.ExerciseContainer>
-                        )
-                    }}
+                    renderItem={({ item }) => <Exercise item={item} />}
                 />
             </S.Main>
 

@@ -48,11 +48,12 @@ export const ExerciseProvider = ({ children }: { children: React.ReactNode }) =>
                 if (exercises.length === 0) {
                     initialsExercises.forEach(exercise => {
                         realm.write(() => {
-                            realm.create<exercise>('Exercise', {
+                            let createdExercise = realm.create<exercise>('Exercise', {
                                 name: exercise.name,
                                 categories: exercise.categories,
                                 muscles: exercise.muscles
                             })
+                            setExerciseList(old => [...old, createdExercise as exercise])
                         })
                     })
                 }

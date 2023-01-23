@@ -1,13 +1,14 @@
 export const WorkoutSchema = {
-    name: "Workout",
+    name: 'Workout',
     properties: {
         _id: {
-            type: "int",
+            type: 'int',
             indexed: true
         },
-        title: "string",
-        banner: "string",
-        exercises: "ExerciseWorkout[]",//id exerciese[]
+        title: 'string',
+        banner: 'string',
+        exercises: 'ExerciseWorkout[]',//id exerciese[]
+        anotation: 'string?'
     },
-    primaryKey: "_id",
+    primaryKey: '_id',
 };
