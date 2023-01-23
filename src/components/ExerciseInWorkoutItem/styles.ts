@@ -63,3 +63,16 @@ export const DeleteSerieText = styled.View`
     border-radius: ${({ theme }) => theme.sizes.borderRadius.full}px;
     background-color: ${({ theme }) => theme.colors.contrast};
 `
+
+export const CreateNewSerieButton = styled.TouchableOpacity`
+    border-radius: ${({ theme }) => theme.sizes.borderRadius.full}px;
+    width: 8%;
+    align-items: center;
+    justify-content: center;
+    background-color: ${({ theme }) => theme.colors.contrast};
+    align-self: center;
+`
+export const CreateNewSerieText = styled.Text`
+    font-size: ${({theme}) => theme.sizes.fontSize.md}px;
+    color: ${({ theme }) => theme.colors.text};
+`

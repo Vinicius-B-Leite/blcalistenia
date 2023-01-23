@@ -14,7 +14,7 @@ type Props = {
 }
 const Serie: React.FC<Props> = ({ item, exercise }) => {
     const { changeSeriesInExerciseWorkout } = useContext(ExerciseContext)
-    const theme = useTheme()    
+    const theme = useTheme()
     const [rep, setRep] = useState(item.rep)
     const [rest, setRest] = useState(item.rest)
 
@@ -28,19 +28,20 @@ const Serie: React.FC<Props> = ({ item, exercise }) => {
             </S.DeleteSerieButton>
             <S.SerieInfo
                 editable={false}
-                placeholder={String(item.serie)}
-                placeholderTextColor={theme.colors.text}
+                defaultValue={String(item.serie)}
             />
             <S.SerieInfo
                 value={String(rep)}
                 onChangeText={(text) => setRep(Number(text))}
                 onEndEditing={(e) => handleChange()}
+
             />
 
             <S.SerieInfo
                 value={String(rest)}
                 onChangeText={(text) => setRest(Number(text))}
                 onEndEditing={(e) => handleChange()}
+
             />
         </S.Container>)
 }

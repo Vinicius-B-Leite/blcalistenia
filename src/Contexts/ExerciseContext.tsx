@@ -10,7 +10,8 @@ type ExerciseContextType = {
     createExercise: ({ name, muscles, categories }: exercise) => Promise<void>,
     addExerciseToWorkout: ({ exerciseId }: { exerciseId: String }) => Promise<void>,
     exercisesInWorkout: exercisesInWorkout[],
-    changeSeriesInExerciseWorkout: (item: exercisesInWorkout, serie: Number, newRep?: Number, newRest?: Number) => void
+    changeSeriesInExerciseWorkout: (item: exercisesInWorkout, serie: Number, newRep?: Number, newRest?: Number) => void,
+    addSerieInExercise: (item: exercisesInWorkout) => void
 }
 
 export const ExerciseContext = createContext({} as ExerciseContextType)
@@ -85,13 +86,26 @@ export const ExerciseProvider = ({ children }: { children: React.ReactNode }) =>
         let exercisesInWorkoutCopy = exercisesInWorkout
         const exerciseIndex = exercisesInWorkoutCopy.indexOf(item)
         const serieIndex = exercisesInWorkoutCopy[exerciseIndex].series.findIndex((value, index, object) => value.serie === serie)
-        if (newRep){
+        if (newRep) {
             exercisesInWorkoutCopy[exerciseIndex].series[serieIndex].rep = newRep
         }
-        else if (newRest){
+        else if (newRest) {
             exercisesInWorkoutCopy[exerciseIndex].series[serieIndex].rest = newRest
         }
         setExerciseInWorkout(exercisesInWorkoutCopy)
+    }
+    const addSerieInExercise = (item: exercisesInWorkout) => {
+
+        setExerciseInWorkout(old => {
+            let exercisesInWorkoutCopy = old
+            const exerciseIndex = exercisesInWorkoutCopy.indexOf(item)
+            exercisesInWorkoutCopy[exerciseIndex].series.push({
+                serie: exercisesInWorkoutCopy[exerciseIndex].series.length + 1,
+                rep: 8,
+                rest: 30
+            })
+            return exercisesInWorkoutCopy
+        })
     }
     return (
         <ExerciseContext.Provider value={{
@@ -100,7 +114,8 @@ export const ExerciseProvider = ({ children }: { children: React.ReactNode }) =>
             createExercise,
             addExerciseToWorkout,
             exercisesInWorkout,
-            changeSeriesInExerciseWorkout
+            changeSeriesInExerciseWorkout,
+            addSerieInExercise
         }}>
             {children}
         </ExerciseContext.Provider>

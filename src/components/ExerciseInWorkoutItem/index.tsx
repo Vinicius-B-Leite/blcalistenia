@@ -15,7 +15,7 @@ type Props = {
 
 const ExerciseInWorkoutItem: React.FC<Props> = ({ item }) => {
     const theme = useTheme()
-
+    const { addSerieInExercise } = useContext(ExerciseContext)
 
     return (
         <S.Exercise>
@@ -36,7 +36,12 @@ const ExerciseInWorkoutItem: React.FC<Props> = ({ item }) => {
                         <S.Title>Descanso</S.Title>
                     </S.Row>
                 )}
-                renderItem={({ item: serie }) => <Serie item={serie}  exercise={item}/>}
+                renderItem={({ item: serie }) => <Serie item={serie} exercise={item} />}
+                ListFooterComponent={() => (
+                    <S.CreateNewSerieButton onPress={() => addSerieInExercise(item)}>
+                        <S.CreateNewSerieText>+</S.CreateNewSerieText>
+                    </S.CreateNewSerieButton>
+                )}
             />
         </S.Exercise>
     )
