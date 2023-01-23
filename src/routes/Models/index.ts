@@ -9,7 +9,7 @@ export type RootStackParamList = {
 };
 
 export type TabParamList = {
-    Home: NavigatorScreenParams<RootStackParamList>,
+    HomeStack: NavigatorScreenParams<RootStackParamList>,
     Dashboard: undefined,
     Historic: undefined,
   };

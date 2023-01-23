@@ -13,7 +13,7 @@ import { ExerciseContext } from '../../contexts/ExerciseContext';
 import ExerciseInWorkoutItem from '../../components/ExerciseInWorkoutItem';
 import { WorkoutContext } from '../../contexts/WorkoutContext';
 
-type Navigation = StackScreenProps<TabParamList, 'Home'>
+type Navigation = StackScreenProps<RootStackParamList, 'CreateWorkout'>
 
 const CreateWorkout: React.FC<Navigation> = ({ route, navigation }) => {
     const theme = useTheme()
@@ -23,7 +23,7 @@ const CreateWorkout: React.FC<Navigation> = ({ route, navigation }) => {
     const [anotation, setAnotation] = useState('')
 
     useEffect(() => {
-        navigation.addListener('beforeRemove', () => {
+        navigation.getParent()?.addListener('beforeRemove', () => {
             if (exercisesInWorkout.length > 0) {
                 createWorkout({
                     banner: 'https://www.adobe.com/br/express/feature/image/media_1bb4d071398492506a1b76b3b6f9d69a5e96d7ffc.png?width=750&format=png&optimize=medium',
@@ -66,7 +66,7 @@ const CreateWorkout: React.FC<Navigation> = ({ route, navigation }) => {
                     data={exercisesInWorkout}
                     renderItem={({ item }) => <ExerciseInWorkoutItem item={item} />}
                     ListFooterComponent={() => (
-                        <S.AddExerciseButton onPress={() => navigation.navigate('Home', { screen: 'AddExercise' })}>
+                        <S.AddExerciseButton onPress={() => navigation.navigate('AddExercise')}>
                             <S.AddExerciseText>Adiconar exercício</S.AddExerciseText>
                         </S.AddExerciseButton>
                     )}

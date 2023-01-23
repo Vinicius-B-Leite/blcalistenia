@@ -22,8 +22,8 @@ const HomeStack: React.FC = () => {
             }}
         >
             <Screen name='Home' component={Home} />
-            <Screen name='CreateWorkout' component={CreateWorkout} />
             <Screen name='AddExercise' component={AddExercise} />
+            <Screen name='CreateWorkout' component={CreateWorkout} />
         </Navigator>
     )
 }

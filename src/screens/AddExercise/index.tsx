@@ -72,6 +72,7 @@ const AddExercise: React.FC<Navigation> = ({ navigation }) => {
                     data={exercisList}
                     keyExtractor={item => String(item.name)}
                     renderItem={({ item }) => <Exercise item={item} />}
+                    showsVerticalScrollIndicator={false}
                 />
             </S.Main>
 

@@ -11,7 +11,7 @@ export function getRealm(): Promise<Realm> {
 
             const realm = await Realm.open({
                 schema: [WorkoutSchema, ExerciseSchema, SerieSchema, ExerciseWorkout],
-                schemaVersion: 1,
+                schemaVersion: 2,
                 deleteRealmIfMigrationNeeded: true,
                 
             })

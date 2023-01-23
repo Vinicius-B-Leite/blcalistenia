@@ -43,7 +43,6 @@ export const ExerciseProvider = ({ children }: { children: React.ReactNode }) =>
                 const realm = await getRealm()
 
                 const exercises = realm.objects<exercise[]>('Exercise').sorted('name').toJSON()
-                console.log("🚀 ~ file: ExerciseContext.tsx:46 ~ returnnewPromise<void> ~ exercises", exercises)
 
                 if (exercises.length === 0) {
                     initialsExercises.forEach(exercise => {
@@ -56,6 +55,8 @@ export const ExerciseProvider = ({ children }: { children: React.ReactNode }) =>
                             setExerciseList(old => [...old, createdExercise as exercise])
                         })
                     })
+
+                    return
                 }
 
                 setExerciseList(exercises as exercise[])
