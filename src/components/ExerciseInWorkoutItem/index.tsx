@@ -16,7 +16,8 @@ type Props = {
 
 const ExerciseInWorkoutItem: React.FC<Props> = ({ item }) => {
     const theme = useTheme()
-    const { createSerie } = useContext(ExerciseInWorkoutContext)
+    const { createSerie, exercisesInWorkout } = useContext(ExerciseInWorkoutContext)
+    const index = exercisesInWorkout.findIndex((v, i) => v.exercise_id === item.exercise_id)
 
     return (
         <S.Exercise>
@@ -30,6 +31,8 @@ const ExerciseInWorkoutItem: React.FC<Props> = ({ item }) => {
             />
             <FlatList
                 data={item.series}
+                removeClippedSubviews={false}
+                extraData={item.series}
                 ListHeaderComponent={() => (
                     <S.Row>
                         <S.Title>Série</S.Title>

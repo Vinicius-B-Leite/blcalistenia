@@ -14,7 +14,7 @@ type Props = {
     exercise: exercisesInWorkout
 }
 const Serie: React.FC<Props> = ({ item, exercise }) => {
-    const { updateSeries } = useContext(ExerciseInWorkoutContext)
+    const { updateSeries, deleteSerie } = useContext(ExerciseInWorkoutContext)
     const theme = useTheme()
     const [rep, setRep] = useState(item.rep)
     const [rest, setRest] = useState(item.rest)
@@ -24,7 +24,7 @@ const Serie: React.FC<Props> = ({ item, exercise }) => {
     }
     return (
         <S.Container>
-            <S.DeleteSerieButton>
+            <S.DeleteSerieButton onPress={() => deleteSerie(item.serie, exercise.exercise_id)}>
                 <S.DeleteSerieText />
             </S.DeleteSerieButton>
             <S.SerieInfo

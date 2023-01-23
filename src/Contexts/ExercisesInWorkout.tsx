@@ -6,7 +6,8 @@ type ExerciseInWorkoutType = {
     addExerciseToWorkout: ({ exerciseId }: { exerciseId: String }) => Promise<void>,
     exercisesInWorkout: exercisesInWorkout[],
     updateSeries: (item: exercisesInWorkout, serie: Number, newRep?: Number, newRest?: Number) => void,
-    createSerie: (item: exercisesInWorkout) => void
+    createSerie: (item: exercisesInWorkout) => void,
+    deleteSerie: (serieNumber: Number, exercise: String) => void
 }
 type Props = {
     children: React.ReactNode
@@ -30,7 +31,7 @@ const ExerciseInWorkoutProvider: React.FC<Props> = ({ children }) => {
                 rep: 8,
                 rest: 30
             })
-            return exercisesInWorkoutCopy
+            return [...exercisesInWorkoutCopy]
         })
     }
     const updateSeries = (item: exercisesInWorkout, serie: Number, newRep?: Number, newRest?: Number) => {
@@ -59,6 +60,25 @@ const ExerciseInWorkoutProvider: React.FC<Props> = ({ children }) => {
         }])
 
     }
+    const deleteSerie = (serieNumber: Number, exercise: String) => {
+        let copy = exercisesInWorkout
+        const exerciseIndex = copy.findIndex((v, i, o) => v.exercise_id === exercise)
+        const serieIndex = copy[exerciseIndex].series.findIndex((value, index, object) => value.serie === serieNumber)
+
+        if (copy[exerciseIndex].series.length === 1) {
+            copy.splice(exerciseIndex, 1)
+        } else {
+            copy[exerciseIndex].series.splice(serieIndex, 1)
+
+            copy[exerciseIndex].series.forEach(s => {
+                if (copy[exerciseIndex].series.indexOf(s) >= serieIndex) {
+                    s.serie = Number(s.serie) - 1
+                }
+            })
+        }
+        setExerciseInWorkout([...copy])
+
+    }
 
     return (
         <ExerciseInWorkoutContext.Provider
@@ -67,6 +87,7 @@ const ExerciseInWorkoutProvider: React.FC<Props> = ({ children }) => {
                 updateSeries,
                 addExerciseToWorkout,
                 exercisesInWorkout,
+                deleteSerie,
             }}
         >
             {children}

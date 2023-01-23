@@ -23,8 +23,8 @@ export const SerieInfo = styled.TextInput.attrs({
 export const DeleteSerieButton = styled.TouchableOpacity`
     position: absolute;
     border-radius: ${({ theme }) => theme.sizes.borderRadius.full}px;
-    left: ${({ theme }) => theme.sizes.vw * -0.03}px;
-    width: 10%;
+    left: ${({ theme }) => theme.sizes.vw * 0.03}px;
+    width: 7%;
     height: 100%;
     align-items: center;
     justify-content: center;

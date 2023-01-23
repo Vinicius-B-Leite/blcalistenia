@@ -66,6 +66,8 @@ const CreateWorkout: React.FC<Navigation> = ({ route, navigation }) => {
                 <FlatList
                     data={exercisesInWorkout}
                     extraData={exercisesInWorkout}
+                removeClippedSubviews={false}
+
                     renderItem={({ item }) => <ExerciseInWorkoutItem item={item} />}
                     ListFooterComponent={() => (
                         <S.AddExerciseButton onPress={() => navigation.navigate('AddExercise')}>
