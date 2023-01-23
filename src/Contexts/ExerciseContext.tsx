@@ -10,6 +10,7 @@ type ExerciseContextType = {
     createExercise: ({ name, muscles, categories }: exercise) => Promise<void>,
     addExerciseToWorkout: ({ exerciseId }: { exerciseId: String }) => Promise<void>,
     exercisesInWorkout: exercisesInWorkout[],
+    changeSeriesInExerciseWorkout: (item: exercisesInWorkout, serie: Number, newRep?: Number, newRest?: Number) => void
 }
 
 export const ExerciseContext = createContext({} as ExerciseContextType)
@@ -80,8 +81,27 @@ export const ExerciseProvider = ({ children }: { children: React.ReactNode }) =>
         }])
 
     }
+    const changeSeriesInExerciseWorkout = (item: exercisesInWorkout, serie: Number, newRep?: Number, newRest?: Number) => {
+        let exercisesInWorkoutCopy = exercisesInWorkout
+        const exerciseIndex = exercisesInWorkoutCopy.indexOf(item)
+        const serieIndex = exercisesInWorkoutCopy[exerciseIndex].series.findIndex((value, index, object) => value.serie === serie)
+        if (newRep){
+            exercisesInWorkoutCopy[exerciseIndex].series[serieIndex].rep = newRep
+        }
+        else if (newRest){
+            exercisesInWorkoutCopy[exerciseIndex].series[serieIndex].rest = newRest
+        }
+        setExerciseInWorkout(exercisesInWorkoutCopy)
+    }
     return (
-        <ExerciseContext.Provider value={{ getExercises, exercisList, createExercise, addExerciseToWorkout, exercisesInWorkout }}>
+        <ExerciseContext.Provider value={{
+            getExercises,
+            exercisList,
+            createExercise,
+            addExerciseToWorkout,
+            exercisesInWorkout,
+            changeSeriesInExerciseWorkout
+        }}>
             {children}
         </ExerciseContext.Provider>
     )

@@ -23,7 +23,7 @@ const CreateWorkout: React.FC<Navigation> = ({ route, navigation }) => {
     const [anotation, setAnotation] = useState('')
 
     useEffect(() => {
-        navigation.getParent()?.addListener('beforeRemove', () => {
+        navigation.addListener('beforeRemove', () => {
             if (exercisesInWorkout.length > 0) {
                 createWorkout({
                     banner: 'https://www.adobe.com/br/express/feature/image/media_1bb4d071398492506a1b76b3b6f9d69a5e96d7ffc.png?width=750&format=png&optimize=medium',

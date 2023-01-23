@@ -13,7 +13,6 @@ const Exercise: React.FC<Prosp> = ({ item }) => {
         <S.ExerciseContainer onPress={() => addExerciseToWorkout({ exerciseId: item.name })}>
             <S.ExerciseName>{item.name}</S.ExerciseName>
             <FlatList
-                style={{flex: 1}}
                 data={item.muscles}
                 horizontal
                 renderItem={({ item: m }) => (
