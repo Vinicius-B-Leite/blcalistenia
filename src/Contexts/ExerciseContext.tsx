@@ -8,10 +8,7 @@ type ExerciseContextType = {
     getExercises: () => Promise<void>,
     exercisList: exercise[],
     createExercise: ({ name, muscles, categories }: exercise) => Promise<void>,
-    addExerciseToWorkout: ({ exerciseId }: { exerciseId: String }) => Promise<void>,
-    exercisesInWorkout: exercisesInWorkout[],
-    changeSeriesInExerciseWorkout: (item: exercisesInWorkout, serie: Number, newRep?: Number, newRest?: Number) => void,
-    addSerieInExercise: (item: exercisesInWorkout) => void
+
 }
 
 export const ExerciseContext = createContext({} as ExerciseContextType)
@@ -19,7 +16,6 @@ export const ExerciseContext = createContext({} as ExerciseContextType)
 export const ExerciseProvider = ({ children }: { children: React.ReactNode }) => {
 
     const [exercisList, setExerciseList] = useState<exercise[]>([])
-    const [exercisesInWorkout, setExerciseInWorkout] = useState<exercisesInWorkout[]>([])
 
     const createExercise = ({ name, muscles, categories }: exercise) => {
         return new Promise<void>(async (res, rej) => {
@@ -68,54 +64,13 @@ export const ExerciseProvider = ({ children }: { children: React.ReactNode }) =>
             }
         })
     }
-    const addExerciseToWorkout = async ({ exerciseId }: { exerciseId: String }) => {
 
-        setExerciseInWorkout(old => [...old, {
-            exercise_id: exerciseId,
-            series: [
-                {
-                    serie: 1,
-                    rep: 5,
-                    rest: 40
-                }
-            ]
-        }])
 
-    }
-    const changeSeriesInExerciseWorkout = (item: exercisesInWorkout, serie: Number, newRep?: Number, newRest?: Number) => {
-        let exercisesInWorkoutCopy = exercisesInWorkout
-        const exerciseIndex = exercisesInWorkoutCopy.indexOf(item)
-        const serieIndex = exercisesInWorkoutCopy[exerciseIndex].series.findIndex((value, index, object) => value.serie === serie)
-        if (newRep) {
-            exercisesInWorkoutCopy[exerciseIndex].series[serieIndex].rep = newRep
-        }
-        else if (newRest) {
-            exercisesInWorkoutCopy[exerciseIndex].series[serieIndex].rest = newRest
-        }
-        setExerciseInWorkout(exercisesInWorkoutCopy)
-    }
-    const addSerieInExercise = (item: exercisesInWorkout) => {
-
-        setExerciseInWorkout(old => {
-            let exercisesInWorkoutCopy = old
-            const exerciseIndex = exercisesInWorkoutCopy.indexOf(item)
-            exercisesInWorkoutCopy[exerciseIndex].series.push({
-                serie: exercisesInWorkoutCopy[exerciseIndex].series.length + 1,
-                rep: 8,
-                rest: 30
-            })
-            return exercisesInWorkoutCopy
-        })
-    }
     return (
         <ExerciseContext.Provider value={{
             getExercises,
             exercisList,
             createExercise,
-            addExerciseToWorkout,
-            exercisesInWorkout,
-            changeSeriesInExerciseWorkout,
-            addSerieInExercise
         }}>
             {children}
         </ExerciseContext.Provider>

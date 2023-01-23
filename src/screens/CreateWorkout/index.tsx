@@ -12,12 +12,13 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { ExerciseContext } from '../../contexts/ExerciseContext';
 import ExerciseInWorkoutItem from '../../components/ExerciseInWorkoutItem';
 import { WorkoutContext } from '../../contexts/WorkoutContext';
+import { ExerciseInWorkoutContext } from '../../contexts/ExercisesInWorkout';
 
 type Navigation = StackScreenProps<RootStackParamList, 'CreateWorkout'>
 
 const CreateWorkout: React.FC<Navigation> = ({ route, navigation }) => {
     const theme = useTheme()
-    const { exercisesInWorkout } = useContext(ExerciseContext)
+    const { exercisesInWorkout } = useContext(ExerciseInWorkoutContext)
     const { createWorkout } = useContext(WorkoutContext)
     const [workoutName, setWorkoutName] = useState('')
     const [anotation, setAnotation] = useState('')
