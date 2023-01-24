@@ -61,15 +61,3 @@ export const AddExerciseText = styled.Text`
     font-size: ${({theme}) => theme.sizes.fontSize.sm}px;
     text-decoration: underline;
 `
-
-export const CreateExercise = styled.TouchableOpacity`
-    position: absolute;
-    right: ${({theme}) => theme.sizes.vh * 0.02}px;
-    bottom: ${({theme}) => theme.sizes.vh * 0.03}px;
-    background-color: ${({theme}) => theme.colors.contrast};
-    padding: 8%;
-    justify-content: center;
-    align-items: center;
-    border-radius: ${({theme}) => theme.sizes.borderRadius.full}px;
-    z-index: 2;
-`

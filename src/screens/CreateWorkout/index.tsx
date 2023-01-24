@@ -5,10 +5,9 @@ import AntDesign from 'react-native-vector-icons/AntDesign'
 import Feather from 'react-native-vector-icons/Feather'
 import { useTheme } from 'styled-components/native';
 import { StackScreenProps } from '@react-navigation/stack';
-import { RootStackParamList, TabParamList } from '../../routes/Models';
+import { RootStackParamList } from '../../routes/Models';
 import ExerciseInWorkoutItem from '../../components/ExerciseInWorkoutItem';
 import { WorkoutContext } from '../../contexts/WorkoutContext';
-import { ExerciseInWorkoutContext } from '../../contexts/ExercisesInWorkout';
 import { pickeImage } from '../../utils/pickImage';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 
@@ -18,11 +17,13 @@ type Navigation = StackScreenProps<RootStackParamList, 'CreateWorkout'>
 
 const CreateWorkout: React.FC<Navigation> = ({ route, navigation }) => {
     const theme = useTheme()
-    const { exercisesInWorkout } = useContext(ExerciseInWorkoutContext)
-    const { createWorkout } = useContext(WorkoutContext)
+    const { createInitialWorkout, saveWorkout, exercises, getSingleWorkout, workout, deleteWorkout, clean } = useContext(WorkoutContext)
     const [workoutName, setWorkoutName] = useState('')
     const [anotation, setAnotation] = useState('')
     const [imageURI, setImageURI] = useState('')
+    const workout_id = route?.params?.workout_id
+
+
 
     useLayoutEffect(() => {
         navigation.getParent()?.setOptions({
@@ -30,10 +31,29 @@ const CreateWorkout: React.FC<Navigation> = ({ route, navigation }) => {
                 display: 'none'
             }
         })
+        if (typeof workout_id !== 'undefined') {
+            getSingleWorkout(workout_id as number).then(data => {
+                setWorkoutName(data.title as string)
+                setAnotation(data.anotation ? data.anotation as string : '')
+                setImageURI(data.banner)
+            })
+
+        } else {
+            createInitialWorkout()
+        }
     }, [])
 
     useEffect(() => {
-        navigation.addListener('beforeRemove', () => {
+
+
+
+        navigation.addListener('beforeRemove', (e) => {
+            if (workout.title == '') {
+                deleteWorkout()
+            }
+
+            clean()
+
             navigation.getParent()?.setOptions({
                 tabBarStyle: {
                     display: 'flex',
@@ -43,26 +63,22 @@ const CreateWorkout: React.FC<Navigation> = ({ route, navigation }) => {
                 }
             })
         })
+
+
     }, [])
 
-    const save = async () => {
-        console.log(exercisesInWorkout)
-        console.log(workoutName)
-        console.log(imageURI)
-        if (imageURI !== '' && workoutName !== '' && exercisesInWorkout.length > 0) {
-            await createWorkout({
+    useEffect(() => {
+        if (workoutName != '' && exercises.length > 0) {
+            saveWorkout({
+                _id: workout._id,
                 banner: imageURI,
+                exercises: exercises,
                 title: workoutName,
-                exercises: exercisesInWorkout,
                 anotation: anotation
             })
-            navigation.goBack()
-
-            setAnotation('')
-            setWorkoutName('')
-            setImageURI('')
         }
-    }
+    }, [workoutName, anotation, exercises, imageURI])
+
     const handleImagePicker = async () => {
         const { assets } = await pickeImage()
         const uri = assets ? assets[0].uri : ''
@@ -89,20 +105,23 @@ const CreateWorkout: React.FC<Navigation> = ({ route, navigation }) => {
                 </S.ImagePickerButton>
             </S.Header>
 
-            <S.AnotationContainer>
-                <S.Anotation
-                    value={anotation}
-                    onChangeText={setAnotation}
-                    placeholder='Anotação'
-                    placeholderTextColor={theme.colors.darkText}
-                />
-            </S.AnotationContainer>
+
 
             <FlatList
-                data={exercisesInWorkout}
-                extraData={exercisesInWorkout}
+                data={exercises}
+                extraData={exercises}
                 removeClippedSubviews={false}
-
+                showsVerticalScrollIndicator={false}
+                ListHeaderComponent={() => (
+                    <S.AnotationContainer>
+                        <S.Anotation
+                            value={anotation}
+                            onChangeText={setAnotation}
+                            placeholder='Anotação'
+                            placeholderTextColor={theme.colors.darkText}
+                        />
+                    </S.AnotationContainer>
+                )}
                 renderItem={({ item }) => <ExerciseInWorkoutItem item={item} />}
                 ListFooterComponent={() => (
                     <S.AddExerciseButton onPress={() => navigation.navigate('AddExercise')}>
@@ -111,9 +130,6 @@ const CreateWorkout: React.FC<Navigation> = ({ route, navigation }) => {
                 )}
             />
 
-            <S.CreateExercise onPress={save}>
-                <MaterialIcons name='done' size={theme.sizes.icons.xlg} color={theme.colors.text}/>
-            </S.CreateExercise>
         </S.Container>
 
     )

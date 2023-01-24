@@ -8,7 +8,6 @@ import { WorkoutContext } from '../../contexts/WorkoutContext';
 import { useTheme } from 'styled-components/native';
 import ExerciseInWorkoutItem from '../../components/ExerciseInWorkoutItem';
 import Feather from 'react-native-vector-icons/Feather'
-import { ExerciseInWorkoutContext } from '../../contexts/ExercisesInWorkout';
 import { pickeImage } from '../../utils/pickImage';
 import Ionicons from 'react-native-vector-icons/Ionicons'
 
@@ -19,22 +18,12 @@ const Workout: React.FC<Props> = ({ navigation, route }) => {
 
     const theme = useTheme()
     const { getSingleWorkout, workout } = useContext(WorkoutContext)
-    const [workoutName, setWorkoutName] = useState('')
-    const [anotation, setAnotation] = useState('')
-    const { exercisesInWorkout } = useContext(ExerciseInWorkoutContext)
-    let imageURI = ''
 
     useEffect(() => {
         getSingleWorkout(route.params.workout_id as number)
     }, [])
 
-    const handleImagePicker = async () => {
-        const { assets } = await pickeImage()
-        const uri = assets ? assets[0].uri : ''
-        const finalUri = uri ? uri : ''
-
-        imageURI = finalUri
-    }
+  
 
     return (
         <S.Container>
@@ -45,7 +34,7 @@ const Workout: React.FC<Props> = ({ navigation, route }) => {
                     </S.GoBack>
                     <S.Title>{workout?.title}</S.Title>
                 </S.Left>
-                <S.ImagePickerButton onPress={handleImagePicker}>
+                <S.ImagePickerButton>
                     <Ionicons name='pencil' size={theme.sizes.icons.sm} color={theme.colors.text} />
                 </S.ImagePickerButton>
             </S.Header>
@@ -53,22 +42,16 @@ const Workout: React.FC<Props> = ({ navigation, route }) => {
             {
                 workout?.anotation && (
                     <S.AnotationContainer>
-                        <S.Anotation
-                            value={anotation}
-                            onChangeText={setAnotation}
-                            placeholder='Anotação'
-                            placeholderTextColor={theme.colors.darkText}
-                        />
+                        <S.Anotation>{workout.anotation}</S.Anotation>
                     </S.AnotationContainer>
                 )
             }
 
             <FlatList
                 data={workout?.exercises}
-                extraData={exercisesInWorkout}
+                extraData={workout?.exercises}
                 removeClippedSubviews={false}
-
-                renderItem={({ item }) => <ExerciseInWorkoutItem item={item} />}
+                renderItem={({ item }) => <ExerciseInWorkoutItem createSerieType='workout' item={item} />}
                 ListFooterComponent={() => (
                     <S.AddExerciseButton onPress={() => navigation.navigate('AddExercise')}>
                         <S.AddExerciseText>Adiconar exercício</S.AddExerciseText>

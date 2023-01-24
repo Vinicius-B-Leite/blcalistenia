@@ -6,17 +6,18 @@ import * as S from './styles'
 import Entypo from 'react-native-vector-icons/Entypo'
 import { ExerciseContext } from '../../contexts/ExerciseContext';
 import Serie from '../Serie';
-import { ExerciseInWorkoutContext } from '../../contexts/ExercisesInWorkout';
+import { WorkoutContext } from '../../contexts/WorkoutContext';
 
 
 
 type Props = {
-    item: exercisesInWorkout
+    item: exercisesInWorkout,
+    createSerieType?: 'workout' | 'exerciseInWorkout'
 }
 
-const ExerciseInWorkoutItem: React.FC<Props> = ({ item }) => {
+const ExerciseInWorkoutItem: React.FC<Props> = ({ item, createSerieType }) => {
     const theme = useTheme()
-    const { createSerie, exercisesInWorkout } = useContext(ExerciseInWorkoutContext)
+    const { createSerie } = useContext(WorkoutContext)
 
     return (
         <S.Exercise>
@@ -41,7 +42,7 @@ const ExerciseInWorkoutItem: React.FC<Props> = ({ item }) => {
                 )}
                 renderItem={({ item: serie }) => <Serie item={serie} exercise={item} />}
                 ListFooterComponent={() => (
-                    <S.CreateNewSerieButton onPress={() => createSerie(item)}>
+                    <S.CreateNewSerieButton onPress={() =>  createSerie(item) }>
                         <S.CreateNewSerieText>+</S.CreateNewSerieText>
                     </S.CreateNewSerieButton>
                 )}

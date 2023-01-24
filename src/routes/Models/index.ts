@@ -4,7 +4,9 @@ import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 
 export type RootStackParamList = {
     Home: undefined,
-    CreateWorkout: undefined,
+    CreateWorkout: {
+        workout_id?: Number
+    },
     AddExercise: undefined,
     Workout: {
         workout_id: Number

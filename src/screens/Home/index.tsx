@@ -16,11 +16,11 @@ import { useFocusEffect } from '@react-navigation/native';
 
 const Home: React.FC = () => {
     const theme = useTheme()
-    const { getWorkouts, workoutsList } = useContext(WorkoutContext)
+    const { getWorkoutsList, workoutsList } = useContext(WorkoutContext)
 
-    useEffect(() => {
-        getWorkouts()
-    }, [])
+    useFocusEffect(useCallback(() => {
+        getWorkoutsList()
+    }, []))
     return (
         <Container>
             <S.Header>

@@ -5,7 +5,7 @@ import { StackNavigationProp, StackScreenProps } from '@react-navigation/stack';
 import React, { useContext } from 'react';
 import { FlatList } from 'react-native';
 import { ExerciseContext } from '../../contexts/ExerciseContext';
-import { ExerciseInWorkoutContext } from '../../contexts/ExercisesInWorkout';
+import { WorkoutContext } from '../../contexts/WorkoutContext';
 import { exercise } from '../../models/exercise';
 import { RootStackParamList } from '../../routes/Models';
 import * as S from './styles'
@@ -17,10 +17,10 @@ type Navigation = StackNavigationProp<RootStackParamList, 'AddExercise'>
 
 const Exercise: React.FC<Prosp> = ({ item }) => {
     const navigation = useNavigation<Navigation>()
-    const { addExerciseToWorkout } = useContext(ExerciseInWorkoutContext)
+    const { addExercise } = useContext(WorkoutContext)
 
     const handleAddExercise = async () => {
-        await addExerciseToWorkout({ exerciseId: item.name })
+        await addExercise(item.name)
         navigation.goBack()
     }
 

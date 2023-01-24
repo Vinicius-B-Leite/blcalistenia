@@ -40,7 +40,7 @@ export const AnotationContainer = styled.View`
     padding: 0 5%;
     width: 100%;
 `
-export const Anotation = styled.TextInput`
+export const Anotation = styled.Text`
     width: 100%;
     padding: 1.5% 5%;
     color: ${({ theme }) => theme.colors.text};

@@ -35,10 +35,10 @@ const Workout: React.FC<Props> = ({ data }) => {
     }
     return (
         <S.Container
-            onPress={() => navigation.navigate('Workout', { workout_id: data._id })}
+            onPress={() => navigation.navigate('CreateWorkout', { workout_id: data._id })}
             onLongPress={handleDelete}>
             <S.Banner
-                source={{ uri: data.banner }}
+                source={{ uri: data.banner.length > 0 ? data.banner : 'https://www.salonlfc.com/wp-content/uploads/2018/01/image-not-found-1-scaled-1150x647.png' }}
                 resizeMode='cover'
             />
             <S.TextContainer>

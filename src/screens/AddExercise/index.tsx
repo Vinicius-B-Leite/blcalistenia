@@ -10,7 +10,6 @@ import { RootStackParamList } from '../../routes/Models';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import CreateExercise, { CreateExerciseRefProps } from '../../components/CreateExercise';
 import Exercise from '../../components/Exercise';
-import { ExerciseInWorkoutContext } from '../../contexts/ExercisesInWorkout';
 
 
 type Navigation = StackScreenProps<RootStackParamList, 'AddExercise'>
@@ -18,7 +17,6 @@ type Navigation = StackScreenProps<RootStackParamList, 'AddExercise'>
 const AddExercise: React.FC<Navigation> = ({ navigation }) => {
     const theme = useTheme()
     const { getExercises, exercisList } = useContext(ExerciseContext)
-    const { addExerciseToWorkout } = useContext(ExerciseInWorkoutContext)
     const bottomSheetRef = useRef<CreateExerciseRefProps>(null)
 
     useEffect(() => {
