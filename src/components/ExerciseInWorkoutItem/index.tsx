@@ -17,7 +17,6 @@ type Props = {
 const ExerciseInWorkoutItem: React.FC<Props> = ({ item }) => {
     const theme = useTheme()
     const { createSerie, exercisesInWorkout } = useContext(ExerciseInWorkoutContext)
-    const index = exercisesInWorkout.findIndex((v, i) => v.exercise_id === item.exercise_id)
 
     return (
         <S.Exercise>

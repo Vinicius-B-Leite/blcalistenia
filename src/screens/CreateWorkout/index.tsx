@@ -4,15 +4,12 @@ import * as S from './styles'
 import AntDesign from 'react-native-vector-icons/AntDesign'
 import Feather from 'react-native-vector-icons/Feather'
 import { useTheme } from 'styled-components/native';
-import { useNavigation } from '@react-navigation/native';
 import { StackScreenProps } from '@react-navigation/stack';
 import { RootStackParamList, TabParamList } from '../../routes/Models';
-import AddExercise from '../AddExercise';
-import { GestureHandlerRootView } from 'react-native-gesture-handler';
-import { ExerciseContext } from '../../contexts/ExerciseContext';
 import ExerciseInWorkoutItem from '../../components/ExerciseInWorkoutItem';
 import { WorkoutContext } from '../../contexts/WorkoutContext';
 import { ExerciseInWorkoutContext } from '../../contexts/ExercisesInWorkout';
+import { pickeImage } from '../../utils/pickImage';
 
 type Navigation = StackScreenProps<RootStackParamList, 'CreateWorkout'>
 
@@ -22,63 +19,74 @@ const CreateWorkout: React.FC<Navigation> = ({ route, navigation }) => {
     const { createWorkout } = useContext(WorkoutContext)
     const [workoutName, setWorkoutName] = useState('')
     const [anotation, setAnotation] = useState('')
+    let imageURI = ''
 
     useEffect(() => {
-        navigation.addListener('beforeRemove', () => {
-            if (exercisesInWorkout.length > 0) {
+        navigation.addListener('beforeRemove', (e) => {
+            if (imageURI.length > 0 && workoutName.length > 0 && exercisesInWorkout.length > 0) {
                 createWorkout({
-                    banner: 'https://www.adobe.com/br/express/feature/image/media_1bb4d071398492506a1b76b3b6f9d69a5e96d7ffc.png?width=750&format=png&optimize=medium',
-                    title: workoutName || 'Desconhecido',
+                    banner: imageURI,
+                    title: workoutName,
                     exercises: exercisesInWorkout,
                     anotation: anotation
                 })
             }
+
         })
     }, [])
 
+    const handleImagePicker = async () => {
+        const { assets } = await pickeImage()
+        const uri = assets ? assets[0].uri : ''
+        const finalUri = uri ? uri : ''
+
+        imageURI = finalUri
+    }
+
     return (
-        <GestureHandlerRootView style={{ flex: 1 }}>
-            <S.Container>
-                <S.Header>
-                    <S.Left>
-                        <S.GoBack onPress={() => navigation.goBack()}>
-                            <AntDesign name='arrowleft' size={theme.sizes.icons.md} color={theme.colors.contrast} />
-                        </S.GoBack>
-                        <S.Title
-                            value={workoutName}
-                            onChangeText={setWorkoutName}
-                            placeholder='Título do treino'
-                            placeholderTextColor={theme.colors.darkContrast}
-                        />
-                    </S.Left>
-                    <Feather name='image' size={theme.sizes.icons.sm} color={theme.colors.contrast} />
-                </S.Header>
-
-                <S.AnotationContainer>
-                    <S.Anotation
-                        value={anotation}
-                        onChangeText={setAnotation}
-                        placeholder='Anotação'
-                        placeholderTextColor={theme.colors.darkText}
+        <S.Container>
+            <S.Header>
+                <S.Left>
+                    <S.GoBack onPress={() => navigation.goBack()}>
+                        <AntDesign name='arrowleft' size={theme.sizes.icons.md} color={theme.colors.contrast} />
+                    </S.GoBack>
+                    <S.Title
+                        value={workoutName}
+                        onChangeText={(txt) => setWorkoutName(txt)}
+                        placeholder='Título do treino'
+                        placeholderTextColor={theme.colors.darkContrast}
                     />
-                </S.AnotationContainer>
+                </S.Left>
+                <S.ImagePickerButton onPress={handleImagePicker}>
+                    <Feather name='image' size={theme.sizes.icons.sm} color={theme.colors.contrast} />
+                </S.ImagePickerButton>
+            </S.Header>
 
-                <FlatList
-                    data={exercisesInWorkout}
-                    extraData={exercisesInWorkout}
+            <S.AnotationContainer>
+                <S.Anotation
+                    value={anotation}
+                    onChangeText={setAnotation}
+                    placeholder='Anotação'
+                    placeholderTextColor={theme.colors.darkText}
+                />
+            </S.AnotationContainer>
+
+            <FlatList
+                data={exercisesInWorkout}
+                extraData={exercisesInWorkout}
                 removeClippedSubviews={false}
 
-                    renderItem={({ item }) => <ExerciseInWorkoutItem item={item} />}
-                    ListFooterComponent={() => (
-                        <S.AddExerciseButton onPress={() => navigation.navigate('AddExercise')}>
-                            <S.AddExerciseText>Adiconar exercício</S.AddExerciseText>
-                        </S.AddExerciseButton>
-                    )}
-                />
+                renderItem={({ item }) => <ExerciseInWorkoutItem item={item} />}
+                ListFooterComponent={() => (
+                    <S.AddExerciseButton onPress={() => navigation.navigate('AddExercise')}>
+                        <S.AddExerciseText>Adiconar exercício</S.AddExerciseText>
+                    </S.AddExerciseButton>
+                )}
+            />
 
-            </S.Container>
 
-        </GestureHandlerRootView>
+        </S.Container>
+
     )
 }
 
