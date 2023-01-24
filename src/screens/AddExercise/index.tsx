@@ -53,6 +53,7 @@ const AddExercise: React.FC<Navigation> = ({ navigation }) => {
 
                 <S.ExerciseList
                     data={exercisList}
+                    extraData={exercisList}
                     keyExtractor={item => String(item.name)}
                     renderItem={({ item }) => <Exercise item={item} />}
                     showsVerticalScrollIndicator={false}
@@ -60,14 +61,11 @@ const AddExercise: React.FC<Navigation> = ({ navigation }) => {
             </S.Main>
 
             <S.FloatButton onPress={() => {
-                bottomSheetRef?.current?.scrollTo(theme.sizes.vh / 3, 1000)
+                bottomSheetRef?.current?.scrollTo(theme.sizes.vh / 5, 1000)
             }}>
                 <S.FloatButtonIcon>+</S.FloatButtonIcon>
             </S.FloatButton>
 
-            {
-                bottomSheetRef.current?.isVisible() && <S.FocusBackground />
-            }
 
             <CreateExercise ref={bottomSheetRef} />
         </S.Container>

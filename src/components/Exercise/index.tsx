@@ -1,9 +1,7 @@
 import { useNavigation } from '@react-navigation/native';
-import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { NativeStackNavigatorProps } from '@react-navigation/native-stack/lib/typescript/src/types';
-import { StackNavigationProp, StackScreenProps } from '@react-navigation/stack';
+import { StackNavigationProp} from '@react-navigation/stack';
 import React, { useContext } from 'react';
-import { FlatList } from 'react-native';
+import { FlatList, Alert } from 'react-native';
 import { ExerciseContext } from '../../contexts/ExerciseContext';
 import { WorkoutContext } from '../../contexts/WorkoutContext';
 import { exercise } from '../../models/exercise';
@@ -18,18 +16,40 @@ type Navigation = StackNavigationProp<RootStackParamList, 'AddExercise'>
 const Exercise: React.FC<Prosp> = ({ item }) => {
     const navigation = useNavigation<Navigation>()
     const { addExercise } = useContext(WorkoutContext)
+    const { deleteExercise } = useContext(ExerciseContext)
 
-    const handleAddExercise = async () => {
-        await addExercise(item.name)
+    const handleAddExercise = () => {
+        addExercise(item.name)
         navigation.goBack()
     }
 
+    const handleDelete = () => {
+        Alert.alert(
+            'Deletar exercício',
+            'Você deseja deletar o exercício ' + item.name,
+            [
+                {
+                    text: 'Sim',
+                    onPress: () => deleteExercise(item.name)
+                },
+                {
+                    text: 'Não',
+                    style: 'cancel'
+                }
+            ],
+            {
+                cancelable: true
+            }
+        )
+    }
+
     return (
-        <S.ExerciseContainer onPress={handleAddExercise}>
+        <S.ExerciseContainer onPress={handleAddExercise} onLongPress={handleDelete}>
             <S.ExerciseName>{item.name}</S.ExerciseName>
             <FlatList
                 data={item.muscles}
                 horizontal
+                scrollEnabled={false}
                 renderItem={({ item: m }) => (
                     <S.ExerciseMuscles>{m}</S.ExerciseMuscles>
                 )}

@@ -46,7 +46,6 @@ const WorkoutProvider = ({ children }: { children: React.ReactNode }) => {
                 })
                 setWorkout(workoutResponnse.toJSON() as WorkoutType)
             })
-            console.log('key initial ' + key)
             currentKey = key
             resolve(key)
         })
@@ -79,7 +78,6 @@ const WorkoutProvider = ({ children }: { children: React.ReactNode }) => {
 
 
         const workout = realm.objects<WorkoutType[]>('Workout').sorted('title').toJSON()
-        console.log( workout[1].exercises)
         
         setWorkoutList(workout as WorkoutType[])
 
@@ -135,7 +133,6 @@ const WorkoutProvider = ({ children }: { children: React.ReactNode }) => {
                 rest: 30,
                 serie: series.length + 1
             })
-            console.log('add serie = ' + series)
             return [...old]
         })
 

@@ -59,14 +59,3 @@ export const FloatButtonIcon = styled.Text`
     color: ${({ theme }) => theme.colors.text};
     font-weight: 700;
 `
-
-export const FocusBackground = styled.View`
-    width: 100%;
-    height: 100%;
-    background-color: ${({theme}) => theme.colors.background};
-    position: absolute;
-    opacity: 0.8;
-    top: 0;
-    left: 0;
-    z-index: 1;
-`

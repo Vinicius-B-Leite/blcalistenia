@@ -44,9 +44,6 @@ const CreateWorkout: React.FC<Navigation> = ({ route, navigation }) => {
     }, [])
 
     useEffect(() => {
-
-
-
         navigation.addListener('beforeRemove', (e) => {
             if (workout.title == '') {
                 deleteWorkout()
@@ -63,8 +60,6 @@ const CreateWorkout: React.FC<Navigation> = ({ route, navigation }) => {
                 }
             })
         })
-
-
     }, [])
 
     useEffect(() => {
@@ -86,6 +81,7 @@ const CreateWorkout: React.FC<Navigation> = ({ route, navigation }) => {
 
         setImageURI(finalUri)
     }
+    
     return (
         <S.Container>
             <S.Header>

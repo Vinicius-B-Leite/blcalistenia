@@ -42,19 +42,19 @@ const CreateExercise = React.forwardRef<CreateExerciseRefProps>(({ }, ref) => {
         })
         .onUpdate((ev) => {
             if (animatedHeigh.value < 0) {
-                scrollTo(0)
+                scrollTo(0, 500)
             }
             else if (animatedHeigh.value < height) {
-                scrollTo(ev.translationY + startValue.value.y)
+                scrollTo((ev.translationY + startValue.value.y))
                 scrollTo(Math.max(animatedHeigh.value, -height + 50))
             }
         })
         .onEnd((ev) => {
             if (animatedHeigh.value <= height / 4 || ev.velocityX <= -height / 2) {
-                scrollTo(0)
+                scrollTo(0, 500)
             }
-            else if (animatedHeigh.value > height / 1.9 || ev.velocityY > height) {
-                scrollTo(height)
+            else if (animatedHeigh.value > height / 3.5 || ev.velocityY > height) {
+                scrollTo(height, 500)
             }
         })
 
