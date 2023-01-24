@@ -23,26 +23,9 @@ const AddExercise: React.FC<Navigation> = ({ navigation }) => {
 
     useEffect(() => {
         getExercises()
-
-        navigation.addListener('beforeRemove', () => {
-            navigation.getParent()?.setOptions({
-                tabBarStyle: {
-                    display: 'flex',
-                    backgroundColor: theme.colors.darkBackground,
-                    height: theme.sizes.tabBar,
-                    justifyContent: 'center',
-                }
-            })
-        })
     }, [])
 
-    useLayoutEffect(() => {
-        navigation.getParent()?.setOptions({
-            tabBarStyle: {
-                display: 'none'
-            }
-        })
-    }, [])
+    
 
     return (
         <S.Container>

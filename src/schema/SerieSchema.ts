@@ -5,5 +5,6 @@ export const SerieSchema = {
     properties: {
         serie: 'int',
         rep: 'int',
+        rest: 'double'
     },
 };

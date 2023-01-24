@@ -1,7 +1,7 @@
 import styled from "styled-components/native";
 
 
-export const Container = styled.View`
+export const Container = styled.TouchableOpacity`
     height: ${({ theme }) => theme.sizes.vh * 0.25}px;
     width: ${({ theme }) => theme.sizes.vw * 0.50}px;
     border-radius: ${({ theme }) => theme.sizes.borderRadius.md}px;

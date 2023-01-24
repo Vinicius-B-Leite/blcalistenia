@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useState, useContext, useEffect, useLayoutEffect } from 'react';
 import { FlatList, View, Text } from 'react-native';
 import * as S from './styles'
 import AntDesign from 'react-native-vector-icons/AntDesign'
@@ -10,6 +10,9 @@ import ExerciseInWorkoutItem from '../../components/ExerciseInWorkoutItem';
 import { WorkoutContext } from '../../contexts/WorkoutContext';
 import { ExerciseInWorkoutContext } from '../../contexts/ExercisesInWorkout';
 import { pickeImage } from '../../utils/pickImage';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
+
+
 
 type Navigation = StackScreenProps<RootStackParamList, 'CreateWorkout'>
 
@@ -19,30 +22,54 @@ const CreateWorkout: React.FC<Navigation> = ({ route, navigation }) => {
     const { createWorkout } = useContext(WorkoutContext)
     const [workoutName, setWorkoutName] = useState('')
     const [anotation, setAnotation] = useState('')
-    let imageURI = ''
+    const [imageURI, setImageURI] = useState('')
 
-    useEffect(() => {
-        navigation.addListener('beforeRemove', (e) => {
-            if (imageURI.length > 0 && workoutName.length > 0 && exercisesInWorkout.length > 0) {
-                createWorkout({
-                    banner: imageURI,
-                    title: workoutName,
-                    exercises: exercisesInWorkout,
-                    anotation: anotation
-                })
+    useLayoutEffect(() => {
+        navigation.getParent()?.setOptions({
+            tabBarStyle: {
+                display: 'none'
             }
-
         })
     }, [])
 
+    useEffect(() => {
+        navigation.addListener('beforeRemove', () => {
+            navigation.getParent()?.setOptions({
+                tabBarStyle: {
+                    display: 'flex',
+                    backgroundColor: theme.colors.darkBackground,
+                    height: theme.sizes.tabBar,
+                    justifyContent: 'center',
+                }
+            })
+        })
+    }, [])
+
+    const save = async () => {
+        console.log(exercisesInWorkout)
+        console.log(workoutName)
+        console.log(imageURI)
+        if (imageURI !== '' && workoutName !== '' && exercisesInWorkout.length > 0) {
+            await createWorkout({
+                banner: imageURI,
+                title: workoutName,
+                exercises: exercisesInWorkout,
+                anotation: anotation
+            })
+            navigation.goBack()
+
+            setAnotation('')
+            setWorkoutName('')
+            setImageURI('')
+        }
+    }
     const handleImagePicker = async () => {
         const { assets } = await pickeImage()
         const uri = assets ? assets[0].uri : ''
         const finalUri = uri ? uri : ''
 
-        imageURI = finalUri
+        setImageURI(finalUri)
     }
-
     return (
         <S.Container>
             <S.Header>
@@ -84,7 +111,9 @@ const CreateWorkout: React.FC<Navigation> = ({ route, navigation }) => {
                 )}
             />
 
-
+            <S.CreateExercise onPress={save}>
+                <MaterialIcons name='done' size={theme.sizes.icons.xlg} color={theme.colors.text}/>
+            </S.CreateExercise>
         </S.Container>
 
     )

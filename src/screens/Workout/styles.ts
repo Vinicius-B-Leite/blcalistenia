@@ -21,14 +21,12 @@ export const GoBack = styled.TouchableOpacity`
     padding: 4% 0;
     align-items: center;
     justify-content: center;
-    border-radius: ${({theme}) => theme.sizes.borderRadius.full}px;
+    border-radius: ${({ theme }) => theme.sizes.borderRadius.full}px;
 `
-export const Title = styled.TextInput`
+export const Title = styled.Text`
     color: ${({ theme }) => theme.colors.contrast};
     width: 75%;
     padding: 3% 5%;
-    border-radius: ${({ theme }) => theme.sizes.borderRadius.sm}px;
-    background-color: ${({ theme }) => theme.colors.darkBackground};
     font-size: ${({ theme }) => theme.sizes.fontSize.md}px ;
     margin-left: 3%;
 `
@@ -46,9 +44,9 @@ export const Anotation = styled.TextInput`
     width: 100%;
     padding: 1.5% 5%;
     color: ${({ theme }) => theme.colors.text};
-    background-color: ${({theme}) => theme.colors.darkBackground};
+    background-color: ${({ theme }) => theme.colors.darkBackground};
     font-size: ${({ theme }) => theme.sizes.fontSize.vsm}px;
-    border-radius: ${({theme}) => theme.sizes.borderRadius.sm}px;
+    border-radius: ${({ theme }) => theme.sizes.borderRadius.sm}px;
 `
 
 export const AddExerciseButton = styled.TouchableOpacity`
@@ -57,19 +55,7 @@ export const AddExerciseButton = styled.TouchableOpacity`
     padding: 3% 5%;
 `
 export const AddExerciseText = styled.Text`
-    color: ${({theme}) => theme.colors.contrast};
-    font-size: ${({theme}) => theme.sizes.fontSize.sm}px;
+    color: ${({ theme }) => theme.colors.contrast};
+    font-size: ${({ theme }) => theme.sizes.fontSize.sm}px;
     text-decoration: underline;
-`
-
-export const CreateExercise = styled.TouchableOpacity`
-    position: absolute;
-    right: ${({theme}) => theme.sizes.vh * 0.02}px;
-    bottom: ${({theme}) => theme.sizes.vh * 0.03}px;
-    background-color: ${({theme}) => theme.colors.contrast};
-    padding: 8%;
-    justify-content: center;
-    align-items: center;
-    border-radius: ${({theme}) => theme.sizes.borderRadius.full}px;
-    z-index: 2;
 `
