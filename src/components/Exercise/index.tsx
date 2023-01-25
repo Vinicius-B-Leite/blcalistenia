@@ -38,7 +38,7 @@ const Exercise: React.FC<Prosp> = ({ item }) => {
                 }
             ],
             {
-                cancelable: true
+                cancelable: true,
             }
         )
     }

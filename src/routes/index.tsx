@@ -1,5 +1,5 @@
 import React from 'react';
-import {StatusBar} from 'react-native'
+import { StatusBar } from 'react-native'
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import { NavigationContainer } from '@react-navigation/native';
 import Dashboard from '../screens/Dashboard';
@@ -8,6 +8,7 @@ import { useTheme } from 'styled-components/native';
 import Entypo from 'react-native-vector-icons/Entypo'
 import Octicons from 'react-native-vector-icons/Octicons'
 import HomeStack from './HomeStack';
+import { Text } from '../components/Workout/styles';
 
 
 const { Navigator, Screen } = createMaterialTopTabNavigator()
@@ -15,11 +16,11 @@ const { Navigator, Screen } = createMaterialTopTabNavigator()
 const Routes: React.FC = () => {
     const theme = useTheme()
     return (
-        <NavigationContainer>
+        <NavigationContainer  >
             <StatusBar backgroundColor={theme.colors.background} barStyle='light-content' />
             <Navigator
+
                 tabBarPosition='bottom'
-                keyboardDismissMode='on-drag'
                 screenOptions={{
                     tabBarIndicatorStyle: { display: 'none' },
                     tabBarStyle: {
@@ -28,16 +29,13 @@ const Routes: React.FC = () => {
                         justifyContent: 'center',
                     },
                     tabBarActiveTintColor: theme.colors.contrast,
-                    tabBarShowLabel: false
+                    tabBarShowLabel: false,
                 }}
-
-
             >
                 <Screen name='HomeStack' component={HomeStack}
                     options={{
                         tabBarIcon: ({ color }) => <Entypo name='home' size={theme.sizes.icons.md} color={color} />
                     }}
-
                 />
                 <Screen name='Dashboard' component={Dashboard}
                     options={{
@@ -50,7 +48,9 @@ const Routes: React.FC = () => {
                     }}
                 />
             </Navigator>
+
         </NavigationContainer>
+
     )
 }
 

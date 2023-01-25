@@ -1,7 +1,7 @@
 import React, { createContext, useEffect, useState } from 'react';
 import { nativeViewGestureHandlerProps } from 'react-native-gesture-handler/lib/typescript/handlers/NativeViewGestureHandler';
 import { exercisesInWorkout } from '../models/exercisesInWorkout';
-import { WorkoutType } from '../models/workout';
+import { series, WorkoutType } from '../models/workout';
 import { getRealm } from '../services/realm';
 
 type WorkoutContext = {
@@ -12,8 +12,9 @@ type WorkoutContext = {
     getSingleWorkout: (workoutID: number) => Promise<WorkoutType>,
     deleteWorkout: (workoutID?: number) => Promise<void>,
     createSerie: (exercise: exercisesInWorkout) => void,
-    clean: () => void,
     deleteSerie: (exercise: exercisesInWorkout, serie: Number) => void
+    clean: () => void,
+    updateSerie: (serieNumber: number, exercise: exercisesInWorkout, newSerie: series) => void,
     workoutsList: WorkoutType[],
     exercises: exercisesInWorkout[],
     workout: WorkoutType
@@ -51,7 +52,7 @@ const WorkoutProvider = ({ children }: { children: React.ReactNode }) => {
         })
 
 
-    } //check
+    } 
 
     const saveWorkout = async (workout: WorkoutType) => {
         const realm = await getRealm()
@@ -70,7 +71,7 @@ const WorkoutProvider = ({ children }: { children: React.ReactNode }) => {
             setWorkout(workoutResponse?.toJSON() as WorkoutType)
         })
 
-    } //check
+    } 
 
     const getWorkoutsList = async () => {
 
@@ -81,7 +82,7 @@ const WorkoutProvider = ({ children }: { children: React.ReactNode }) => {
         
         setWorkoutList(workout as WorkoutType[])
 
-    } //check
+    } 
 
     const addExercise = async (newExercise: String) => {
         setExercises(old => [
@@ -98,7 +99,7 @@ const WorkoutProvider = ({ children }: { children: React.ReactNode }) => {
             }
         ])
 
-    } //check
+    } 
 
     const getSingleWorkout = async (workoutID: number) => {
         const realm = await getRealm()
@@ -106,7 +107,7 @@ const WorkoutProvider = ({ children }: { children: React.ReactNode }) => {
         setWorkout(workoutResponse)
         setExercises(workoutResponse.exercises)
         return workoutResponse
-    }
+    } 
 
     const deleteWorkout = async (workoutID?: number) => {
         const realm = await getRealm()
@@ -121,7 +122,7 @@ const WorkoutProvider = ({ children }: { children: React.ReactNode }) => {
         })
 
 
-    }  //check
+    }  
 
     const createSerie = (exercise: exercisesInWorkout) => {
 
@@ -136,7 +137,7 @@ const WorkoutProvider = ({ children }: { children: React.ReactNode }) => {
             return [...old]
         })
 
-    }  //check
+    }  
 
     const deleteSerie = (exercise: exercisesInWorkout, serie: Number) => {
 
@@ -158,13 +159,27 @@ const WorkoutProvider = ({ children }: { children: React.ReactNode }) => {
             }
             return [...old]
         })
-    } //check
+    } 
 
     const clean = () => {
         setExercises([])
         setWorkout({ _id: -1, banner: '', exercises: [], title: '' })
         currentKey = -1
     }
+
+    const updateSerie = (serieNumber: number, exercise: exercisesInWorkout, newSerie: series) => {
+
+        const exerciseIndex = exercises.findIndex((v) => v.exercise_id == exercise.exercise_id)
+        const serieIndex = exercises[exerciseIndex].series.findIndex((v) => v.serie == serieNumber)
+        let copyExercise = [...exercises]
+
+        copyExercise[exerciseIndex].series[serieIndex] = newSerie
+        console.log("🚀 ~ file: WorkoutContext.tsx:177 ~ updateSerie ~ copyExercise", copyExercise)
+
+        setExercises([...copyExercise])
+
+    }
+
     return (
         <WorkoutContext.Provider value={{
             createInitialWorkout,
@@ -174,8 +189,9 @@ const WorkoutProvider = ({ children }: { children: React.ReactNode }) => {
             getSingleWorkout,
             deleteWorkout,
             createSerie,
-            clean,
             deleteSerie,
+            clean, 
+            updateSerie,
             workoutsList,
             exercises,
             workout,

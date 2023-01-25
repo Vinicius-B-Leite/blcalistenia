@@ -61,3 +61,18 @@ export const AddExerciseText = styled.Text`
     font-size: ${({theme}) => theme.sizes.fontSize.sm}px;
     text-decoration: underline;
 `
+export const StartWorkout = styled.TouchableOpacity`
+    width: 90%;
+    background-color: ${({theme}) => theme.colors.contrast};
+    justify-content: center;
+    align-items: center;
+    padding: 5%;
+    margin: 3%;
+    align-self: center;
+    border-radius: ${({theme}) => theme.sizes.borderRadius.sm}px;
+`
+export const StartText = styled.Text`
+    font-size: ${({theme}) => theme.sizes.fontSize.md}px;
+    color: ${({theme}) => theme.colors.text};
+    font-weight: 700;
+`

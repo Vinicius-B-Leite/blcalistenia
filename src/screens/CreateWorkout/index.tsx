@@ -126,6 +126,14 @@ const CreateWorkout: React.FC<Navigation> = ({ route, navigation }) => {
                 )}
             />
 
+            {
+                workout_id && (
+                    <S.StartWorkout>
+                        <S.StartText>Iniciar treino</S.StartText>
+                    </S.StartWorkout>
+                )
+            }
+
         </S.Container>
 
     )

@@ -1,7 +1,4 @@
-import { useTheme } from '@react-navigation/native';
 import React, { useContext, useState } from 'react';
-import { View } from 'react-native';
-import { ExerciseContext } from '../../contexts/ExerciseContext';
 import { WorkoutContext } from '../../contexts/WorkoutContext';
 import { exercisesInWorkout } from '../../models/exercisesInWorkout';
 import { series } from '../../models/workout';
@@ -14,12 +11,19 @@ type Props = {
     exercise: exercisesInWorkout
 }
 const Serie: React.FC<Props> = ({ item, exercise }) => {
-    const theme = useTheme()
     const [rep, setRep] = useState(item.rep)
-    const { deleteSerie } = useContext(WorkoutContext)
     const [rest, setRest] = useState(item.rest)
+    const { deleteSerie, updateSerie } = useContext(WorkoutContext)
 
-    const handleChange = () => {
+    const handleChange = (text: Number, state: 'rep' | 'rest') => {
+        if (state == 'rep') setRep(text)
+        if (state == 'rest') setRest(text)
+        
+        updateSerie(item.serie as number, exercise, {
+            rep: state == 'rep' ? text : rep,
+            rest: state == 'rest' ? text : rest,
+            serie: item.serie
+        })
     }
     return (
         <S.Container>
@@ -32,16 +36,12 @@ const Serie: React.FC<Props> = ({ item, exercise }) => {
             />
             <S.SerieInfo
                 value={String(rep)}
-                onChangeText={(text) => setRep(Number(text))}
-                onEndEditing={(e) => handleChange()}
-
+                onChangeText={(text) => handleChange(Number(text), 'rep')}
             />
 
             <S.SerieInfo
                 value={String(rest)}
-                onChangeText={(text) => setRest(Number(text))}
-                onEndEditing={(e) => handleChange()}
-
+                onChangeText={(text) => handleChange(Number(text), 'rest')}
             />
         </S.Container>)
 }
