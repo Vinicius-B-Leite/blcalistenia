@@ -7,10 +7,9 @@ export type RootStackParamList = {
     CreateWorkout: {
         workout_id?: Number
     },
-    AddExercise: undefined,
-    Workout: {
-        workout_id: Number
-    }
+    AddExercise: undefined, 
+    WorkoutSeason: undefined
+
 };
 
 export type TabParamList = {

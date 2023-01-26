@@ -1,7 +1,4 @@
 
-- modificar series do treino
-
-
 
 criar o contexto para workout season workout
 
@@ -13,6 +10,6 @@ funcionalidades
 -terminar o treino
   - salvar o treino feito em uma tabela
 -marcar serie como feita
- - navegar para o cutdown
+ - navegar para o countdown
 -cutdown para descanso
   - receber a quantidade de segundos

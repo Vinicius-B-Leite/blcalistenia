@@ -8,7 +8,6 @@ import { useTheme } from 'styled-components/native';
 import Entypo from 'react-native-vector-icons/Entypo'
 import Octicons from 'react-native-vector-icons/Octicons'
 import HomeStack from './HomeStack';
-import { Text } from '../components/Workout/styles';
 
 
 const { Navigator, Screen } = createMaterialTopTabNavigator()
