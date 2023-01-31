@@ -1,5 +1,6 @@
 import { CompositeNavigationProp, NavigatorScreenParams } from '@react-navigation/native';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { WorkoutType } from '../../models/workout';
 
 
 export type RootStackParamList = {
@@ -8,7 +9,9 @@ export type RootStackParamList = {
         workout_id?: Number
     },
     AddExercise: undefined, 
-    WorkoutSeason: undefined
+    WorkoutSeason: {
+        workout: WorkoutType
+    }
 
 };
 

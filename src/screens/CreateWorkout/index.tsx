@@ -118,7 +118,7 @@ const CreateWorkout: React.FC<Navigation> = ({ route, navigation }) => {
                         />
                     </S.AnotationContainer>
                 )}
-                renderItem={({ item }) => <ExerciseInWorkoutItem item={item} />}
+                renderItem={({ item }) => <ExerciseInWorkoutItem enableChanges={false} item={item} />}
                 ListFooterComponent={() => (
                     <S.AddExerciseButton onPress={() => navigation.navigate('AddExercise')}>
                         <S.AddExerciseText>Adiconar exercício</S.AddExerciseText>
@@ -128,7 +128,7 @@ const CreateWorkout: React.FC<Navigation> = ({ route, navigation }) => {
 
             {
                 workout_id && (
-                    <S.StartWorkout>
+                    <S.StartWorkout onPress={() => navigation.navigate('WorkoutSeason', {workout: workout})}>
                         <S.StartText>Iniciar treino</S.StartText>
                     </S.StartWorkout>
                 )

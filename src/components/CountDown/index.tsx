@@ -4,13 +4,9 @@ import { Dimensions } from 'react-native';
 import * as S from './styles'
 import { Svg, Circle, G, CircleProps } from 'react-native-svg'
 import { useTheme } from 'styled-components/native';
-import Animated, { Easing, runOnJS, SharedValue, useSharedValue, withTiming } from 'react-native-reanimated';
+import Animated, { useSharedValue, withTiming } from 'react-native-reanimated';
 import { useAnimatedProps } from 'react-native-reanimated';
-import { useAnimatedReaction } from 'react-native-reanimated';
-import { runOnUI } from 'react-native-reanimated';
-import { useDerivedValue } from 'react-native-reanimated';
-import { Text } from '../Workout/styles';
-import { cancelAnimation } from 'react-native-reanimated';
+
 
 
 const RADIUS = Dimensions.get('screen').width * 0.10
@@ -32,7 +28,7 @@ const CountDown = React.forwardRef<CountDownRef, CountDownProps>(({ totalSeconds
     const animatedValue = useSharedValue(0) //0 desc || totalSeconds asc
     const [counter, setCounter] = useState(totalSeconds)
     const [minutes, setMinutes] = useState(Math.floor(totalSeconds / 60))
-    const [seconds, setSeconds] = useState(totalSeconds % 60)
+    const [seconds, setSeconds] = useState(0)
 
     const animatedProps = useAnimatedProps((): CircleProps => {
         return {
@@ -44,7 +40,7 @@ const CountDown = React.forwardRef<CountDownRef, CountDownProps>(({ totalSeconds
         const porcentageTimerInTotalSeconds = (timer * 100) / totalSeconds
         const timerPorcentageOfCircumference = (CIRCUMFERENCE * porcentageTimerInTotalSeconds) / 100
 
-        animatedValue.value = withTiming(timerPorcentageOfCircumference , { duration: 1000 })
+        animatedValue.value = withTiming(timerPorcentageOfCircumference, { duration: 1000 })
 
     }, [])
 
@@ -58,7 +54,7 @@ const CountDown = React.forwardRef<CountDownRef, CountDownProps>(({ totalSeconds
                 setSeconds(counter % 60)
             }
         }, 1000)
-    }, [counter])
+    }, [seconds])
 
     const addSecond = (seconds: number) => {
         setCounter(old => old + seconds)

@@ -12,10 +12,10 @@ import { WorkoutContext } from '../../contexts/WorkoutContext';
 
 type Props = {
     item: exercisesInWorkout,
-    createSerieType?: 'workout' | 'exerciseInWorkout'
+    enableChanges: boolean
 }
 
-const ExerciseInWorkoutItem: React.FC<Props> = ({ item, createSerieType }) => {
+const ExerciseInWorkoutItem: React.FC<Props> = ({ item, enableChanges }) => {
     const theme = useTheme()
     const { createSerie } = useContext(WorkoutContext)
 
@@ -40,12 +40,12 @@ const ExerciseInWorkoutItem: React.FC<Props> = ({ item, createSerieType }) => {
                         <S.Title>Descanso</S.Title>
                     </S.Row>
                 )}
-                renderItem={({ item: serie }) => <Serie item={serie} exercise={item} />}
-                ListFooterComponent={() => (
-                    <S.CreateNewSerieButton onPress={() =>  createSerie(item) }>
+                renderItem={({ item: serie }) => <Serie item={serie} exercise={item} enableChanges={enableChanges} />}
+                ListFooterComponent={() => enableChanges ? (
+                    <S.CreateNewSerieButton onPress={() => createSerie(item)}>
                         <S.CreateNewSerieText>+</S.CreateNewSerieText>
                     </S.CreateNewSerieButton>
-                )}
+                ) : <></>}
             />
         </S.Exercise>
     )

@@ -8,9 +8,10 @@ import * as S from './styles'
 
 type Props = {
     item: series,
-    exercise: exercisesInWorkout
+    exercise: exercisesInWorkout,
+    enableChanges: boolean
 }
-const Serie: React.FC<Props> = ({ item, exercise }) => {
+const Serie: React.FC<Props> = ({ item, exercise, enableChanges }) => {
     const [rep, setRep] = useState(item.rep)
     const [rest, setRest] = useState(item.rest)
     const { deleteSerie, updateSerie } = useContext(WorkoutContext)
@@ -18,7 +19,7 @@ const Serie: React.FC<Props> = ({ item, exercise }) => {
     const handleChange = (text: Number, state: 'rep' | 'rest') => {
         if (state == 'rep') setRep(text)
         if (state == 'rest') setRest(text)
-        
+
         updateSerie(item.serie as number, exercise, {
             rep: state == 'rep' ? text : rep,
             rest: state == 'rest' ? text : rest,
@@ -27,9 +28,14 @@ const Serie: React.FC<Props> = ({ item, exercise }) => {
     }
     return (
         <S.Container>
-            <S.DeleteSerieButton onPress={() => deleteSerie(exercise, item.serie)}>
-                <S.DeleteSerieText />
-            </S.DeleteSerieButton>
+            {
+                enableChanges && (
+                    <S.DeleteSerieButton onPress={() => deleteSerie(exercise, item.serie)}>
+                        <S.DeleteSerieText />
+                    </S.DeleteSerieButton>
+                )
+            }
+
             <S.SerieInfo
                 editable={false}
                 defaultValue={String(item.serie)}
