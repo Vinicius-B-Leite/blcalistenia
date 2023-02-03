@@ -3,7 +3,7 @@ import styled from "styled-components/native";
 export const Container = styled.View`
     flex-direction: row;
     width: 100%;
-    justify-content: space-evenly;
+    justify-content: space-around;
     align-items: center;
     margin: ${({ theme }) => theme.sizes.vw * 0.01}px 0px;
     position: relative;
@@ -15,7 +15,7 @@ export const SerieInfo = styled.TextInput.attrs({
 
 })`
     text-align: center;
-    flex: 1;
+    width: 12%;
     font-size: ${({ theme }) => theme.sizes.fontSize.sm}px;
     padding: 0 ;
 `
@@ -42,7 +42,7 @@ type CheckButtonProps = { selected: boolean }
 export const CheckButton = styled.TouchableOpacity<CheckButtonProps>`
     background-color: ${({ selected, theme }) => selected ? theme.colors.contrast : theme.colors.darkContrast};
     width: 8%;
-    border-radius: ${({theme}) => theme.sizes.borderRadius.sm}px;
+    border-radius: ${({ theme }) => theme.sizes.borderRadius.sm}px;
     height: 80%;
     flex-direction: row;
     align-items: center;

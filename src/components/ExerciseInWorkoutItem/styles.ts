@@ -25,17 +25,16 @@ export const ExerciseAnotation = styled.TextInput`
 export const Row = styled.View`
     flex-direction: row;
     width: 100%;
-    justify-content: space-evenly;
-    align-items: baseline;
     margin: ${({ theme }) => theme.sizes.vw * 0.01}px 0px;
     position: relative;
 `
 
 export const Title = styled.Text`
     text-align: center;
-    flex: 1;
     font-size: ${({ theme }) => theme.sizes.fontSize.sm}px;
-
+    color: white;
+    flex: 1;
+    margin: 0px 5px;
 `
 
 export const SerieInfo = styled.TextInput.attrs({
@@ -43,7 +42,7 @@ export const SerieInfo = styled.TextInput.attrs({
 
 })`
     text-align: center;
-    width: 20%;
+    width: 25%;
     font-size: ${({ theme }) => theme.sizes.fontSize.sm}px;
     padding: 0 ;
 `

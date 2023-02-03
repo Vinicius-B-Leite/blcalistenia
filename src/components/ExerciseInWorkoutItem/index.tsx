@@ -36,16 +36,17 @@ const ExerciseInWorkoutItem: React.FC<Props> = ({ item, showCreateSerie, createS
             />
             <FlatList
                 data={item.series}
-                removeClippedSubviews={false}
+                numColumns={3}
                 extraData={item.series}
                 ListHeaderComponent={() => (
                     <S.Row>
                         <S.Title>Série</S.Title>
-                        <S.Title>Rep</S.Title>
-                        {showRest ? <S.Title>Descanso(s)</S.Title> : <S.Title></S.Title>}
+                        <S.Title>Repetições</S.Title>
+                        {showRest ? <S.Title>Descanso(s)</S.Title> : <S.Title>Concluída</S.Title>}
                     </S.Row>
                 )}
                 renderItem={({ item: serie }) => (
+                    
                     <Serie
                         item={serie}
                         exercise={item}
