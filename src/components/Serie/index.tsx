@@ -7,8 +7,12 @@ import { series } from '../../models/workout';
 import { Text } from '../Workout/styles';
 import * as S from './styles'
 import AntDesign from 'react-native-vector-icons/AntDesign'
+import { useTheme } from 'styled-components/native';
+import { useNavigation } from '@react-navigation/native';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { RootStackParamList } from '../../routes/Models';
 
-
+type NavigationType = StackNavigationProp<RootStackParamList, 'WorkoutSeason'>
 type Props = {
     item: series,
     exercise: exercisesInWorkout,
@@ -19,10 +23,12 @@ type Props = {
     showSucessButton: boolean
 }
 const Serie: React.FC<Props> = ({ item, exercise, deleteSerieButton, showRest, sucessButton, deleteSerie, showSucessButton }) => {
+    const theme = useTheme()
     const [rep, setRep] = useState(item.rep)
     const [rest, setRest] = useState(item.rest)
     const { updateSerie } = useContext(WorkoutContext)
     const { changeSerie } = useContext(WorkoutSeasonContext)
+    const navigation = useNavigation<NavigationType>()
 
     const handleChange = (text: Number, state: 'rep' | 'rest') => {
         if (state == 'rep') setRep(text)
@@ -41,6 +47,11 @@ const Serie: React.FC<Props> = ({ item, exercise, deleteSerieButton, showRest, s
                 serie: item.serie
             })
         }
+    }
+
+    const handleMarkAsDone = () => {
+        sucessButton(exercise, item.serie as number)
+        navigation.navigate('Rest', { totalSeconds: item.rest})
     }
     return (
         <S.Container>
@@ -62,7 +73,7 @@ const Serie: React.FC<Props> = ({ item, exercise, deleteSerieButton, showRest, s
             />
 
             {
-                
+
                 showRest && <S.SerieInfo
                     value={String(rest)}
                     onChangeText={(text) => handleChange(Number(text), 'rest')}
@@ -71,8 +82,8 @@ const Serie: React.FC<Props> = ({ item, exercise, deleteSerieButton, showRest, s
 
             {
                 showSucessButton && (
-                    <S.CheckButton selected={item.done ? true : false} onPress={() => sucessButton(exercise, item.serie as number)}>
-                        <AntDesign name='check' color={'#fff'} />
+                    <S.CheckButton selected={item.done ? true : false} onPress={handleMarkAsDone}>
+                        <AntDesign name='check' color={theme.colors.text} />
                     </S.CheckButton>
                 )
             }

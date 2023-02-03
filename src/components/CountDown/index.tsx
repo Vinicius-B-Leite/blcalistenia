@@ -14,16 +14,16 @@ const CIRCUMFERENCE = 2 * Math.PI * RADIUS
 
 type CountDownProps = {
     totalSeconds: number,
-
+    onFineshed?: () => void
 }
 export type CountDownRef = {
     addSecond: (seconds: number) => void,
-    lessSecond: (seconds: number) => void
+    lessSecond: (seconds: number) => void,
 }
 
 const AnimatedCircle = Animated.createAnimatedComponent(Circle)
 
-const CountDown = React.forwardRef<CountDownRef, CountDownProps>(({ totalSeconds }, ref) => {
+const CountDown = React.forwardRef<CountDownRef, CountDownProps>(({ totalSeconds, onFineshed }, ref) => {
     const theme = useTheme()
     const animatedValue = useSharedValue(0) //0 desc || totalSeconds asc
     const [counter, setCounter] = useState(totalSeconds)
@@ -53,6 +53,9 @@ const CountDown = React.forwardRef<CountDownRef, CountDownProps>(({ totalSeconds
                 setMinutes(Math.floor(counter / 60))
                 setSeconds(counter % 60)
             }
+            else {
+                if (onFineshed) onFineshed()
+            }
         }, 1000)
     }, [seconds])
 
@@ -63,6 +66,7 @@ const CountDown = React.forwardRef<CountDownRef, CountDownProps>(({ totalSeconds
     const lessSecond = (seconds: number) => {
         setCounter(old => old - seconds)
     }
+
 
     useImperativeHandle(ref, () => ({ addSecond, lessSecond }), [addSecond, lessSecond])
 

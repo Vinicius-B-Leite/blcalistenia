@@ -32,6 +32,7 @@ export const darkMode = {
             vsm: Dimensions.get('screen').width / 28,
             sm: Dimensions.get('screen').width /25,
             md: Dimensions.get('screen').width /20,
+            lg: Dimensions.get('screen').width /15,
             xlg: Dimensions.get('screen').width /10,
         }
     }

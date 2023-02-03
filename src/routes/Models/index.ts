@@ -11,6 +11,9 @@ export type RootStackParamList = {
     AddExercise: undefined, 
     WorkoutSeason: {
         workout: WorkoutType
+    },
+    Rest:{
+        totalSeconds: Number
     }
 
 };
