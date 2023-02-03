@@ -17,7 +17,16 @@ type Navigation = StackScreenProps<RootStackParamList, 'CreateWorkout'>
 
 const CreateWorkout: React.FC<Navigation> = ({ route, navigation }) => {
     const theme = useTheme()
-    const { createInitialWorkout, saveWorkout, exercises, getSingleWorkout, workout, deleteWorkout, clean } = useContext(WorkoutContext)
+    const {
+        createInitialWorkout,
+        saveWorkout,
+        exercises,
+        getSingleWorkout,
+        workout,
+        deleteWorkout,
+        clean,
+        createSerie,
+        deleteSerie } = useContext(WorkoutContext)
     const [workoutName, setWorkoutName] = useState('')
     const [anotation, setAnotation] = useState('')
     const [imageURI, setImageURI] = useState('')
@@ -81,7 +90,7 @@ const CreateWorkout: React.FC<Navigation> = ({ route, navigation }) => {
 
         setImageURI(finalUri)
     }
-    
+
     return (
         <S.Container>
             <S.Header>
@@ -118,7 +127,17 @@ const CreateWorkout: React.FC<Navigation> = ({ route, navigation }) => {
                         />
                     </S.AnotationContainer>
                 )}
-                renderItem={({ item }) => <ExerciseInWorkoutItem enableChanges={false} item={item} />}
+                renderItem={({ item }) => (
+                    <ExerciseInWorkoutItem
+                        item={item}
+                        showRest={true}
+                        showCreateSerie={true}
+                        showDeleteSerieButton={true}
+                        showSucessButton={false}
+                        createSerieFunction={(exercise) => createSerie(exercise)}
+                        deleteSerieFunction={(exercise, serieNumber) => deleteSerie(exercise, serieNumber)}
+                    />
+                )}
                 ListFooterComponent={() => (
                     <S.AddExerciseButton onPress={() => navigation.navigate('AddExercise')}>
                         <S.AddExerciseText>Adiconar exercício</S.AddExerciseText>
@@ -128,7 +147,7 @@ const CreateWorkout: React.FC<Navigation> = ({ route, navigation }) => {
 
             {
                 workout_id && (
-                    <S.StartWorkout onPress={() => navigation.navigate('WorkoutSeason', {workout: workout})}>
+                    <S.StartWorkout onPress={() => navigation.navigate('WorkoutSeason', { workout: workout })}>
                         <S.StartText>Iniciar treino</S.StartText>
                     </S.StartWorkout>
                 )

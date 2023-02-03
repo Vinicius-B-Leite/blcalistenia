@@ -33,7 +33,7 @@ export const Row = styled.View`
 
 export const Title = styled.Text`
     text-align: center;
-    width: 20%;
+    flex: 1;
     font-size: ${({ theme }) => theme.sizes.fontSize.sm}px;
 
 `

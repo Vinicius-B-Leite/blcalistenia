@@ -12,12 +12,17 @@ import { WorkoutContext } from '../../contexts/WorkoutContext';
 
 type Props = {
     item: exercisesInWorkout,
-    enableChanges: boolean
+    showCreateSerie: boolean,
+    createSerieFunction: (exercise: exercisesInWorkout) => void,
+    showRest: boolean,
+    showDeleteSerieButton: boolean,
+    deleteSerieFunction: (exercise: exercisesInWorkout, serie: number) => void,
+    showSucessButton: boolean,
+    sucessButtonFunction: (exercise: exercisesInWorkout, serieNumber: number) => void,
 }
 
-const ExerciseInWorkoutItem: React.FC<Props> = ({ item, enableChanges }) => {
+const ExerciseInWorkoutItem: React.FC<Props> = ({ item, showCreateSerie, createSerieFunction, showRest, showDeleteSerieButton, deleteSerieFunction, showSucessButton, sucessButtonFunction }) => {
     const theme = useTheme()
-    const { createSerie } = useContext(WorkoutContext)
 
     return (
         <S.Exercise>
@@ -37,12 +42,22 @@ const ExerciseInWorkoutItem: React.FC<Props> = ({ item, enableChanges }) => {
                     <S.Row>
                         <S.Title>Série</S.Title>
                         <S.Title>Rep</S.Title>
-                        <S.Title>Descanso</S.Title>
+                        {showRest ? <S.Title>Descanso(s)</S.Title> : <S.Title></S.Title>}
                     </S.Row>
                 )}
-                renderItem={({ item: serie }) => <Serie item={serie} exercise={item} enableChanges={enableChanges} />}
-                ListFooterComponent={() => enableChanges ? (
-                    <S.CreateNewSerieButton onPress={() => createSerie(item)}>
+                renderItem={({ item: serie }) => (
+                    <Serie
+                        item={serie}
+                        exercise={item}
+                        deleteSerieButton={showDeleteSerieButton}
+                        showRest={showRest}
+                        showSucessButton={showSucessButton}
+                        sucessButton={() => sucessButtonFunction(item, serie.serie as number)}
+                        deleteSerie={(exercise, serie) => deleteSerieFunction(exercise, serie)}
+                    />
+                )}
+                ListFooterComponent={() => showCreateSerie ? (
+                    <S.CreateNewSerieButton onPress={() => createSerieFunction(item)}>
                         <S.CreateNewSerieText>+</S.CreateNewSerieText>
                     </S.CreateNewSerieButton>
                 ) : <></>}

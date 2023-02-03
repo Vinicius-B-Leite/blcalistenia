@@ -4,7 +4,7 @@ export const Container = styled.View`
     flex-direction: row;
     width: 100%;
     justify-content: space-evenly;
-    align-items: baseline;
+    align-items: center;
     margin: ${({ theme }) => theme.sizes.vw * 0.01}px 0px;
     position: relative;
 `
@@ -15,7 +15,7 @@ export const SerieInfo = styled.TextInput.attrs({
 
 })`
     text-align: center;
-    width: 20%;
+    flex: 1;
     font-size: ${({ theme }) => theme.sizes.fontSize.sm}px;
     padding: 0 ;
 `
@@ -34,4 +34,17 @@ export const DeleteSerieText = styled.View`
     height: 10%;
     border-radius: ${({ theme }) => theme.sizes.borderRadius.full}px;
     background-color: ${({ theme }) => theme.colors.contrast};
+`
+
+
+type CheckButtonProps = { selected: boolean }
+
+export const CheckButton = styled.TouchableOpacity<CheckButtonProps>`
+    background-color: ${({ selected, theme }) => selected ? theme.colors.contrast : theme.colors.darkContrast};
+    width: 8%;
+    border-radius: ${({theme}) => theme.sizes.borderRadius.sm}px;
+    height: 80%;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
 `
