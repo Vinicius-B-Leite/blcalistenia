@@ -115,7 +115,6 @@ const CreateWorkout: React.FC<Navigation> = ({ route, navigation }) => {
             <FlatList
                 data={exercises}
                 extraData={exercises}
-                removeClippedSubviews={false}
                 showsVerticalScrollIndicator={false}
                 ListHeaderComponent={() => (
                     <S.AnotationContainer>
@@ -129,6 +128,7 @@ const CreateWorkout: React.FC<Navigation> = ({ route, navigation }) => {
                 )}
                 renderItem={({ item }) => (
                     <ExerciseInWorkoutItem
+                        sucessButtonFunction={() => {}}
                         item={item}
                         showRest={true}
                         showCreateSerie={true}

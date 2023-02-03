@@ -35,9 +35,9 @@ const ExerciseInWorkoutItem: React.FC<Props> = ({ item, showCreateSerie, createS
                 placeholderTextColor={theme.colors.darkText}
             />
             <FlatList
-                data={item.series}
-                numColumns={3}
+                data={item.series}                  
                 extraData={item.series}
+
                 ListHeaderComponent={() => (
                     <S.Row>
                         <S.Title>Série</S.Title>
@@ -46,7 +46,6 @@ const ExerciseInWorkoutItem: React.FC<Props> = ({ item, showCreateSerie, createS
                     </S.Row>
                 )}
                 renderItem={({ item: serie }) => (
-                    
                     <Serie
                         item={serie}
                         exercise={item}

@@ -128,12 +128,13 @@ const WorkoutProvider = ({ children }: { children: React.ReactNode }) => {
 
         setExercises(old => {
             const index = old.indexOf(exercise)
-            let series = old[index].series
-            series.push({
+            
+            old[index].series.push({
                 rep: 8,
                 rest: 30,
-                serie: series.length + 1
+                serie: old[index].series.length + 1
             })
+            console.log(old)
             return [...old]
         })
 
