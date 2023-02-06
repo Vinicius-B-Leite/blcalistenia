@@ -11,6 +11,7 @@ import { getRealm } from '../../services/realm';
 import Workout from '../../components/Workout';
 import { WorkoutContext } from '../../contexts/WorkoutContext';
 import { useFocusEffect } from '@react-navigation/native';
+import { Calendar } from 'react-native-calendars';
 
 
 
@@ -23,6 +24,36 @@ const Home: React.FC = () => {
     }, []))
     return (
         <Container>
+
+            <Calendar
+                theme={{
+                    backgroundColor: theme.colors.darkBackground,
+                    arrowColor: theme.colors.contrast,
+                    calendarBackground: theme.colors.darkBackground,
+                    todayTextColor: theme.colors.contrast,
+                    dayTextColor: theme.colors.text,
+                    textSectionTitleColor: theme.colors.contrast
+                }}
+                style={{
+                    backgroundColor: theme.colors.darkBackground
+                }}
+                initialDate={new Date().toString()}
+                onDayPress={day => {
+                    console.log('selected day', day);
+                }}
+                onDayLongPress={day => {
+                    console.log('long selected day', day);
+                }}
+                monthFormat={'MM/yyyy'}
+                onMonthChange={month => {
+                    console.log('month changed', month);
+                }}
+                firstDay={1}
+                onPressArrowLeft={subtractMonth => subtractMonth()}
+                onPressArrowRight={addMonth => addMonth()}
+
+
+            />
             <S.Header>
                 <S.Left>
                     <S.Avatar source={{ uri: 'https://pbs.twimg.com/media/FOq9YuBXsBgTIQM.jpg' }} />

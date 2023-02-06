@@ -20,6 +20,7 @@ const HistoricItem: React.FC<Props> = ({ item }) => {
 
     const minutes = String((item.timerInSeconds / 60).toFixed(0)).padStart(2, '0')
     const seconds = String((item.timerInSeconds % 60).toFixed(0)).padStart(2, '0')
+    
     return (
         <S.Container>
             <S.Header>
