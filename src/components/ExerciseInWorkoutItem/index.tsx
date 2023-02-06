@@ -37,7 +37,6 @@ const ExerciseInWorkoutItem: React.FC<Props> = ({ item, showCreateSerie, createS
             <FlatList
                 data={item.series}                  
                 extraData={item.series}
-
                 ListHeaderComponent={() => (
                     <S.Row>
                         <S.Title>Série</S.Title>

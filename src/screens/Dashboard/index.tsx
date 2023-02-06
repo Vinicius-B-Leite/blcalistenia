@@ -1,13 +1,15 @@
-import React from 'react';
+import React, { useContext, useEffect } from 'react';
 import { Text, View } from 'react-native';
+import { HistoricContext } from '../../contexts/HistoricContext';
+import * as S from './styles'
 
-// import { Container } from './styles';
 
 const Dashboard: React.FC = () => {
+
+    
+
     return (
-        <View>
-            <Text>Dashboard</Text>
-        </View>
+        <View/>
     )
 }
 

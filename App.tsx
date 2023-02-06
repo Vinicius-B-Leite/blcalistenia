@@ -5,6 +5,7 @@ import Routes from './src/routes';
 import { darkMode } from './src/theme/darkMode';
 import { ExerciseProvider } from './src/contexts/ExerciseContext';
 import WorkoutSeasonProvider from './src/contexts/WorkooutSeason';
+import HistoricProvider from './src/contexts/HistoricContext';
 
 
 const App = () => {
@@ -13,7 +14,9 @@ const App = () => {
       <WorkoutProvider>
         <ExerciseProvider>
           <WorkoutSeasonProvider>
-            <Routes />
+            <HistoricProvider>
+              <Routes />
+            </HistoricProvider>
           </WorkoutSeasonProvider>
         </ExerciseProvider>
       </WorkoutProvider>
