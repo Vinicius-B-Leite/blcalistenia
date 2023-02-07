@@ -1,15 +1,14 @@
-import React, { useEffect, useContext, useCallback, useRef, useLayoutEffect, useState } from 'react';
-import { View, ModalProps, FlatList } from 'react-native';
+import React, { useEffect, useContext, useCallback, useRef } from 'react';
 import * as S from './styles'
 import AntDesign from 'react-native-vector-icons/AntDesign'
 import { useTheme } from 'styled-components';
 import { ExerciseContext } from '../../contexts/ExerciseContext';
-import { useNavigation } from '@react-navigation/native';
-import { StackNavigationProp, StackScreenProps } from '@react-navigation/stack';
+import {  StackScreenProps } from '@react-navigation/stack';
 import { RootStackParamList } from '../../routes/Models';
-import { GestureHandlerRootView } from 'react-native-gesture-handler';
-import CreateExercise, { CreateExerciseRefProps } from '../../components/CreateExercise';
+import { BottomSheetRefProps } from '../../components/BottomSheet';
 import Exercise from '../../components/Exercise';
+import BottomSheet from '../../components/BottomSheet';
+import CreateExercise from '../../components/CreateExercise';
 
 
 type Navigation = StackScreenProps<RootStackParamList, 'AddExercise'>
@@ -17,13 +16,11 @@ type Navigation = StackScreenProps<RootStackParamList, 'AddExercise'>
 const AddExercise: React.FC<Navigation> = ({ navigation }) => {
     const theme = useTheme()
     const { getExercises, exercisList } = useContext(ExerciseContext)
-    const bottomSheetRef = useRef<CreateExerciseRefProps>(null)
+    const bottomSheetRef = useRef<BottomSheetRefProps>(null)
 
     useEffect(() => {
         getExercises()
     }, [])
-
-    
 
     return (
         <S.Container>
@@ -67,7 +64,9 @@ const AddExercise: React.FC<Navigation> = ({ navigation }) => {
             </S.FloatButton>
 
 
-            <CreateExercise ref={bottomSheetRef} />
+            <BottomSheet ref={bottomSheetRef}>
+                <CreateExercise/>
+            </BottomSheet>
         </S.Container>
 
 

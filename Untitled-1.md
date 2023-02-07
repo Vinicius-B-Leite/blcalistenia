@@ -1,7 +1,5 @@
-
-
-criar o contexto para workout season workout
-
-funcionalidades
--cancelar treino
-  - reseta o contexto sem salvar no banco
+tasks
+- refatorar o bottomsheet
+- fazer um bottomsheet para quando clica no item do historico
+- fazer a tela de perfil
+- fazer a tela de graficos
