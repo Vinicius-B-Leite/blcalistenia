@@ -1,59 +1,29 @@
 import React, { useContext, useEffect, useState, useCallback } from 'react';
+import { TouchableOpacity } from 'react-native'
 import Container from '../../components/Container';
 import * as S from './styles'
 import AntDesign from 'react-native-vector-icons/AntDesign'
 import { useTheme } from 'styled-components/native';
 import { muscles } from '../../utils/muscles';
 import Muscle from '../../components/Muscle';
-import { WorkoutType } from '../../models/workout';
 import CreateWorkoutButton from '../../components/CreateWorkoutButton';
-import { getRealm } from '../../services/realm';
 import Workout from '../../components/Workout';
 import { WorkoutContext } from '../../contexts/WorkoutContext';
 import { useFocusEffect } from '@react-navigation/native';
-import { Calendar } from 'react-native-calendars';
-
+import CalendarDaysTrained from '../../components/CalendarDaysTrained';
 
 
 const Home: React.FC = () => {
     const theme = useTheme()
     const { getWorkoutsList, workoutsList } = useContext(WorkoutContext)
+    const [calendarVisible, setCalendarVisible] = useState<boolean>(false)
 
     useFocusEffect(useCallback(() => {
         getWorkoutsList()
     }, []))
     return (
-        <Container>
-
-            <Calendar
-                theme={{
-                    backgroundColor: theme.colors.darkBackground,
-                    arrowColor: theme.colors.contrast,
-                    calendarBackground: theme.colors.darkBackground,
-                    todayTextColor: theme.colors.contrast,
-                    dayTextColor: theme.colors.text,
-                    textSectionTitleColor: theme.colors.contrast
-                }}
-                style={{
-                    backgroundColor: theme.colors.darkBackground
-                }}
-                initialDate={new Date().toString()}
-                onDayPress={day => {
-                    console.log('selected day', day);
-                }}
-                onDayLongPress={day => {
-                    console.log('long selected day', day);
-                }}
-                monthFormat={'MM/yyyy'}
-                onMonthChange={month => {
-                    console.log('month changed', month);
-                }}
-                firstDay={1}
-                onPressArrowLeft={subtractMonth => subtractMonth()}
-                onPressArrowRight={addMonth => addMonth()}
-
-
-            />
+        <Container> 
+            <CalendarDaysTrained  closeCalendar={() => setCalendarVisible(false)} visible={calendarVisible} />
             <S.Header>
                 <S.Left>
                     <S.Avatar source={{ uri: 'https://pbs.twimg.com/media/FOq9YuBXsBgTIQM.jpg' }} />
@@ -65,7 +35,7 @@ const Home: React.FC = () => {
 
                 </S.Left>
 
-                <S.Right>
+                <S.Right onPress={() => setCalendarVisible(true)}>
                     <AntDesign size={theme.sizes.icons.md} color={theme.colors.text} name='calendar' />
                 </S.Right>
             </S.Header>
