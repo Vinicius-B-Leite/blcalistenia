@@ -14,7 +14,8 @@ export type RootStackParamList = {
     },
     Rest:{
         totalSeconds: Number
-    }
+    },
+    Profile: undefined
 
 };
 

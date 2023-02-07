@@ -16,11 +16,11 @@ type NavigationType = StackNavigationProp<RootStackParamList, 'WorkoutSeason'>
 type Props = {
     item: series,
     exercise: exercisesInWorkout,
+    showRest: boolean,
+    showSucessButton: boolean
     deleteSerieButton: boolean,
     deleteSerie: (exercise: exercisesInWorkout, serie: number) => void,
-    showRest: boolean,
     sucessButton: (exercise: exercisesInWorkout, serieNumber: number) => void,
-    showSucessButton: boolean
 }
 const Serie: React.FC<Props> = ({ item, exercise, deleteSerieButton, showRest, sucessButton, deleteSerie, showSucessButton }) => {
     const theme = useTheme()

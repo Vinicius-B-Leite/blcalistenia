@@ -13,11 +13,11 @@ import { WorkoutContext } from '../../contexts/WorkoutContext';
 type Props = {
     item: exercisesInWorkout,
     showCreateSerie: boolean,
-    createSerieFunction?: (exercise: exercisesInWorkout) => void,
     showRest: boolean,
     showDeleteSerieButton: boolean,
-    deleteSerieFunction?: (exercise: exercisesInWorkout, serie: number) => void,
     showSucessButton: boolean,
+    createSerieFunction?: (exercise: exercisesInWorkout) => void,
+    deleteSerieFunction?: (exercise: exercisesInWorkout, serie: number) => void,
     sucessButtonFunction?: (exercise: exercisesInWorkout, serieNumber: number) => void,
 }
 
@@ -34,16 +34,15 @@ const ExerciseInWorkoutItem: React.FC<Props> = ({ item, showCreateSerie, createS
                 placeholder='Anotação'
                 placeholderTextColor={theme.colors.darkText}
             />
+            <S.Row>
+                <S.Title>Série</S.Title>
+                <S.Title>Repetições</S.Title>
+                {showRest && <S.Title>Descanso(s)</S.Title>} 
+                {showSucessButton && <S.Title>Concluída</S.Title>}
+            </S.Row>
             <FlatList
                 data={item.series}
                 extraData={item.series}
-                ListHeaderComponent={() => (
-                    <S.Row>
-                        <S.Title>Série</S.Title>
-                        <S.Title>Repetições</S.Title>
-                        {showRest ? <S.Title>Descanso(s)</S.Title> : <S.Title>Concluída</S.Title>}
-                    </S.Row>
-                )}
                 renderItem={({ item: serie }) => (
                     <Serie
                         item={serie}
