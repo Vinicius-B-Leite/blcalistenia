@@ -1,3 +1,50 @@
 import styled from "styled-components/native";
 
-export const Container = styled.SafeAreaView``
+export const Container = styled.SafeAreaView`
+    flex: 1;
+    background-color: ${({ theme }) => theme.colors.background};
+`
+export const Header = styled.View`
+    width: 100%;
+    padding: 5%;
+`
+export const Title = styled.Text`
+    font-size: ${({ theme }) => theme.sizes.fontSize.md}px;
+    color: ${({ theme }) => theme.colors.text};
+    font-weight: 700;
+`
+export const Avatar = styled.Image`
+    width: 50%;
+    height: 30%;
+    border-radius: ${({ theme }) => theme.sizes.borderRadius.full}px;
+    align-self: center;
+`
+export const Username = styled.Text`
+    font-size: ${({ theme }) => theme.sizes.fontSize.sm}px;
+    color: ${({ theme }) => theme.colors.text};
+    margin: 3% 0%;
+    align-self: center;
+`
+export const OptionContainer = styled.TouchableOpacity`
+    margin: 1% 0%;
+    flex-direction: row;
+    align-items: center;
+    background-color: ${({ theme }) => theme.colors.darkBackground};
+    border-radius: ${({ theme }) => theme.sizes.borderRadius.sm}px;
+    height: ${({theme}) => theme.sizes.vh / 15}px;
+    padding: 0% 5%;
+`
+export const Left = styled.View`
+    background-color: ${({ theme }) => theme.colors.darkContrast};
+    border-radius: ${({theme}) => theme.sizes.borderRadius.full}px;
+    width: 10%;
+    height: 65%;
+    justify-content: center;
+    align-items: center;
+    margin-right: 3%;
+`
+export const OptionTitle = styled.Text`
+    font-size: ${({ theme }) => theme.sizes.fontSize.sm}px;
+    color: ${({ theme }) => theme.colors.text};
+
+`

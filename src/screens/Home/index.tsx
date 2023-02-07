@@ -9,12 +9,16 @@ import Muscle from '../../components/Muscle';
 import CreateWorkoutButton from '../../components/CreateWorkoutButton';
 import Workout from '../../components/Workout';
 import { WorkoutContext } from '../../contexts/WorkoutContext';
-import { useFocusEffect } from '@react-navigation/native';
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import CalendarDaysTrained from '../../components/CalendarDaysTrained';
+import { RootStackParamList } from '../../routes/Models';
+import { StackNavigationProp } from '@react-navigation/stack';
 
+type Navigation = StackNavigationProp<RootStackParamList, 'Home'>
 
 const Home: React.FC = () => {
     const theme = useTheme()
+    const navigation = useNavigation<Navigation>()
     const { getWorkoutsList, workoutsList } = useContext(WorkoutContext)
     const [calendarVisible, setCalendarVisible] = useState<boolean>(false)
 
@@ -22,10 +26,10 @@ const Home: React.FC = () => {
         getWorkoutsList()
     }, []))
     return (
-        <Container> 
-            <CalendarDaysTrained  closeCalendar={() => setCalendarVisible(false)} visible={calendarVisible} />
+        <Container>
+            <CalendarDaysTrained closeCalendar={() => setCalendarVisible(false)} visible={calendarVisible} />
             <S.Header>
-                <S.Left>
+                <S.Left onPress={() => navigation.navigate('Profile')}>
                     <S.Avatar source={{ uri: 'https://pbs.twimg.com/media/FOq9YuBXsBgTIQM.jpg' }} />
 
                     <S.TextContainer>
