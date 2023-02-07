@@ -13,12 +13,12 @@ import { WorkoutContext } from '../../contexts/WorkoutContext';
 type Props = {
     item: exercisesInWorkout,
     showCreateSerie: boolean,
-    createSerieFunction: (exercise: exercisesInWorkout) => void,
+    createSerieFunction?: (exercise: exercisesInWorkout) => void,
     showRest: boolean,
     showDeleteSerieButton: boolean,
-    deleteSerieFunction: (exercise: exercisesInWorkout, serie: number) => void,
+    deleteSerieFunction?: (exercise: exercisesInWorkout, serie: number) => void,
     showSucessButton: boolean,
-    sucessButtonFunction: (exercise: exercisesInWorkout, serieNumber: number) => void,
+    sucessButtonFunction?: (exercise: exercisesInWorkout, serieNumber: number) => void,
 }
 
 const ExerciseInWorkoutItem: React.FC<Props> = ({ item, showCreateSerie, createSerieFunction, showRest, showDeleteSerieButton, deleteSerieFunction, showSucessButton, sucessButtonFunction }) => {
@@ -35,7 +35,7 @@ const ExerciseInWorkoutItem: React.FC<Props> = ({ item, showCreateSerie, createS
                 placeholderTextColor={theme.colors.darkText}
             />
             <FlatList
-                data={item.series}                  
+                data={item.series}
                 extraData={item.series}
                 ListHeaderComponent={() => (
                     <S.Row>
@@ -51,12 +51,12 @@ const ExerciseInWorkoutItem: React.FC<Props> = ({ item, showCreateSerie, createS
                         deleteSerieButton={showDeleteSerieButton}
                         showRest={showRest}
                         showSucessButton={showSucessButton}
-                        sucessButton={() => sucessButtonFunction(item, serie.serie as number)}
-                        deleteSerie={(exercise, serie) => deleteSerieFunction(exercise, serie)}
+                        sucessButton={() => sucessButtonFunction && sucessButtonFunction(item, serie.serie as number)}
+                        deleteSerie={(exercise, serie) => deleteSerieFunction && deleteSerieFunction(exercise, serie)}
                     />
                 )}
                 ListFooterComponent={() => showCreateSerie ? (
-                    <S.CreateNewSerieButton onPress={() => createSerieFunction(item)}>
+                    <S.CreateNewSerieButton onPress={() => createSerieFunction && createSerieFunction(item)}>
                         <S.CreateNewSerieText>+</S.CreateNewSerieText>
                     </S.CreateNewSerieButton>
                 ) : <></>}

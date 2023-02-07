@@ -4,10 +4,11 @@ import { HistoricType } from '../../models/HistoricType';
 import { WorkoutType } from '../../models/workout';
 
 type Props = {
-    item: HistoricType
+    item: HistoricType,
+    onClick: (item: HistoricType) => void
 }
 
-const HistoricItem: React.FC<Props> = ({ item }) => {
+const HistoricItem: React.FC<Props> = ({ item, onClick }) => {
     const {title, exercises }: WorkoutType = JSON.parse(item.workout)
 
     const day = String(item.date.getDate()).padStart(2, '0')
@@ -22,7 +23,7 @@ const HistoricItem: React.FC<Props> = ({ item }) => {
     const seconds = String((item.timerInSeconds % 60).toFixed(0)).padStart(2, '0')
     
     return (
-        <S.Container>
+        <S.Container onPress={() => onClick({...item})}>
             <S.Header>
                 <S.Title>{title}</S.Title>
                 <S.Date>{day}/{month}/{year}</S.Date>
@@ -30,7 +31,7 @@ const HistoricItem: React.FC<Props> = ({ item }) => {
 
             <S.Time>{minutes}:{seconds}</S.Time>
 
-            <S.FirstExercise>{seriesLength}x{firtsRep} - {exerciseName}</S.FirstExercise>
+            <S.FirstExercise>{`${seriesLength}x${firtsRep} - ${exerciseName}`}</S.FirstExercise>
         </S.Container>
     )
 }
