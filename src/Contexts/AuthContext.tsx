@@ -1,11 +1,14 @@
-import React, { createContext, useState } from 'react';
+import React, { createContext, useEffect, useState } from 'react';
+import { User } from 'realm';
 import { UserType } from '../models/UserType';
+import { WorkoutType } from '../models/workout';
+import { getRealm } from '../services/realm';
 
 
 
 type AuthContextType = {
     user: UserType,
-    changePhoto: (uri: string) => void,
+    changePhoto: (uri: string) => Promise<void>,
 }
 
 export const AuthContext = createContext({} as AuthContextType)
@@ -16,9 +19,40 @@ type Props = { children: React.ReactNode }
 const AuthProvider: React.FC<Props> = ({ children }) => {
     const [user, setUser] = useState<UserType>({ username: 'Desconhecido', photoURI: 'https://pbs.twimg.com/media/FOq9YuBXsBgTIQM.jpg' })
 
-    const changePhoto = (uri: string) => {
+    useEffect(() => {
+        getUser()
+    }, [])
+
+    const getUser = async () => {
+        const realm = await getRealm()
+
+        const userRealm = realm.objects('User')[0]
+        console.log("🚀 ~ file: AuthContext.tsx:29 ~ getUser ~ userRealm", userRealm)
+
+        if (typeof userRealm === 'undefined'  ){
+            // .toJSON() as UserType
+            realm.write(() => {
+                realm.create<UserType>('User', {
+                    username: 'Desconhecido',
+                    photoURI: 'https://pbs.twimg.com/media/FOq9YuBXsBgTIQM.jpg'
+                })
+            })
+        }else{
+            setUser(userRealm.toJSON() as UserType)
+        }
+
+
+    }
+    const changePhoto = async (uri: string) => {
         setUser(old => ({ ...old, photoURI: uri }))
-        console.log(user)
+
+        const realm = await getRealm()
+        realm.write(() => {
+            realm.create<UserType>('User', {
+                ...user, 
+                photoURI: uri
+            }, Realm.UpdateMode.Modified)
+        })
     }
 
     return (
