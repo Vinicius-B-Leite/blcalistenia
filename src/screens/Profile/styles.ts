@@ -4,7 +4,7 @@ export const Container = styled.SafeAreaView`
     flex: 1;
     background-color: ${({ theme }) => theme.colors.background};
 `
-export const Header = styled.View`
+export const Header = styled.TouchableOpacity`
     width: 100%;
     padding: 5%;
 `
@@ -13,11 +13,14 @@ export const Title = styled.Text`
     color: ${({ theme }) => theme.colors.text};
     font-weight: 700;
 `
-export const Avatar = styled.Image`
+export const ButtonChangeImage = styled.TouchableOpacity`
     width: 50%;
     height: 30%;
-    border-radius: ${({ theme }) => theme.sizes.borderRadius.full}px;
     align-self: center;
+    `
+export const Avatar = styled.Image`
+    flex: 1;
+    border-radius: ${({ theme }) => theme.sizes.borderRadius.full}px;
 `
 export const Username = styled.Text`
     font-size: ${({ theme }) => theme.sizes.fontSize.sm}px;
@@ -31,12 +34,12 @@ export const OptionContainer = styled.TouchableOpacity`
     align-items: center;
     background-color: ${({ theme }) => theme.colors.darkBackground};
     border-radius: ${({ theme }) => theme.sizes.borderRadius.sm}px;
-    height: ${({theme}) => theme.sizes.vh / 15}px;
+    height: ${({ theme }) => theme.sizes.vh / 15}px;
     padding: 0% 5%;
 `
 export const Left = styled.View`
     background-color: ${({ theme }) => theme.colors.darkContrast};
-    border-radius: ${({theme}) => theme.sizes.borderRadius.full}px;
+    border-radius: ${({ theme }) => theme.sizes.borderRadius.full}px;
     width: 10%;
     height: 65%;
     justify-content: center;
