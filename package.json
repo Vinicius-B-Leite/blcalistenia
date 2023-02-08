@@ -19,6 +19,7 @@
     "react-native": "0.71.2",
     "react-native-calendars": "^1.1293.0",
     "react-native-gesture-handler": "^2.9.0",
+    "react-native-image-cache-wrapper": "^1.0.7",
     "react-native-image-picker": "^5.0.1",
     "react-native-pager-view": "^6.1.2",
     "react-native-reanimated": "^2.14.4",
@@ -28,6 +29,7 @@
     "react-native-tab-view": "^3.3.4",
     "react-native-vector-icons": "^9.2.0",
     "realm": "^11.3.2",
+    "rn-fetch-blob": "^0.10.16",
     "styled-components": "^5.3.6"
   },
   "devDependencies": {
