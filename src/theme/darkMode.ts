@@ -5,6 +5,7 @@ export const darkMode = {
         background: '#1a1a1a',
         text: '#fff',
         darkBackground: '#0f0f0f',
+        darkBackgroundOpacity: 'rgba(15, 15, 15, 0.5)',
         contrast: '#FF8A00',
         lightBackground: '#252525',
         darkText: '#6b6b6b',

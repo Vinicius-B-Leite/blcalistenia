@@ -31,7 +31,7 @@ export const Username = styled.Text`
     align-self: center;
 `
 export const OptionContainer = styled.TouchableOpacity`
-    margin: 1% 0%;
+    margin: 1% 5%;
     flex-direction: row;
     align-items: center;
     background-color: ${({ theme }) => theme.colors.darkBackground};

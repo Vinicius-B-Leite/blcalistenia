@@ -9,6 +9,7 @@ import { getRealm } from '../services/realm';
 type AuthContextType = {
     user: UserType,
     changePhoto: (uri: string) => Promise<void>,
+    changeName: (newName: string) => Promise<void>
 }
 
 export const AuthContext = createContext({} as AuthContextType)
@@ -29,7 +30,7 @@ const AuthProvider: React.FC<Props> = ({ children }) => {
         const userRealm = realm.objects('User')[0]
         console.log("🚀 ~ file: AuthContext.tsx:29 ~ getUser ~ userRealm", userRealm)
 
-        if (typeof userRealm === 'undefined'  ){
+        if (typeof userRealm === 'undefined') {
             // .toJSON() as UserType
             realm.write(() => {
                 realm.create<UserType>('User', {
@@ -37,26 +38,41 @@ const AuthProvider: React.FC<Props> = ({ children }) => {
                     photoURI: 'https://pbs.twimg.com/media/FOq9YuBXsBgTIQM.jpg'
                 })
             })
-        }else{
+        } else {
             setUser(userRealm.toJSON() as UserType)
         }
 
 
     }
     const changePhoto = async (uri: string) => {
-        setUser(old => ({ ...old, photoURI: uri }))
+        if (uri.length > 0) {
+            setUser(old => ({ ...old, photoURI: uri }))
+            await updateUserCache({ ...user, photoURI: uri })
+        }
+    }
 
+    const updateUserCache = async (newUser: UserType) => {
         const realm = await getRealm()
         realm.write(() => {
-            realm.create<UserType>('User', {
-                ...user, 
-                photoURI: uri
-            }, Realm.UpdateMode.Modified)
+            realm.create<UserType>(
+                'User',
+                {
+                    ...newUser
+                },
+                Realm.UpdateMode.Modified)
         })
     }
 
+    const changeName = async (newName: string) => {
+        if (newName.length > 0) {
+            setUser(old => ({ ...old, username: newName }))
+            await updateUserCache({ ...user, username: newName })
+        }
+    }
+
+
     return (
-        <AuthContext.Provider value={{ user, changePhoto }}>
+        <AuthContext.Provider value={{ user, changePhoto, changeName }}>
             {children}
         </AuthContext.Provider>
     )
