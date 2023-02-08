@@ -6,13 +6,14 @@ import { useTheme } from 'styled-components/native';
 import { AuthContext } from '../../contexts/AuthContext';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../../routes/Models';
+import { pickeImage } from '../../utils/pickImage';
 
 type NavigationProps = NativeStackScreenProps<RootStackParamList, 'Profile'>
 
 const Profile: React.FC<NavigationProps> = ({ navigation }) => {
 
     const theme = useTheme()
-    const { user } = useContext(AuthContext)
+    const { user, changePhoto } = useContext(AuthContext)
     const OPTIONS = [
         {
             title: 'Nome de usuário',
@@ -28,12 +29,17 @@ const Profile: React.FC<NavigationProps> = ({ navigation }) => {
         },
     ]
 
+    const handlePickImage = async () => {
+        const image = await pickeImage()
+        if (image.assets && image.assets[0].uri) changePhoto(image.assets[0].uri)
+    }
+
     return (
         <S.Container>
             <S.Header onPress={() => navigation.goBack()}>
                 <S.Title>{'<  '}Perfil</S.Title>
             </S.Header>
-            <S.ButtonChangeImage>
+            <S.ButtonChangeImage onPress={handlePickImage}>
                 <S.Avatar
                     source={{ uri: user.photoURI }}
                 />
