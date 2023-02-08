@@ -1,4 +1,6 @@
 import styled from "styled-components/native";
+import FastImage from 'react-native-fast-image'
+
 
 export const Container = styled.SafeAreaView`
     flex: 1;
@@ -18,7 +20,7 @@ export const ButtonChangeImage = styled.TouchableOpacity`
     height: 30%;
     align-self: center;
     `
-export const Avatar = styled.Image`
+export const Avatar = styled(FastImage)`
     flex: 1;
     border-radius: ${({ theme }) => theme.sizes.borderRadius.full}px;
 `

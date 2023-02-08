@@ -20,6 +20,9 @@ const App = () => {
     today: "Hoje"
   };
   LocaleConfig.defaultLocale = 'br';
+
+
+
   return (
     <ThemeProvider theme={darkMode}>
       <WorkoutProvider>

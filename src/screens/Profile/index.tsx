@@ -1,5 +1,5 @@
-import React, { useContext } from 'react';
-import { FlatList, TouchableOpacity } from 'react-native';
+import React, { useContext, useRef } from 'react';
+import { ActivityIndicator, FlatList, TouchableOpacity } from 'react-native';
 import * as S from './styles'
 import Feather from 'react-native-vector-icons/Feather'
 import { useTheme } from 'styled-components/native';
@@ -7,6 +7,9 @@ import { AuthContext } from '../../contexts/AuthContext';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../../routes/Models';
 import { pickeImage } from '../../utils/pickImage';
+import FastImage from 'react-native-fast-image';
+
+
 
 type NavigationProps = NativeStackScreenProps<RootStackParamList, 'Profile'>
 
@@ -31,7 +34,10 @@ const Profile: React.FC<NavigationProps> = ({ navigation }) => {
 
     const handlePickImage = async () => {
         const image = await pickeImage()
-        if (image.assets && image.assets[0].uri) changePhoto(image.assets[0].uri)
+        if (image.assets && image.assets[0].uri) {
+            changePhoto(image.assets[0].uri)
+            console.log(user.photoURI)
+        }
     }
 
     return (
@@ -41,7 +47,10 @@ const Profile: React.FC<NavigationProps> = ({ navigation }) => {
             </S.Header>
             <S.ButtonChangeImage onPress={handlePickImage}>
                 <S.Avatar
-                    source={{ uri: user.photoURI }}
+                    source={{
+                        uri: user.photoURI,
+                    }}
+                    resizeMode={FastImage.resizeMode.cover}
                 />
             </S.ButtonChangeImage>
             <S.Username>{user.username}</S.Username>

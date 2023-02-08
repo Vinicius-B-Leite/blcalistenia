@@ -1,6 +1,6 @@
 import React, { createContext, useState } from 'react';
-import { View } from 'react-native';
 import { UserType } from '../models/UserType';
+
 
 
 type AuthContextType = {
@@ -17,7 +17,8 @@ const AuthProvider: React.FC<Props> = ({ children }) => {
     const [user, setUser] = useState<UserType>({ username: 'Desconhecido', photoURI: 'https://pbs.twimg.com/media/FOq9YuBXsBgTIQM.jpg' })
 
     const changePhoto = (uri: string) => {
-        setUser(old => ({...old, photoURI: uri}))
+        setUser(old => ({ ...old, photoURI: uri }))
+        console.log(user)
     }
 
     return (
