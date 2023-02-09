@@ -61,14 +61,11 @@ const CalendarDaysTrained = ({ visible, closeCalendar }: Props) => {
                 }}
                 initialDate={new Date().toString()}
                 onDayPress={day => {
-                    console.log('selected day', day);
                 }}
                 onDayLongPress={day => {
-                    console.log('long selected day', day);
                 }}
                 monthFormat={'MMMM'}
                 onMonthChange={month => {
-                    console.log('month changed', month);
                 }}
                 firstDay={1}
                 onPressArrowLeft={subtractMonth => subtractMonth()}

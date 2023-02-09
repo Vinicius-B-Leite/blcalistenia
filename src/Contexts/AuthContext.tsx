@@ -28,7 +28,6 @@ const AuthProvider: React.FC<Props> = ({ children }) => {
         const realm = await getRealm()
 
         const userRealm = realm.objects('User')[0]
-        console.log("🚀 ~ file: AuthContext.tsx:29 ~ getUser ~ userRealm", userRealm)
 
         if (typeof userRealm === 'undefined') {
             // .toJSON() as UserType

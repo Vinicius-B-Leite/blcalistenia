@@ -24,7 +24,6 @@ const Profile: React.FC<NavigationProps> = ({ navigation }) => {
         const image = await pickeImage()
         if (image.assets && image.assets[0].uri) {
             changePhoto(image.assets[0].uri)
-            console.log(user.photoURI)
         }
     }
 

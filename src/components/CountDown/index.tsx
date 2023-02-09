@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useImperativeHandle, useState } from 'react';
+import React, { useCallback, useEffect, useImperativeHandle, useLayoutEffect, useMemo, useState } from 'react';
 import { View } from 'react-native'
 import { Dimensions } from 'react-native';
 import * as S from './styles'
@@ -27,8 +27,7 @@ const CountDown = React.forwardRef<CountDownRef, CountDownProps>(({ totalSeconds
     const theme = useTheme()
     const animatedValue = useSharedValue(0) //0 desc || totalSeconds asc
     const [counter, setCounter] = useState(totalSeconds)
-    const [minutes, setMinutes] = useState(Math.floor(totalSeconds / 60))
-    const [seconds, setSeconds] = useState(0)
+    const [forceComponentReRender, setForceComponentReRender] = useState(false)
 
     const animatedProps = useAnimatedProps((): CircleProps => {
         return {
@@ -45,19 +44,21 @@ const CountDown = React.forwardRef<CountDownRef, CountDownProps>(({ totalSeconds
     }, [])
 
 
-    useEffect(() => {
+
+    useLayoutEffect(() => {
         setTimeout(() => {
             if (counter >= 0) {
                 setCounter(old => old - 1)
                 animate(totalSeconds - counter)
-                setMinutes(Math.floor(counter / 60))
-                setSeconds(counter % 60)
+                setForceComponentReRender(!forceComponentReRender)
             }
             else {
                 if (onFineshed) onFineshed()
             }
         }, 1000)
-    }, [seconds])
+
+
+    }, [forceComponentReRender])
 
     const addSecond = (seconds: number) => {
         setCounter(old => old + seconds)
@@ -95,7 +96,7 @@ const CountDown = React.forwardRef<CountDownRef, CountDownProps>(({ totalSeconds
                     />
                 </G>
             </Svg>
-            <S.Counter>{String(minutes).padStart(2, '0')}:{String(seconds).padStart(2, '0')}</S.Counter>
+            <S.Counter>{String(Math.floor(counter / 60)).padStart(2, '0')}:{String(counter % 60).padStart(2, '0')}</S.Counter>
         </View>
     )
 })

@@ -34,7 +34,6 @@ const WorkoutSeasonProvider = ({ children }: { children: React.ReactNode }) => {
                 timerInSeconds: seconds,
                 _id: realm.objects('Historic').length + 1
             })
-            console.log(retrn)
         })
     }
 

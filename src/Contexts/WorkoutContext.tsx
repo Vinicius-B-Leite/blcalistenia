@@ -134,7 +134,6 @@ const WorkoutProvider = ({ children }: { children: React.ReactNode }) => {
                 rest: 30,
                 serie: old[index].series.length + 1
             })
-            console.log(old)
             return [...old]
         })
 
