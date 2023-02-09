@@ -1,12 +1,13 @@
 import { StackScreenProps } from '@react-navigation/stack';
 import React, { useContext, useState, useEffect } from 'react';
-import { FlatList } from 'react-native'
+import { FlatList, Alert } from 'react-native'
 import { useTheme } from 'styled-components/native';
 import { RootStackParamList } from '../../routes/Models';
 import * as S from './styles'
 import AntDesign from 'react-native-vector-icons/AntDesign'
 import ExerciseInWorkoutItem from '../../components/ExerciseInWorkoutItem';
-import { useTimer, WorkoutSeasonContext } from '../../contexts/WorkooutSeason';
+import { WorkoutSeasonContext } from '../../contexts/WorkooutSeason';
+import { useTimer } from '../../hooks/useTimer';
 
 type Navigation = StackScreenProps<RootStackParamList, 'WorkoutSeason'>
 
@@ -20,6 +21,20 @@ const WorkoutSeason: React.FC<Navigation> = ({ navigation, route }) => {
         startWorkout(workout)
     }, [])
 
+    const handleFineshWorkout = () => {
+        Alert.alert(
+            'Terminar treino',
+            'Tem certeza que quer terminar o treino?',
+            [{
+                text: 'Sim',
+                onPress: () => navigation.navigate('Home')
+            },
+            {
+                text: 'Não',
+                style: 'cancel'
+            }])
+        finishWorkout(minutes * 60 + seconds).then(() => navigation.navigate('Home'))
+    }
     return (
         <S.Container>
             <S.Header>
@@ -56,12 +71,12 @@ const WorkoutSeason: React.FC<Navigation> = ({ navigation, route }) => {
                         createSerieFunction={(exercise) => createSerie(exercise)}
                         deleteSerieFunction={(exercise, serieNumber) => deleteSerie(exercise, serieNumber)}
                         showSucessButton={true}
-                        sucessButtonFunction={(exercise, serieNumber)=> markSerieAsDone(exercise, serieNumber)}
+                        sucessButtonFunction={(exercise, serieNumber) => markSerieAsDone(exercise, serieNumber)}
                     />
                 )}
             />
 
-            <S.finishWorkout onPress={() => finishWorkout(minutes * 60 + seconds)}>
+            <S.finishWorkout onPress={() => handleFineshWorkout}>
                 <S.FineshText>Terminar treino {String(minutes).padStart(2, '0')}:{String(seconds).padStart(2, '0')}</S.FineshText>
             </S.finishWorkout>
         </S.Container >

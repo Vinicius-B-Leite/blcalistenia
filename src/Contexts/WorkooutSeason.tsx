@@ -28,7 +28,7 @@ const WorkoutSeasonProvider = ({ children }: { children: React.ReactNode }) => {
             realm.delete(realm.objects('Historic'))
 
 
-            const retrn = realm.create<HistoricType>('Historic', {
+            realm.create<HistoricType>('Historic', {
                 workout: JSON.stringify(workoutCopy),
                 date: new Date(),
                 timerInSeconds: seconds,
@@ -121,14 +121,3 @@ const WorkoutSeasonProvider = ({ children }: { children: React.ReactNode }) => {
 
 export default WorkoutSeasonProvider;
 
-export const useTimer = () => {
-    const [timer, setTimer] = useState(0)
-
-    useEffect(() => {
-        setTimeout(() => {
-            setTimer(old => old + 1)
-        }, 1000)
-    }, [timer])
-
-    return { minutes: Math.floor(timer / 60), seconds: timer % 60 }
-}

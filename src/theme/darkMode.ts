@@ -10,6 +10,7 @@ export const darkMode = {
         lightBackground: '#252525',
         darkText: '#6b6b6b',
         darkContrast: '#8A4C04',
+        exrtemeDarkContrast: '#703e03',
         alert: '#ff0000',
     },
     sizes: {
