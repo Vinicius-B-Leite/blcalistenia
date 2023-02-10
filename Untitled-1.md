@@ -1,4 +1,20 @@
 tasks
-- trocar de tema
 - trocar o nome
-- fazer  a tela de graficos
+- trocar de tema
+- criar treinos de sugestão
+- buscar treino pelo input
+- filtrar treino pelo músculo
+- filtrar exercicios
+- buscar exercicios pelo input
+- substituir os tres pontinhos por um lixo para exluir o exercicio direto
+- mostrar os total de tempo descançado no cronometro 
+- trocar o nnome dos models/tipos
+- substituir as imagens de treino para a lib fast image
+- melhorar o esquema de criar os treinos
+- fazer os graficos realmente funcionar
+- criar uma tela ou bottom sheet para mostrar como que faz o exercicios e um gif de eu fazendo
+- notificação para quando o treino estiver rolando
+- componente em cima da navbar mostrando que o treino esta rolando 
+- fazer backup na nuvem
+- adicionar novos exercicios
+- publicar o app na loja
