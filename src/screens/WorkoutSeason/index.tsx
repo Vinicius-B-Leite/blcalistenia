@@ -27,13 +27,14 @@ const WorkoutSeason: React.FC<Navigation> = ({ navigation, route }) => {
             'Tem certeza que quer terminar o treino?',
             [{
                 text: 'Sim',
-                onPress: () => navigation.navigate('Home')
+                onPress: () => {
+                    finishWorkout(minutes * 60 + seconds).then(() => navigation.navigate('Home'))
+                }
             },
             {
                 text: 'Não',
                 style: 'cancel'
             }])
-        finishWorkout(minutes * 60 + seconds).then(() => navigation.navigate('Home'))
     }
     return (
         <S.Container>
@@ -76,7 +77,7 @@ const WorkoutSeason: React.FC<Navigation> = ({ navigation, route }) => {
                 )}
             />
 
-            <S.finishWorkout onPress={() => handleFineshWorkout}>
+            <S.finishWorkout onPress={() => handleFineshWorkout()}>
                 <S.FineshText>Terminar treino {String(minutes).padStart(2, '0')}:{String(seconds).padStart(2, '0')}</S.FineshText>
             </S.finishWorkout>
         </S.Container >

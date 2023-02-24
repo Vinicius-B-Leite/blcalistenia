@@ -21,10 +21,13 @@ const Home: React.FC = () => {
     const navigation = useNavigation<Navigation>()
     const { getWorkoutsList, workoutsList } = useContext(WorkoutContext)
     const [calendarVisible, setCalendarVisible] = useState<boolean>(false)
+    const [searchWorkoutInput, setSearchWorkoutInput] = useState('')
 
-    useFocusEffect(useCallback(() => {
-        getWorkoutsList()
-    }, []))
+    useFocusEffect(
+        useCallback(() => {
+            getWorkoutsList(searchWorkoutInput)
+        }, [searchWorkoutInput])
+    )
     return (
         <Container>
             <CalendarDaysTrained closeCalendar={() => setCalendarVisible(false)} visible={calendarVisible} />
@@ -49,6 +52,8 @@ const Home: React.FC = () => {
                 <S.InputArea>
                     <AntDesign name='search1' color={theme.colors.text} size={theme.sizes.icons.sm} />
                     <S.Input
+                        value={searchWorkoutInput}
+                        onChangeText={setSearchWorkoutInput}
                         placeholder='Pesquisar treino'
                         placeholderTextColor={theme.colors.darkText}
                     />

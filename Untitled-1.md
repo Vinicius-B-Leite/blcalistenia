@@ -2,7 +2,6 @@ tasks
 - trocar o nome
 - trocar de tema
 - criar treinos de sugestão
-- buscar treino pelo input
 - filtrar treino pelo músculo
 - filtrar exercicios
 - buscar exercicios pelo input
@@ -20,4 +19,4 @@ tasks
 
 
 TASK EM DESENVOLVIMENTO
-- melhorar o esquema de criar os treinos
+- buscar treino pelo input

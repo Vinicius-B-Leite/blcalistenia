@@ -6,7 +6,7 @@ import { getRealm } from '../services/realm';
 
 type WorkoutContext = {
     saveWorkout: (workout: WorkoutType) => Promise<void>,
-    getWorkoutsList: () => Promise<void>,
+    getWorkoutsList: (text?: string) => Promise<void>,
     addExercise: (newExercise: String) => void,
     deleteWorkout: (workoutID: string) => Promise<void>,
     createSerie: (exercise: exercisesInWorkout) => void,
@@ -41,9 +41,13 @@ const WorkoutProvider = ({ children }: { children: React.ReactNode }) => {
 
     }
 
-    const getWorkoutsList = async () => {
+    const getWorkoutsList = async (text?: string) => {
         const realm = await getRealm()
-        const workout = realm.objects<WorkoutType[]>('Workout').sorted('title').toJSON()
+        let workout = realm.objects<WorkoutType[]>('Workout').sorted('title').toJSON()
+
+        if (text) {
+            workout = realm.objects<WorkoutType[]>('Workout').filtered(`title CONTAINS '${text}'`).toJSON()
+        }
         setWorkoutList(workout as WorkoutType[])
     }
 
