@@ -10,7 +10,6 @@ tasks
 - mostrar os total de tempo descançado no cronometro 
 - trocar o nnome dos models/tipos
 - substituir as imagens de treino para a lib fast image
-- melhorar o esquema de criar os treinos
 - fazer os graficos realmente funcionar
 - criar uma tela ou bottom sheet para mostrar como que faz o exercicios e um gif de eu fazendo
 - notificação para quando o treino estiver rolando
@@ -18,3 +17,7 @@ tasks
 - fazer backup na nuvem
 - adicionar novos exercicios
 - publicar o app na loja
+
+
+TASK EM DESENVOLVIMENTO
+- melhorar o esquema de criar os treinos

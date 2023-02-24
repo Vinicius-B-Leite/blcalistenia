@@ -1,13 +1,13 @@
 import React from 'react';
-import { ThemeProvider } from 'styled-components/native';
-import WorkoutProvider from './src/contexts/WorkoutContext';
-import Routes from './src/routes';
 import { darkMode } from './src/theme/darkMode';
+import { LocaleConfig } from 'react-native-calendars';
+import { ThemeProvider } from 'styled-components/native';
 import { ExerciseProvider } from './src/contexts/ExerciseContext';
 import WorkoutSeasonProvider from './src/contexts/WorkooutSeason';
 import HistoricProvider from './src/contexts/HistoricContext';
-import { LocaleConfig } from 'react-native-calendars';
 import AuthProvider from './src/contexts/AuthContext';
+import Routes from './src/routes';
+import WorkoutProvider from './src/contexts/WorkoutContext';
 
 
 

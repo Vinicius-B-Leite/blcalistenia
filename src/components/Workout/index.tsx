@@ -24,7 +24,7 @@ const Workout: React.FC<Props> = ({ data }) => {
             [
                 {
                     text: 'Sim',
-                    onPress: () => deleteWorkout(data._id as number),
+                    onPress: () => deleteWorkout(data._id),
                 },
                 {
                     text: 'Não',
@@ -35,7 +35,7 @@ const Workout: React.FC<Props> = ({ data }) => {
     }
     return (
         <S.Container
-            onPress={() => navigation.navigate('CreateWorkout', { workout_id: data._id })}
+            onPress={() => navigation.navigate('CreateWorkout', { workout: data })}
             onLongPress={handleDelete}>
             <S.Banner
                 source={{ uri: data.banner.length > 0 ? data.banner : 'https://www.salonlfc.com/wp-content/uploads/2018/01/image-not-found-1-scaled-1150x647.png' }}

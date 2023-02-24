@@ -2,7 +2,7 @@ export const WorkoutSchema = {
     name: 'Workout',
     properties: {
         _id: {
-            type: 'int',
+            type: 'string',
             indexed: true
         },
         title: 'string',

@@ -5,19 +5,16 @@ import { series, WorkoutType } from '../models/workout';
 import { getRealm } from '../services/realm';
 
 type WorkoutContext = {
-    createInitialWorkout: () => Promise<number>,
-    saveWorkout: (workout: WorkoutType) => void,
+    saveWorkout: (workout: WorkoutType) => Promise<void>,
     getWorkoutsList: () => Promise<void>,
     addExercise: (newExercise: String) => void,
-    getSingleWorkout: (workoutID: number) => Promise<WorkoutType>,
-    deleteWorkout: (workoutID?: number) => Promise<void>,
+    deleteWorkout: (workoutID: string) => Promise<void>,
     createSerie: (exercise: exercisesInWorkout) => void,
     deleteSerie: (exercise: exercisesInWorkout, serie: Number) => void
-    clean: () => void,
     updateSerie: (serieNumber: number, exercise: exercisesInWorkout, newSerie: series) => void,
+    setExercises: (old: exercisesInWorkout[]) => void,
     workoutsList: WorkoutType[],
     exercises: exercisesInWorkout[],
-    workout: WorkoutType
 }
 
 
@@ -27,62 +24,28 @@ export const WorkoutContext = createContext({} as WorkoutContext)
 const WorkoutProvider = ({ children }: { children: React.ReactNode }) => {
     const [workoutsList, setWorkoutList] = useState<WorkoutType[]>([]);
     const [exercises, setExercises] = useState<exercisesInWorkout[]>([])
-    const [workout, setWorkout] = useState<WorkoutType>({ _id: -1, banner: '', exercises: [], title: '' })
-    let currentKey: number
-
-    const createInitialWorkout = () => {
-        return new Promise<number>(async (resolve, reject) => {
-            const realm = await getRealm()
-            const key = realm.objects('Workout').length + 1
-
-            realm?.write(() => {
 
 
-                const workoutResponnse = realm.create<WorkoutType>('Workout', {
-                    title: '',
-                    exercises: [],
-                    anotation: '',
-                    banner: '',
-                    _id: key
-                })
-                setWorkout(workoutResponnse.toJSON() as WorkoutType)
-            })
-            currentKey = key
-            resolve(key)
-        })
-
-
-    } 
-
-    const saveWorkout = async (workout: WorkoutType) => {
+    const saveWorkout = async ({ banner, exercises, title, anotation, _id }: WorkoutType) => {
         const realm = await getRealm()
         realm.write(() => {
-
-            const workoutResponse = realm.objectForPrimaryKey<WorkoutType>('Workout', workout._id as number)
-
             realm.create<WorkoutType>('Workout', {
-                _id: workout._id,
-                anotation: workout.anotation,
-                banner: workout.banner,
-                exercises: workout.exercises,
-                title: workout.title
-            }, Realm.UpdateMode.Modified)
+                _id: _id,
+                anotation: anotation,
+                banner: banner,
+                exercises: exercises,
+                title: title
+            }, Realm.UpdateMode.Modified).toJSON() as WorkoutType
 
-            setWorkout(workoutResponse?.toJSON() as WorkoutType)
         })
 
-    } 
+    }
 
     const getWorkoutsList = async () => {
-
         const realm = await getRealm()
-
-
         const workout = realm.objects<WorkoutType[]>('Workout').sorted('title').toJSON()
-        
         setWorkoutList(workout as WorkoutType[])
-
-    } 
+    }
 
     const addExercise = async (newExercise: String) => {
         setExercises(old => [
@@ -99,22 +62,15 @@ const WorkoutProvider = ({ children }: { children: React.ReactNode }) => {
             }
         ])
 
-    } 
+    }
 
-    const getSingleWorkout = async (workoutID: number) => {
-        const realm = await getRealm()
-        const workoutResponse = realm.objectForPrimaryKey('Workout', workoutID as number)?.toJSON() as WorkoutType
-        setWorkout(workoutResponse)
-        setExercises(workoutResponse.exercises)
-        return workoutResponse
-    } 
 
-    const deleteWorkout = async (workoutID?: number) => {
+    const deleteWorkout = async (workoutID: string) => {
         const realm = await getRealm()
         realm.write(() => {
-            realm.delete(realm.objectForPrimaryKey('Workout', (workoutID || currentKey)))
+            realm.delete(realm.objectForPrimaryKey('Workout', workoutID))
             setWorkoutList(old => {
-                const index = old.findIndex((v, i) => v._id == (workoutID || currentKey))
+                const index = old.findIndex((v, i) => v._id == workoutID)
                 const newWorkoutList = old
                 newWorkoutList.splice(index, 1)
                 return [...newWorkoutList]
@@ -122,13 +78,13 @@ const WorkoutProvider = ({ children }: { children: React.ReactNode }) => {
         })
 
 
-    }  
+    }
 
     const createSerie = (exercise: exercisesInWorkout) => {
 
         setExercises(old => {
             const index = old.indexOf(exercise)
-            
+
             old[index].series.push({
                 rep: 8,
                 rest: 30,
@@ -137,7 +93,7 @@ const WorkoutProvider = ({ children }: { children: React.ReactNode }) => {
             return [...old]
         })
 
-    }  
+    }
 
     const deleteSerie = (exercise: exercisesInWorkout, serie: Number) => {
 
@@ -159,12 +115,6 @@ const WorkoutProvider = ({ children }: { children: React.ReactNode }) => {
             }
             return [...old]
         })
-    } 
-
-    const clean = () => {
-        setExercises([])
-        setWorkout({ _id: -1, banner: '', exercises: [], title: '' })
-        currentKey = -1
     }
 
     const updateSerie = (serieNumber: number, exercise: exercisesInWorkout, newSerie: series) => {
@@ -182,19 +132,16 @@ const WorkoutProvider = ({ children }: { children: React.ReactNode }) => {
 
     return (
         <WorkoutContext.Provider value={{
-            createInitialWorkout,
             saveWorkout,
             getWorkoutsList,
             addExercise,
-            getSingleWorkout,
             deleteWorkout,
             createSerie,
             deleteSerie,
-            clean, 
             updateSerie,
+            setExercises,
             workoutsList,
             exercises,
-            workout,
         }}>
             {children}
         </WorkoutContext.Provider>

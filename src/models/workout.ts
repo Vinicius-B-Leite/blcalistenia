@@ -8,7 +8,7 @@ export type series = {
 }
 
 export type WorkoutType = {
-    _id: Number,
+    _id: string,
     title: String,
     banner: string,
     exercises: exercisesInWorkout[],

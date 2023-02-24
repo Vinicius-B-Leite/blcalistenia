@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect, useLayoutEffect } from 'react';
-import { FlatList, View, Text } from 'react-native';
+import { FlatList, View, Alert } from 'react-native';
 import * as S from './styles'
 import AntDesign from 'react-native-vector-icons/AntDesign'
 import Feather from 'react-native-vector-icons/Feather'
@@ -9,7 +9,7 @@ import { RootStackParamList } from '../../routes/Models';
 import ExerciseInWorkoutItem from '../../components/ExerciseInWorkoutItem';
 import { WorkoutContext } from '../../contexts/WorkoutContext';
 import { pickeImage } from '../../utils/pickImage';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
+import uuid from 'react-native-uuid';
 
 
 
@@ -18,19 +18,16 @@ type Navigation = StackScreenProps<RootStackParamList, 'CreateWorkout'>
 const CreateWorkout: React.FC<Navigation> = ({ route, navigation }) => {
     const theme = useTheme()
     const {
-        createInitialWorkout,
         saveWorkout,
-        exercises,
-        getSingleWorkout,
-        workout,
         deleteWorkout,
-        clean,
+        exercises,
         createSerie,
-        deleteSerie } = useContext(WorkoutContext)
+        deleteSerie,
+        setExercises } = useContext(WorkoutContext)
     const [workoutName, setWorkoutName] = useState('')
     const [anotation, setAnotation] = useState('')
     const [imageURI, setImageURI] = useState('')
-    const workout_id = route?.params?.workout_id
+    const [workout_id, setWorkoutID] = useState(uuid.v4().toString())
 
 
 
@@ -40,25 +37,44 @@ const CreateWorkout: React.FC<Navigation> = ({ route, navigation }) => {
                 display: 'none'
             }
         })
-        if (typeof workout_id !== 'undefined') {
-            getSingleWorkout(workout_id as number).then(data => {
-                setWorkoutName(data.title as string)
-                setAnotation(data.anotation ? data.anotation as string : '')
-                setImageURI(data.banner)
-            })
-
-        } else {
-            createInitialWorkout()
+        if (typeof route?.params?.workout !== 'undefined') {
+            const { _id, banner, exercises, title, anotation } = route.params.workout
+            setWorkoutName(title as string)
+            setAnotation(anotation as string)
+            setImageURI(banner)
+            setWorkoutID(_id)
+            setExercises(exercises)
         }
     }, [])
 
     useEffect(() => {
-        navigation.addListener('beforeRemove', (e) => {
-            if (workout.title == '') {
-                deleteWorkout()
-            }
+        saveWorkout({
+            banner: imageURI,
+            exercises: exercises,
+            title: workoutName,
+            anotation: anotation,
+            _id: workout_id
+        })
+    }, [workoutName, anotation, imageURI, exercises])
 
-            clean()
+    useEffect(() => {
+        navigation.addListener('beforeRemove', async (e) => {
+            e.preventDefault()
+
+            Alert.alert(
+                'Atenção',
+                'Deseja salvar as alterações?',
+                [
+                    {
+                        text: 'Não',
+                        style: 'cancel',
+                        onPress: async () => deleteWorkout(workout_id)
+                    },
+                    {
+                        text: 'Sim',
+                    }
+                ]
+            )
 
             navigation.getParent()?.setOptions({
                 tabBarStyle: {
@@ -68,20 +84,10 @@ const CreateWorkout: React.FC<Navigation> = ({ route, navigation }) => {
                     justifyContent: 'center',
                 }
             })
+
+            navigation.dispatch(e.data.action)
         })
     }, [])
-
-    useEffect(() => {
-        if (workoutName != '' && exercises.length > 0) {
-            saveWorkout({
-                _id: workout._id,
-                banner: imageURI,
-                exercises: exercises,
-                title: workoutName,
-                anotation: anotation
-            })
-        }
-    }, [workoutName, anotation, exercises, imageURI])
 
     const handleImagePicker = async () => {
         const { assets } = await pickeImage()
@@ -128,7 +134,7 @@ const CreateWorkout: React.FC<Navigation> = ({ route, navigation }) => {
                 )}
                 renderItem={({ item }) => (
                     <ExerciseInWorkoutItem
-                        sucessButtonFunction={() => {}}
+                        sucessButtonFunction={() => { }}
                         item={item}
                         showRest={true}
                         showCreateSerie={true}
@@ -146,8 +152,8 @@ const CreateWorkout: React.FC<Navigation> = ({ route, navigation }) => {
             />
 
             {
-                workout_id && (
-                    <S.StartWorkout onPress={() => navigation.navigate('WorkoutSeason', { workout: workout })}>
+                route?.params?.workout && (
+                    <S.StartWorkout onPress={() => navigation.navigate('WorkoutSeason', { workout: { _id: workout_id, banner: imageURI, exercises: exercises, title: workoutName, anotation: anotation } })}>
                         <S.StartText>Iniciar treino</S.StartText>
                     </S.StartWorkout>
                 )
