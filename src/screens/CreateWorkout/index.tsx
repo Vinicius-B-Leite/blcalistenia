@@ -54,7 +54,7 @@ const CreateWorkout: React.FC<Navigation> = ({ route, navigation }) => {
             exercises: exercises,
             title: workoutName  || 'Desconhecido',
             anotation: anotation,
-            _id: workout_id
+            _id: route?.params?.workout?._id || workout_id
         })
     }, [workoutName, anotation, imageURI, exercises])
 
@@ -85,7 +85,7 @@ const CreateWorkout: React.FC<Navigation> = ({ route, navigation }) => {
                         text: 'Não',
                         style: 'cancel',
                         onPress: async () => {
-                            await deleteWorkout(workout_id)
+                            if (!(route?.params?.workout)) await deleteWorkout(workout_id)
                             resolve()
                         }
                     },

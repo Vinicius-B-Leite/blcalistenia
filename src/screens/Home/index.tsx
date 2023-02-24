@@ -19,15 +19,21 @@ type Navigation = StackNavigationProp<RootStackParamList, 'Home'>
 const Home: React.FC = () => {
     const theme = useTheme()
     const navigation = useNavigation<Navigation>()
-    const { getWorkoutsList, workoutsList } = useContext(WorkoutContext)
+    const { getWorkoutsList, workoutsList, filterWorkoutByMuscle } = useContext(WorkoutContext)
     const [calendarVisible, setCalendarVisible] = useState<boolean>(false)
     const [searchWorkoutInput, setSearchWorkoutInput] = useState('')
+    const [muscleFilterSelected, setMuscleFilterSelected] = useState('Todos')
 
     useFocusEffect(
         useCallback(() => {
             getWorkoutsList(searchWorkoutInput)
         }, [searchWorkoutInput])
     )
+
+    const handleSelectMuscleFilter = (muscle: string) => {
+        setMuscleFilterSelected(muscle)
+        filterWorkoutByMuscle(muscle)
+    }
     return (
         <Container>
             <CalendarDaysTrained closeCalendar={() => setCalendarVisible(false)} visible={calendarVisible} />
@@ -62,9 +68,9 @@ const Home: React.FC = () => {
                 <S.CategotyList
                     horizontal
                     showsHorizontalScrollIndicator={false}
-                    data={muscles}
+                    data={['Todos', ...muscles]}
                     keyExtractor={(item) => item}
-                    renderItem={({ item }) => <Muscle muscle={item} />}
+                    renderItem={({ item }) => <Muscle muscle={item} muscleSelected={muscleFilterSelected} onClick={(m) => handleSelectMuscleFilter(m)} />}
                 />
                 <S.WorkoutList
                     data={workoutsList}

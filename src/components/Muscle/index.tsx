@@ -2,13 +2,15 @@ import React from 'react';
 import * as S from './styles'
 
 type Props = {
-    muscle: string
+    muscle: string,
+    muscleSelected: string,
+    onClick: (muscle: string) => void
 }
 
-const Muscle = ({ muscle }: Props) => {
+const Muscle = ({ muscle, muscleSelected, onClick }: Props) => {
     return (
-        <S.Container>
-            <S.MuscleName>{muscle}</S.MuscleName>
+        <S.Container  selected={muscle == muscleSelected} onPress={() => onClick(muscle)}>
+            <S.MuscleName selected={muscle == muscleSelected}>{muscle}</S.MuscleName>
         </S.Container>
     )
 }

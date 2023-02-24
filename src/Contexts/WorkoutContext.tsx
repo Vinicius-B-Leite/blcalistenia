@@ -1,8 +1,10 @@
 import React, { createContext, useEffect, useState } from 'react';
 import { nativeViewGestureHandlerProps } from 'react-native-gesture-handler/lib/typescript/handlers/NativeViewGestureHandler';
+import { exercise } from '../models/exercise';
 import { exercisesInWorkout } from '../models/exercisesInWorkout';
 import { series, WorkoutType } from '../models/workout';
 import { getRealm } from '../services/realm';
+import { muscles } from '../utils/muscles';
 
 type WorkoutContext = {
     saveWorkout: (workout: WorkoutType) => Promise<void>,
@@ -13,6 +15,7 @@ type WorkoutContext = {
     createSerie: (exercise: exercisesInWorkout) => void,
     deleteSerie: (exercise: exercisesInWorkout, serie: Number) => void
     updateSerie: (serieNumber: number, exercise: exercisesInWorkout, newSerie: series) => void,
+    filterWorkoutByMuscle: (muscle: string) => Promise<void>,
     setExercises: (old: exercisesInWorkout[]) => void,
     workoutsList: WorkoutType[],
     exercises: exercisesInWorkout[],
@@ -28,6 +31,7 @@ const WorkoutProvider = ({ children }: { children: React.ReactNode }) => {
 
 
     const saveWorkout = async ({ banner, exercises, title, anotation, _id }: WorkoutType) => {
+        console.log(exercises)
         const realm = await getRealm()
         realm.write(() => {
             realm.create<WorkoutType>('Workout', {
@@ -38,7 +42,7 @@ const WorkoutProvider = ({ children }: { children: React.ReactNode }) => {
                 title: title
             }, Realm.UpdateMode.Modified).toJSON() as WorkoutType
             console.log('WorkoutContext - saveWorkout - id ' + _id);
-            
+
         })
 
     }
@@ -146,6 +150,32 @@ const WorkoutProvider = ({ children }: { children: React.ReactNode }) => {
 
     }
 
+    const filterWorkoutByMuscle = async (muscle: string) => {
+        const realm = await getRealm()
+        const workouts = realm.objects('Workout').toJSON() as WorkoutType[]
+
+        if (!(muscles.includes(muscle))){
+            setWorkoutList(workouts)
+            return
+        }
+
+        const exercises = realm.objects('Exercise').toJSON() as exercise[]
+
+
+        const exercisesHaveMuscleSelected = exercises.filter(e => e.muscles.includes(muscle))
+        let workoutsWithMuscleSelected: WorkoutType[] = []
+        
+        workouts.forEach(w => {
+            w.exercises.forEach(e => {
+                const index = exercisesHaveMuscleSelected.findIndex(v => v.name == e.exercise_id)
+                if (index > -1) workoutsWithMuscleSelected.push(w)
+            })
+            
+        })
+
+        setWorkoutList(workoutsWithMuscleSelected)
+    }
+
     return (
         <WorkoutContext.Provider value={{
             saveWorkout,
@@ -156,6 +186,7 @@ const WorkoutProvider = ({ children }: { children: React.ReactNode }) => {
             createSerie,
             deleteSerie,
             updateSerie,
+            filterWorkoutByMuscle,
             setExercises,
             workoutsList,
             exercises,

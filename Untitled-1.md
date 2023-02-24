@@ -2,7 +2,6 @@ tasks
 - trocar o nome
 - trocar de tema
 - criar treinos de sugestão
-- filtrar treino pelo músculo
 - filtrar exercicios
 - mostrar os total de tempo descançado no cronometro 
 - trocar o nnome dos models/tipos
@@ -17,6 +16,7 @@ tasks
 
 
 TASK EM DESENVOLVIMENTO
-- 
+- filtrar treino pelo músculo
+
 
 
