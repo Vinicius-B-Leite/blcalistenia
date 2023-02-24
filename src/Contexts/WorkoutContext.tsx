@@ -8,6 +8,7 @@ type WorkoutContext = {
     saveWorkout: (workout: WorkoutType) => Promise<void>,
     getWorkoutsList: (text?: string) => Promise<void>,
     addExercise: (newExercise: String) => void,
+    deleteExercise: (exercise: exercisesInWorkout) => Promise<void>,
     deleteWorkout: (workoutID: string) => Promise<void>,
     createSerie: (exercise: exercisesInWorkout) => void,
     deleteSerie: (exercise: exercisesInWorkout, serie: Number) => void
@@ -68,6 +69,14 @@ const WorkoutProvider = ({ children }: { children: React.ReactNode }) => {
 
     }
 
+    const deleteExercise = async (exercise: exercisesInWorkout) => {
+        setExercises(old => {
+            let copy = [...old]
+            const index = copy.indexOf(exercise)
+            copy.splice(index, 1)
+            return copy
+        })
+    }
 
     const deleteWorkout = async (workoutID: string) => {
         const realm = await getRealm()
@@ -139,6 +148,7 @@ const WorkoutProvider = ({ children }: { children: React.ReactNode }) => {
             saveWorkout,
             getWorkoutsList,
             addExercise,
+            deleteExercise,
             deleteWorkout,
             createSerie,
             deleteSerie,

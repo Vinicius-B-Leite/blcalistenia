@@ -4,7 +4,6 @@ tasks
 - criar treinos de sugestão
 - filtrar treino pelo músculo
 - filtrar exercicios
-- substituir os tres pontinhos por um lixo para exluir o exercicio direto
 - mostrar os total de tempo descançado no cronometro 
 - trocar o nnome dos models/tipos
 - substituir as imagens de treino para a lib fast image
@@ -18,5 +17,6 @@ tasks
 
 
 TASK EM DESENVOLVIMENTO
-- buscar exercicios pelo input
+- substituir os tres pontinhos por um lixo para exluir o exercicio direto
+
 

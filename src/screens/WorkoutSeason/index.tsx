@@ -14,7 +14,7 @@ type Navigation = StackScreenProps<RootStackParamList, 'WorkoutSeason'>
 const WorkoutSeason: React.FC<Navigation> = ({ navigation, route }) => {
     const theme = useTheme()
     const { workout } = route.params
-    const { finishWorkout, startWorkout, createSerie, deleteSerie, markSerieAsDone } = useContext(WorkoutSeasonContext)
+    const { finishWorkout, startWorkout, createSerie, deleteSerie, markSerieAsDone, deleteExercise } = useContext(WorkoutSeasonContext)
     const { seconds, minutes } = useTimer()
 
     useEffect(() => {
@@ -73,6 +73,7 @@ const WorkoutSeason: React.FC<Navigation> = ({ navigation, route }) => {
                         deleteSerieFunction={(exercise, serieNumber) => deleteSerie(exercise, serieNumber)}
                         showSucessButton={true}
                         sucessButtonFunction={(exercise, serieNumber) => markSerieAsDone(exercise, serieNumber)}
+                        deleteExerciseFuntion={(exercise) => deleteExercise(exercise)}
                     />
                 )}
             />

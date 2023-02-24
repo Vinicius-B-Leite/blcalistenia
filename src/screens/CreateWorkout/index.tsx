@@ -23,7 +23,8 @@ const CreateWorkout: React.FC<Navigation> = ({ route, navigation }) => {
         exercises,
         createSerie,
         deleteSerie,
-        setExercises } = useContext(WorkoutContext)
+        setExercises,
+        deleteExercise } = useContext(WorkoutContext)
     const [workoutName, setWorkoutName] = useState('')
     const [anotation, setAnotation] = useState('')
     const [imageURI, setImageURI] = useState('')
@@ -61,20 +62,7 @@ const CreateWorkout: React.FC<Navigation> = ({ route, navigation }) => {
         navigation.addListener('beforeRemove', async (e) => {
             e.preventDefault()
 
-            Alert.alert(
-                'Atenção',
-                'Deseja salvar as alterações?',
-                [
-                    {
-                        text: 'Não',
-                        style: 'cancel',
-                        onPress: async () => deleteWorkout(workout_id)
-                    },
-                    {
-                        text: 'Sim',
-                    }
-                ]
-            )
+            await handleGoBack()
 
             navigation.getParent()?.setOptions({
                 tabBarStyle: {
@@ -89,6 +77,22 @@ const CreateWorkout: React.FC<Navigation> = ({ route, navigation }) => {
         })
     }, [])
 
+    const handleGoBack = async () => {
+        Alert.alert(
+            'Atenção',
+            'Deseja salvar as alterações?',
+            [
+                {
+                    text: 'Não',
+                    style: 'cancel',
+                    onPress: async () => await deleteWorkout(workout_id)
+                },
+                {
+                    text: 'Sim',
+                }
+            ]
+        )
+    }
     const handleImagePicker = async () => {
         const { assets } = await pickeImage()
         const uri = assets ? assets[0].uri : ''
@@ -134,7 +138,6 @@ const CreateWorkout: React.FC<Navigation> = ({ route, navigation }) => {
                 )}
                 renderItem={({ item }) => (
                     <ExerciseInWorkoutItem
-                        sucessButtonFunction={() => { }}
                         item={item}
                         showRest={true}
                         showCreateSerie={true}
@@ -142,6 +145,7 @@ const CreateWorkout: React.FC<Navigation> = ({ route, navigation }) => {
                         showSucessButton={false}
                         createSerieFunction={(exercise) => createSerie(exercise)}
                         deleteSerieFunction={(exercise, serieNumber) => deleteSerie(exercise, serieNumber)}
+                        deleteExerciseFuntion={(exercise) => deleteExercise(exercise)}
                     />
                 )}
                 ListFooterComponent={() => (
