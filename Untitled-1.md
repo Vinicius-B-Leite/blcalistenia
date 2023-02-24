@@ -17,6 +17,6 @@ tasks
 
 
 TASK EM DESENVOLVIMENTO
-- substituir os tres pontinhos por um lixo para exluir o exercicio direto
+- 
 
 

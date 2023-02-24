@@ -37,7 +37,8 @@ const WorkoutProvider = ({ children }: { children: React.ReactNode }) => {
                 exercises: exercises,
                 title: title
             }, Realm.UpdateMode.Modified).toJSON() as WorkoutType
-
+            console.log('WorkoutContext - saveWorkout - id ' + _id);
+            
         })
 
     }
@@ -88,6 +89,8 @@ const WorkoutProvider = ({ children }: { children: React.ReactNode }) => {
                 newWorkoutList.splice(index, 1)
                 return [...newWorkoutList]
             })
+            console.log('WorkoutContext - deleteWorkout - id ' + workoutID);
+
         })
 
 

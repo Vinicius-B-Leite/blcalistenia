@@ -52,7 +52,7 @@ const CreateWorkout: React.FC<Navigation> = ({ route, navigation }) => {
         saveWorkout({
             banner: imageURI,
             exercises: exercises,
-            title: workoutName,
+            title: workoutName  || 'Desconhecido',
             anotation: anotation,
             _id: workout_id
         })
@@ -60,7 +60,6 @@ const CreateWorkout: React.FC<Navigation> = ({ route, navigation }) => {
 
     useEffect(() => {
         navigation.addListener('beforeRemove', async (e) => {
-            e.preventDefault()
 
             await handleGoBack()
 
@@ -73,25 +72,32 @@ const CreateWorkout: React.FC<Navigation> = ({ route, navigation }) => {
                 }
             })
             setExercises([])
-            navigation.dispatch(e.data.action)
         })
     }, [])
 
     const handleGoBack = async () => {
-        Alert.alert(
-            'Atenção',
-            'Deseja salvar as alterações?',
-            [
-                {
-                    text: 'Não',
-                    style: 'cancel',
-                    onPress: async () => await deleteWorkout(workout_id)
-                },
-                {
-                    text: 'Sim',
-                }
-            ]
-        )
+        return new Promise<void>((resolve, reject) => {
+            Alert.alert(
+                'Atenção',
+                'Deseja salvar as alterações?',
+                [
+                    {
+                        text: 'Não',
+                        style: 'cancel',
+                        onPress: async () => {
+                            await deleteWorkout(workout_id)
+                            resolve()
+                        }
+                    },
+                    {
+                        text: 'Sim',
+                        onPress: () => {
+                            resolve()
+                        }
+                    }
+                ]
+            )
+        })
     }
     const handleImagePicker = async () => {
         const { assets } = await pickeImage()
