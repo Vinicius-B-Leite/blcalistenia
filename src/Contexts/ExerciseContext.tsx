@@ -5,7 +5,7 @@ import { getRealm } from '../services/realm'
 import { initialsExercises } from '../utils/initialsExercises'
 
 type ExerciseContextType = {
-    getExercises: () => Promise<void>,
+    getExercises: (text?: string) => Promise<void>,
     exercisList: exercise[],
     createExercise: ({ name, muscles, categories }: exercise) => Promise<void>,
     deleteExercise: (exerciseName: String) => Promise<void>
@@ -37,18 +37,21 @@ export const ExerciseProvider = ({ children }: { children: React.ReactNode }) =>
             }
         })
     }
-    const getExercises = async () => {
+    const getExercises = async (text? : string) => {
         return new Promise<void>(async (resolve, reject) => {
             try {
                 const realm = await getRealm()
 
-                const exercises = realm.objects<exercise[]>('Exercise').sorted('name').toJSON() as exercise[]
+                let exercises = realm.objects<exercise[]>('Exercise').sorted('name').toJSON() as exercise[]
 
                 if (exercises.length === 0) {
                     initialsExercises.forEach(exercise => {
                         createExercise(exercise)
                     })
                     return
+                }
+                if (text){
+                    exercises = realm.objects<exercise[]>('Exercise').filtered(`name CONTAINS '${text}'`).toJSON() as exercise[]
                 }
                 exercises.sort()
                 setExerciseList(exercises)

@@ -84,7 +84,7 @@ const CreateWorkout: React.FC<Navigation> = ({ route, navigation }) => {
                     justifyContent: 'center',
                 }
             })
-
+            setExercises([])
             navigation.dispatch(e.data.action)
         })
     }, [])

@@ -4,7 +4,6 @@ tasks
 - criar treinos de sugestão
 - filtrar treino pelo músculo
 - filtrar exercicios
-- buscar exercicios pelo input
 - substituir os tres pontinhos por um lixo para exluir o exercicio direto
 - mostrar os total de tempo descançado no cronometro 
 - trocar o nnome dos models/tipos
@@ -19,4 +18,5 @@ tasks
 
 
 TASK EM DESENVOLVIMENTO
-- buscar treino pelo input
+- buscar exercicios pelo input
+
