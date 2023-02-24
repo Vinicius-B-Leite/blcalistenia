@@ -9,6 +9,7 @@ import { BottomSheetRefProps } from '../../components/BottomSheet';
 import Exercise from '../../components/Exercise';
 import BottomSheet from '../../components/BottomSheet';
 import CreateExercise from '../../components/CreateExercise';
+import FilterExercise from '../../components/FilterExercise';
 
 
 type Navigation = StackScreenProps<RootStackParamList, 'AddExercise'>
@@ -70,6 +71,8 @@ const AddExercise: React.FC<Navigation> = ({ navigation }) => {
             <BottomSheet ref={bottomSheetRef}>
                 <CreateExercise />
             </BottomSheet>
+
+            <FilterExercise/>
         </S.Container>
 
 

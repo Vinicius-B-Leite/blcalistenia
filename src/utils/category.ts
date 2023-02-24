@@ -1,1 +1,1 @@
-export const category = ['empurrar', 'puxar', 'pernas', 'estático(hold)', 'dinâmico(rep)', 'peso']
+export const category = ['empurrar', 'puxar', 'estático(hold)', 'dinâmico(rep)', 'peso']
