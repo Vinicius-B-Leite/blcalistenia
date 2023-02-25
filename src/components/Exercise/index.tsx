@@ -4,7 +4,7 @@ import React, { useContext } from 'react';
 import { FlatList, Alert } from 'react-native';
 import { ExerciseContext } from '../../contexts/ExerciseContext';
 import { WorkoutContext } from '../../contexts/WorkoutContext';
-import { exercise } from '../../models/exercise';
+import { exercise } from '../../models/ExerciseType';
 import { RootStackParamList } from '../../routes/Models';
 import * as S from './styles'
 

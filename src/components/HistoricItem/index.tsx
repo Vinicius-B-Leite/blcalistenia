@@ -1,7 +1,7 @@
 import React from 'react';
 import * as S from './styles'
 import { HistoricType } from '../../models/HistoricType';
-import { WorkoutType } from '../../models/workout';
+import { WorkoutType } from '../../models/WorkoutType';
 
 type Props = {
     item: HistoricType,

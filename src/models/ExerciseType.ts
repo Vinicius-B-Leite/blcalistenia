@@ -1,6 +1,5 @@
-import { series } from "./workout"
 
-export type exercise = {
+export type ExerciseType = {
     name: String,
     categories: String[],
     muscles: String[]

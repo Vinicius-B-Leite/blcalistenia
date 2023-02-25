@@ -1,6 +1,6 @@
 import styled from "styled-components/native";
 import { FlatList } from 'react-native'
-import { Workout, Workouts } from "../../models/workout";
+import { Workout, Workouts } from "../../models/WorkoutType";
 
 
 export const Header = styled.View`

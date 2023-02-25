@@ -3,7 +3,7 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import React, { useContext } from 'react';
 import { Alert } from 'react-native';
 import { WorkoutContext } from '../../contexts/WorkoutContext';
-import { WorkoutType } from '../../models/workout';
+import { WorkoutType } from '../../models/WorkoutType';
 import { RootStackParamList } from '../../routes/Models';
 import * as S from './styles'
 

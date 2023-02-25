@@ -1,18 +1,19 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
-import { exercisesInWorkout } from '../models/exercisesInWorkout';
+import { ExercisesInWorkoutType } from '../models/ExercisesInWorkoutType';
 import { HistoricType } from '../models/HistoricType';
-import { series, WorkoutType } from '../models/workout';
+import { SerieType } from '../models/SerieType';
+import { WorkoutType } from '../models/WorkoutType';
 import { getRealm } from '../services/realm';
 
 
 type WorkoutSeasonType = {
     finishWorkout: (seconds: number) => Promise<void>,
     startWorkout: (workout: WorkoutType) => void,
-    createSerie: (currentExercise: exercisesInWorkout) => void,
-    deleteSerie: (currentExercise: exercisesInWorkout, serieNumber: number) => void,
-    changeSerie: (currentExercise: exercisesInWorkout, serieNumber: number, newSerie: series) => void,
-    markSerieAsDone: (currentExercise: exercisesInWorkout, serieNumber: number) => void,
-    deleteExercise: (exercise: exercisesInWorkout) => Promise<void>
+    createSerie: (currentExercise: ExercisesInWorkoutType) => void,
+    deleteSerie: (currentExercise: ExercisesInWorkoutType, serieNumber: number) => void,
+    changeSerie: (currentExercise: ExercisesInWorkoutType, serieNumber: number, newSerie: SerieType) => void,
+    markSerieAsDone: (currentExercise: ExercisesInWorkoutType, serieNumber: number) => void,
+    deleteExercise: (exercise: ExercisesInWorkoutType) => Promise<void>
 }
 
 export const WorkoutSeasonContext = createContext({} as WorkoutSeasonType)
@@ -43,7 +44,7 @@ const WorkoutSeasonProvider = ({ children }: { children: React.ReactNode }) => {
         setWorkoutCopy(workout)
     }
 
-    const createSerie = (currentExercise: exercisesInWorkout) => {
+    const createSerie = (currentExercise: ExercisesInWorkoutType) => {
 
         setWorkoutCopy(old => {
             if (old) {
@@ -60,7 +61,7 @@ const WorkoutSeasonProvider = ({ children }: { children: React.ReactNode }) => {
 
     }
 
-    const deleteSerie = (currentExercise: exercisesInWorkout, serieNumber: number) => {
+    const deleteSerie = (currentExercise: ExercisesInWorkoutType, serieNumber: number) => {
         setWorkoutCopy(old => {
             if (old) {
                 const exericseIndex = old.exercises.findIndex((v) => v.exercise_id == currentExercise.exercise_id)
@@ -82,7 +83,7 @@ const WorkoutSeasonProvider = ({ children }: { children: React.ReactNode }) => {
         })
     }
 
-    const changeSerie = (currentExercise: exercisesInWorkout, serieNumber: number, newSerie: series) => {
+    const changeSerie = (currentExercise: ExercisesInWorkoutType, serieNumber: number, newSerie: SerieType) => {
         setWorkoutCopy(old => {
             if (old) {
                 const exerciseIndex = old.exercises.findIndex((v) => v.exercise_id == currentExercise.exercise_id)
@@ -92,7 +93,7 @@ const WorkoutSeasonProvider = ({ children }: { children: React.ReactNode }) => {
         })
     }
 
-    const markSerieAsDone = (currentExercise: exercisesInWorkout, serieNumber: number) => {
+    const markSerieAsDone = (currentExercise: ExercisesInWorkoutType, serieNumber: number) => {
         setWorkoutCopy(old => {
             if (old) {
                 const exerciseIndex = old.exercises.indexOf(currentExercise)
@@ -103,7 +104,7 @@ const WorkoutSeasonProvider = ({ children }: { children: React.ReactNode }) => {
         })
     }
 
-    const deleteExercise = async (exercise: exercisesInWorkout) => {
+    const deleteExercise = async (exercise: ExercisesInWorkoutType) => {
         setWorkoutCopy(old => {
             if (old) {
                 let copy = { ...old }

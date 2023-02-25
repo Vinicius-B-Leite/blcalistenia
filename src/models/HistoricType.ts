@@ -1,4 +1,4 @@
-import { WorkoutType } from "./workout"
+import { WorkoutType } from "./WorkoutType"
 
 export type HistoricType = {
     workout: string,

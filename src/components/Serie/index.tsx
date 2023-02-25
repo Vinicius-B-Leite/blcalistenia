@@ -2,8 +2,7 @@ import React, { useContext, useState } from 'react';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { WorkoutSeasonContext } from '../../contexts/WorkooutSeason';
 import { WorkoutContext } from '../../contexts/WorkoutContext';
-import { exercisesInWorkout } from '../../models/exercisesInWorkout';
-import { series } from '../../models/workout';
+import { ExercisesInWorkoutType } from '../../models/ExercisesInWorkoutType';
 import { Text } from '../Workout/styles';
 import * as S from './styles'
 import AntDesign from 'react-native-vector-icons/AntDesign'
@@ -11,16 +10,17 @@ import { useTheme } from 'styled-components/native';
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RootStackParamList } from '../../routes/Models';
+import { SerieType } from '../../models/SerieType';
 
 type NavigationType = StackNavigationProp<RootStackParamList, 'WorkoutSeason'>
 type Props = {
-    item: series,
-    exercise: exercisesInWorkout,
+    item: SerieType,
+    exercise: ExercisesInWorkoutType,
     showRest: boolean,
     showSucessButton: boolean
     deleteSerieButton: boolean,
-    deleteSerie: (exercise: exercisesInWorkout, serie: number) => void,
-    sucessButton: (exercise: exercisesInWorkout, serieNumber: number) => void,
+    deleteSerie: (exercise: ExercisesInWorkoutType, serie: number) => void,
+    sucessButton: (exercise: ExercisesInWorkoutType, serieNumber: number) => void,
 }
 const Serie: React.FC<Props> = ({ item, exercise, deleteSerieButton, showRest, sucessButton, deleteSerie, showSucessButton }) => {
     const theme = useTheme()

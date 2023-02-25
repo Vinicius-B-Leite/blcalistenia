@@ -5,7 +5,7 @@ import { HistoricContext } from '../../contexts/HistoricContext';
 import { HistoricType } from '../../models/HistoricType';
 import HistoricItem from '../../components/HistoricItem';
 import BottomSheet, { BottomSheetRefProps } from '../../components/BottomSheet';
-import { WorkoutType } from '../../models/workout';
+import { WorkoutType } from '../../models/WorkoutType';
 import Exercise from '../../components/Exercise';
 import ExerciseInWorkoutItem from '../../components/ExerciseInWorkoutItem';
 import { GestureHandlerRootView, TouchableOpacity } from 'react-native-gesture-handler';
@@ -74,6 +74,7 @@ const HistoricBottomSheetItem = ({ item }: { item: HistoricType }) => {
                     showDeleteSerieButton={false}
                     showRest={false}
                     showSucessButton={false}
+
                 />}
             />
         </>

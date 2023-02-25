@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react';
 import { FlatList, TouchableOpacity } from 'react-native';
 import { useTheme } from 'styled-components/native';
-import { exercisesInWorkout } from '../../models/exercisesInWorkout';
+import { ExercisesInWorkoutType } from '../../models/ExercisesInWorkoutType';
 import * as S from './styles'
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import { ExerciseContext } from '../../contexts/ExerciseContext';
@@ -11,15 +11,15 @@ import { WorkoutContext } from '../../contexts/WorkoutContext';
 
 
 type Props = {
-    item: exercisesInWorkout,
+    item: ExercisesInWorkoutType,
     showCreateSerie: boolean,
     showRest: boolean,
     showDeleteSerieButton: boolean,
     showSucessButton: boolean,
-    createSerieFunction?: (exercise: exercisesInWorkout) => void,
-    deleteSerieFunction?: (exercise: exercisesInWorkout, serie: number) => void,
-    sucessButtonFunction?: (exercise: exercisesInWorkout, serieNumber: number) => void,
-    deleteExerciseFuntion: (exercise: exercisesInWorkout) => void
+    createSerieFunction?: (exercise: ExercisesInWorkoutType) => void,
+    deleteSerieFunction?: (exercise: ExercisesInWorkoutType, serie: number) => void,
+    sucessButtonFunction?: (exercise: ExercisesInWorkoutType, serieNumber: number) => void,
+    deleteExerciseFuntion?: (exercise: ExercisesInWorkoutType) => void
 }
 
 const ExerciseInWorkoutItem: React.FC<Props> = ({ item, showCreateSerie, createSerieFunction, showRest, showDeleteSerieButton, deleteSerieFunction, showSucessButton, sucessButtonFunction, deleteExerciseFuntion }) => {
@@ -29,7 +29,7 @@ const ExerciseInWorkoutItem: React.FC<Props> = ({ item, showCreateSerie, createS
         <S.Exercise>
             <S.ExerciseHeader>
                 <S.ExerciseName>{item.exercise_id}</S.ExerciseName>
-                <TouchableOpacity onPress={() => deleteExerciseFuntion(item)}>
+                <TouchableOpacity onPress={() => deleteExerciseFuntion && deleteExerciseFuntion(item)}>
                     <FontAwesome name='trash' size={theme.sizes.icons.sm} color={theme.colors.alert} />
                 </TouchableOpacity>
             </S.ExerciseHeader>

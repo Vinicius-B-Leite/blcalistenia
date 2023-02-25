@@ -1,6 +1,6 @@
 import { CompositeNavigationProp, NavigatorScreenParams } from '@react-navigation/native';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { WorkoutType } from '../../models/workout';
+import { WorkoutType } from '../../models/WorkoutType';
 
 
 export type RootStackParamList = {
