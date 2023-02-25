@@ -6,6 +6,7 @@ import { initialsExercises } from '../utils/initialsExercises'
 
 type ExerciseContextType = {
     getExercises: (text?: string) => Promise<void>,
+    filterExercises: (category: string, muscle: string) => Promise<void>,
     exercisList: exercise[],
     createExercise: ({ name, muscles, categories }: exercise) => Promise<void>,
     deleteExercise: (exerciseName: String) => Promise<void>
@@ -37,7 +38,7 @@ export const ExerciseProvider = ({ children }: { children: React.ReactNode }) =>
             }
         })
     }
-    const getExercises = async (text? : string) => {
+    const getExercises = async (text?: string) => {
         return new Promise<void>(async (resolve, reject) => {
             try {
                 const realm = await getRealm()
@@ -50,7 +51,7 @@ export const ExerciseProvider = ({ children }: { children: React.ReactNode }) =>
                     })
                     return
                 }
-                if (text){
+                if (text) {
                     exercises = realm.objects<exercise[]>('Exercise').filtered(`name CONTAINS '${text}'`).toJSON() as exercise[]
                 }
                 exercises.sort()
@@ -61,10 +62,21 @@ export const ExerciseProvider = ({ children }: { children: React.ReactNode }) =>
             }
         })
     }
+    const filterExercises = async (category: string, muscle: string) => {
+        const realm = await getRealm()
+        const exerciesesFiltereds = realm.objects('Exercise')
+            .filtered(`categories CONTAINS  '${category}'`)
+            .filtered(`muscles CONTAINS '${muscle}'`)
+            .toJSON() as exercise[]
+
+        setExerciseList([...exerciesesFiltereds])
+
+
+    }
     const deleteExercise = async (exerciseName: String) => {
         const realm = await getRealm()
-        realm.write(() =>{
-            realm.delete(realm.objectForPrimaryKey('Exercise', exerciseName as string ))
+        realm.write(() => {
+            realm.delete(realm.objectForPrimaryKey('Exercise', exerciseName as string))
             setExerciseList(old => {
                 const index = old.findIndex((v) => v.name == exerciseName)
                 old.splice(index, 1)
@@ -77,6 +89,7 @@ export const ExerciseProvider = ({ children }: { children: React.ReactNode }) =>
     return (
         <ExerciseContext.Provider value={{
             getExercises,
+            filterExercises,
             exercisList,
             createExercise,
             deleteExercise

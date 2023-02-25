@@ -49,6 +49,7 @@ const Exercise: React.FC<Prosp> = ({ item }) => {
             <FlatList
                 data={item.muscles}
                 horizontal
+                showsHorizontalScrollIndicator={false}
                 scrollEnabled={false}
                 renderItem={({ item: m }) => (
                     <S.ExerciseMuscles>{m}</S.ExerciseMuscles>

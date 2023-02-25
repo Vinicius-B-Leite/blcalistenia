@@ -13,12 +13,14 @@ import FilterExercise from '../../components/FilterExercise';
 
 
 type Navigation = StackScreenProps<RootStackParamList, 'AddExercise'>
-
+export type FilterType = { category: string, muscles: string }
 const AddExercise: React.FC<Navigation> = ({ navigation }) => {
     const theme = useTheme()
-    const { getExercises, exercisList } = useContext(ExerciseContext)
+    const { getExercises, exercisList, filterExercises } = useContext(ExerciseContext)
     const bottomSheetRef = useRef<BottomSheetRefProps>(null)
     const [searchExerciseInput, setSearchExerciseInput] = useState('')
+    const [filterExerciseVisible, setFilterExercciseVisible] = useState(true)
+    const [filters, setFilters] = useState<FilterType>({ category: 'empurrar', muscles: 'Peitoral' })
 
     useEffect(() => {
         getExercises(searchExerciseInput)
@@ -47,7 +49,7 @@ const AddExercise: React.FC<Navigation> = ({ navigation }) => {
             </S.Header>
 
             <S.Main>
-                <S.FilterButton>
+                <S.FilterButton onPress={() => setFilterExercciseVisible(true)}>
                     <S.FilterText>Filtros</S.FilterText>
                 </S.FilterButton>
 
@@ -72,7 +74,18 @@ const AddExercise: React.FC<Navigation> = ({ navigation }) => {
                 <CreateExercise />
             </BottomSheet>
 
-            <FilterExercise/>
+            <FilterExercise
+                filters={filters}
+                modalProps={{
+                    visible: filterExerciseVisible,
+                    transparent: true,
+                    onRequestClose: () => setFilterExercciseVisible(false),
+                    animationType: 'fade'
+                }}
+                onSelectCategoty={(category) => setFilters(old => ({ ...old, category: category }))}
+                onSelectMuscle={(muscle) => setFilters(old => ({ ...old, muscles: muscle }))}
+                onApply={() => filterExercises(filters.category, filters.muscles).then(() => setFilterExercciseVisible(false))}
+            />
         </S.Container>
 
 
