@@ -37,7 +37,7 @@ export const OptionContainer = styled.TouchableOpacity`
 
 type Props = { selected: boolean }
 export const OptionCircleBorder = styled.View<Props>`
-    width: 20%;
+    width: 18%;
     height: 100%;
     border-radius: ${({ theme }) => theme.sizes.borderRadius.full}px;
     border-width: 2px;

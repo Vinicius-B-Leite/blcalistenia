@@ -1,10 +1,8 @@
 TASKS
 facil
     - trocar o nome
-    - trocar de tema
     - criar treinos de sugestão
     - mostrar os total de tempo descançado no cronometro 
-    - trocar o nnome dos models/tipos
     - substituir as imagens de treino para a lib fast image
     - criar uma tela ou bottom sheet para mostrar como que faz o exercicios e um gif de eu fazendo
     - adicionar novos exercicios
@@ -21,7 +19,8 @@ dificil
 
 
 TASK EM DESENVOLVIMENTO
-- 
+    - trocar de tema
+
 
 
 

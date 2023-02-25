@@ -48,7 +48,7 @@ const Profile: React.FC<NavigationProps> = ({ navigation }) => {
                 </S.Left>
                 <S.OptionTitle>Nome de usuário</S.OptionTitle>
             </S.OptionContainer>
-            <S.OptionContainer>
+            <S.OptionContainer onPress={() => setShowThemeSelect(true)}>
                 <S.Left>
                     <Feather name='sun' size={theme.sizes.icons.md} color={theme.colors.contrast} />
                 </S.Left>

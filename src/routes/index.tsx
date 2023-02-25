@@ -16,7 +16,7 @@ const Routes: React.FC = () => {
     const theme = useTheme()
     return (
         <NavigationContainer  >
-            <StatusBar backgroundColor={theme.colors.background} barStyle='light-content' />
+            <StatusBar backgroundColor={theme.colors.background} barStyle={theme.name == 'dark' ? 'light-content' : 'dark-content'} />
             <Navigator
 
                 tabBarPosition='bottom'

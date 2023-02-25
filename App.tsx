@@ -8,6 +8,9 @@ import HistoricProvider from './src/contexts/HistoricContext';
 import AuthProvider from './src/contexts/AuthContext';
 import Routes from './src/routes';
 import WorkoutProvider from './src/contexts/WorkoutContext';
+import { lightMode } from './src/theme/lightMode';
+import ThemeContextProvider from './src/contexts/ThemeContext';
+import Index from './src';
 
 
 
@@ -24,19 +27,9 @@ const App = () => {
 
 
   return (
-    <ThemeProvider theme={darkMode}>
-      <WorkoutProvider>
-        <ExerciseProvider>
-          <WorkoutSeasonProvider>
-            <HistoricProvider>
-              <AuthProvider>
-                <Routes />
-              </AuthProvider>
-            </HistoricProvider>
-          </WorkoutSeasonProvider>
-        </ExerciseProvider>
-      </WorkoutProvider>
-    </ThemeProvider>
+    <ThemeContextProvider>
+      <Index/>
+    </ThemeContextProvider>
   )
 }
 
