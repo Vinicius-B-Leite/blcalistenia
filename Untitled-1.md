@@ -1,13 +1,12 @@
 TASKS
 facil
-    - trocar o nome
+    - trocar o nome de user
     - criar treinos de sugestão
-    - mostrar os total de tempo descançado no cronometro 
-    - substituir as imagens de treino para a lib fast image
     - criar uma tela ou bottom sheet para mostrar como que faz o exercicios e um gif de eu fazendo
     - adicionar novos exercicios
 
 medio
+    - mostrar os total de tempo descançado no cronometro 
     - fazer os graficos realmente funcionar
     - fazer backup na nuvem
 
@@ -19,7 +18,7 @@ dificil
 
 
 TASK EM DESENVOLVIMENTO
-    - trocar de tema
+    -
 
 
 

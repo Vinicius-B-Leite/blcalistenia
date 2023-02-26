@@ -2,6 +2,7 @@ import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import React, { useContext } from 'react';
 import { Alert } from 'react-native';
+import FastImage from 'react-native-fast-image';
 import { WorkoutContext } from '../../contexts/WorkoutContext';
 import { WorkoutType } from '../../models/WorkoutType';
 import { RootStackParamList } from '../../routes/Models';
@@ -39,7 +40,7 @@ const Workout: React.FC<Props> = ({ data }) => {
             onLongPress={handleDelete}>
             <S.Banner
                 source={{ uri: data.banner.length > 0 ? data.banner : 'https://www.salonlfc.com/wp-content/uploads/2018/01/image-not-found-1-scaled-1150x647.png' }}
-                resizeMode='cover'
+                resizeMode={FastImage.resizeMode.cover}
             />
             <S.TextContainer>
                 <S.Text >{data.title}</S.Text>
