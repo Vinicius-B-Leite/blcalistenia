@@ -14,7 +14,8 @@ type WorkoutSeasonType = {
     deleteSerie: (currentExercise: ExercisesInWorkoutType, serieNumber: number) => void,
     changeSerie: (currentExercise: ExercisesInWorkoutType, serieNumber: number, newSerie: SerieType) => void,
     markSerieAsDone: (currentExercise: ExercisesInWorkoutType, serieNumber: number) => void,
-    deleteExercise: (exercise: ExercisesInWorkoutType) => Promise<void>
+    deleteExercise: (exercise: ExercisesInWorkoutType) => Promise<void>,
+    workoutCopy: WorkoutType | undefined
 }
 
 export const WorkoutSeasonContext = createContext({} as WorkoutSeasonType)
@@ -128,7 +129,8 @@ const WorkoutSeasonProvider = ({ children }: { children: React.ReactNode }) => {
             deleteSerie,
             changeSerie,
             markSerieAsDone,
-            deleteExercise
+            deleteExercise,
+            workoutCopy
         }}>
             {children}
         </WorkoutSeasonContext.Provider>

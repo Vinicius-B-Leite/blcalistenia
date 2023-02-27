@@ -1,5 +1,5 @@
 import React from 'react';
-import { StatusBar } from 'react-native'
+import { StatusBar, Text } from 'react-native'
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import { NavigationContainer } from '@react-navigation/native';
 import Dashboard from '../screens/Dashboard';
@@ -8,6 +8,7 @@ import { useTheme } from 'styled-components/native';
 import Entypo from 'react-native-vector-icons/Entypo'
 import Octicons from 'react-native-vector-icons/Octicons'
 import HomeStack from './HomeStack';
+import TabBar from '../components/Tabbar';
 
 
 const { Navigator, Screen } = createMaterialTopTabNavigator()
@@ -18,18 +19,11 @@ const Routes: React.FC = () => {
         <NavigationContainer  >
             <StatusBar backgroundColor={theme.colors.background} barStyle={theme.name == 'dark' ? 'light-content' : 'dark-content'} />
             <Navigator
-
                 tabBarPosition='bottom'
                 screenOptions={{
-                    tabBarIndicatorStyle: { display: 'none' },
-                    tabBarStyle: {
-                        backgroundColor: theme.colors.darkBackground,
-                        height: theme.sizes.tabBar,
-                        justifyContent: 'center',
-                    },
-                    tabBarActiveTintColor: theme.colors.contrast,
-                    tabBarShowLabel: false,
+                    tabBarIndicatorStyle: { display: 'none' }
                 }}
+                tabBar={(props) => <TabBar {...props} />}
             >
                 <Screen name='HomeStack' component={HomeStack}
                     options={{
