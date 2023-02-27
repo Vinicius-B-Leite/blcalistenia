@@ -23,6 +23,8 @@ const Home: React.FC = () => {
     const [calendarVisible, setCalendarVisible] = useState<boolean>(false)
     const [searchWorkoutInput, setSearchWorkoutInput] = useState('')
     const [muscleFilterSelected, setMuscleFilterSelected] = useState('Todos')
+    
+
 
     useFocusEffect(
         useCallback(() => {

@@ -14,11 +14,32 @@ type Navigation = StackScreenProps<RootStackParamList, 'WorkoutSeason'>
 const WorkoutSeason: React.FC<Navigation> = ({ navigation, route }) => {
     const theme = useTheme()
     const { workout } = route.params
-    const { finishWorkout, startWorkout, createSerie, deleteSerie, markSerieAsDone, deleteExercise } = useContext(WorkoutSeasonContext)
+    const { finishWorkout, startWorkout, createSerie, deleteSerie, markSerieAsDone, deleteExercise, cancelWorkout } = useContext(WorkoutSeasonContext)
     const { seconds, minutes } = useTimer()
+
 
     useEffect(() => {
         startWorkout(workout)
+        navigation.addListener('beforeRemove', (e) => {
+            e.preventDefault()
+            Alert.alert(
+                'Cancelar treino',
+                'Você deseja cancelar o treino?',
+                [
+                    {
+                        onPress: () => {
+                            cancelWorkout()
+                            navigation.dispatch(e.data.action)
+                        },
+                        text: 'Sim',
+                    },
+                    {
+                        text: 'Não',
+                        style: 'cancel'
+                    }
+                ]
+            )
+        })
     }, [])
 
     const handleFineshWorkout = () => {
@@ -36,6 +57,8 @@ const WorkoutSeason: React.FC<Navigation> = ({ navigation, route }) => {
                 style: 'cancel'
             }])
     }
+
+
     return (
         <S.Container>
             <S.Header>
@@ -45,7 +68,7 @@ const WorkoutSeason: React.FC<Navigation> = ({ navigation, route }) => {
                     </S.GoBack>
                     <S.Title numberOfLines={1}>{workout.title}</S.Title>
                 </S.Left>
-                <S.CancelWorkoutBtn>
+                <S.CancelWorkoutBtn onPress={() => navigation.goBack()}>
                     <S.CancelWorkoutTxt>Cancelar</S.CancelWorkoutTxt>
                 </S.CancelWorkoutBtn>
             </S.Header>

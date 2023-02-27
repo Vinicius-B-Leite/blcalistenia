@@ -8,6 +8,7 @@ import { getRealm } from '../services/realm';
 
 type WorkoutSeasonType = {
     finishWorkout: (seconds: number) => Promise<void>,
+    cancelWorkout: () => void,
     startWorkout: (workout: WorkoutType) => void,
     createSerie: (currentExercise: ExercisesInWorkoutType) => void,
     deleteSerie: (currentExercise: ExercisesInWorkoutType, serieNumber: number) => void,
@@ -34,6 +35,10 @@ const WorkoutSeasonProvider = ({ children }: { children: React.ReactNode }) => {
                 _id: realm.objects('Historic').length + 1
             })
         })
+    }
+
+    const cancelWorkout = () => {
+        setWorkoutCopy(undefined)
     }
 
     const startWorkout = (workout: WorkoutType) => {
@@ -117,6 +122,7 @@ const WorkoutSeasonProvider = ({ children }: { children: React.ReactNode }) => {
     return (
         <WorkoutSeasonContext.Provider value={{
             finishWorkout,
+            cancelWorkout,
             startWorkout,
             createSerie,
             deleteSerie,
