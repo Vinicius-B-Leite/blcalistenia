@@ -30,7 +30,6 @@ const AuthProvider: React.FC<Props> = ({ children }) => {
         const userRealm = realm.objects('User')[0]
 
         if (typeof userRealm === 'undefined') {
-            // .toJSON() as UserType
             realm.write(() => {
                 realm.create<UserType>('User', {
                     username: 'Desconhecido',

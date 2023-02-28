@@ -9,6 +9,7 @@ import { RootStackParamList } from '../../routes/Models';
 import { pickeImage } from '../../utils/pickImage';
 import FastImage from 'react-native-fast-image';
 import ThemeSelect from '../../components/ThemeSelect';
+import ChangeUsername from '../../components/ChangeUsername';
 
 
 
@@ -19,6 +20,7 @@ const Profile: React.FC<NavigationProps> = ({ navigation }) => {
     const theme = useTheme()
     const { user, changePhoto } = useContext(AuthContext)
     const [showThemeSelect, setShowThemeSelect] = useState(false)
+    const [showChangeUsername, setShowChangeUsername] = useState(false)
 
     const handlePickImage = async () => {
         const image = await pickeImage()
@@ -42,7 +44,7 @@ const Profile: React.FC<NavigationProps> = ({ navigation }) => {
             </S.ButtonChangeImage>
             <S.Username>{user.username}</S.Username>
 
-            <S.OptionContainer onPress={() => setShowThemeSelect(true)}>
+            <S.OptionContainer onPress={() => setShowChangeUsername(true)}>
                 <S.Left>
                     <Feather name='user' size={theme.sizes.icons.md} color={theme.colors.contrast} />
                 </S.Left>
@@ -61,8 +63,8 @@ const Profile: React.FC<NavigationProps> = ({ navigation }) => {
                 <S.OptionTitle>Sincronizar na nuvem</S.OptionTitle>
             </S.OptionContainer>
 
-
-            <ThemeSelect transparent animationType='fade' visible={showThemeSelect} onRequestClose={() => setShowThemeSelect(false)}/>
+            <ChangeUsername  visible={showChangeUsername} onRequestClose={() => setShowChangeUsername(false)} animationType='slide' transparent/>
+            <ThemeSelect transparent animationType='fade' visible={showThemeSelect} onRequestClose={() => setShowThemeSelect(false)} />
         </S.Container>
     )
 }
