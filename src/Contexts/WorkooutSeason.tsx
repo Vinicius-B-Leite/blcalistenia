@@ -48,6 +48,8 @@ const WorkoutSeasonProvider = ({ children }: { children: React.ReactNode }) => {
                 _id: realm.objects('Historic').length + 1
             })
         })
+
+        setWorkoutCopy(undefined)
     }
 
     const cancelWorkout = () => {

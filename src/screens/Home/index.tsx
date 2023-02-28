@@ -13,6 +13,7 @@ import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import CalendarDaysTrained from '../../components/CalendarDaysTrained';
 import { RootStackParamList } from '../../routes/Models';
 import { StackNavigationProp } from '@react-navigation/stack';
+import ListEmptyComponent from '../../components/ListEmptyComponent';
 
 type Navigation = StackNavigationProp<RootStackParamList, 'Home'>
 
@@ -23,7 +24,7 @@ const Home: React.FC = () => {
     const [calendarVisible, setCalendarVisible] = useState<boolean>(false)
     const [searchWorkoutInput, setSearchWorkoutInput] = useState('')
     const [muscleFilterSelected, setMuscleFilterSelected] = useState('Todos')
-    
+
 
 
     useFocusEffect(
@@ -81,6 +82,7 @@ const Home: React.FC = () => {
                     contentContainerStyle={{
                         alignItems: 'center'
                     }}
+                    ListEmptyComponent={() => <ListEmptyComponent />}
                     ListHeaderComponent={() => <CreateWorkoutButton />}
                     renderItem={({ item }) => <Workout data={item} />}
                 />

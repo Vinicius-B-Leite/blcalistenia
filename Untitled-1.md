@@ -17,7 +17,7 @@ dificil
 
 
 TASK EM DESENVOLVIMENTO
-    - refatorar o cronometro para o WorkoutSeasonContext e colocar ele no WorkoutCopy
+    - 
 
 
 
