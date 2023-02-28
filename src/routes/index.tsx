@@ -21,7 +21,8 @@ const Routes: React.FC = () => {
             <Navigator
                 tabBarPosition='bottom'
                 screenOptions={{
-                    tabBarIndicatorStyle: { display: 'none' }
+                    tabBarIndicatorStyle: { display: 'none' },
+                    
                 }}
                 tabBar={(props) => <TabBar {...props} />}
             >

@@ -21,7 +21,7 @@ export const SubtitleGoWorkout = styled.Text`
     color: ${({ theme }) => theme.colors.text};
 `
 
-export const NavBar = styled.TouchableOpacity`
+export const NavBar = styled.View`
     flex-direction: row;
     justify-content: space-around;
     align-items: center;

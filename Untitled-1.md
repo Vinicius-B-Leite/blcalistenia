@@ -17,7 +17,7 @@ dificil
 
 
 TASK EM DESENVOLVIMENTO
-    - componente em cima da navbar mostrando que o treino esta rolando 
+    - refatorar o cronometro para o WorkoutSeasonContext e colocar ele no WorkoutCopy
 
 
 

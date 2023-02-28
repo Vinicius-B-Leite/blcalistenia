@@ -4,7 +4,7 @@ import { HistoricType } from '../models/HistoricType';
 import { SerieType } from '../models/SerieType';
 import { WorkoutType } from '../models/WorkoutType';
 import { getRealm } from '../services/realm';
-
+import { useTimer } from '../hooks/useTimer'
 
 type WorkoutSeasonType = {
     finishWorkout: (seconds: number) => Promise<void>,
@@ -15,15 +15,27 @@ type WorkoutSeasonType = {
     changeSerie: (currentExercise: ExercisesInWorkoutType, serieNumber: number, newSerie: SerieType) => void,
     markSerieAsDone: (currentExercise: ExercisesInWorkoutType, serieNumber: number) => void,
     deleteExercise: (exercise: ExercisesInWorkoutType) => Promise<void>,
-    workoutCopy: WorkoutType | undefined
+    workoutCopy: WorkoutType | undefined,
+    timer: number
 }
 
 export const WorkoutSeasonContext = createContext({} as WorkoutSeasonType)
 
 
+
+
 const WorkoutSeasonProvider = ({ children }: { children: React.ReactNode }) => {
 
     const [workoutCopy, setWorkoutCopy] = useState<WorkoutType>()
+    const [timer, setTimer] = useState(-1)
+
+    useEffect(() => {
+        if (workoutCopy) {
+            setTimeout(() => {
+                setTimer(old => old + 1)
+            }, 1000)
+        }
+    }, [timer])
 
     const finishWorkout = async (seconds: number) => {
         const realm = await getRealm()
@@ -43,11 +55,13 @@ const WorkoutSeasonProvider = ({ children }: { children: React.ReactNode }) => {
     }
 
     const startWorkout = (workout: WorkoutType) => {
-        workout.exercises.forEach(exercise => {
-            exercise.series.forEach(serie => serie.done = false)
-        })
-
-        setWorkoutCopy(workout)
+        if (!workoutCopy) {
+            workout.exercises.forEach(exercise => {
+                exercise.series.forEach(serie => serie.done = false)
+            })
+            setTimer(0)
+            setWorkoutCopy(workout)
+        }
     }
 
     const createSerie = (currentExercise: ExercisesInWorkoutType) => {
@@ -130,7 +144,8 @@ const WorkoutSeasonProvider = ({ children }: { children: React.ReactNode }) => {
             changeSerie,
             markSerieAsDone,
             deleteExercise,
-            workoutCopy
+            workoutCopy,
+            timer
         }}>
             {children}
         </WorkoutSeasonContext.Provider>

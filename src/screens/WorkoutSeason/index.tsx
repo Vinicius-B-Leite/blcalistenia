@@ -1,5 +1,5 @@
 import { StackScreenProps } from '@react-navigation/stack';
-import React, { useContext, useState, useEffect } from 'react';
+import React, { useContext, useState, useEffect, useLayoutEffect } from 'react';
 import { FlatList, Alert } from 'react-native'
 import { useTheme } from 'styled-components/native';
 import { RootStackParamList } from '../../routes/Models';
@@ -14,32 +14,11 @@ type Navigation = StackScreenProps<RootStackParamList, 'WorkoutSeason'>
 const WorkoutSeason: React.FC<Navigation> = ({ navigation, route }) => {
     const theme = useTheme()
     const { workout } = route.params
-    const { finishWorkout, startWorkout, createSerie, deleteSerie, markSerieAsDone, deleteExercise, cancelWorkout } = useContext(WorkoutSeasonContext)
-    const { seconds, minutes } = useTimer()
-
+    const { finishWorkout, startWorkout, createSerie, deleteSerie, markSerieAsDone, deleteExercise, cancelWorkout, timer } = useContext(WorkoutSeasonContext)
 
     useEffect(() => {
         startWorkout(workout)
-        navigation.addListener('beforeRemove', (e) => {
-            e.preventDefault()
-            Alert.alert(
-                'Cancelar treino',
-                'Você deseja cancelar o treino?',
-                [
-                    {
-                        onPress: () => {
-                            cancelWorkout()
-                            navigation.dispatch(e.data.action)
-                        },
-                        text: 'Sim',
-                    },
-                    {
-                        text: 'Não',
-                        style: 'cancel'
-                    }
-                ]
-            )
-        })
+
     }, [])
 
     const handleFineshWorkout = () => {
@@ -49,7 +28,7 @@ const WorkoutSeason: React.FC<Navigation> = ({ navigation, route }) => {
             [{
                 text: 'Sim',
                 onPress: () => {
-                    finishWorkout(minutes * 60 + seconds).then(() => navigation.navigate('Home'))
+                    finishWorkout(timer).then(() => navigation.navigate('Home'))
                 }
             },
             {
@@ -102,7 +81,7 @@ const WorkoutSeason: React.FC<Navigation> = ({ navigation, route }) => {
             />
 
             <S.finishWorkout onPress={() => handleFineshWorkout()}>
-                <S.FineshText>Terminar treino {String(minutes).padStart(2, '0')}:{String(seconds).padStart(2, '0')}</S.FineshText>
+                <S.FineshText>Terminar treino {String(Math.floor(timer / 60)).padStart(2, '0')}:{String(timer % 60).padStart(2, '0')}</S.FineshText>
             </S.finishWorkout>
         </S.Container >
     )

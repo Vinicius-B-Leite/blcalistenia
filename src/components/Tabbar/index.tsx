@@ -9,15 +9,16 @@ import Ionicons from 'react-native-vector-icons/Ionicons'
 type TabBarProps = MaterialTopTabBarProps
 const TabBar: React.FC<TabBarProps> = ({ state, descriptors, position, navigation }) => {
     const { colors, sizes } = useTheme()
-    const { workoutCopy } = useContext(WorkoutSeasonContext)
+    const { workoutCopy, timer } = useContext(WorkoutSeasonContext)
+
     return (
         <>
             {
-                workoutCopy && (
-                    <S.GoWorkout onPress={() => navigation.navigate('HomeStack', { screen: 'WorkoutSeason' })} >
+                workoutCopy && state.routes[0].state?.index != 2 && state.routes[0].state?.index != 1 && (
+                    <S.GoWorkout onPress={() => navigation.navigate('HomeStack', { screen: 'WorkoutSeason', params: { workout: workoutCopy } })} >
                         <View>
-                            <S.TitleGoWorkout>Handstand pushup</S.TitleGoWorkout>
-                            <S.SubtitleGoWorkout >Voltar ao treino - 38:03</S.SubtitleGoWorkout>
+                            <S.TitleGoWorkout>{workoutCopy.title}</S.TitleGoWorkout>
+                            <S.SubtitleGoWorkout >Voltar ao treino - {String(Math.floor(timer / 60)).padStart(2, '0')}:{String(timer % 60).padStart(2, '0')}</S.SubtitleGoWorkout>
                         </View>
                         <Ionicons name='arrow-forward' color={colors.text} size={sizes.icons.xlg} />
                     </S.GoWorkout>
