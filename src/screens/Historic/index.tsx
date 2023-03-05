@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef, useState } from 'react';
+import React, { useCallback, useContext, useEffect, useRef, useState } from 'react';
 import { FlatList, View } from 'react-native'
 import * as S from './styles'
 import { HistoricContext } from '../../contexts/HistoricContext';
@@ -9,6 +9,7 @@ import { WorkoutType } from '../../models/WorkoutType';
 import Exercise from '../../components/Exercise';
 import ExerciseInWorkoutItem from '../../components/ExerciseInWorkoutItem';
 import { GestureHandlerRootView, TouchableOpacity } from 'react-native-gesture-handler';
+import { useFocusEffect } from '@react-navigation/native';
 
 
 const Historic: React.FC = () => {
@@ -17,9 +18,9 @@ const Historic: React.FC = () => {
     const bottomsheetRef = useRef<BottomSheetRefProps>(null)
     const [bottomSheetItem, setBottomSheetItem] = useState<HistoricType | null>(null)
 
-    useEffect(() => {
+    useFocusEffect(useCallback(() => {
         getHistoric().then(realmHistoric => setHistoric(realmHistoric))
-    }, [])
+    }, []))
 
 
     return (

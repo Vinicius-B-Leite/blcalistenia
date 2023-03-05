@@ -14,6 +14,8 @@ import CalendarDaysTrained from '../../components/CalendarDaysTrained';
 import { RootStackParamList } from '../../routes/Models';
 import { StackNavigationProp } from '@react-navigation/stack';
 import ListEmptyComponent from '../../components/ListEmptyComponent';
+import { SuggestWorkoutContext } from '../../contexts/SuggestWorkoutContex';
+import { WorkoutLevel } from '../../models/SuggestsWorkoutType';
 
 type Navigation = StackNavigationProp<RootStackParamList, 'Home'>
 
@@ -21,15 +23,18 @@ const Home: React.FC = () => {
     const theme = useTheme()
     const navigation = useNavigation<Navigation>()
     const { getWorkoutsList, workoutsList, filterWorkoutByMuscle } = useContext(WorkoutContext)
+    const { getSuggestsWorkouts, suggestsWorkouts } = useContext(SuggestWorkoutContext)
     const [calendarVisible, setCalendarVisible] = useState<boolean>(false)
     const [searchWorkoutInput, setSearchWorkoutInput] = useState('')
     const [muscleFilterSelected, setMuscleFilterSelected] = useState('Todos')
+    const [workoutLeveSuggest, setWorkoutLevelSuggest] = useState<WorkoutLevel>('begginer')
 
 
 
     useFocusEffect(
         useCallback(() => {
             getWorkoutsList(searchWorkoutInput)
+            getSuggestsWorkouts(workoutLeveSuggest)
         }, [searchWorkoutInput])
     )
 
@@ -96,7 +101,7 @@ const Home: React.FC = () => {
                     </S.LevelButton>
                 </S.Row>
                 <S.WorkoutList
-                    data={workoutsList}
+                    data={suggestsWorkouts}
                     showsHorizontalScrollIndicator={false}
                     horizontal
                     renderItem={({ item, index }) => <Workout data={item} />}

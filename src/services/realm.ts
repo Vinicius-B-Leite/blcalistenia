@@ -3,6 +3,7 @@ import { ExerciseSchema } from "../schema/ExerciseSchema";
 import { ExerciseWorkout } from "../schema/ExerciseWorkoutSchema";
 import { HistoricSchema } from "../schema/HistoricSchema";
 import { SerieSchema } from "../schema/SerieSchema";
+import { SuggestWorkout } from "../schema/SuggestWorkoutSchema";
 import { UserSchema } from "../schema/UserSchema";
 import { WorkoutSchema } from '../schema/WorkoutSchema'
 
@@ -12,7 +13,7 @@ export function getRealm(): Promise<Realm> {
         try {
 
             const realm = await Realm.open({
-                schema: [WorkoutSchema, ExerciseSchema, SerieSchema, ExerciseWorkout, HistoricSchema, UserSchema],
+                schema: [WorkoutSchema, ExerciseSchema, SerieSchema, ExerciseWorkout, HistoricSchema, UserSchema, SuggestWorkout],
                 schemaVersion: 2,
                 deleteRealmIfMigrationNeeded: true,
 

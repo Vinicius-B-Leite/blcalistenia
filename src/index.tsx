@@ -4,6 +4,7 @@ import { ThemeProvider } from 'styled-components/native';
 import AuthProvider from './contexts/AuthContext';
 import { ExerciseProvider } from './contexts/ExerciseContext';
 import HistoricProvider from './contexts/HistoricContext';
+import SuggestWorkoutProvider from './contexts/SuggestWorkoutContex';
 import { ThemeContext } from './contexts/ThemeContext';
 import WorkoutSeasonProvider from './contexts/WorkooutSeason';
 import WorkoutProvider from './contexts/WorkoutContext';
@@ -24,7 +25,9 @@ const Index: React.FC = () => {
                     <WorkoutSeasonProvider>
                         <HistoricProvider>
                             <AuthProvider>
-                                <Routes />
+                                <SuggestWorkoutProvider>
+                                    <Routes />
+                                </SuggestWorkoutProvider>
                             </AuthProvider>
                         </HistoricProvider>
                     </WorkoutSeasonProvider>

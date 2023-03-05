@@ -19,7 +19,7 @@ const AddExercise: React.FC<Navigation> = ({ navigation }) => {
     const { getExercises, exercisList, filterExercises } = useContext(ExerciseContext)
     const bottomSheetRef = useRef<BottomSheetRefProps>(null)
     const [searchExerciseInput, setSearchExerciseInput] = useState('')
-    const [filterExerciseVisible, setFilterExercciseVisible] = useState(true)
+    const [filterExerciseVisible, setFilterExercciseVisible] = useState(false)
     const [filters, setFilters] = useState<FilterType>({ category: 'empurrar', muscles: 'Peitoral' })
 
     useEffect(() => {
