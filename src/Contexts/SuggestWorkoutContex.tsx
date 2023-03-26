@@ -28,12 +28,16 @@ const SuggestWorkoutProvider: React.FC<Props> = ({ children }) => {
 
         realm.write(() => {
             suggests.forEach(w => {
-                let respose = realm.create<SuggestWorkoutType>('SuggestWorkout', w).toJSON() as SuggestWorkoutType
+                let respose = realm.create<SuggestWorkoutType>('SuggestWorkout', {
+                    id: w.id,
+                    level: w.level,
+                    workout: JSON.stringify(w.workout)
+                }).toJSON() as SuggestWorkoutType
                 arraySuggests.push(respose)
             });
         })
 
-        let arraySuggestsWorkouts: WorkoutType[] = arraySuggests.map(s => s.workout)
+        let arraySuggestsWorkouts: WorkoutType[] = arraySuggests.map(s => JSON.parse(s.workout))
         return arraySuggestsWorkouts
     }
 
@@ -46,7 +50,7 @@ const SuggestWorkoutProvider: React.FC<Props> = ({ children }) => {
             createSuggestsWorkouts().then(s => setSuggestsWorkouts(s))
             return
         }
-        setSuggestsWorkouts(workouts.map(w => w.workout))
+        setSuggestsWorkouts(workouts.map(w => JSON.parse(w.workout)))
     }
 
     return (

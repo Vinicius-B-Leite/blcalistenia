@@ -4,7 +4,7 @@ import { WorkoutType } from "./WorkoutType"
 export type WorkoutLevel =  'begginer' | 'intermate' | 'advanced'
 
 export type SuggestWorkoutType = {
-    workout: WorkoutType,
+    workout: string,
     level: WorkoutLevel
     id: string
 }

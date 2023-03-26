@@ -5,7 +5,7 @@ export const SuggestWorkout: Realm.ObjectSchema = {
             type: 'string',
             indexed: true
         },
-        workout: 'Workout',
+        workout: 'string',
         level: 'string'
     }
 }

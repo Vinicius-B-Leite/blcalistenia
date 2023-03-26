@@ -37,7 +37,7 @@ const TabBar: React.FC<TabBarProps> = ({ state, descriptors, position, navigatio
                         }
 
                         return (
-                            <TouchableOpacity onPress={onPress}>
+                            <TouchableOpacity onPress={onPress} key={r.key}>
                                 <options.tabBarIcon color={isFocused ? colors.contrast : colors.darkContrast} />
                             </TouchableOpacity>
                         )

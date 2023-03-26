@@ -50,9 +50,9 @@ const WorkoutProvider = ({ children }: { children: React.ReactNode }) => {
 
     const getWorkoutsList = async (text?: string) => {
         const realm = await getRealm()
-        let workout = realm.objects<WorkoutType[]>('Workout').sorted('title').toJSON()
+        let workout = realm.objects<WorkoutType[]>('Workout').toJSON()
 
-        if (text) {
+        if (text && text.length > 1) {
             workout = realm.objects<WorkoutType[]>('Workout').filtered(`title CONTAINS '${text}'`).toJSON()
         }
         setWorkoutList(workout as WorkoutType[])
