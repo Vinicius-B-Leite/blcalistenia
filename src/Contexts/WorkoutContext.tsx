@@ -9,7 +9,7 @@ import { SerieType } from '../models/SerieType';
 
 type WorkoutContext = {
     saveWorkout: (workout: WorkoutType) => Promise<void>,
-    getWorkoutsList: (text?: string) => Promise<void>,
+    getWorkoutsList: (text: string) => Promise<void>,
     addExercise: (newExercise: String) => void,
     deleteExercise: (exercise: ExercisesInWorkoutType) => Promise<void>,
     deleteWorkout: (workoutID: string) => Promise<void>,
@@ -48,13 +48,14 @@ const WorkoutProvider = ({ children }: { children: React.ReactNode }) => {
 
     }
 
-    const getWorkoutsList = async (text?: string) => {
+    const getWorkoutsList = async (text: string ) => {
         const realm = await getRealm()
-        let workout = realm.objects<WorkoutType[]>('Workout').sorted('title').toJSON()
+        let workout = realm.objects<WorkoutType[]>('Workout').sorted('title').filtered(`title CONTAINS '${text ? text : null}'`).toJSON()
+        console.log("🚀 ~ file: WorkoutContext.tsx:54 ~ getWorkoutsList ~ workout:", workout)
 
-        if (text) {
-            workout = realm.objects<WorkoutType[]>('Workout').filtered(`title CONTAINS '${text}'`).toJSON()
-        }
+        // if (text) {
+        //     workout = realm.objects<WorkoutType[]>('Workout').filtered(`title CONTAINS '${text}'`).toJSON()
+        // }
         setWorkoutList(workout as WorkoutType[])
     }
 

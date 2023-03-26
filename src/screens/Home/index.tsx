@@ -33,8 +33,9 @@ const Home: React.FC = () => {
 
     useFocusEffect(
         useCallback(() => {
-            getWorkoutsList(searchWorkoutInput)
-            getSuggestsWorkouts(workoutLeveSuggest)
+            getWorkoutsList(searchWorkoutInput).then(() => {
+                getSuggestsWorkouts(workoutLeveSuggest)
+            })
         }, [searchWorkoutInput])
     )
 
@@ -83,6 +84,7 @@ const Home: React.FC = () => {
                 <S.WorkoutList
                     data={workoutsList}
                     horizontal
+                    keyExtractor={(item) => item._id}
                     showsHorizontalScrollIndicator={false}
                     contentContainerStyle={{
                         alignItems: 'center'
@@ -104,6 +106,7 @@ const Home: React.FC = () => {
                     data={suggestsWorkouts}
                     showsHorizontalScrollIndicator={false}
                     horizontal
+                    keyExtractor={(item) => item._id}
                     renderItem={({ item, index }) => <Workout data={item} />}
                 />
             </S.WorkoutContainer>

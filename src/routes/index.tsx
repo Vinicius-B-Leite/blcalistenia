@@ -31,11 +31,11 @@ const Routes: React.FC = () => {
                         tabBarIcon: ({ color }) => <Entypo name='home' size={theme.sizes.icons.md} color={color} />
                     }}
                 />
-                <Screen name='Dashboard' component={Dashboard}
+                {/* <Screen name='Dashboard' component={Dashboard}
                     options={{
                         tabBarIcon: ({ color }) => <Entypo name='bar-graph' size={theme.sizes.icons.md} color={color} />
                     }}
-                />
+                /> */}
                 <Screen name='Historic' component={Historic}
                     options={{
                         tabBarIcon: ({ color }) => <Octicons name='history' size={theme.sizes.icons.md} color={color} />
