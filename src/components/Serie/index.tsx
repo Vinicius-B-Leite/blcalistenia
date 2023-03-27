@@ -1,9 +1,7 @@
 import React, { useContext, useState } from 'react';
-import { TouchableOpacity } from 'react-native-gesture-handler';
 import { WorkoutSeasonContext } from '../../contexts/WorkooutSeason';
 import { WorkoutContext } from '../../contexts/WorkoutContext';
 import { ExercisesInWorkoutType } from '../../models/ExercisesInWorkoutType';
-import { Text } from '../Workout/styles';
 import * as S from './styles'
 import AntDesign from 'react-native-vector-icons/AntDesign'
 import { useTheme } from 'styled-components/native';

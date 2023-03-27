@@ -1,5 +1,4 @@
 import React, { useContext, useState } from 'react';
-import { View } from 'react-native';
 import { useTheme } from 'styled-components/native';
 import { ExerciseContext } from '../../contexts/ExerciseContext';
 import { category } from '../../utils/category';

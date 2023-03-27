@@ -1,4 +1,3 @@
-import { WorkoutType } from "./WorkoutType"
 
 
 export type WorkoutLevel =  'begginer' | 'intermate' | 'advanced'

@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Modal, ModalProps, FlatList } from 'react-native';
+import {  Modal, ModalProps, FlatList } from 'react-native';
 import { FilterType } from '../../screens/AddExercise';
 import { category } from '../../utils/category';
 import { muscles } from '../../utils/muscles';

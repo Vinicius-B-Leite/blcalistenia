@@ -1,12 +1,10 @@
-import React, { useContext, useState } from 'react';
+import React from 'react';
 import { FlatList, TouchableOpacity } from 'react-native';
 import { useTheme } from 'styled-components/native';
 import { ExercisesInWorkoutType } from '../../models/ExercisesInWorkoutType';
 import * as S from './styles'
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
-import { ExerciseContext } from '../../contexts/ExerciseContext';
 import Serie from '../Serie';
-import { WorkoutContext } from '../../contexts/WorkoutContext';
 
 
 

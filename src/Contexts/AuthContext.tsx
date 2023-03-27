@@ -1,7 +1,5 @@
 import React, { createContext, useEffect, useState } from 'react';
-import { User } from 'realm';
 import { UserType } from '../models/UserType';
-import { WorkoutType } from '../models/WorkoutType';
 import { getRealm } from '../services/realm';
 
 

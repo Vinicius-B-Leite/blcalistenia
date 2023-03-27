@@ -13,7 +13,6 @@ import Routes from './routes';
 import { darkMode } from './theme/darkMode';
 import { lightMode } from './theme/lightMode';
 
-// import { Container } from './styles';
 
 const Index: React.FC = () => {
 

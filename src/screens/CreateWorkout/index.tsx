@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect, useLayoutEffect } from 'react';
-import { FlatList, View, Alert } from 'react-native';
+import { FlatList, Alert } from 'react-native';
 import * as S from './styles'
 import AntDesign from 'react-native-vector-icons/AntDesign'
 import Feather from 'react-native-vector-icons/Feather'
@@ -81,11 +81,7 @@ const CreateWorkout: React.FC<Navigation> = ({ route, navigation }) => {
                         onPress: async () => {
                             if (!(route?.params?.workout)) resolve(await deleteWorkout(workout_id))
                             else {
-                                console.log("🚀 ~ file: index.tsx:81 ~ onPress: ~ workoutWithoutChanges:", workoutWithoutChanges)
-
-                                if (workoutWithoutChanges) {
-                                    resolve(await saveWorkout({ ...workoutWithoutChanges }))
-                                }
+                                if (workoutWithoutChanges)    resolve(await saveWorkout({ ...workoutWithoutChanges }))
                             }
                         }
                     },

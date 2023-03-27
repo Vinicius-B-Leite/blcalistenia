@@ -1,5 +1,5 @@
 import React from 'react';
-import { Dimensions, View } from 'react-native';
+import { Dimensions } from 'react-native';
 import { BarChart } from 'react-native-chart-kit';
 import { ChartData } from 'react-native-chart-kit/dist/HelperTypes';
 import { useTheme } from 'styled-components/native';

@@ -1,8 +1,6 @@
 import React, { createContext, useEffect, useState } from 'react';
-import { View } from 'react-native';
 import { SuggestWorkoutType, WorkoutLevel } from '../models/SuggestsWorkoutType';
 import { getRealm } from '../services/realm';
-import uuid from 'react-native-uuid'
 import { suggests } from '../utils/suggestsWorkout';
 import { WorkoutType } from '../models/WorkoutType';
 

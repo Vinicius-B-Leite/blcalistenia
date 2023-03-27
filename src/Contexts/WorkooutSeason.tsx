@@ -1,10 +1,9 @@
-import React, { createContext, useContext, useEffect, useState } from 'react';
+import React, { createContext, useEffect, useState } from 'react';
 import { ExercisesInWorkoutType } from '../models/ExercisesInWorkoutType';
 import { HistoricType } from '../models/HistoricType';
 import { SerieType } from '../models/SerieType';
 import { WorkoutType } from '../models/WorkoutType';
 import { getRealm } from '../services/realm';
-import { useTimer } from '../hooks/useTimer'
 
 type WorkoutSeasonType = {
     finishWorkout: (seconds: number) => Promise<void>,

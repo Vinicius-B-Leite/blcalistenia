@@ -1,5 +1,5 @@
 import React from 'react';
-import { Dimensions, View } from 'react-native';
+import { Dimensions } from 'react-native';
 import { PieChart } from 'react-native-chart-kit';
 import { useTheme } from 'styled-components/native';
 import { TitleOfCharts } from '../../screens/Dashboard/styles';

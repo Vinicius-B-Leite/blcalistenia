@@ -1,14 +1,13 @@
-import React, { useCallback, useContext, useEffect, useRef, useState } from 'react';
-import { FlatList, View } from 'react-native'
+import React, { useCallback, useContext, useRef, useState } from 'react';
+import { FlatList, } from 'react-native'
 import * as S from './styles'
 import { HistoricContext } from '../../contexts/HistoricContext';
 import { HistoricType } from '../../models/HistoricType';
 import HistoricItem from '../../components/HistoricItem';
 import BottomSheet, { BottomSheetRefProps } from '../../components/BottomSheet';
 import { WorkoutType } from '../../models/WorkoutType';
-import Exercise from '../../components/Exercise';
 import ExerciseInWorkoutItem from '../../components/ExerciseInWorkoutItem';
-import { GestureHandlerRootView, TouchableOpacity } from 'react-native-gesture-handler';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { useFocusEffect } from '@react-navigation/native';
 
 

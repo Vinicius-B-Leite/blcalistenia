@@ -1,6 +1,5 @@
 import { StackScreenProps } from '@react-navigation/stack';
-import React, { useLayoutEffect, useRef, useEffect } from 'react';
-import { SafeAreaView, View } from 'react-native';
+import React, {  useRef, useEffect } from 'react';
 import CountDown, { CountDownRef } from '../../components/CountDown';
 import { useTabBar } from '../../contexts/TabBarContext';
 import { RootStackParamList } from '../../routes/Models';

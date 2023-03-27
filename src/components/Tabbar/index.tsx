@@ -1,6 +1,6 @@
 import { MaterialTopTabBarProps } from '@react-navigation/material-top-tabs';
 import React, { useContext } from 'react';
-import { View, StyleSheet, TouchableOpacity, Text } from 'react-native';
+import { View, StyleSheet, TouchableOpacity } from 'react-native';
 import { useTheme } from 'styled-components/native';
 import { WorkoutSeasonContext } from '../../contexts/WorkooutSeason'
 import * as S from './styles'

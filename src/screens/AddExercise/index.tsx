@@ -1,4 +1,4 @@
-import React, { useEffect, useContext, useCallback, useRef, useState } from 'react';
+import React, { useEffect, useContext, useRef, useState } from 'react';
 import * as S from './styles'
 import AntDesign from 'react-native-vector-icons/AntDesign'
 import { useTheme } from 'styled-components';

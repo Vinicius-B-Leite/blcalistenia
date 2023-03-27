@@ -1,7 +1,5 @@
-import React, { useContext, useEffect } from 'react';
-import { Dimensions, Text, View } from 'react-native';
+import React from 'react';
 import * as S from './styles'
-import { LineChart, BarChart, PieChart, ProgressChart, ContributionGraph, StackedBarChart } from "react-native-chart-kit";
 import { useTheme } from 'styled-components/native';
 import FrequencuyChart from '../../components/FrequencuyChart';
 import ExercisePregressChart from '../../components/ExercisePregressChart';

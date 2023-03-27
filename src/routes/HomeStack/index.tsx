@@ -1,6 +1,5 @@
 import { createStackNavigator, CardStyleInterpolators } from '@react-navigation/stack';
 import React from 'react';
-import { View } from 'react-native';
 import AddExercise from '../../screens/AddExercise';
 import CreateWorkout from '../../screens/CreateWorkout';
 import Home from '../../screens/Home';

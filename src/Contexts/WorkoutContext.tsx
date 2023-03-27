@@ -1,5 +1,4 @@
-import React, { createContext, useEffect, useState } from 'react';
-import { nativeViewGestureHandlerProps } from 'react-native-gesture-handler/lib/typescript/handlers/NativeViewGestureHandler';
+import React, { createContext, useState } from 'react';
 import { ExerciseType } from '../models/ExerciseType';
 import { ExercisesInWorkoutType } from '../models/ExercisesInWorkoutType';
 import { WorkoutType } from '../models/WorkoutType';

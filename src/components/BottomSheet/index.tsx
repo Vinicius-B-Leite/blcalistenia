@@ -1,7 +1,7 @@
-import React, { useCallback, useContext, useEffect, useImperativeHandle, useState } from 'react';
-import { Dimensions, StyleSheet, View } from 'react-native';
+import React, { useCallback, useImperativeHandle } from 'react';
+import { Dimensions, StyleSheet } from 'react-native';
 import { Gesture, GestureDetector } from 'react-native-gesture-handler';
-import Animated, { useAnimatedStyle, useSharedValue, withDecay, withTiming } from 'react-native-reanimated';
+import Animated, { useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated';
 
 import * as S from './styles'
 

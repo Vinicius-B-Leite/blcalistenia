@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useImperativeHandle, useLayoutEffect, useMemo, useState } from 'react';
+import React, { useCallback, useImperativeHandle, useLayoutEffect, useState } from 'react';
 import { View } from 'react-native'
 import { Dimensions } from 'react-native';
 import * as S from './styles'

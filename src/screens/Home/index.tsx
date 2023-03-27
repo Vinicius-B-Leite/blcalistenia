@@ -1,5 +1,4 @@
-import React, { useContext, useEffect, useState, useCallback } from 'react';
-import { TouchableOpacity } from 'react-native'
+import React, { useContext, useState, useCallback } from 'react';
 import Container from '../../components/Container';
 import * as S from './styles'
 import AntDesign from 'react-native-vector-icons/AntDesign'

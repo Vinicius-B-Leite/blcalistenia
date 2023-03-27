@@ -1,6 +1,5 @@
 import React, { createContext, useState } from 'react'
 import { ExerciseType } from '../models/ExerciseType'
-import { ExercisesInWorkoutType } from '../models/ExercisesInWorkoutType'
 import { getRealm  } from '../services/realm'
 import { initialsExercises } from '../utils/initialsExercises'
 

@@ -1,5 +1,4 @@
-import { CompositeNavigationProp, NavigatorScreenParams } from '@react-navigation/native';
-import type { NativeStackScreenProps } from '@react-navigation/native-stack';
+import {  NavigatorScreenParams } from '@react-navigation/native';
 import { WorkoutType } from '../../models/WorkoutType';
 
 
