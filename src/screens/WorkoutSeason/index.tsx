@@ -40,12 +40,12 @@ const WorkoutSeason: React.FC<Navigation> = ({ navigation, route }) => {
         <S.Container>
             <S.Header>
                 <S.Left>
-                    <S.GoBack onPress={() => navigation.navigate('Home')}>
+                    <S.GoBack onPressIn={() => navigation.navigate('Home')}>
                         <AntDesign name='arrowleft' size={theme.sizes.icons.md} color={theme.colors.contrast} />
                     </S.GoBack>
                     <S.Title numberOfLines={1}>{workout.title}</S.Title>
                 </S.Left>
-                <S.CancelWorkoutBtn onPress={() => navigation.goBack()}>
+                <S.CancelWorkoutBtn onPressIn={() => navigation.goBack()}>
                     <S.CancelWorkoutTxt>Cancelar</S.CancelWorkoutTxt>
                 </S.CancelWorkoutBtn>
             </S.Header>
@@ -78,7 +78,7 @@ const WorkoutSeason: React.FC<Navigation> = ({ navigation, route }) => {
                 )}
             />
 
-            <S.finishWorkout onPress={() => handleFineshWorkout()}>
+            <S.finishWorkout onPressIn={() => handleFineshWorkout()}>
                 <S.FineshText>Terminar treino {String(Math.floor(timer / 60)).padStart(2, '0')}:{String(timer % 60).padStart(2, '0')}</S.FineshText>
             </S.finishWorkout>
         </S.Container >

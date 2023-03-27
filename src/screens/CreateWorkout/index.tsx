@@ -107,7 +107,7 @@ const CreateWorkout: React.FC<Navigation> = ({ route, navigation }) => {
         <S.Container>
             <S.Header>
                 <S.Left>
-                    <S.GoBack onPress={() => navigation.goBack()}>
+                    <S.GoBack onPressIn={() => navigation.goBack()}>
                         <AntDesign name='arrowleft' size={theme.sizes.icons.md} color={theme.colors.contrast} />
                     </S.GoBack>
                     <S.Title
@@ -117,7 +117,7 @@ const CreateWorkout: React.FC<Navigation> = ({ route, navigation }) => {
                         placeholderTextColor={theme.colors.darkContrast}
                     />
                 </S.Left>
-                <S.ImagePickerButton onPress={handleImagePicker}>
+                <S.ImagePickerButton onPressIn={handleImagePicker}>
                     <Feather name='image' size={theme.sizes.icons.sm} color={theme.colors.contrast} />
                 </S.ImagePickerButton>
             </S.Header>
@@ -151,7 +151,7 @@ const CreateWorkout: React.FC<Navigation> = ({ route, navigation }) => {
                     />
                 )}
                 ListFooterComponent={() => (
-                    <S.AddExerciseButton onPress={() => navigation.navigate('AddExercise')}>
+                    <S.AddExerciseButton onPressIn={() => navigation.navigate('AddExercise')}>
                         <S.AddExerciseText>Adiconar exercício</S.AddExerciseText>
                     </S.AddExerciseButton>
                 )}
@@ -159,7 +159,7 @@ const CreateWorkout: React.FC<Navigation> = ({ route, navigation }) => {
 
             {
                 route?.params?.workout && (
-                    <S.StartWorkout onPress={() => navigation.navigate('WorkoutSeason', { workout: { _id: workout_id, banner: imageURI, exercises: exercises, title: workoutName, anotation: anotation } })}>
+                    <S.StartWorkout onPressIn={() => navigation.navigate('WorkoutSeason', { workout: { _id: workout_id, banner: imageURI, exercises: exercises, title: workoutName, anotation: anotation } })}>
                         <S.StartText>Iniciar treino</S.StartText>
                     </S.StartWorkout>
                 )

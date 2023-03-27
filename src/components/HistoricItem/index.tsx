@@ -15,15 +15,15 @@ const HistoricItem: React.FC<Props> = ({ item, onClick }) => {
     const month = String(item.date.getMonth() + 1).padStart(2, '0')
     const year = item.date.getFullYear()
 
-    const seriesLength = exercises[0].series.length
-    const firtsRep  = exercises[0].series[0].rep
-    const exerciseName = exercises[0].exercise_id
+    const seriesLength = exercises[0]?.series?.length
+    const firtsRep  = exercises[0]?.series[0]?.rep
+    const exerciseName = exercises[0]?.exercise_id
 
     const minutes = String((item.timerInSeconds / 60).toFixed(0)).padStart(2, '0')
     const seconds = String((item.timerInSeconds % 60).toFixed(0)).padStart(2, '0')
     
     return (
-        <S.Container onPress={() => onClick({...item})}>
+        <S.Container onPressIn={() => onClick({...item})}>
             <S.Header>
                 <S.Title>{title}</S.Title>
                 <S.Date>{day}/{month}/{year}</S.Date>

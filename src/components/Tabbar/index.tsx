@@ -21,7 +21,7 @@ const TabBar: React.FC<TabBarProps> = ({ state, descriptors, position, navigatio
         <>
             {
                 workoutCopy && state.routes[0].state?.index != 2 && state.routes[0].state?.index != 1 && (
-                    <S.GoWorkout onPress={() => navigation.navigate('HomeStack', { screen: 'WorkoutSeason', params: { workout: workoutCopy } })} >
+                    <S.GoWorkout onPressIn={() => navigation.navigate('HomeStack', { screen: 'WorkoutSeason', params: { workout: workoutCopy } })} >
                         <View>
                             <S.TitleGoWorkout>{workoutCopy.title}</S.TitleGoWorkout>
                             <S.SubtitleGoWorkout >Voltar ao treino - {String(Math.floor(timer / 60)).padStart(2, '0')}:{String(timer % 60).padStart(2, '0')}</S.SubtitleGoWorkout>
@@ -42,8 +42,11 @@ const TabBar: React.FC<TabBarProps> = ({ state, descriptors, position, navigatio
                             navigation.navigate(r.name)
                         }
 
+                        
                         return (
                             <TouchableOpacity onPress={onPress} key={r.key}>
+
+
                                 <options.tabBarIcon color={isFocused ? colors.contrast : colors.darkContrast} />
                             </TouchableOpacity>
                         )

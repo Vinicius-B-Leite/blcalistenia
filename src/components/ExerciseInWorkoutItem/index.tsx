@@ -27,7 +27,7 @@ const ExerciseInWorkoutItem: React.FC<Props> = ({ item, showCreateSerie, createS
         <S.Exercise>
             <S.ExerciseHeader>
                 <S.ExerciseName>{item.exercise_id}</S.ExerciseName>
-                <TouchableOpacity onPress={() => deleteExerciseFuntion && deleteExerciseFuntion(item)}>
+                <TouchableOpacity onPressIn={() => deleteExerciseFuntion && deleteExerciseFuntion(item)}>
                     <FontAwesome name='trash' size={theme.sizes.icons.sm} color={theme.colors.alert} />
                 </TouchableOpacity>
             </S.ExerciseHeader>
@@ -56,7 +56,7 @@ const ExerciseInWorkoutItem: React.FC<Props> = ({ item, showCreateSerie, createS
                     />
                 )}
                 ListFooterComponent={() => showCreateSerie ? (
-                    <S.CreateNewSerieButton onPress={() => createSerieFunction && createSerieFunction(item)}>
+                    <S.CreateNewSerieButton onPressIn={() => createSerieFunction && createSerieFunction(item)}>
                         <S.CreateNewSerieText>+</S.CreateNewSerieText>
                     </S.CreateNewSerieButton>
                 ) : <></>}

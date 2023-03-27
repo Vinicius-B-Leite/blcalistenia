@@ -1,5 +1,5 @@
 import React, { useCallback, useContext, useRef, useState } from 'react';
-import { FlatList, } from 'react-native'
+import { FlatList } from 'react-native'
 import * as S from './styles'
 import { HistoricContext } from '../../contexts/HistoricContext';
 import { HistoricType } from '../../models/HistoricType';

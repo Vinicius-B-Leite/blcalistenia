@@ -31,10 +31,10 @@ const Profile: React.FC<NavigationProps> = ({ navigation }) => {
 
     return (
         <S.Container>
-            <S.Header onPress={() => navigation.goBack()}>
+            <S.Header onPressIn={() => navigation.goBack()}>
                 <S.Title>{'<  '}Perfil</S.Title>
             </S.Header>
-            <S.ButtonChangeImage onPress={handlePickImage}>
+            <S.ButtonChangeImage onPressIn={handlePickImage}>
                 <S.Avatar
                     source={{
                         uri: user.photoURI,
@@ -44,13 +44,13 @@ const Profile: React.FC<NavigationProps> = ({ navigation }) => {
             </S.ButtonChangeImage>
             <S.Username>{user.username}</S.Username>
 
-            <S.OptionContainer onPress={() => setShowChangeUsername(true)}>
+            <S.OptionContainer onPressIn={() => setShowChangeUsername(true)}>
                 <S.Left>
                     <Feather name='user' size={theme.sizes.icons.md} color={theme.colors.contrast} />
                 </S.Left>
                 <S.OptionTitle>Nome de usuário</S.OptionTitle>
             </S.OptionContainer>
-            <S.OptionContainer onPress={() => setShowThemeSelect(true)}>
+            <S.OptionContainer onPressIn={() => setShowThemeSelect(true)}>
                 <S.Left>
                     <Feather name='sun' size={theme.sizes.icons.md} color={theme.colors.contrast} />
                 </S.Left>

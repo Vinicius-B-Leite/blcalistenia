@@ -4,12 +4,12 @@ import React, { useContext } from 'react';
 import { FlatList, Alert } from 'react-native';
 import { ExerciseContext } from '../../contexts/ExerciseContext';
 import { WorkoutContext } from '../../contexts/WorkoutContext';
-import { exercise } from '../../models/ExerciseType';
+import { ExerciseType } from '../../models/ExerciseType';
 import { RootStackParamList } from '../../routes/Models';
 import * as S from './styles'
 
 
-type Prosp = { item: exercise }
+type Prosp = { item: ExerciseType }
 
 type Navigation = StackNavigationProp<RootStackParamList, 'AddExercise'>
 
@@ -44,7 +44,7 @@ const Exercise: React.FC<Prosp> = ({ item }) => {
     }
 
     return (
-        <S.ExerciseContainer onPress={handleAddExercise} onLongPress={handleDelete}>
+        <S.ExerciseContainer onPressIn={handleAddExercise} onLongPress={handleDelete}>
             <S.ExerciseName>{item.name}</S.ExerciseName>
             <FlatList
                 data={item.muscles}

@@ -2,6 +2,7 @@ import styled from "styled-components/native";
 
 export const Container = styled.TouchableOpacity`
     padding: 5%;
+    margin: 5% 0%;
     background-color: ${({theme}) => theme.colors.darkBackground};
     border-radius: ${({theme}) => theme.sizes.borderRadius.sm}px;
 `

@@ -30,11 +30,11 @@ const Rest: React.FC<NavigationPropsType> = ({ route, navigation }) => {
             <CountDown totalSeconds={route.params.totalSeconds as number} ref={countDownRef} onFineshed={() => navigation.goBack()} />
 
             <S.ButtonsContainer>
-                <S.CountDownButton bg='contrast' onPress={increaseSecondsInCountdown}>
+                <S.CountDownButton bg='contrast' onPressIn={increaseSecondsInCountdown}>
                     <S.CountDownButtonText>{'+ 10s'}</S.CountDownButtonText>
                 </S.CountDownButton>
 
-                <S.CountDownButton bg='darkContrast' onPress={decreaseSecondsInCountdown}>
+                <S.CountDownButton bg='darkContrast' onPressIn={decreaseSecondsInCountdown}>
                     <S.CountDownButtonText>{'- 10s'}</S.CountDownButtonText>
                 </S.CountDownButton>
             </S.ButtonsContainer>

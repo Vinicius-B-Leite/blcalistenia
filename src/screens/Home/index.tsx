@@ -46,7 +46,7 @@ const Home: React.FC = () => {
         <Container>
             <CalendarDaysTrained closeCalendar={() => setCalendarVisible(false)} visible={calendarVisible} />
             <S.Header>
-                <S.Left onPress={() => navigation.navigate('Profile')}>
+                <S.Left onPressIn={() => navigation.navigate('Profile')} >
                     <S.Avatar source={{ uri: 'https://pbs.twimg.com/media/FOq9YuBXsBgTIQM.jpg' }} />
 
                     <S.TextContainer>
@@ -56,7 +56,7 @@ const Home: React.FC = () => {
 
                 </S.Left>
 
-                <S.Right onPress={() => setCalendarVisible(true)}>
+                <S.Right onPressIn={() => setCalendarVisible(true)}>
                     <AntDesign size={theme.sizes.icons.md} color={theme.colors.text} name='calendar' />
                 </S.Right>
             </S.Header>

@@ -29,7 +29,7 @@ const AddExercise: React.FC<Navigation> = ({ navigation }) => {
     return (
         <S.Container>
             <S.Header>
-                <S.GoBack onPress={() => navigation.goBack()}>
+                <S.GoBack onPressIn={() => navigation.goBack()}>
                     <AntDesign name='arrowleft' size={theme.sizes.icons.md} color={theme.colors.text} />
                 </S.GoBack>
                 <S.InputArea>
@@ -49,7 +49,7 @@ const AddExercise: React.FC<Navigation> = ({ navigation }) => {
             </S.Header>
 
             <S.Main>
-                <S.FilterButton onPress={() => setFilterExercciseVisible(true)}>
+                <S.FilterButton onPressIn={() => setFilterExercciseVisible(true)}>
                     <S.FilterText>Filtros</S.FilterText>
                 </S.FilterButton>
 
@@ -63,7 +63,7 @@ const AddExercise: React.FC<Navigation> = ({ navigation }) => {
                 />
             </S.Main>
 
-            <S.FloatButton onPress={() => {
+            <S.FloatButton onPressIn={() => {
                 bottomSheetRef?.current?.scrollTo(theme.sizes.vh / 5, 1000)
             }}>
                 <S.FloatButtonIcon>+</S.FloatButtonIcon>

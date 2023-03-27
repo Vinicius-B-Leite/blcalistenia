@@ -55,7 +55,7 @@ const Serie: React.FC<Props> = ({ item, exercise, deleteSerieButton, showRest, s
         <S.Container>
             {
                 deleteSerieButton && (
-                    <S.DeleteSerieButton onPress={() => deleteSerie(exercise, Number(item.serie))}>
+                    <S.DeleteSerieButton onPressIn={() => deleteSerie(exercise, Number(item.serie))}>
                         <S.DeleteSerieText />
                     </S.DeleteSerieButton>
                 )
@@ -80,7 +80,7 @@ const Serie: React.FC<Props> = ({ item, exercise, deleteSerieButton, showRest, s
 
             {
                 showSucessButton && (
-                    <S.CheckButton selected={item.done ? true : false} onPress={handleMarkAsDone}>
+                    <S.CheckButton selected={item.done ? true : false} onPressIn={handleMarkAsDone}>
                         <AntDesign name='check' color={theme.colors.text} />
                     </S.CheckButton>
                 )

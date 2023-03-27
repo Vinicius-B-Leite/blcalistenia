@@ -73,7 +73,7 @@ const CalendarDaysTrained = ({ visible, closeCalendar }: Props) => {
                 markedDates={markedDates}
             />
 
-            <TouchableOpacity activeOpacity={0} style={[styles.closeButton, { backgroundColor: theme.colors.darkBackground }]} onPress={closeCalendar} />
+            <TouchableOpacity activeOpacity={0} style={[styles.closeButton, { backgroundColor: theme.colors.darkBackground }]} onPressIn={closeCalendar} />
         </Animated.View>
     ) : <></>
 }

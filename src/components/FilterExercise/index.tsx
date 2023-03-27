@@ -17,7 +17,7 @@ const FilterExercise: React.FC<FilterExerciseProps> = ({ filters, modalProps, on
     return (
         <Modal {...modalProps}>
             <S.Container>
-                <S.CloseModal onPress={modalProps.onRequestClose} />
+                <S.CloseModal onPressIn={modalProps.onRequestClose} />
                 <S.Main>
                     <S.Title>Filtros</S.Title>
 
@@ -26,7 +26,7 @@ const FilterExercise: React.FC<FilterExerciseProps> = ({ filters, modalProps, on
                         data={category}
                         numColumns={3}
                         renderItem={({ item }) => (
-                            <S.ItemContainer selected={filters.category == item} onPress={() => onSelectCategoty(item)}>
+                            <S.ItemContainer selected={filters.category == item} onPressIn={() => onSelectCategoty(item)}>
                                 <S.ItemLabel>{item}</S.ItemLabel>
                             </S.ItemContainer>
                         )}
@@ -37,13 +37,13 @@ const FilterExercise: React.FC<FilterExerciseProps> = ({ filters, modalProps, on
                         data={muscles}
                         numColumns={3}
                         renderItem={({ item }) => (
-                            <S.ItemContainer selected={filters.muscles == item} onPress={() => onSelectMuscle(item)}>
+                            <S.ItemContainer selected={filters.muscles == item} onPressIn={() => onSelectMuscle(item)}>
                                 <S.ItemLabel >{item}</S.ItemLabel>
                             </S.ItemContainer>
                         )}
                     />
 
-                    <S.ApplyFilter onPress={onApply}>
+                    <S.ApplyFilter onPressIn={onApply}>
                         <S.ApplyText>Aplicar</S.ApplyText>
                     </S.ApplyFilter>
                 </S.Main>
