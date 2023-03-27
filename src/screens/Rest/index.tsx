@@ -1,13 +1,21 @@
 import { StackScreenProps } from '@react-navigation/stack';
-import React, { useRef } from 'react';
+import React, { useLayoutEffect, useRef, useEffect } from 'react';
 import { SafeAreaView, View } from 'react-native';
 import CountDown, { CountDownRef } from '../../components/CountDown';
+import { useTabBar } from '../../contexts/TabBarContext';
 import { RootStackParamList } from '../../routes/Models';
 import * as S from './styles'
 
 type NavigationPropsType = StackScreenProps<RootStackParamList, 'Rest'>
 const Rest: React.FC<NavigationPropsType> = ({ route, navigation }) => {
 
+    const { hideTabBar, showTabBar } = useTabBar()
+
+    useEffect(() => {
+        hideTabBar()
+
+        return () => showTabBar()
+    }, [])
     const countDownRef = useRef<CountDownRef>(null)
 
     const increaseSecondsInCountdown = () => {

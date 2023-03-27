@@ -7,7 +7,6 @@ import * as S from './styles'
 import AntDesign from 'react-native-vector-icons/AntDesign'
 import ExerciseInWorkoutItem from '../../components/ExerciseInWorkoutItem';
 import { WorkoutSeasonContext } from '../../contexts/WorkooutSeason';
-import { useTimer } from '../../hooks/useTimer';
 
 type Navigation = StackScreenProps<RootStackParamList, 'WorkoutSeason'>
 
@@ -18,7 +17,6 @@ const WorkoutSeason: React.FC<Navigation> = ({ navigation, route }) => {
 
     useEffect(() => {
         startWorkout(workout)
-
     }, [])
 
     const handleFineshWorkout = () => {

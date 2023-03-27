@@ -10,6 +10,7 @@ import ExerciseInWorkoutItem from '../../components/ExerciseInWorkoutItem';
 import { WorkoutContext } from '../../contexts/WorkoutContext';
 import { pickeImage } from '../../utils/pickImage';
 import uuid from 'react-native-uuid';
+import { useTabBar } from '../../contexts/TabBarContext';
 
 
 
@@ -17,6 +18,7 @@ type Navigation = StackScreenProps<RootStackParamList, 'CreateWorkout'>
 
 const CreateWorkout: React.FC<Navigation> = ({ route, navigation }) => {
     const theme = useTheme()
+    const { showTabBar, hideTabBar } = useTabBar()
     const {
         saveWorkout,
         deleteWorkout,
@@ -33,11 +35,7 @@ const CreateWorkout: React.FC<Navigation> = ({ route, navigation }) => {
 
 
     useLayoutEffect(() => {
-        navigation.getParent()?.setOptions({
-            tabBarStyle: {
-                display: 'none'
-            }
-        })
+        hideTabBar()
         if (typeof route?.params?.workout !== 'undefined') {
             const { _id, banner, exercises, title, anotation } = route.params.workout
             setWorkoutName(title as string)
@@ -52,7 +50,7 @@ const CreateWorkout: React.FC<Navigation> = ({ route, navigation }) => {
         saveWorkout({
             banner: imageURI,
             exercises: exercises,
-            title: workoutName  || 'Desconhecido',
+            title: workoutName || 'Desconhecido',
             anotation: anotation,
             _id: route?.params?.workout?._id || workout_id
         })
@@ -60,17 +58,8 @@ const CreateWorkout: React.FC<Navigation> = ({ route, navigation }) => {
 
     useEffect(() => {
         navigation.addListener('beforeRemove', async (e) => {
-
             await handleGoBack()
-
-            navigation.getParent()?.setOptions({
-                tabBarStyle: {
-                    display: 'flex',
-                    backgroundColor: theme.colors.darkBackground,
-                    height: theme.sizes.tabBar,
-                    justifyContent: 'center',
-                }
-            })
+            showTabBar()
             setExercises([])
         })
     }, [])

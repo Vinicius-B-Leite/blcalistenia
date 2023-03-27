@@ -5,11 +5,17 @@ import { useTheme } from 'styled-components/native';
 import { WorkoutSeasonContext } from '../../contexts/WorkooutSeason'
 import * as S from './styles'
 import Ionicons from 'react-native-vector-icons/Ionicons'
+import { useTabBar } from '../../contexts/TabBarContext';
 
 type TabBarProps = MaterialTopTabBarProps
 const TabBar: React.FC<TabBarProps> = ({ state, descriptors, position, navigation }) => {
     const { colors, sizes } = useTheme()
     const { workoutCopy, timer } = useContext(WorkoutSeasonContext)
+    const { isTabBarVisible } = useTabBar()
+
+    if (!isTabBarVisible) {
+        return <></>
+    }
 
     return (
         <>

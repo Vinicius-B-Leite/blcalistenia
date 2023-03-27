@@ -5,6 +5,7 @@ import AuthProvider from './contexts/AuthContext';
 import { ExerciseProvider } from './contexts/ExerciseContext';
 import HistoricProvider from './contexts/HistoricContext';
 import SuggestWorkoutProvider from './contexts/SuggestWorkoutContex';
+import TabBarProvider from './contexts/TabBarContext';
 import { ThemeContext } from './contexts/ThemeContext';
 import WorkoutSeasonProvider from './contexts/WorkooutSeason';
 import WorkoutProvider from './contexts/WorkoutContext';
@@ -26,7 +27,9 @@ const Index: React.FC = () => {
                         <HistoricProvider>
                             <AuthProvider>
                                 <SuggestWorkoutProvider>
-                                    <Routes />
+                                    <TabBarProvider>
+                                        <Routes />
+                                    </TabBarProvider>
                                 </SuggestWorkoutProvider>
                             </AuthProvider>
                         </HistoricProvider>
