@@ -32,7 +32,6 @@ const WorkoutProvider = ({ children }: { children: React.ReactNode }) => {
 
 
     const saveWorkout = async ({ banner, exercises, title, anotation, _id }: WorkoutType) => {
-        console.log(exercises)
         const realm = await getRealm()
         realm.write(() => {
             realm.create<WorkoutType>('Workout', {
@@ -42,8 +41,6 @@ const WorkoutProvider = ({ children }: { children: React.ReactNode }) => {
                 exercises: exercises,
                 title: title
             }, Realm.UpdateMode.Modified).toJSON() as WorkoutType
-            console.log('WorkoutContext - saveWorkout - id ' + _id);
-
         })
 
     }
@@ -94,8 +91,6 @@ const WorkoutProvider = ({ children }: { children: React.ReactNode }) => {
                 newWorkoutList.splice(index, 1)
                 return [...newWorkoutList]
             })
-            console.log('WorkoutContext - deleteWorkout - id ' + workoutID);
-
         })
 
 
@@ -145,8 +140,6 @@ const WorkoutProvider = ({ children }: { children: React.ReactNode }) => {
         let copyExercise = [...exercises]
 
         copyExercise[exerciseIndex].series[serieIndex] = newSerie
-        console.log("🚀 ~ file: WorkoutContext.tsx:177 ~ updateSerie ~ copyExercise", copyExercise)
-
         setExercises([...copyExercise])
 
     }

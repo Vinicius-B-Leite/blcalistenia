@@ -11,6 +11,7 @@ import { WorkoutContext } from '../../contexts/WorkoutContext';
 import { pickeImage } from '../../utils/pickImage';
 import uuid from 'react-native-uuid';
 import { useTabBar } from '../../contexts/TabBarContext';
+import { WorkoutType } from '../../models/WorkoutType';
 
 
 
@@ -31,13 +32,15 @@ const CreateWorkout: React.FC<Navigation> = ({ route, navigation }) => {
     const [anotation, setAnotation] = useState('')
     const [imageURI, setImageURI] = useState('')
     const [workout_id, setWorkoutID] = useState(uuid.v4().toString())
-
+    let workoutWithoutChanges: WorkoutType | undefined = undefined
 
 
     useLayoutEffect(() => {
         hideTabBar()
+        setExercises([])
         if (typeof route?.params?.workout !== 'undefined') {
             const { _id, banner, exercises, title, anotation } = route.params.workout
+            workoutWithoutChanges = { ...route.params.workout }
             setWorkoutName(title as string)
             setAnotation(anotation as string)
             setImageURI(banner)
@@ -54,13 +57,15 @@ const CreateWorkout: React.FC<Navigation> = ({ route, navigation }) => {
             anotation: anotation,
             _id: route?.params?.workout?._id || workout_id
         })
+        
     }, [workoutName, anotation, imageURI, exercises])
 
     useEffect(() => {
         navigation.addListener('beforeRemove', async (e) => {
+            e.preventDefault()
             await handleGoBack()
             showTabBar()
-            setExercises([])
+            navigation.dispatch(e.data.action)
         })
     }, [])
 
@@ -74,8 +79,14 @@ const CreateWorkout: React.FC<Navigation> = ({ route, navigation }) => {
                         text: 'Não',
                         style: 'cancel',
                         onPress: async () => {
-                            if (!(route?.params?.workout)) await deleteWorkout(workout_id)
-                            resolve()
+                            if (!(route?.params?.workout)) resolve(await deleteWorkout(workout_id))
+                            else {
+                                console.log("🚀 ~ file: index.tsx:81 ~ onPress: ~ workoutWithoutChanges:", workoutWithoutChanges)
+
+                                if (workoutWithoutChanges) {
+                                    resolve(await saveWorkout({ ...workoutWithoutChanges }))
+                                }
+                            }
                         }
                     },
                     {
