@@ -12,8 +12,10 @@ import { pickeImage } from '../../utils/pickImage';
 import uuid from 'react-native-uuid';
 import { useTabBar } from '../../contexts/TabBarContext';
 import { WorkoutType } from '../../models/WorkoutType';
+import { isEqual } from 'lodash'
 
-
+var workoutWithoutChanges: WorkoutType | undefined = undefined
+var currentWorkoutToCompare: WorkoutType | undefined = undefined
 
 type Navigation = StackScreenProps<RootStackParamList, 'CreateWorkout'>
 
@@ -32,15 +34,13 @@ const CreateWorkout: React.FC<Navigation> = ({ route, navigation }) => {
     const [anotation, setAnotation] = useState('')
     const [imageURI, setImageURI] = useState('')
     const [workout_id, setWorkoutID] = useState(uuid.v4().toString())
-    let workoutWithoutChanges: WorkoutType | undefined = undefined
-
 
     useLayoutEffect(() => {
         hideTabBar()
         setExercises([])
         if (typeof route?.params?.workout !== 'undefined') {
             const { _id, banner, exercises, title, anotation } = route.params.workout
-            workoutWithoutChanges = { ...route.params.workout }
+            workoutWithoutChanges = {...route.params.workout}
             setWorkoutName(title as string)
             setAnotation(anotation as string)
             setImageURI(banner)
@@ -57,7 +57,19 @@ const CreateWorkout: React.FC<Navigation> = ({ route, navigation }) => {
             anotation: anotation,
             _id: route?.params?.workout?._id || workout_id
         })
-        
+        if (currentWorkoutToCompare) {
+            
+            currentWorkoutToCompare = {
+                banner: imageURI,
+                exercises: exercises,
+                title: workoutName,
+                anotation: anotation,
+                _id: route?.params?.workout?._id || workout_id
+            }
+        } else {
+            currentWorkoutToCompare = workoutWithoutChanges
+        }
+
     }, [workoutName, anotation, imageURI, exercises])
 
     useEffect(() => {
@@ -71,6 +83,15 @@ const CreateWorkout: React.FC<Navigation> = ({ route, navigation }) => {
 
     const handleGoBack = async () => {
         return new Promise<void>((resolve, reject) => {
+
+            const userDoesAnyChange = isEqual(workoutWithoutChanges, currentWorkoutToCompare)
+
+
+            if (userDoesAnyChange && currentWorkoutToCompare) {
+                resolve()
+                return
+            }
+
             Alert.alert(
                 'Atenção',
                 'Deseja salvar as alterações?',
@@ -78,10 +99,10 @@ const CreateWorkout: React.FC<Navigation> = ({ route, navigation }) => {
                     {
                         text: 'Não',
                         style: 'cancel',
-                        onPress: async () => {
-                            if (!(route?.params?.workout)) resolve(await deleteWorkout(workout_id))
+                        onPress: () => {
+                            if (!(route?.params?.workout)) resolve(deleteWorkout(workout_id))
                             else {
-                                if (workoutWithoutChanges)    resolve(await saveWorkout({ ...workoutWithoutChanges }))
+                                if (workoutWithoutChanges) resolve(saveWorkout({ ...workoutWithoutChanges }))
                             }
                         }
                     },

@@ -17,7 +17,7 @@ const RealmProvider: React.FC<Props> = ({ children }) => {
     const [realm, setRealm] = useState<Realm | undefined>(undefined)
 
     useEffect(() => {
-        getRealm().then((r) => setRealm(r)).catch((err) => console.log(err))
+        getRealm().then((r) => setRealm(r))
     }, [])
 
 

@@ -40,7 +40,7 @@ const SuggestWorkoutProvider: React.FC<Props> = ({ children }) => {
 
             let arraySuggestsWorkouts: WorkoutType[] = arraySuggests.map(s => JSON.parse(s.workout))
             return arraySuggestsWorkouts
-        } else console.log('fsaaafasasf');
+        }
 
 
     }
@@ -50,11 +50,8 @@ const SuggestWorkoutProvider: React.FC<Props> = ({ children }) => {
         if (realm) {
             const workouts = realm.objects<SuggestWorkoutType[]>('SuggestWorkout').filtered(`level == '${level}'`).toJSON() as SuggestWorkoutType[]
 
-            console.log("🚀 ~ file: SuggestWorkoutContex.tsx:53 ~ getSuggestsWorkouts ~ workouts:", workouts)
             if (workouts.length < 1) {
                 const sw = createSuggestsWorkouts()
-                console.log("🚀 ~ file: SuggestWorkoutContex.tsx:55 ~ getSuggestsWorkouts ~ sw:", sw)
-
                 sw && setSuggestsWorkouts(sw)
                 return
             }
