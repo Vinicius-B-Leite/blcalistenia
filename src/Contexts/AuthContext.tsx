@@ -1,4 +1,4 @@
-import React, { createContext, useEffect, useState } from 'react';
+import React, { createContext, useContext, useEffect, useState } from 'react';
 import { UserType } from '../models/UserType';
 import { getRealm } from '../services/realm';
 import { useRealm } from './RealmContext';
@@ -21,7 +21,7 @@ const AuthProvider: React.FC<Props> = ({ children }) => {
     const { realm } = useRealm()
     useEffect(() => {
         getUser()
-    }, [])
+    }, [realm])
 
     const getUser = () => {
         if (realm) {
@@ -79,4 +79,6 @@ const AuthProvider: React.FC<Props> = ({ children }) => {
     )
 }
 
+
+export const useUser = () => useContext(AuthContext )
 export default AuthProvider;

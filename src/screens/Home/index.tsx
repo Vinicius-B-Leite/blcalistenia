@@ -16,6 +16,7 @@ import ListEmptyComponent from '../../components/ListEmptyComponent';
 import { SuggestWorkoutContext } from '../../contexts/SuggestWorkoutContex';
 import { WorkoutLevel } from '../../models/SuggestsWorkoutType';
 import { useRealm } from '../../contexts/RealmContext';
+import { useUser } from '../../contexts/AuthContext';
 
 type Navigation = StackNavigationProp<RootStackParamList, 'Home'>
 
@@ -29,7 +30,7 @@ const Home: React.FC = () => {
     const [muscleFilterSelected, setMuscleFilterSelected] = useState('Todos')
     const [workoutLeveSuggest, setWorkoutLevelSuggest] = useState<WorkoutLevel>('begginer')
     const { realm } = useRealm()
-
+    const { user } = useUser()
 
 
     useEffect(() => {
@@ -50,11 +51,11 @@ const Home: React.FC = () => {
             <CalendarDaysTrained closeCalendar={() => setCalendarVisible(false)} visible={calendarVisible} />
             <S.Header>
                 <S.Left onPressIn={() => navigation.navigate('Profile')} >
-                    <S.Avatar source={{ uri: 'https://pbs.twimg.com/media/FOq9YuBXsBgTIQM.jpg' }} />
+                    <S.Avatar source={{ uri: user.photoURI }} />
 
                     <S.TextContainer>
                         <S.Welcome>Bem-vindo</S.Welcome>
-                        <S.Username>Vincius B Leite</S.Username>
+                        <S.Username>{user.username}</S.Username>
                     </S.TextContainer>
 
                 </S.Left>
