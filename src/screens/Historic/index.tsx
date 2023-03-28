@@ -18,7 +18,8 @@ const Historic: React.FC = () => {
     const [bottomSheetItem, setBottomSheetItem] = useState<HistoricType | null>(null)
 
     useFocusEffect(useCallback(() => {
-        getHistoric().then(realmHistoric => setHistoric(realmHistoric))
+        const historicCache = getHistoric()
+        historicCache && setHistoric(historicCache)
     }, []))
 
 

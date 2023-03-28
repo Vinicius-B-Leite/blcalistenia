@@ -27,12 +27,11 @@ const CalendarDaysTrained = ({ visible, closeCalendar }: Props) => {
     })
 
     useEffect(() => {
-        getDatesTrained({
+        setMarkedDates(getDatesTrained({
             selected: false,
             marked: true,
             dotColor: theme.colors.contrast
-        })
-            .then(dates => setMarkedDates(dates))
+        }))
 
 
         top.value = withTiming(0, { duration: 1000 })

@@ -48,8 +48,8 @@ const Serie: React.FC<Props> = ({ item, exercise, deleteSerieButton, showRest, s
     }
 
     const handleMarkAsDone = () => {
-        if (item.done === false) navigation.navigate('Rest', { totalSeconds: item.rest})
         sucessButton(exercise, item.serie as number)
+        if (item.done === false) navigation.navigate('Rest', { totalSeconds: item.rest})
     }
     return (
         <S.Container>

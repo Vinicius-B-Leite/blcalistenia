@@ -27,11 +27,10 @@ const CreateExercise: React.FC = () => {
                 name: exerciseNameInput,
                 muscles: musclesSelected,
                 categories: categoriesSelected
-            }).then(() => {
-                setCategoriesSelected([])
-                setMusclesSelected([])
-                setExerciseNameInput('')
             })
+            setCategoriesSelected([])
+            setMusclesSelected([])
+            setExerciseNameInput('')
         }
     }
 

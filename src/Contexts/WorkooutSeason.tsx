@@ -4,16 +4,17 @@ import { HistoricType } from '../models/HistoricType';
 import { SerieType } from '../models/SerieType';
 import { WorkoutType } from '../models/WorkoutType';
 import { getRealm } from '../services/realm';
+import { useRealm } from './RealmContext';
 
 type WorkoutSeasonType = {
-    finishWorkout: (seconds: number) => Promise<void>,
+    finishWorkout: (seconds: number) => void,
     cancelWorkout: () => void,
     startWorkout: (workout: WorkoutType) => void,
     createSerie: (currentExercise: ExercisesInWorkoutType) => void,
     deleteSerie: (currentExercise: ExercisesInWorkoutType, serieNumber: number) => void,
     changeSerie: (currentExercise: ExercisesInWorkoutType, serieNumber: number, newSerie: SerieType) => void,
     markSerieAsDone: (currentExercise: ExercisesInWorkoutType, serieNumber: number) => void,
-    deleteExercise: (exercise: ExercisesInWorkoutType) => Promise<void>,
+    deleteExercise: (exercise: ExercisesInWorkoutType) => void,
     workoutCopy: WorkoutType | undefined,
     timer: number
 }
@@ -27,6 +28,7 @@ const WorkoutSeasonProvider = ({ children }: { children: React.ReactNode }) => {
 
     const [workoutCopy, setWorkoutCopy] = useState<WorkoutType>()
     const [timer, setTimer] = useState(-1)
+    const { realm } = useRealm()
 
     useEffect(() => {
         if (workoutCopy) {
@@ -36,19 +38,19 @@ const WorkoutSeasonProvider = ({ children }: { children: React.ReactNode }) => {
         }
     }, [timer])
 
-    const finishWorkout = async (seconds: number) => {
-        const realm = await getRealm()
-
-        realm.write(() => {
-            realm.create<HistoricType>('Historic', {
-                workout: JSON.stringify(workoutCopy),
-                date: new Date(),
-                timerInSeconds: seconds,
-                _id: realm.objects('Historic').length + 1
+    const finishWorkout = (seconds: number) => {
+        if (realm) {
+            realm.write(() => {
+                realm.create<HistoricType>('Historic', {
+                    workout: JSON.stringify(workoutCopy),
+                    date: new Date(),
+                    timerInSeconds: seconds,
+                    _id: realm.objects('Historic').length + 1
+                })
             })
-        })
 
-        setWorkoutCopy(undefined)
+            setWorkoutCopy(undefined)
+        }
     }
 
     const cancelWorkout = () => {
@@ -125,7 +127,7 @@ const WorkoutSeasonProvider = ({ children }: { children: React.ReactNode }) => {
         })
     }
 
-    const deleteExercise = async (exercise: ExercisesInWorkoutType) => {
+    const deleteExercise = (exercise: ExercisesInWorkoutType) => {
         setWorkoutCopy(old => {
             if (old) {
                 let copy = { ...old }

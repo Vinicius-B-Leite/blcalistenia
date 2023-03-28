@@ -1,4 +1,4 @@
-import React, { useContext, useState, useCallback } from 'react';
+import React, { useContext, useState, useCallback, useEffect } from 'react';
 import Container from '../../components/Container';
 import * as S from './styles'
 import AntDesign from 'react-native-vector-icons/AntDesign'
@@ -15,6 +15,7 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import ListEmptyComponent from '../../components/ListEmptyComponent';
 import { SuggestWorkoutContext } from '../../contexts/SuggestWorkoutContex';
 import { WorkoutLevel } from '../../models/SuggestsWorkoutType';
+import { useRealm } from '../../contexts/RealmContext';
 
 type Navigation = StackNavigationProp<RootStackParamList, 'Home'>
 
@@ -27,16 +28,18 @@ const Home: React.FC = () => {
     const [searchWorkoutInput, setSearchWorkoutInput] = useState('')
     const [muscleFilterSelected, setMuscleFilterSelected] = useState('Todos')
     const [workoutLeveSuggest, setWorkoutLevelSuggest] = useState<WorkoutLevel>('begginer')
+    const { realm } = useRealm()
 
 
 
-    useFocusEffect(
-        useCallback(() => {
-            getWorkoutsList(searchWorkoutInput).then(() => {
-                getSuggestsWorkouts(workoutLeveSuggest)
-            })
-        }, [searchWorkoutInput])
-    )
+    useEffect(() => {
+        getSuggestsWorkouts(workoutLeveSuggest)
+    }, [realm])
+
+    useEffect(() => {
+        getWorkoutsList(searchWorkoutInput)
+    }, [searchWorkoutInput, realm])
+
 
     const handleSelectMuscleFilter = (muscle: string) => {
         setMuscleFilterSelected(muscle)

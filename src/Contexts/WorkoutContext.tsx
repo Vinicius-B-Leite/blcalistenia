@@ -5,17 +5,18 @@ import { WorkoutType } from '../models/WorkoutType';
 import { getRealm } from '../services/realm';
 import { muscles } from '../utils/muscles';
 import { SerieType } from '../models/SerieType';
+import { useRealm } from './RealmContext';
 
 type WorkoutContext = {
-    saveWorkout: (workout: WorkoutType) => Promise<void>,
-    getWorkoutsList: (text?: string) => Promise<void>,
+    saveWorkout: (workout: WorkoutType) => void,
+    getWorkoutsList: (text?: string) => void,
     addExercise: (newExercise: String) => void,
-    deleteExercise: (exercise: ExercisesInWorkoutType) => Promise<void>,
-    deleteWorkout: (workoutID: string) => Promise<void>,
+    deleteExercise: (exercise: ExercisesInWorkoutType) => void,
+    deleteWorkout: (workoutID: string) => void,
     createSerie: (exercise: ExercisesInWorkoutType) => void,
     deleteSerie: (exercise: ExercisesInWorkoutType, serie: Number) => void
     updateSerie: (serieNumber: number, exercise: ExercisesInWorkoutType, newSerie: SerieType) => void,
-    filterWorkoutByMuscle: (muscle: string) => Promise<void>,
+    filterWorkoutByMuscle: (muscle: string) => void,
     setExercises: (old: ExercisesInWorkoutType[]) => void,
     workoutsList: WorkoutType[],
     exercises: ExercisesInWorkoutType[],
@@ -28,11 +29,11 @@ export const WorkoutContext = createContext({} as WorkoutContext)
 const WorkoutProvider = ({ children }: { children: React.ReactNode }) => {
     const [workoutsList, setWorkoutList] = useState<WorkoutType[]>([]);
     const [exercises, setExercises] = useState<ExercisesInWorkoutType[]>([])
+    const { realm } = useRealm()
 
 
-    const saveWorkout = async ({ banner, exercises, title, anotation, _id }: WorkoutType) => {
-        const realm = await getRealm()
-        realm.write(() => {
+    const saveWorkout = ({ banner, exercises, title, anotation, _id }: WorkoutType) => {
+        realm && realm.write(() => {
             realm.create<WorkoutType>('Workout', {
                 _id: _id,
                 anotation: anotation,
@@ -40,29 +41,32 @@ const WorkoutProvider = ({ children }: { children: React.ReactNode }) => {
                 exercises: exercises,
                 title: title
             }, Realm.UpdateMode.Modified).toJSON() as WorkoutType
+            getWorkoutsList()
         })
 
     }
 
-    const getWorkoutsList = async (text?: string) => {
-        const realm = await getRealm()
-        let workout = realm.objects<WorkoutType[]>('Workout').toJSON()
+    const getWorkoutsList = (text?: string) => {
+        if (realm) {
+            let workout = realm.objects<WorkoutType[]>('Workout').toJSON()
 
-        if (text && text.length > 1) {
-            workout = realm.objects<WorkoutType[]>('Workout').filtered(`title CONTAINS '${text}'`).toJSON()
+            if (text && text.length > 1) {
+                workout = realm.objects<WorkoutType[]>('Workout').filtered(`title CONTAINS '${text}'`).toJSON()
+            }
+            setWorkoutList(workout as WorkoutType[])
         }
-        setWorkoutList(workout as WorkoutType[])
+
     }
 
-    const addExercise = async (newExercise: String) => {
+    const addExercise = (newExercise: String) => {
         setExercises(old => [
             ...old,
             {
                 exercise_id: newExercise,
                 series: [
                     {
-                        rep: 1,
-                        rest: 1,
+                        rep: 8,
+                        rest: 60,
                         serie: 1
                     }
                 ]
@@ -71,7 +75,7 @@ const WorkoutProvider = ({ children }: { children: React.ReactNode }) => {
 
     }
 
-    const deleteExercise = async (exercise: ExercisesInWorkoutType) => {
+    const deleteExercise = (exercise: ExercisesInWorkoutType) => {
         setExercises(old => {
             let copy = [...old]
             const index = copy.indexOf(exercise)
@@ -80,9 +84,8 @@ const WorkoutProvider = ({ children }: { children: React.ReactNode }) => {
         })
     }
 
-    const deleteWorkout = async (workoutID: string) => {
-        const realm = await getRealm()
-        realm.write(() => {
+    const deleteWorkout = (workoutID: string) => {
+        realm && realm.write(() => {
             realm.delete(realm.objectForPrimaryKey('Workout', workoutID))
             setWorkoutList(old => {
                 const index = old.findIndex((v, i) => v._id == workoutID)
@@ -90,6 +93,7 @@ const WorkoutProvider = ({ children }: { children: React.ReactNode }) => {
                 newWorkoutList.splice(index, 1)
                 return [...newWorkoutList]
             })
+            getWorkoutsList()
         })
 
 
@@ -143,30 +147,32 @@ const WorkoutProvider = ({ children }: { children: React.ReactNode }) => {
 
     }
 
-    const filterWorkoutByMuscle = async (muscle: string) => {
-        const realm = await getRealm()
-        const workouts = realm.objects('Workout').toJSON() as WorkoutType[]
+    const filterWorkoutByMuscle = (muscle: string) => {
+        if (realm) {
 
-        if (!(muscles.includes(muscle))){
-            setWorkoutList(workouts)
-            return
-        }
+            const workouts = realm.objects('Workout').toJSON() as WorkoutType[]
 
-        const exercises = realm.objects('Exercise').toJSON() as ExerciseType[]
+            if (!(muscles.includes(muscle))) {
+                setWorkoutList(workouts)
+                return
+            }
+
+            const exercises = realm.objects('Exercise').toJSON() as ExerciseType[]
 
 
-        const exercisesHaveMuscleSelected = exercises.filter(e => e.muscles.includes(muscle))
-        let workoutsWithMuscleSelected: WorkoutType[] = []
-        
-        workouts.forEach(w => {
-            w.exercises.forEach(e => {
-                const index = exercisesHaveMuscleSelected.findIndex(v => v.name == e.exercise_id)
-                if (index > -1) workoutsWithMuscleSelected.push(w)
+            const exercisesHaveMuscleSelected = exercises.filter(e => e.muscles.includes(muscle))
+            let workoutsWithMuscleSelected: WorkoutType[] = []
+
+            workouts.forEach(w => {
+                w.exercises.forEach(e => {
+                    const index = exercisesHaveMuscleSelected.findIndex(v => v.name == e.exercise_id)
+                    if (index > -1) workoutsWithMuscleSelected.push(w)
+                })
+
             })
-            
-        })
 
-        setWorkoutList(workoutsWithMuscleSelected)
+            setWorkoutList(workoutsWithMuscleSelected)
+        }
     }
 
     return (

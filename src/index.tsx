@@ -4,6 +4,7 @@ import { ThemeProvider } from 'styled-components/native';
 import AuthProvider from './contexts/AuthContext';
 import { ExerciseProvider } from './contexts/ExerciseContext';
 import HistoricProvider from './contexts/HistoricContext';
+import RealmProvider from './contexts/RealmContext';
 import SuggestWorkoutProvider from './contexts/SuggestWorkoutContex';
 import TabBarProvider from './contexts/TabBarContext';
 import { ThemeContext } from './contexts/ThemeContext';
@@ -19,23 +20,23 @@ const Index: React.FC = () => {
     const { theme } = useContext(ThemeContext)
 
     return (
-        <ThemeProvider theme={theme == 'dark' ? darkMode : lightMode}>
-            <WorkoutProvider>
-                <ExerciseProvider>
-                    <WorkoutSeasonProvider>
-                        <HistoricProvider>
-                            <AuthProvider>
-                                <SuggestWorkoutProvider>
-                                    <TabBarProvider>
-                                        <Routes />
-                                    </TabBarProvider>
-                                </SuggestWorkoutProvider>
-                            </AuthProvider>
-                        </HistoricProvider>
-                    </WorkoutSeasonProvider>
-                </ExerciseProvider>
-            </WorkoutProvider>
-        </ThemeProvider>
+            <ThemeProvider theme={theme == 'dark' ? darkMode : lightMode}>
+                <WorkoutProvider>
+                    <ExerciseProvider>
+                        <WorkoutSeasonProvider>
+                            <HistoricProvider>
+                                <AuthProvider>
+                                    <SuggestWorkoutProvider>
+                                        <TabBarProvider>
+                                            <Routes />
+                                        </TabBarProvider>
+                                    </SuggestWorkoutProvider>
+                                </AuthProvider>
+                            </HistoricProvider>
+                        </WorkoutSeasonProvider>
+                    </ExerciseProvider>
+                </WorkoutProvider>
+            </ThemeProvider>
     )
 }
 

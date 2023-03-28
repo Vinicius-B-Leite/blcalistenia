@@ -84,7 +84,10 @@ const AddExercise: React.FC<Navigation> = ({ navigation }) => {
                 }}
                 onSelectCategoty={(category) => setFilters(old => ({ ...old, category: category }))}
                 onSelectMuscle={(muscle) => setFilters(old => ({ ...old, muscles: muscle }))}
-                onApply={() => filterExercises(filters.category, filters.muscles).then(() => setFilterExercciseVisible(false))}
+                onApply={() => {
+                    filterExercises(filters.category, filters.muscles)
+                    setFilterExercciseVisible(false)
+                }}
             />
         </S.Container>
 

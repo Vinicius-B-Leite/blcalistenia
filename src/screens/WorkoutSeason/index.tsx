@@ -26,7 +26,8 @@ const WorkoutSeason: React.FC<Navigation> = ({ navigation, route }) => {
             [{
                 text: 'Sim',
                 onPress: () => {
-                    finishWorkout(timer).then(() => navigation.navigate('Home'))
+                    finishWorkout(timer)
+                    navigation.navigate('Home')
                 }
             },
             {

@@ -44,7 +44,7 @@ const Exercise: React.FC<Prosp> = ({ item }) => {
     }
 
     return (
-        <S.ExerciseContainer onPressIn={handleAddExercise} onLongPress={handleDelete}>
+        <S.ExerciseContainer onPress={handleAddExercise} onLongPress={handleDelete}>
             <S.ExerciseName>{item.name}</S.ExerciseName>
             <FlatList
                 data={item.muscles}
