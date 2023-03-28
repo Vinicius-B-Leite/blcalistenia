@@ -1,4 +1,4 @@
-import React, { useContext, useState, useCallback, useEffect } from 'react';
+import React, { useContext, useState, useCallback, useEffect, useRef } from 'react';
 import Container from '../../components/Container';
 import * as S from './styles'
 import AntDesign from 'react-native-vector-icons/AntDesign'
@@ -9,7 +9,7 @@ import CreateWorkoutButton from '../../components/CreateWorkoutButton';
 import Workout from '../../components/Workout';
 import { WorkoutContext } from '../../contexts/WorkoutContext';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
-import CalendarDaysTrained from '../../components/CalendarDaysTrained';
+import CalendarDaysTrained, { CalendarRef } from '../../components/CalendarDaysTrained';
 import { RootStackParamList } from '../../routes/Models';
 import { StackNavigationProp } from '@react-navigation/stack';
 import ListEmptyComponent from '../../components/ListEmptyComponent';
@@ -31,7 +31,7 @@ const Home: React.FC = () => {
     const [workoutLeveSuggest, setWorkoutLevelSuggest] = useState<WorkoutLevel>('begginer')
     const { realm } = useRealm()
     const { user } = useUser()
-
+    const calendarRef = useRef<CalendarRef>(null)
 
     useEffect(() => {
         getSuggestsWorkouts(workoutLeveSuggest)
@@ -48,7 +48,7 @@ const Home: React.FC = () => {
     }
     return (
         <Container>
-            <CalendarDaysTrained closeCalendar={() => setCalendarVisible(false)} visible={calendarVisible} />
+            <CalendarDaysTrained ref={calendarRef}/>
             <S.Header>
                 <S.Left onPressIn={() => navigation.navigate('Profile')} >
                     <S.Avatar source={{ uri: user.photoURI }} />
@@ -60,7 +60,7 @@ const Home: React.FC = () => {
 
                 </S.Left>
 
-                <S.Right onPressIn={() => setCalendarVisible(true)}>
+                <S.Right onPressIn={() => calendarRef.current?.openCalendar()}>
                     <AntDesign size={theme.sizes.icons.md} color={theme.colors.text} name='calendar' />
                 </S.Right>
             </S.Header>

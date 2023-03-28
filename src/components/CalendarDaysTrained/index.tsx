@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { forwardRef, useContext, useEffect, useImperativeHandle, useState } from 'react';
 import { Calendar } from 'react-native-calendars';
 import { StyleSheet, TouchableOpacity, Dimensions } from 'react-native'
 import { useTheme } from 'styled-components/native';
@@ -7,16 +7,15 @@ import { HistoricContext } from '../../contexts/HistoricContext';
 import { MarkedDates } from 'react-native-calendars/src/types';
 
 
-type Props = {
-    visible: boolean,
+
+export type CalendarRef = {
+    openCalendar: () => void
     closeCalendar: () => void
 }
 
-
-
-const CalendarDaysTrained = ({ visible, closeCalendar }: Props) => {
+const CalendarDaysTrained = forwardRef<CalendarRef>(({ }, ref) => {
     const theme = useTheme()
-    const top = useSharedValue(Dimensions.get('screen').height / -1.5)
+    const top = useSharedValue(-(Dimensions.get('screen').height))
     const { getDatesTrained } = useContext(HistoricContext)
     const [markedDates, setMarkedDates] = useState<MarkedDates>({})
 
@@ -32,15 +31,19 @@ const CalendarDaysTrained = ({ visible, closeCalendar }: Props) => {
             marked: true,
             dotColor: theme.colors.contrast
         }))
-
-
-        top.value = withTiming(0, { duration: 1000 })
-
-        return () => { top.value = withTiming(Dimensions.get('screen').height / -1.5, { duration: 1000 }) }
-
     }, [])
 
-    return visible ? (
+    const openCalendar = () => {
+        console.log('clicou');
+        
+        top.value = withTiming(0, { duration: 1000 })
+    }
+    const closeCalendar = () => {        
+        top.value = withTiming(-(Dimensions.get('screen').height), { duration: 1000 })
+    }
+    useImperativeHandle(ref, () => ({ openCalendar, closeCalendar }), [openCalendar, closeCalendar])
+
+    return (
 
         <Animated.View style={[animatedStyle, styles.container]}>
             <Calendar
@@ -59,23 +62,20 @@ const CalendarDaysTrained = ({ visible, closeCalendar }: Props) => {
                     backgroundColor: theme.colors.darkBackground
                 }}
                 initialDate={new Date().toString()}
-                onDayPress={day => {
-                }}
-                onDayLongPress={day => {
-                }}
                 monthFormat={'MMMM'}
-                onMonthChange={month => {
-                }}
                 firstDay={1}
                 onPressArrowLeft={subtractMonth => subtractMonth()}
                 onPressArrowRight={addMonth => addMonth()}
                 markedDates={markedDates}
             />
 
-            <TouchableOpacity activeOpacity={0} style={[styles.closeButton, { backgroundColor: theme.colors.darkBackground }]} onPressIn={closeCalendar} />
+            <TouchableOpacity
+                activeOpacity={0}
+                style={[styles.closeButton]}
+                onPressIn={closeCalendar} />
         </Animated.View>
-    ) : <></>
-}
+    )
+})
 
 const styles = StyleSheet.create({
     container: {
