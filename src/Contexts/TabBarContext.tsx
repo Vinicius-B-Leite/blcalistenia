@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext, useContext, useState, useCallback } from 'react';
 
 
 
@@ -18,13 +18,13 @@ const TabBarProvider: React.FC<Props> = ({ children }) => {
 
     const [isTabBarVisible, setTabBarVisible] = useState(true)
 
-    const hideTabBar = () => {
+    const hideTabBar = useCallback(() => {
         setTabBarVisible(false)
-    }
+    }, [])
 
-    const showTabBar = () => {
+    const showTabBar = useCallback( () => {
         setTabBarVisible(true)
-    }
+    }, [])
     return (
         <TabBarContext.Provider value={{
             hideTabBar,

@@ -1,4 +1,5 @@
-import React, { useCallback, useImperativeHandle } from 'react';
+import React, { memo, useCallback, useImperativeHandle } from 'react';
+import { View } from 'react-native'
 import { Dimensions, StyleSheet } from 'react-native';
 import { Gesture, GestureDetector } from 'react-native-gesture-handler';
 import Animated, { useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated';
@@ -89,4 +90,4 @@ const styles = StyleSheet.create({
     }
 })
 
-export default BottomSheet;
+export default memo(BottomSheet);

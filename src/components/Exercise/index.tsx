@@ -1,27 +1,26 @@
 import { useNavigation } from '@react-navigation/native';
-import { StackNavigationProp} from '@react-navigation/stack';
-import React, { useContext } from 'react';
-import { FlatList, Alert } from 'react-native';
-import { ExerciseContext } from '../../contexts/ExerciseContext';
+import { StackNavigationProp } from '@react-navigation/stack';
+import React, { memo, useContext, useCallback } from 'react';
+import {  Alert } from 'react-native';
 import { WorkoutContext } from '../../contexts/WorkoutContext';
 import { ExerciseType } from '../../models/ExerciseType';
 import { RootStackParamList } from '../../routes/Models';
 import * as S from './styles'
+import { FlashList } from '@shopify/flash-list'
 
 
-type Prosp = { item: ExerciseType }
+type Prosp = { item: ExerciseType, deleteExercise: (exerciseName: String) => void }
 
 type Navigation = StackNavigationProp<RootStackParamList, 'AddExercise'>
 
-const Exercise: React.FC<Prosp> = ({ item }) => {
+const Exercise: React.FC<Prosp> = ({ item, deleteExercise }) => {
     const navigation = useNavigation<Navigation>()
     const { addExercise } = useContext(WorkoutContext)
-    const { deleteExercise } = useContext(ExerciseContext)
 
-    const handleAddExercise = () => {
+    const handleAddExercise = useCallback(() => {
         addExercise(item.name)
         navigation.goBack()
-    }
+    }, [])
 
     const handleDelete = () => {
         Alert.alert(
@@ -43,10 +42,12 @@ const Exercise: React.FC<Prosp> = ({ item }) => {
         )
     }
 
+
+
     return (
         <S.ExerciseContainer onPress={handleAddExercise} onLongPress={handleDelete}>
             <S.ExerciseName>{item.name}</S.ExerciseName>
-            <FlatList
+            <FlashList
                 data={item.muscles}
                 horizontal
                 showsHorizontalScrollIndicator={false}
@@ -59,4 +60,4 @@ const Exercise: React.FC<Prosp> = ({ item }) => {
     )
 }
 
-export default Exercise;
+export default memo(Exercise);

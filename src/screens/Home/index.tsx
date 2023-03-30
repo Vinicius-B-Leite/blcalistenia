@@ -17,13 +17,15 @@ import { SuggestWorkoutContext } from '../../contexts/SuggestWorkoutContex';
 import { WorkoutLevel } from '../../models/SuggestsWorkoutType';
 import { useRealm } from '../../contexts/RealmContext';
 import { useUser } from '../../contexts/AuthContext';
+import { WorkoutType } from '../../models/WorkoutType';
+import { ExerciseType } from '../../models/ExerciseType';
 
 type Navigation = StackNavigationProp<RootStackParamList, 'Home'>
 
 const Home: React.FC = () => {
     const theme = useTheme()
     const navigation = useNavigation<Navigation>()
-    const { getWorkoutsList, workoutsList, filterWorkoutByMuscle } = useContext(WorkoutContext)
+    const [workoutsList, setWorkoutList] = useState<WorkoutType[]>([]);
     const { getSuggestsWorkouts, suggestsWorkouts } = useContext(SuggestWorkoutContext)
     const [calendarVisible, setCalendarVisible] = useState<boolean>(false)
     const [searchWorkoutInput, setSearchWorkoutInput] = useState('')
@@ -33,13 +35,52 @@ const Home: React.FC = () => {
     const { user } = useUser()
     const calendarRef = useRef<CalendarRef>(null)
 
+    const getWorkoutsList = useCallback((text?: string) => {
+        if (realm) {
+            let workout = realm.objects<WorkoutType[]>('Workout').toJSON()
+
+            if (text && text.length > 1) {
+                workout = realm.objects<WorkoutType[]>('Workout').filtered(`title CONTAINS '${text}'`).toJSON()
+            }
+            setWorkoutList(workout as WorkoutType[])
+        }
+    }, [realm])
+
+    const filterWorkoutByMuscle = useCallback((muscle: string) => {
+        if (realm) {
+
+            const workouts = realm.objects('Workout').toJSON() as WorkoutType[]
+
+            if (!(muscles.includes(muscle))) {
+                setWorkoutList(workouts)
+                return
+            }
+
+            const exercises = realm.objects('Exercise').toJSON() as ExerciseType[]
+
+
+            const exercisesHaveMuscleSelected = exercises.filter(e => e.muscles.includes(muscle))
+            let workoutsWithMuscleSelected: WorkoutType[] = []
+
+            workouts.forEach(w => {
+                w.exercises.forEach(e => {
+                    const index = exercisesHaveMuscleSelected.findIndex(v => v.name == e.exercise_id)
+                    if (index > -1) workoutsWithMuscleSelected.push(w)
+                })
+
+            })
+
+            setWorkoutList(workoutsWithMuscleSelected)
+        }
+    }, [realm])
+
     useEffect(() => {
         getSuggestsWorkouts(workoutLeveSuggest)
     }, [realm])
 
-    useEffect(() => {
+    useFocusEffect(useCallback(() => {
         getWorkoutsList(searchWorkoutInput)
-    }, [searchWorkoutInput, realm])
+    }, [searchWorkoutInput, realm]))
 
 
     const handleSelectMuscleFilter = (muscle: string) => {
@@ -48,7 +89,7 @@ const Home: React.FC = () => {
     }
     return (
         <Container>
-            <CalendarDaysTrained ref={calendarRef}/>
+            <CalendarDaysTrained ref={calendarRef} />
             <S.Header>
                 <S.Left onPressIn={() => navigation.navigate('Profile')} >
                     <S.Avatar source={{ uri: user.photoURI }} />

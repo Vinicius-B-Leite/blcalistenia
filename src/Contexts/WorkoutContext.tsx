@@ -1,4 +1,4 @@
-import React, { createContext, useState } from 'react';
+import React, { createContext, useState, useCallback, useMemo } from 'react';
 import { ExerciseType } from '../models/ExerciseType';
 import { ExercisesInWorkoutType } from '../models/ExercisesInWorkoutType';
 import { WorkoutType } from '../models/WorkoutType';
@@ -8,17 +8,9 @@ import { SerieType } from '../models/SerieType';
 import { useRealm } from './RealmContext';
 
 type WorkoutContext = {
-    saveWorkout: (workout: WorkoutType) => void,
-    getWorkoutsList: (text?: string) => void,
     addExercise: (newExercise: String) => void,
-    deleteExercise: (exercise: ExercisesInWorkoutType) => void,
-    deleteWorkout: (workoutID: string) => void,
-    createSerie: (exercise: ExercisesInWorkoutType) => void,
-    deleteSerie: (exercise: ExercisesInWorkoutType, serie: Number) => void
-    updateSerie: (serieNumber: number, exercise: ExercisesInWorkoutType, newSerie: SerieType) => void,
-    filterWorkoutByMuscle: (muscle: string) => void,
-    setExercises: (old: ExercisesInWorkoutType[]) => void,
-    workoutsList: WorkoutType[],
+    deleteWorkout: (workoutID: string) => void
+    setExercises: React.Dispatch<React.SetStateAction<ExercisesInWorkoutType[]>>,
     exercises: ExercisesInWorkoutType[],
 }
 
@@ -27,38 +19,10 @@ export const WorkoutContext = createContext({} as WorkoutContext)
 
 
 const WorkoutProvider = ({ children }: { children: React.ReactNode }) => {
-    const [workoutsList, setWorkoutList] = useState<WorkoutType[]>([]);
     const [exercises, setExercises] = useState<ExercisesInWorkoutType[]>([])
     const { realm } = useRealm()
 
-
-    const saveWorkout = ({ banner, exercises, title, anotation, _id }: WorkoutType) => {
-        realm && realm.write(() => {
-            realm.create<WorkoutType>('Workout', {
-                _id: _id,
-                anotation: anotation,
-                banner: banner,
-                exercises: exercises,
-                title: title
-            }, Realm.UpdateMode.Modified).toJSON() as WorkoutType
-            getWorkoutsList()
-        })
-
-    }
-
-    const getWorkoutsList = (text?: string) => {
-        if (realm) {
-            let workout = realm.objects<WorkoutType[]>('Workout').toJSON()
-
-            if (text && text.length > 1) {
-                workout = realm.objects<WorkoutType[]>('Workout').filtered(`title CONTAINS '${text}'`).toJSON()
-            }
-            setWorkoutList(workout as WorkoutType[])
-        }
-
-    }
-
-    const addExercise = (newExercise: String) => {
+    const addExercise = useCallback((newExercise: String) => {
         setExercises(old => [
             ...old,
             {
@@ -73,123 +37,24 @@ const WorkoutProvider = ({ children }: { children: React.ReactNode }) => {
             }
         ])
 
-    }
+    }, [])
 
-    const deleteExercise = (exercise: ExercisesInWorkoutType) => {
-        setExercises(old => {
-            let copy = [...old]
-            const index = copy.indexOf(exercise)
-            copy.splice(index, 1)
-            return copy
-        })
-    }
+    
 
-    const deleteWorkout = (workoutID: string) => {
+    const deleteWorkout = useCallback((workoutID: string) => {
         realm && realm.write(() => {
             realm.delete(realm.objectForPrimaryKey('Workout', workoutID))
-            setWorkoutList(old => {
-                const index = old.findIndex((v, i) => v._id == workoutID)
-                const newWorkoutList = old
-                newWorkoutList.splice(index, 1)
-                return [...newWorkoutList]
-            })
-            getWorkoutsList()
         })
+    }, [realm])
 
-
-    }
-
-    const createSerie = (exercise: ExercisesInWorkoutType) => {
-
-        setExercises(old => {
-            const index = old.indexOf(exercise)
-
-            old[index].series.push({
-                rep: 8,
-                rest: 30,
-                serie: old[index].series.length + 1
-            })
-            return [...old]
-        })
-
-    }
-
-    const deleteSerie = (exercise: ExercisesInWorkoutType, serie: Number) => {
-
-        setExercises(old => {
-            const indexExercise = old.indexOf(exercise)
-            let seriesIndex = old[indexExercise].series.findIndex((v) => v.serie == serie)
-
-            if (old[indexExercise].series.length == 1) {
-                old.splice(indexExercise, 1)
-            } else {
-                old[indexExercise].series.forEach(s => {
-                    if (old[indexExercise].series.findIndex(v => v.serie == s.serie) > seriesIndex) {
-                        s.serie = Number(s.serie) - 1
-                    }
-                })
-
-                old[indexExercise].series.splice(seriesIndex, 1)
-
-            }
-            return [...old]
-        })
-    }
-
-    const updateSerie = (serieNumber: number, exercise: ExercisesInWorkoutType, newSerie: SerieType) => {
-
-        const exerciseIndex = exercises.findIndex((v) => v.exercise_id == exercise.exercise_id)
-        const serieIndex = exercises[exerciseIndex].series.findIndex((v) => v.serie == serieNumber)
-        let copyExercise = [...exercises]
-
-        copyExercise[exerciseIndex].series[serieIndex] = newSerie
-        setExercises([...copyExercise])
-
-    }
-
-    const filterWorkoutByMuscle = (muscle: string) => {
-        if (realm) {
-
-            const workouts = realm.objects('Workout').toJSON() as WorkoutType[]
-
-            if (!(muscles.includes(muscle))) {
-                setWorkoutList(workouts)
-                return
-            }
-
-            const exercises = realm.objects('Exercise').toJSON() as ExerciseType[]
-
-
-            const exercisesHaveMuscleSelected = exercises.filter(e => e.muscles.includes(muscle))
-            let workoutsWithMuscleSelected: WorkoutType[] = []
-
-            workouts.forEach(w => {
-                w.exercises.forEach(e => {
-                    const index = exercisesHaveMuscleSelected.findIndex(v => v.name == e.exercise_id)
-                    if (index > -1) workoutsWithMuscleSelected.push(w)
-                })
-
-            })
-
-            setWorkoutList(workoutsWithMuscleSelected)
-        }
-    }
-
+    const returnValue = useMemo(() => ({
+        addExercise,
+        setExercises,
+        exercises,
+        deleteWorkout
+    }), [exercises])
     return (
-        <WorkoutContext.Provider value={{
-            saveWorkout,
-            getWorkoutsList,
-            addExercise,
-            deleteExercise,
-            deleteWorkout,
-            createSerie,
-            deleteSerie,
-            updateSerie,
-            filterWorkoutByMuscle,
-            setExercises,
-            workoutsList,
-            exercises,
-        }}>
+        <WorkoutContext.Provider value={returnValue}>
             {children}
         </WorkoutContext.Provider>
     )

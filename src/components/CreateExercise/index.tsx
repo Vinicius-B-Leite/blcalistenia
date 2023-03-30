@@ -1,23 +1,39 @@
 import React, { useContext, useState } from 'react';
 import { useTheme } from 'styled-components/native';
-import { ExerciseContext } from '../../contexts/ExerciseContext';
+import { ExerciseType } from '../../models/ExerciseType';
 import { category } from '../../utils/category';
 import { muscles } from '../../utils/muscles';
 import * as S from './styles'
 
-const CreateExercise: React.FC = () => {
+
+type Props = {
+    createExercise: ({ name, muscles, categories }: ExerciseType) => void
+}
+
+const CreateExercise: React.FC<Props> = ({ createExercise }) => {
     const theme = useTheme()
     const [categoriesSelected, setCategoriesSelected] = useState<string[]>([])
     const [musclesSelected, setMusclesSelected] = useState<string[]>([])
     const [exerciseNameInput, setExerciseNameInput] = useState('')
-    const { createExercise } = useContext(ExerciseContext)
 
 
     const selectCategory = (category: string) => {
+        if (categoriesSelected.includes(category)) {
+            const index = categoriesSelected.indexOf(category)
+            categoriesSelected.splice(index, 1)
+            setCategoriesSelected([...categoriesSelected])
+            return
+        }
         setCategoriesSelected(oldCategorySelected => [...oldCategorySelected, category])
     }
 
     const selectMuscle = (muscle: string) => {
+        if (musclesSelected.includes(muscle)) {
+            const index = musclesSelected.indexOf(muscle)
+            musclesSelected.splice(index, 1)
+            setCategoriesSelected([...musclesSelected])
+            return
+        }
         setMusclesSelected(oldMusclesSelected => [...oldMusclesSelected, muscle])
     }
 

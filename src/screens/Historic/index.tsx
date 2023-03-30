@@ -1,5 +1,4 @@
 import React, { useCallback, useContext, useRef, useState } from 'react';
-import { FlatList } from 'react-native'
 import * as S from './styles'
 import { HistoricContext } from '../../contexts/HistoricContext';
 import { HistoricType } from '../../models/HistoricType';
@@ -9,6 +8,7 @@ import { WorkoutType } from '../../models/WorkoutType';
 import ExerciseInWorkoutItem from '../../components/ExerciseInWorkoutItem';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { useFocusEffect } from '@react-navigation/native';
+import { FlashList } from '@shopify/flash-list';
 
 
 const Historic: React.FC = () => {
@@ -33,8 +33,8 @@ const Historic: React.FC = () => {
                         <S.FilterText>data</S.FilterText>
                     </S.FilterButton>
                 </S.Header>
-                <FlatList
-                    contentContainerStyle={{ padding: '5%' }}
+                <FlashList
+                    // contentContainerStyle={{ padding: '5%' }}
                     data={historic}
                     renderItem={({ item }) => <HistoricItem item={item} onClick={(bsItem) => {
                         setBottomSheetItem(bsItem)
@@ -67,8 +67,9 @@ const HistoricBottomSheetItem = ({ item }: { item: HistoricType }) => {
                 <S.WorkoutTime>{minutes}:{seconds}</S.WorkoutTime>
             </S.WorkoutHeader>
             <S.WorkoutAnotation>{workout.anotation}</S.WorkoutAnotation>
-            <FlatList
+            <FlashList
                 data={workout.exercises}
+                estimatedItemSize={6}
                 renderItem={({ item }) => <ExerciseInWorkoutItem
                     item={item}
                     showCreateSerie={false}

@@ -7,6 +7,7 @@ import * as S from './styles'
 import AntDesign from 'react-native-vector-icons/AntDesign'
 import ExerciseInWorkoutItem from '../../components/ExerciseInWorkoutItem';
 import { WorkoutSeasonContext } from '../../contexts/WorkooutSeason';
+import { FlashList } from '@shopify/flash-list';
 
 type Navigation = StackScreenProps<RootStackParamList, 'WorkoutSeason'>
 
@@ -59,7 +60,7 @@ const WorkoutSeason: React.FC<Navigation> = ({ navigation, route }) => {
                 )
             }
 
-            <FlatList
+            <FlashList
                 data={workout.exercises}
                 extraData={workout.exercises}
                 removeClippedSubviews={false}

@@ -1,5 +1,6 @@
-import React from 'react';
-import {  Modal, ModalProps, FlatList } from 'react-native';
+import { FlashList } from '@shopify/flash-list';
+import React, { memo } from 'react';
+import { Modal, ModalProps } from 'react-native';
 import { FilterType } from '../../screens/AddExercise';
 import { category } from '../../utils/category';
 import { muscles } from '../../utils/muscles';
@@ -22,7 +23,7 @@ const FilterExercise: React.FC<FilterExerciseProps> = ({ filters, modalProps, on
                     <S.Title>Filtros</S.Title>
 
                     <S.FilterTitle>Categoria</S.FilterTitle>
-                    <FlatList
+                    <FlashList
                         data={category}
                         numColumns={3}
                         renderItem={({ item }) => (
@@ -33,7 +34,7 @@ const FilterExercise: React.FC<FilterExerciseProps> = ({ filters, modalProps, on
                     />
 
                     <S.FilterTitle>Músculos</S.FilterTitle>
-                    <FlatList
+                    <FlashList
                         data={muscles}
                         numColumns={3}
                         renderItem={({ item }) => (
@@ -53,4 +54,4 @@ const FilterExercise: React.FC<FilterExerciseProps> = ({ filters, modalProps, on
 
 }
 
-export default FilterExercise;
+export default memo(FilterExercise);

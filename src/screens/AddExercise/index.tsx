@@ -1,8 +1,7 @@
-import React, { useEffect, useContext, useRef, useState } from 'react';
+import React, { useEffect, useContext, useRef, useState, useCallback, memo, useMemo } from 'react';
 import * as S from './styles'
 import AntDesign from 'react-native-vector-icons/AntDesign'
 import { useTheme } from 'styled-components';
-import { ExerciseContext } from '../../contexts/ExerciseContext';
 import { StackScreenProps } from '@react-navigation/stack';
 import { RootStackParamList } from '../../routes/Models';
 import { BottomSheetRefProps } from '../../components/BottomSheet';
@@ -10,21 +9,91 @@ import Exercise from '../../components/Exercise';
 import BottomSheet from '../../components/BottomSheet';
 import CreateExercise from '../../components/CreateExercise';
 import FilterExercise from '../../components/FilterExercise';
+import { ExerciseType } from '../../models/ExerciseType';
+import { useRealm } from '../../contexts/RealmContext';
+import { initialsExercises } from '../../utils/initialsExercises';
+import { useFocusEffect } from '@react-navigation/native';
+import { FlashList } from '@shopify/flash-list';
+import { Dimensions } from 'react-native';
 
 
 type Navigation = StackScreenProps<RootStackParamList, 'AddExercise'>
 export type FilterType = { category: string, muscles: string }
 const AddExercise: React.FC<Navigation> = ({ navigation }) => {
     const theme = useTheme()
-    const { getExercises, exercisList, filterExercises } = useContext(ExerciseContext)
+    const [exercisList, setExerciseList] = useState<ExerciseType[]>([])
+    const { realm } = useRealm()
     const bottomSheetRef = useRef<BottomSheetRefProps>(null)
-    const [searchExerciseInput, setSearchExerciseInput] = useState('')
+    const [searchExerciseInput, setSearchExerciseInput] = useState<string | undefined>(undefined)
     const [filterExerciseVisible, setFilterExercciseVisible] = useState(false)
     const [filters, setFilters] = useState<FilterType>({ category: 'empurrar', muscles: 'Peitoral' })
 
-    useEffect(() => {
-        getExercises(searchExerciseInput)
+    useFocusEffect(useCallback(() => {
+        getExercises()
+    }, []))
+
+    const exerisesFilteredByInput = useMemo(() => {
+        if (realm) {
+            let exercises = realm.objects<ExerciseType[]>('Exercise').filtered(`name CONTAINS '${searchExerciseInput}'`).toJSON() as ExerciseType[]
+            return exercises.sort()
+        }
     }, [searchExerciseInput])
+
+    const getExercises = useCallback(() => {
+        if (realm) {
+
+            let exercises = realm.objects<ExerciseType[]>('Exercise').sorted('name').toJSON() as ExerciseType[]
+
+            if (exercises.length === 0) {
+                initialsExercises.forEach(exercise => {
+                    createExercise(exercise)
+                })
+                return
+            }
+
+            exercises.sort()
+            setExerciseList(exercises)
+        }
+    }, [realm])
+    const createExercise = useCallback(({ name, muscles, categories }: ExerciseType) => {
+
+        if (realm) {
+
+            realm.write(() => {
+                const exerciseResponse = realm.create<ExerciseType>('Exercise', {
+                    name,
+                    muscles,
+                    categories
+                }).toJSON() as ExerciseType
+
+                setExerciseList(old => [...old, exerciseResponse])
+            })
+        }
+    }, [realm])
+    const filterExercises = useCallback((category: string, muscle: string) => {
+        if (realm) {
+            const exerciesesFiltereds = realm.objects('Exercise')
+                .filtered(`categories CONTAINS  '${category}'`)
+                .filtered(`muscles CONTAINS '${muscle}'`)
+                .toJSON() as ExerciseType[]
+
+            setExerciseList([...exerciesesFiltereds])
+        }
+
+    }, [realm])
+    const deleteExercise = useCallback((exerciseName: String) => {
+        if (realm) {
+            realm.write(() => {
+                realm.delete(realm.objectForPrimaryKey('Exercise', exerciseName as string))
+                setExerciseList(old => {
+                    const index = old.findIndex((v) => v.name == exerciseName)
+                    old.splice(index, 1)
+                    return [...old]
+                })
+            })
+        }
+    }, [realm])
+
 
     return (
         <S.Container>
@@ -35,7 +104,7 @@ const AddExercise: React.FC<Navigation> = ({ navigation }) => {
                 <S.InputArea>
                     <S.Input
                         value={searchExerciseInput}
-                        onChangeText={setSearchExerciseInput}
+                        onChangeText={(text) => setSearchExerciseInput(text)}
                         placeholder='Pesquisar exercício'
                         placeholderTextColor={theme.colors.darkText}
                         textAlign='right'
@@ -54,11 +123,12 @@ const AddExercise: React.FC<Navigation> = ({ navigation }) => {
                 </S.FilterButton>
 
 
-                <S.ExerciseList
-                    data={exercisList}
-                    extraData={exercisList}
+                <FlashList
+                    estimatedItemSize={15}
+                    style={{ height: Dimensions.get('screen').height * 0.50 }}
+                    data={(exerisesFilteredByInput && exerisesFilteredByInput?.length > 1) ? exerisesFilteredByInput : exercisList}
                     keyExtractor={item => String(item.name)}
-                    renderItem={({ item }) => <Exercise item={item} />}
+                    renderItem={({ item }) => <Exercise item={item} deleteExercise={(exerciseName) => deleteExercise(exerciseName)} />}
                     showsVerticalScrollIndicator={false}
                 />
             </S.Main>
@@ -71,7 +141,7 @@ const AddExercise: React.FC<Navigation> = ({ navigation }) => {
 
 
             <BottomSheet ref={bottomSheetRef}>
-                <CreateExercise />
+                <CreateExercise createExercise={createExercise} />
             </BottomSheet>
 
             <FilterExercise
@@ -90,9 +160,6 @@ const AddExercise: React.FC<Navigation> = ({ navigation }) => {
                 }}
             />
         </S.Container>
-
-
-
     )
 }
 

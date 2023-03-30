@@ -34,7 +34,6 @@ const CalendarDaysTrained = forwardRef<CalendarRef>(({ }, ref) => {
     }, [])
 
     const openCalendar = () => {
-        console.log('clicou');
         
         top.value = withTiming(0, { duration: 1000 })
     }

@@ -1,5 +1,6 @@
-import React, { useState, useContext, useEffect, useLayoutEffect } from 'react';
-import { FlatList, Alert } from 'react-native';
+import React, { useState, useContext, useEffect, useMemo, useCallback } from 'react';
+import { Alert, FlatList } from 'react-native';
+import { FlashList } from '@shopify/flash-list'
 import * as S from './styles'
 import AntDesign from 'react-native-vector-icons/AntDesign'
 import Feather from 'react-native-vector-icons/Feather'
@@ -13,9 +14,11 @@ import uuid from 'react-native-uuid';
 import { useTabBar } from '../../contexts/TabBarContext';
 import { WorkoutType } from '../../models/WorkoutType';
 import { isEqual } from 'lodash'
+import { useRealm } from '../../contexts/RealmContext';
+import { ExercisesInWorkoutType } from '../../models/ExercisesInWorkoutType';
+import { SerieType } from '../../models/SerieType';
 
-var workoutWithoutChanges: WorkoutType | undefined = undefined
-var currentWorkoutToCompare: WorkoutType | undefined = undefined
+
 
 type Navigation = StackScreenProps<RootStackParamList, 'CreateWorkout'>
 
@@ -23,30 +26,94 @@ const CreateWorkout: React.FC<Navigation> = ({ route, navigation }) => {
     const theme = useTheme()
     const { showTabBar, hideTabBar } = useTabBar()
     const {
-        saveWorkout,
         deleteWorkout,
         exercises,
-        createSerie,
-        deleteSerie,
         setExercises,
-        deleteExercise } = useContext(WorkoutContext)
-    const [workoutName, setWorkoutName] = useState('')
-    const [anotation, setAnotation] = useState('')
-    const [imageURI, setImageURI] = useState('')
-    const [workout_id, setWorkoutID] = useState(uuid.v4().toString())
-
-    useLayoutEffect(() => {
-        hideTabBar()
-        setExercises([])
-        if (typeof route?.params?.workout !== 'undefined') {
-            const { _id, banner, exercises, title, anotation } = route.params.workout
-            workoutWithoutChanges = {...route.params.workout}
-            setWorkoutName(title as string)
-            setAnotation(anotation as string)
-            setImageURI(banner)
-            setWorkoutID(_id)
-            setExercises(exercises)
+    } = useContext(WorkoutContext)
+    const [workoutName, setWorkoutName] = useState(route?.params?.workout?.title as string || '')
+    const [anotation, setAnotation] = useState(route?.params?.workout?.anotation as string || '')
+    const [imageURI, setImageURI] = useState(route?.params?.workout?.banner as string || '')
+    const [workout_id, setWorkoutID] = useState(route?.params?.workout?._id as string || uuid.v4().toString())
+    const { realm } = useRealm()
+    const workoutWithoutChanges = useMemo(() => {
+        if (route?.params?.workout) {
+            const wkc: WorkoutType = { ...route?.params?.workout }
+            return wkc
         }
+        return
+    }, [])
+    const currentWorkoutToCompare = useMemo(() => {
+        return {
+            banner: imageURI,
+            exercises: exercises,
+            title: workoutName,
+            anotation: anotation,
+            _id: route?.params?.workout?._id || workout_id
+        }
+    }, [workoutName, anotation, imageURI, exercises])
+
+    const saveWorkout = useCallback(({ banner, exercises, title, anotation, _id }: WorkoutType) => {
+        realm && realm.write(() => {
+            realm.create<WorkoutType>('Workout', {
+                _id: _id,
+                anotation: anotation,
+                banner: banner,
+                exercises: exercises,
+                title: title
+            }, Realm.UpdateMode.Modified).toJSON() as WorkoutType
+        })
+    }, [realm])
+    const createSerie = useCallback((exercise: ExercisesInWorkoutType) => {
+
+        setExercises(old => {
+            const index = old.indexOf(exercise)
+            old[index].series.push({
+                rep: 8,
+                rest: 30,
+                serie: old[index].series.length + 1
+            })
+            return [...old]
+        })
+
+    }, [])
+    const updateSerie = useCallback((serieNumber: number, exercise: ExercisesInWorkoutType, newSerie: SerieType) => {
+        setExercises(old => {
+            const exerciseIndex = old.findIndex((v) => v.exercise_id == exercise.exercise_id)
+            const serieIndex = old[exerciseIndex].series.findIndex((v) => v.serie == serieNumber)
+            let copyExercise = [...old]
+
+            copyExercise[exerciseIndex].series[serieIndex] = newSerie
+            return [...copyExercise]
+        })
+    }, [])
+    const deleteSerie = useCallback((exercise: ExercisesInWorkoutType, serie: Number) => {
+
+        setExercises(old => {
+            const indexExercise = old.indexOf(exercise)
+            let seriesIndex = old[indexExercise].series.findIndex((v) => v.serie == serie)
+
+            if (old[indexExercise].series.length == 1) {
+                old.splice(indexExercise, 1)
+            } else {
+                old[indexExercise].series.forEach(s => {
+                    if (old[indexExercise].series.findIndex(v => v.serie == s.serie) > seriesIndex) {
+                        s.serie = Number(s.serie) - 1
+                    }
+                })
+
+                old[indexExercise].series.splice(seriesIndex, 1)
+
+            }
+            return [...old]
+        })
+    }, [])
+    const deleteExercise = useCallback((exercise: ExercisesInWorkoutType) => {
+        setExercises(old => {
+            let copy = [...old]
+            const index = copy.indexOf(exercise)
+            copy.splice(index, 1)
+            return copy
+        })
     }, [])
 
     useEffect(() => {
@@ -57,33 +124,27 @@ const CreateWorkout: React.FC<Navigation> = ({ route, navigation }) => {
             anotation: anotation,
             _id: route?.params?.workout?._id || workout_id
         })
-        if (currentWorkoutToCompare) {
-            
-            currentWorkoutToCompare = {
-                banner: imageURI,
-                exercises: exercises,
-                title: workoutName,
-                anotation: anotation,
-                _id: route?.params?.workout?._id || workout_id
-            }
-        } else {
-            currentWorkoutToCompare = workoutWithoutChanges
-        }
 
     }, [workoutName, anotation, imageURI, exercises])
 
     useEffect(() => {
-        navigation.addListener('beforeRemove', async (e) => {
+        hideTabBar()
+        setExercises(route?.params?.workout?.exercises || [])
+        const sub = navigation.addListener('beforeRemove', async (e) => {
             e.preventDefault()
             await handleGoBack()
             showTabBar()
             navigation.dispatch(e.data.action)
         })
+
+        return sub
     }, [])
 
-    const handleGoBack = async () => {
+    const handleGoBack = useCallback(async () => {
         return new Promise<void>((resolve, reject) => {
 
+            console.log(workoutWithoutChanges, currentWorkoutToCompare);
+            
             const userDoesAnyChange = isEqual(workoutWithoutChanges, currentWorkoutToCompare)
 
 
@@ -100,10 +161,11 @@ const CreateWorkout: React.FC<Navigation> = ({ route, navigation }) => {
                         text: 'Não',
                         style: 'cancel',
                         onPress: () => {
-                            if (!(route?.params?.workout)) resolve(deleteWorkout(workout_id))
+                            if (!(route?.params?.workout)) deleteWorkout(workout_id)
                             else {
-                                if (workoutWithoutChanges) resolve(saveWorkout({ ...workoutWithoutChanges }))
+                                if (workoutWithoutChanges) saveWorkout({ ...workoutWithoutChanges })
                             }
+                            resolve()
                         }
                     },
                     {
@@ -115,14 +177,15 @@ const CreateWorkout: React.FC<Navigation> = ({ route, navigation }) => {
                 ]
             )
         })
-    }
-    const handleImagePicker = async () => {
+    }, [workoutWithoutChanges, currentWorkoutToCompare])
+
+    const handleImagePicker = useCallback(async () => {
         const { assets } = await pickeImage()
         const uri = assets ? assets[0].uri : ''
         const finalUri = uri ? uri : ''
 
         setImageURI(finalUri)
-    }
+    }, [])
 
     return (
         <S.Container>
@@ -145,9 +208,9 @@ const CreateWorkout: React.FC<Navigation> = ({ route, navigation }) => {
 
 
 
-            <FlatList
+            <FlashList
+                estimatedItemSize={10}
                 data={exercises}
-                extraData={exercises}
                 showsVerticalScrollIndicator={false}
                 ListHeaderComponent={() => (
                     <S.AnotationContainer>
@@ -166,9 +229,10 @@ const CreateWorkout: React.FC<Navigation> = ({ route, navigation }) => {
                         showCreateSerie={true}
                         showDeleteSerieButton={true}
                         showSucessButton={false}
-                        createSerieFunction={(exercise) => createSerie(exercise)}
-                        deleteSerieFunction={(exercise, serieNumber) => deleteSerie(exercise, serieNumber)}
-                        deleteExerciseFuntion={(exercise) => deleteExercise(exercise)}
+                        createSerieFunction={createSerie}
+                        deleteSerieFunction={deleteSerie}
+                        deleteExerciseFuntion={deleteExercise}
+                        updateSerie={updateSerie}
                     />
                 )}
                 ListFooterComponent={() => (
@@ -177,7 +241,6 @@ const CreateWorkout: React.FC<Navigation> = ({ route, navigation }) => {
                     </S.AddExerciseButton>
                 )}
             />
-
             {
                 route?.params?.workout && (
                     <S.StartWorkout onPressIn={() => navigation.navigate('WorkoutSeason', { workout: { _id: workout_id, banner: imageURI, exercises: exercises, title: workoutName, anotation: anotation } })}>
@@ -185,7 +248,6 @@ const CreateWorkout: React.FC<Navigation> = ({ route, navigation }) => {
                     </S.StartWorkout>
                 )
             }
-
         </S.Container>
 
     )

@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { memo, useContext, useState, useCallback } from 'react';
 import { WorkoutSeasonContext } from '../../contexts/WorkooutSeason';
 import { WorkoutContext } from '../../contexts/WorkoutContext';
 import { ExercisesInWorkoutType } from '../../models/ExercisesInWorkoutType';
@@ -18,28 +18,29 @@ type Props = {
     showSucessButton: boolean
     deleteSerieButton: boolean,
     deleteSerie: (exercise: ExercisesInWorkoutType, serie: number) => void,
-    sucessButton: (exercise: ExercisesInWorkoutType, serieNumber: number) => void,
+    sucessButton: (serieNumber: number) => void,
+    updateSerie?: (serieNumber: number, exercise: ExercisesInWorkoutType, newSerie: SerieType) => void,
+    changeSerie?: (currentExercise: ExercisesInWorkoutType, serieNumber: number, newSerie: SerieType) => void
 }
-const Serie: React.FC<Props> = ({ item, exercise, deleteSerieButton, showRest, sucessButton, deleteSerie, showSucessButton }) => {
+const Serie: React.FC<Props> = ({ item, exercise, deleteSerieButton, showRest, sucessButton, deleteSerie, showSucessButton, changeSerie, updateSerie }) => {
     const theme = useTheme()
-    const [rep, setRep] = useState(item.rep)
-    const [rest, setRest] = useState(item.rest)
-    const { updateSerie } = useContext(WorkoutContext)
-    const { changeSerie } = useContext(WorkoutSeasonContext)
+    const [rep, setRep] = useState(item?.rep)
+    const [rest, setRest] = useState(item?.rest)
     const navigation = useNavigation<NavigationType>()
+
 
     const handleChange = (text: Number, state: 'rep' | 'rest') => {
         if (state == 'rep') setRep(text)
         if (state == 'rest') setRest(text)
 
-        if (showRest == true) {
+        if (showRest == true && updateSerie) {
             updateSerie(item.serie as number, exercise, {
                 rep: state == 'rep' ? text : rep,
                 rest: state == 'rest' ? text : rest,
                 serie: item.serie
             })
         } else {
-            changeSerie(exercise, item.serie as number, {
+            changeSerie && changeSerie(exercise, item.serie as number, {
                 rep: state == 'rep' ? text : rep,
                 rest: state == 'rest' ? text : rest,
                 serie: item.serie
@@ -48,9 +49,10 @@ const Serie: React.FC<Props> = ({ item, exercise, deleteSerieButton, showRest, s
     }
 
     const handleMarkAsDone = () => {
-        sucessButton(exercise, item.serie as number)
-        if (item.done === false) navigation.navigate('Rest', { totalSeconds: item.rest})
+        sucessButton(item.serie as number)
+        if (item.done === false) navigation.navigate('Rest', { totalSeconds: item.rest })
     }
+
     return (
         <S.Container>
             {
@@ -88,4 +90,5 @@ const Serie: React.FC<Props> = ({ item, exercise, deleteSerieButton, showRest, s
         </S.Container>)
 }
 
-export default Serie;
+export default memo(Serie, (prev, nxt) => prev.item.serie === nxt.item.serie)
+    ;
