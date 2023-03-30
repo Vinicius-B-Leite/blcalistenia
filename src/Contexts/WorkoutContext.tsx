@@ -1,11 +1,8 @@
-import React, { createContext, useState, useCallback, useMemo } from 'react';
-import { ExerciseType } from '../models/ExerciseType';
+import React, { useState, useCallback, createContext } from 'react';
 import { ExercisesInWorkoutType } from '../models/ExercisesInWorkoutType';
-import { WorkoutType } from '../models/WorkoutType';
-import { getRealm } from '../services/realm';
-import { muscles } from '../utils/muscles';
-import { SerieType } from '../models/SerieType';
 import { useRealm } from './RealmContext';
+
+
 
 type WorkoutContext = {
     addExercise: (newExercise: String) => void,
@@ -39,7 +36,7 @@ const WorkoutProvider = ({ children }: { children: React.ReactNode }) => {
 
     }, [])
 
-    
+
 
     const deleteWorkout = useCallback((workoutID: string) => {
         realm && realm.write(() => {
@@ -47,14 +44,13 @@ const WorkoutProvider = ({ children }: { children: React.ReactNode }) => {
         })
     }, [realm])
 
-    const returnValue = useMemo(() => ({
-        addExercise,
-        setExercises,
-        exercises,
-        deleteWorkout
-    }), [exercises])
     return (
-        <WorkoutContext.Provider value={returnValue}>
+        <WorkoutContext.Provider value={{
+            addExercise,
+            setExercises,
+            exercises,
+            deleteWorkout,
+        }}>
             {children}
         </WorkoutContext.Provider>
     )

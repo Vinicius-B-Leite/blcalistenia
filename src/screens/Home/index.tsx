@@ -7,7 +7,6 @@ import { muscles } from '../../utils/muscles';
 import Muscle from '../../components/Muscle';
 import CreateWorkoutButton from '../../components/CreateWorkoutButton';
 import Workout from '../../components/Workout';
-import { WorkoutContext } from '../../contexts/WorkoutContext';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import CalendarDaysTrained, { CalendarRef } from '../../components/CalendarDaysTrained';
 import { RootStackParamList } from '../../routes/Models';

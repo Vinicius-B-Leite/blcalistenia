@@ -27,6 +27,7 @@ const CountDown = React.forwardRef<CountDownRef, CountDownProps>(({ totalSeconds
     const theme = useTheme()
     const animatedValue = useSharedValue(0) //0 desc || totalSeconds asc
     const [counter, setCounter] = useState(totalSeconds)
+    const [totalTimer, setTotalTimer] = useState(totalSeconds)
     const [forceComponentReRender, setForceComponentReRender] = useState(false)
 
     const animatedProps = useAnimatedProps((): CircleProps => {
@@ -61,11 +62,24 @@ const CountDown = React.forwardRef<CountDownRef, CountDownProps>(({ totalSeconds
     }, [forceComponentReRender])
 
     const addSecond = (seconds: number) => {
-        setCounter(old => old + seconds)
+        setCounter(old => {
+            if (old + seconds > totalSeconds) {
+                return old
+            }
+            setTotalTimer(oldT => oldT + seconds)
+            return old + seconds
+        })
+
     }
 
     const lessSecond = (seconds: number) => {
-        setCounter(old => old - seconds)
+        setCounter(old => {
+            setTotalTimer(oldT => oldT - seconds )
+            if (old - seconds < 0) {
+                return 0
+            }
+            return old - seconds
+        })
     }
 
 
@@ -97,6 +111,7 @@ const CountDown = React.forwardRef<CountDownRef, CountDownProps>(({ totalSeconds
                 </G>
             </Svg>
             <S.Counter>{String(Math.floor(counter / 60)).padStart(2, '0')}:{String(counter % 60).padStart(2, '0')}</S.Counter>
+            <S.TotalTimes>{String(Math.floor(totalTimer / 60)).padStart(2, '0')}:{String(totalTimer % 60).padStart(2, '0')}</S.TotalTimes>
         </View>
     )
 })

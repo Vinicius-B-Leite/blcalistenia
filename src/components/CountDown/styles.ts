@@ -7,3 +7,8 @@ export const Counter = styled.Text`
     left: 40%;
     top: 45%;
 `
+export const TotalTimes = styled(Counter)`
+    font-size: ${({theme}) => theme.sizes.fontSize.sm}px;
+    left: 46%;
+    top: 55%;
+`

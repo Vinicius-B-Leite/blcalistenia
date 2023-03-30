@@ -17,6 +17,8 @@ import { isEqual } from 'lodash'
 import { useRealm } from '../../contexts/RealmContext';
 import { ExercisesInWorkoutType } from '../../models/ExercisesInWorkoutType';
 import { SerieType } from '../../models/SerieType';
+import { createContext, useContextSelector } from 'use-context-selector';
+
 
 
 
@@ -33,24 +35,9 @@ const CreateWorkout: React.FC<Navigation> = ({ route, navigation }) => {
     const [workoutName, setWorkoutName] = useState(route?.params?.workout?.title as string || '')
     const [anotation, setAnotation] = useState(route?.params?.workout?.anotation as string || '')
     const [imageURI, setImageURI] = useState(route?.params?.workout?.banner as string || '')
-    const [workout_id, setWorkoutID] = useState(route?.params?.workout?._id as string || uuid.v4().toString())
+    const workout_id = useMemo(() => route?.params?.workout?._id as string || uuid.v4().toString(), [])
     const { realm } = useRealm()
-    const workoutWithoutChanges = useMemo(() => {
-        if (route?.params?.workout) {
-            const wkc: WorkoutType = { ...route?.params?.workout }
-            return wkc
-        }
-        return
-    }, [])
-    const currentWorkoutToCompare = useMemo(() => {
-        return {
-            banner: imageURI,
-            exercises: exercises,
-            title: workoutName,
-            anotation: anotation,
-            _id: route?.params?.workout?._id || workout_id
-        }
-    }, [workoutName, anotation, imageURI, exercises])
+    const initialState = useMemo(() => ({ _id: route?.params?.workout?._id as string || uuid.v4().toString(), banner: route?.params?.workout?.banner as string || '', exercises: exercises || [], title: route?.params?.workout?.title as string || '', anotation: route?.params?.workout?.anotation as string || '' }), [])
 
     const saveWorkout = useCallback(({ banner, exercises, title, anotation, _id }: WorkoutType) => {
         realm && realm.write(() => {
@@ -140,18 +127,8 @@ const CreateWorkout: React.FC<Navigation> = ({ route, navigation }) => {
         return sub
     }, [])
 
-    const handleGoBack = useCallback(async () => {
+    const handleGoBack = async () => {
         return new Promise<void>((resolve, reject) => {
-
-            console.log(workoutWithoutChanges, currentWorkoutToCompare);
-            
-            const userDoesAnyChange = isEqual(workoutWithoutChanges, currentWorkoutToCompare)
-
-
-            if (userDoesAnyChange && currentWorkoutToCompare) {
-                resolve()
-                return
-            }
 
             Alert.alert(
                 'Atenção',
@@ -163,7 +140,7 @@ const CreateWorkout: React.FC<Navigation> = ({ route, navigation }) => {
                         onPress: () => {
                             if (!(route?.params?.workout)) deleteWorkout(workout_id)
                             else {
-                                if (workoutWithoutChanges) saveWorkout({ ...workoutWithoutChanges })
+                                if (initialState) saveWorkout({ ...initialState })
                             }
                             resolve()
                         }
@@ -177,15 +154,15 @@ const CreateWorkout: React.FC<Navigation> = ({ route, navigation }) => {
                 ]
             )
         })
-    }, [workoutWithoutChanges, currentWorkoutToCompare])
+    }
 
-    const handleImagePicker = useCallback(async () => {
+    const handleImagePicker = async () => {
         const { assets } = await pickeImage()
         const uri = assets ? assets[0].uri : ''
         const finalUri = uri ? uri : ''
 
         setImageURI(finalUri)
-    }, [])
+    }
 
     return (
         <S.Container>
@@ -207,21 +184,19 @@ const CreateWorkout: React.FC<Navigation> = ({ route, navigation }) => {
             </S.Header>
 
 
-
+            <S.AnotationContainer>
+                <S.Anotation
+                    value={anotation}
+                    onChangeText={setAnotation}
+                    placeholder='Anotação'
+                    placeholderTextColor={theme.colors.darkText}
+                />
+            </S.AnotationContainer>
             <FlashList
                 estimatedItemSize={10}
                 data={exercises}
                 showsVerticalScrollIndicator={false}
-                ListHeaderComponent={() => (
-                    <S.AnotationContainer>
-                        <S.Anotation
-                            value={anotation}
-                            onChangeText={setAnotation}
-                            placeholder='Anotação'
-                            placeholderTextColor={theme.colors.darkText}
-                        />
-                    </S.AnotationContainer>
-                )}
+                nestedScrollEnabled
                 renderItem={({ item }) => (
                     <ExerciseInWorkoutItem
                         item={item}

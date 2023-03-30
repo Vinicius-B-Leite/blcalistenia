@@ -1,5 +1,5 @@
 import { StackScreenProps } from '@react-navigation/stack';
-import React, { useContext, useState, useEffect, useLayoutEffect } from 'react';
+import React, { useContext, useState, useEffect, useCallback } from 'react';
 import { FlatList, Alert } from 'react-native'
 import { useTheme } from 'styled-components/native';
 import { RootStackParamList } from '../../routes/Models';
@@ -8,13 +8,14 @@ import AntDesign from 'react-native-vector-icons/AntDesign'
 import ExerciseInWorkoutItem from '../../components/ExerciseInWorkoutItem';
 import { WorkoutSeasonContext } from '../../contexts/WorkooutSeason';
 import { FlashList } from '@shopify/flash-list';
+import { ExercisesInWorkoutType } from '../../models/ExercisesInWorkoutType';
 
 type Navigation = StackScreenProps<RootStackParamList, 'WorkoutSeason'>
 
 const WorkoutSeason: React.FC<Navigation> = ({ navigation, route }) => {
     const theme = useTheme()
     const { workout } = route.params
-    const { finishWorkout, startWorkout, createSerie, deleteSerie, markSerieAsDone, deleteExercise, cancelWorkout, timer } = useContext(WorkoutSeasonContext)
+    const { finishWorkout, startWorkout, createSerie, deleteSerie, deleteExercise, cancelWorkout, timer, setWorkoutCopy } = useContext(WorkoutSeasonContext)
 
     useEffect(() => {
         startWorkout(workout)
@@ -36,7 +37,22 @@ const WorkoutSeason: React.FC<Navigation> = ({ navigation, route }) => {
                 style: 'cancel'
             }])
     }
+    const markSerieAsDone = (currentExercise: ExercisesInWorkoutType, serieNumber: number) => {
+        let isDone = false
 
+        setWorkoutCopy(old => {
+            if (old) {
+                const exerciseIndex = old.exercises.indexOf(currentExercise)
+                const serieIndex = serieNumber - 1
+                old.exercises[exerciseIndex].series[serieIndex].done = !old.exercises[exerciseIndex].series[serieIndex].done
+
+                isDone = !old.exercises[exerciseIndex].series[serieIndex].done
+                return { ...old }
+            }
+        })
+
+        return isDone
+    }
 
     return (
         <S.Container>
@@ -63,8 +79,9 @@ const WorkoutSeason: React.FC<Navigation> = ({ navigation, route }) => {
             <FlashList
                 data={workout.exercises}
                 extraData={workout.exercises}
-                removeClippedSubviews={false}
                 showsVerticalScrollIndicator={false}
+                nestedScrollEnabled
+                estimatedItemSize={8}
                 renderItem={({ item }) => (
                     <ExerciseInWorkoutItem
                         item={item}
@@ -74,7 +91,7 @@ const WorkoutSeason: React.FC<Navigation> = ({ navigation, route }) => {
                         createSerieFunction={(exercise) => createSerie(exercise)}
                         deleteSerieFunction={(exercise, serieNumber) => deleteSerie(exercise, serieNumber)}
                         showSucessButton={true}
-                        sucessButtonFunction={(exercise, serieNumber) => markSerieAsDone(exercise, serieNumber)}
+                        sucessButtonFunction={(e, s) => markSerieAsDone(e, s)}
                         deleteExerciseFuntion={(exercise) => deleteExercise(exercise)}
                     />
                 )}

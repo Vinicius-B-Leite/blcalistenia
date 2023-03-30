@@ -18,7 +18,7 @@
     "@react-navigation/stack": "^6.3.11",
     "@shopify/flash-list": "^1.4.2",
     "lodash": "^4.17.21",
-    "react": "18.2.0",
+    "react": "^18.2.0",
     "react-native": "0.71.3",
     "react-native-calendars": "^1.1293.0",
     "react-native-chart-kit": "^6.12.0",
@@ -34,7 +34,9 @@
     "react-native-uuid": "^2.0.1",
     "react-native-vector-icons": "^9.2.0",
     "realm": "^11.3.2",
-    "styled-components": "^5.3.6"
+    "scheduler": "^0.23.0",
+    "styled-components": "^5.3.6",
+    "use-context-selector": "^1.4.1"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",

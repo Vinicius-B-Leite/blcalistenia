@@ -33,14 +33,16 @@ const Historic: React.FC = () => {
                         <S.FilterText>data</S.FilterText>
                     </S.FilterButton>
                 </S.Header>
-                <FlashList
-                    // contentContainerStyle={{ padding: '5%' }}
-                    data={historic}
-                    renderItem={({ item }) => <HistoricItem item={item} onClick={(bsItem) => {
-                        setBottomSheetItem(bsItem)
-                        bottomsheetRef.current?.scrollTo(300, 1000)
-                    }} />}
-                />
+                <S.HistoricListContainer>
+                    <FlashList
+                        estimatedItemSize={20}
+                        data={historic}
+                        renderItem={({ item }) => <HistoricItem item={item} onClick={(bsItem) => {
+                            setBottomSheetItem(bsItem)
+                            bottomsheetRef.current?.scrollTo(300, 1000)
+                        }} />}
+                    />
+                </S.HistoricListContainer>
                 {
                     bottomSheetItem &&
                     <BottomSheet ref={bottomsheetRef} >

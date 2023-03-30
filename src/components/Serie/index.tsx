@@ -9,6 +9,9 @@ import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RootStackParamList } from '../../routes/Models';
 import { SerieType } from '../../models/SerieType';
+import { createContext, useContextSelector } from 'use-context-selector';
+
+
 
 type NavigationType = StackNavigationProp<RootStackParamList, 'WorkoutSeason'>
 type Props = {
@@ -18,7 +21,7 @@ type Props = {
     showSucessButton: boolean
     deleteSerieButton: boolean,
     deleteSerie: (exercise: ExercisesInWorkoutType, serie: number) => void,
-    sucessButton: (serieNumber: number) => void,
+    sucessButton: (serieNumber: number) => boolean,
     updateSerie?: (serieNumber: number, exercise: ExercisesInWorkoutType, newSerie: SerieType) => void,
     changeSerie?: (currentExercise: ExercisesInWorkoutType, serieNumber: number, newSerie: SerieType) => void
 }
@@ -27,7 +30,7 @@ const Serie: React.FC<Props> = ({ item, exercise, deleteSerieButton, showRest, s
     const [rep, setRep] = useState(item?.rep)
     const [rest, setRest] = useState(item?.rest)
     const navigation = useNavigation<NavigationType>()
-
+    const [done, setDone] = useState(false)
 
     const handleChange = (text: Number, state: 'rep' | 'rest') => {
         if (state == 'rep') setRep(text)
@@ -47,10 +50,14 @@ const Serie: React.FC<Props> = ({ item, exercise, deleteSerieButton, showRest, s
             })
         }
     }
+    console.log('renderizou');
+    
 
     const handleMarkAsDone = () => {
-        sucessButton(item.serie as number)
-        if (item.done === false) navigation.navigate('Rest', { totalSeconds: item.rest })
+
+        setDone(!item.done)
+        let isDone = sucessButton(item.serie as number)
+        if (isDone === false) navigation.navigate('Rest', { totalSeconds: item.rest })
     }
 
     return (
@@ -82,7 +89,7 @@ const Serie: React.FC<Props> = ({ item, exercise, deleteSerieButton, showRest, s
 
             {
                 showSucessButton && (
-                    <S.CheckButton selected={item.done ? true : false} onPressIn={handleMarkAsDone}>
+                    <S.CheckButton selected={done} onPressIn={handleMarkAsDone}>
                         <AntDesign name='check' color={theme.colors.text} />
                     </S.CheckButton>
                 )
@@ -90,5 +97,4 @@ const Serie: React.FC<Props> = ({ item, exercise, deleteSerieButton, showRest, s
         </S.Container>)
 }
 
-export default memo(Serie, (prev, nxt) => prev.item.serie === nxt.item.serie)
-    ;
+export default memo(Serie, (prev, nxt) => (prev.item.serie === nxt.item.serie));

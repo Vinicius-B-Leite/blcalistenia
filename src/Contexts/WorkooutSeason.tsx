@@ -1,4 +1,4 @@
-import React, { createContext, useEffect, useState } from 'react';
+import React, { createContext, useEffect, useState, useCallback } from 'react';
 import { ExercisesInWorkoutType } from '../models/ExercisesInWorkoutType';
 import { HistoricType } from '../models/HistoricType';
 import { SerieType } from '../models/SerieType';
@@ -13,10 +13,10 @@ type WorkoutSeasonType = {
     createSerie: (currentExercise: ExercisesInWorkoutType) => void,
     deleteSerie: (currentExercise: ExercisesInWorkoutType, serieNumber: number) => void,
     changeSerie: (currentExercise: ExercisesInWorkoutType, serieNumber: number, newSerie: SerieType) => void,
-    markSerieAsDone: (currentExercise: ExercisesInWorkoutType, serieNumber: number) => void,
     deleteExercise: (exercise: ExercisesInWorkoutType) => void,
     workoutCopy: WorkoutType | undefined,
-    timer: number
+    timer: number,
+    setWorkoutCopy: React.Dispatch<React.SetStateAction<WorkoutType | undefined>>
 }
 
 export const WorkoutSeasonContext = createContext({} as WorkoutSeasonType)
@@ -116,18 +116,10 @@ const WorkoutSeasonProvider = ({ children }: { children: React.ReactNode }) => {
         })
     }
 
-    const markSerieAsDone = (currentExercise: ExercisesInWorkoutType, serieNumber: number) => {
-        setWorkoutCopy(old => {
-            if (old) {
-                const exerciseIndex = old.exercises.indexOf(currentExercise)
-                const serieIndex = serieNumber - 1
-                old.exercises[exerciseIndex].series[serieIndex].done = !old.exercises[exerciseIndex].series[serieIndex].done
-                return { ...old }
-            }
-        })
-    }
+    
 
     const deleteExercise = (exercise: ExercisesInWorkoutType) => {
+
         setWorkoutCopy(old => {
             if (old) {
                 let copy = { ...old }
@@ -145,10 +137,10 @@ const WorkoutSeasonProvider = ({ children }: { children: React.ReactNode }) => {
             createSerie,
             deleteSerie,
             changeSerie,
-            markSerieAsDone,
             deleteExercise,
             workoutCopy,
-            timer
+            timer,
+            setWorkoutCopy
         }}>
             {children}
         </WorkoutSeasonContext.Provider>

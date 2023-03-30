@@ -49,3 +49,7 @@ export const WorkoutAnotation = styled.Text`
     border-radius: ${({ theme }) => theme.sizes.borderRadius.sm}px ;
     padding: 2% 5%;
 `
+export const HistoricListContainer = styled.View`
+    padding: 5%;
+    flex: 1;
+`
