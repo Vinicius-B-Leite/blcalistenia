@@ -27,14 +27,13 @@ type Props = {
 const ExerciseInWorkoutItem: React.FC<Props> = ({ item, showCreateSerie, createSerieFunction, showRest, showDeleteSerieButton, deleteSerieFunction, showSucessButton, sucessButtonFunction, deleteExerciseFuntion, changeSerie, updateSerie }) => {
     const theme = useTheme()
 
-
-    const handleSucessButton = (serie: number) => {
+    const handleSucessButton = useCallback((serie: number) => {
         let isDone = false
         if (sucessButtonFunction) {
             isDone = sucessButtonFunction(item, serie)
         }
         return isDone
-    }
+    }, [])
 
     const handleDeleteSerie = useCallback((e: ExercisesInWorkoutType, serie: number) => {
         if (deleteSerieFunction) {
@@ -42,6 +41,8 @@ const ExerciseInWorkoutItem: React.FC<Props> = ({ item, showCreateSerie, createS
         }
     }, [])
 
+    console.log('exercise render ' + item.exercise_id);
+    
 
     return (
         <S.Exercise>
@@ -63,6 +64,7 @@ const ExerciseInWorkoutItem: React.FC<Props> = ({ item, showCreateSerie, createS
             </S.Row>
             <FlatList
                 data={item.series}
+                extraData={item.series}
                 nestedScrollEnabled
                 renderItem={({ item: serie }) => (
                     <Serie
@@ -87,4 +89,4 @@ const ExerciseInWorkoutItem: React.FC<Props> = ({ item, showCreateSerie, createS
     )
 }
 
-export default ExerciseInWorkoutItem
+export default memo(ExerciseInWorkoutItem, (p, n) => p?.item?.series?.length !== n?.item?.series?.length)

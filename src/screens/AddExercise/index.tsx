@@ -123,14 +123,15 @@ const AddExercise: React.FC<Navigation> = ({ navigation }) => {
                 </S.FilterButton>
 
 
-                <FlashList
-                    estimatedItemSize={15}
-                    style={{ height: Dimensions.get('screen').height * 0.50 }}
-                    data={(exerisesFilteredByInput && exerisesFilteredByInput?.length > 1) ? exerisesFilteredByInput : exercisList}
-                    keyExtractor={item => String(item.name)}
-                    renderItem={({ item }) => <Exercise item={item} deleteExercise={(exerciseName) => deleteExercise(exerciseName)} />}
-                    showsVerticalScrollIndicator={false}
-                />
+                <S.ExerciseListContainer>
+                    <FlashList
+                        estimatedItemSize={15}
+                        data={(exerisesFilteredByInput && exerisesFilteredByInput?.length > 1) ? exerisesFilteredByInput : exercisList}
+                        keyExtractor={item => String(item.name)}
+                        renderItem={({ item }) => <Exercise item={item} deleteExercise={(exerciseName) => deleteExercise(exerciseName)} />}
+                        showsVerticalScrollIndicator={false}
+                    />
+                </S.ExerciseListContainer>
             </S.Main>
 
             <S.FloatButton onPressIn={() => {

@@ -50,11 +50,10 @@ const Serie: React.FC<Props> = ({ item, exercise, deleteSerieButton, showRest, s
             })
         }
     }
-    console.log('renderizou');
+
+    console.log(exercise.exercise_id + ' / ' + item.serie + '   - render');
     
-
     const handleMarkAsDone = () => {
-
         setDone(!item.done)
         let isDone = sucessButton(item.serie as number)
         if (isDone === false) navigation.navigate('Rest', { totalSeconds: item.rest })

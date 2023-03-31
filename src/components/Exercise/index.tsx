@@ -50,6 +50,8 @@ const Exercise: React.FC<Prosp> = ({ item, deleteExercise }) => {
             <FlashList
                 data={item.muscles}
                 horizontal
+                
+                estimatedItemSize={5}
                 showsHorizontalScrollIndicator={false}
                 scrollEnabled={false}
                 renderItem={({ item: m }) => (

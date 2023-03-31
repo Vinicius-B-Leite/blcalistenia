@@ -9,19 +9,27 @@ import ExerciseInWorkoutItem from '../../components/ExerciseInWorkoutItem';
 import { WorkoutSeasonContext } from '../../contexts/WorkooutSeason';
 import { FlashList } from '@shopify/flash-list';
 import { ExercisesInWorkoutType } from '../../models/ExercisesInWorkoutType';
+import { useTabBar } from '../../contexts/TabBarContext';
+import { useRealm } from '../../contexts/RealmContext';
+import { WorkoutType } from '../../models/WorkoutType';
+import { SerieType } from '../../models/SerieType';
+import { HistoricType } from '../../models/HistoricType';
 
 type Navigation = StackScreenProps<RootStackParamList, 'WorkoutSeason'>
 
 const WorkoutSeason: React.FC<Navigation> = ({ navigation, route }) => {
     const theme = useTheme()
     const { workout } = route.params
-    const { finishWorkout, startWorkout, createSerie, deleteSerie, deleteExercise, cancelWorkout, timer, setWorkoutCopy } = useContext(WorkoutSeasonContext)
+    const { hideTabBar, showTabBar } = useTabBar()
+    const { timer, setWorkoutCopy, workoutCopy, setTimer } = useContext(WorkoutSeasonContext)
+    const { realm } = useRealm()
 
     useEffect(() => {
+        hideTabBar()
         startWorkout(workout)
     }, [])
 
-    const handleFineshWorkout = () => {
+    const handleFineshWorkout = useCallback(() => {
         Alert.alert(
             'Terminar treino',
             'Tem certeza que quer terminar o treino?',
@@ -36,8 +44,22 @@ const WorkoutSeason: React.FC<Navigation> = ({ navigation, route }) => {
                 text: 'Não',
                 style: 'cancel'
             }])
-    }
-    const markSerieAsDone = (currentExercise: ExercisesInWorkoutType, serieNumber: number) => {
+    }, [])
+    const createSerie = useCallback((currentExercise: ExercisesInWorkoutType) => {
+        setWorkoutCopy(old => {
+            if (old) {
+                const index = old.exercises.findIndex((v) => v.exercise_id == currentExercise.exercise_id)
+                old.exercises[index].series.push({
+                    rep: 8,
+                    rest: 30,
+                    serie: old.exercises[index].series.length + 1
+                })
+                console.log(old.exercises[index].series.length);
+                return { ...old, exercises: [...old.exercises] }
+            }
+        })
+    }, [])
+    const markSerieAsDone = useCallback((currentExercise: ExercisesInWorkoutType, serieNumber: number) => {
         let isDone = false
 
         setWorkoutCopy(old => {
@@ -52,7 +74,84 @@ const WorkoutSeason: React.FC<Navigation> = ({ navigation, route }) => {
         })
 
         return isDone
-    }
+    }, [])
+    const finishWorkout = useCallback((seconds: number) => {
+        if (realm) {
+            realm.write(() => {
+                realm.create<HistoricType>('Historic', {
+                    workout: JSON.stringify(workoutCopy),
+                    date: new Date(),
+                    timerInSeconds: seconds,
+                    _id: realm.objects('Historic').length + 1
+                })
+            })
+
+            setWorkoutCopy(undefined)
+        }
+    }, [realm])
+
+    const cancelWorkout = useCallback(() => {
+        setWorkoutCopy(undefined)
+    }, [])
+
+    const startWorkout = useCallback((workout: WorkoutType) => {
+        if (!workoutCopy) {
+            workout.exercises.forEach(exercise => {
+                exercise.series.forEach(serie => serie.done = false)
+            })
+            setTimer(0)
+            setWorkoutCopy(workout)
+        }
+    }, [])
+
+    const deleteSerie = useCallback((currentExercise: ExercisesInWorkoutType, serieNumber: number) => {
+        setWorkoutCopy(old => {
+            if (old) {
+                console.log('aaa');
+
+                const exericseIndex = old.exercises.findIndex((v) => v.exercise_id == currentExercise.exercise_id)
+
+                if (old.exercises[exericseIndex].series.length == 1) {
+                    old.exercises.splice(exericseIndex, 1)
+                    return { ...old }
+                }
+
+
+                old.exercises[exericseIndex].series.splice(serieNumber - 1, 1)
+
+                old.exercises[exericseIndex].series.forEach(serie => {
+                    if (Number(serie.serie) > serieNumber) serie.serie = Number(serie.serie) - 1
+                })
+
+                return { ...old, exercises: [...old.exercises] }
+            }
+        })
+    }, [])
+
+    const changeSerie = useCallback((currentExercise: ExercisesInWorkoutType, serieNumber: number, newSerie: SerieType) => {
+        setWorkoutCopy(old => {
+            if (old) {
+                const exerciseIndex = old.exercises.findIndex((v) => v.exercise_id == currentExercise.exercise_id)
+                old.exercises[exerciseIndex].series[serieNumber - 1] = newSerie
+                return { ...old }
+            }
+        })
+    }, [])
+
+    const deleteExercise = useCallback((exercise: ExercisesInWorkoutType) => {
+        setWorkoutCopy(old => {
+            if (old) {
+                let copy = old
+                const index = copy.exercises.findIndex((v) => v.exercise_id == exercise.exercise_id)
+                copy.exercises.splice(index, 1)
+
+                return { ...copy, exercises: [...old.exercises] }
+            }
+        })
+    }, [])
+
+
+    console.log('workout render');
 
     return (
         <S.Container>
@@ -61,7 +160,7 @@ const WorkoutSeason: React.FC<Navigation> = ({ navigation, route }) => {
                     <S.GoBack onPressIn={() => navigation.navigate('Home')}>
                         <AntDesign name='arrowleft' size={theme.sizes.icons.md} color={theme.colors.contrast} />
                     </S.GoBack>
-                    <S.Title numberOfLines={1}>{workout.title}</S.Title>
+                    <S.Title numberOfLines={1}>{workoutCopy?.title}</S.Title>
                 </S.Left>
                 <S.CancelWorkoutBtn onPressIn={() => navigation.goBack()}>
                     <S.CancelWorkoutTxt>Cancelar</S.CancelWorkoutTxt>
@@ -69,30 +168,31 @@ const WorkoutSeason: React.FC<Navigation> = ({ navigation, route }) => {
             </S.Header>
 
             {
-                workout.anotation && (
+                workoutCopy?.anotation && (
                     <S.AnotationContainer>
-                        <S.Anotation>{workout.anotation}</S.Anotation>
+                        <S.Anotation>{workoutCopy?.anotation}</S.Anotation>
                     </S.AnotationContainer>
                 )
             }
 
             <FlashList
-                data={workout.exercises}
-                extraData={workout.exercises}
+                data={workoutCopy?.exercises}
+                extraData={workoutCopy?.exercises}
                 showsVerticalScrollIndicator={false}
                 nestedScrollEnabled
-                estimatedItemSize={8}
+                estimatedItemSize={10}
                 renderItem={({ item }) => (
                     <ExerciseInWorkoutItem
                         item={item}
                         showRest={false}
                         showCreateSerie={true}
                         showDeleteSerieButton={true}
-                        createSerieFunction={(exercise) => createSerie(exercise)}
-                        deleteSerieFunction={(exercise, serieNumber) => deleteSerie(exercise, serieNumber)}
+                        createSerieFunction={createSerie}
+                        deleteSerieFunction={deleteSerie}
                         showSucessButton={true}
-                        sucessButtonFunction={(e, s) => markSerieAsDone(e, s)}
-                        deleteExerciseFuntion={(exercise) => deleteExercise(exercise)}
+                        sucessButtonFunction={markSerieAsDone}
+                        deleteExerciseFuntion={deleteExercise}
+                        changeSerie={changeSerie}
                     />
                 )}
             />

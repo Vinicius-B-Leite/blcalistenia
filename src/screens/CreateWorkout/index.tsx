@@ -127,7 +127,7 @@ const CreateWorkout: React.FC<Navigation> = ({ route, navigation }) => {
         return sub
     }, [])
 
-    const handleGoBack = async () => {
+    const handleGoBack = useCallback(async () => {
         return new Promise<void>((resolve, reject) => {
 
             Alert.alert(
@@ -154,15 +154,16 @@ const CreateWorkout: React.FC<Navigation> = ({ route, navigation }) => {
                 ]
             )
         })
-    }
+    }, [])
+    console.log('create workout render');
 
-    const handleImagePicker = async () => {
+    const handleImagePicker = useCallback(async () => {
         const { assets } = await pickeImage()
         const uri = assets ? assets[0].uri : ''
         const finalUri = uri ? uri : ''
 
         setImageURI(finalUri)
-    }
+    }, [])
 
     return (
         <S.Container>
