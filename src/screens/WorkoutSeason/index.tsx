@@ -1,6 +1,6 @@
 import { StackScreenProps } from '@react-navigation/stack';
 import React, { useContext, useState, useEffect, useCallback } from 'react';
-import { FlatList, Alert } from 'react-native'
+import { Alert } from 'react-native'
 import { useTheme } from 'styled-components/native';
 import { RootStackParamList } from '../../routes/Models';
 import * as S from './styles'
@@ -14,6 +14,8 @@ import { useRealm } from '../../contexts/RealmContext';
 import { WorkoutType } from '../../models/WorkoutType';
 import { SerieType } from '../../models/SerieType';
 import { HistoricType } from '../../models/HistoricType';
+import ChronometerButton from '../../components/ChronometerButton';
+import { useFocusEffect } from '@react-navigation/native';
 
 type Navigation = StackScreenProps<RootStackParamList, 'WorkoutSeason'>
 
@@ -21,29 +23,33 @@ const WorkoutSeason: React.FC<Navigation> = ({ navigation, route }) => {
     const theme = useTheme()
     const { workout } = route.params
     const { hideTabBar, showTabBar } = useTabBar()
-    const { timer, setWorkoutCopy, workoutCopy, setTimer } = useContext(WorkoutSeasonContext)
+    const { setWorkoutCopy, workoutCopy } = useContext(WorkoutSeasonContext)
     const { realm } = useRealm()
 
     useEffect(() => {
-        hideTabBar()
         startWorkout(workout)
+        return showTabBar
     }, [])
 
+    useFocusEffect(useCallback(() => hideTabBar(), []))
+
     const handleFineshWorkout = useCallback(() => {
-        Alert.alert(
-            'Terminar treino',
-            'Tem certeza que quer terminar o treino?',
-            [{
-                text: 'Sim',
-                onPress: () => {
-                    finishWorkout(timer)
-                    navigation.navigate('Home')
-                }
-            },
-            {
-                text: 'Não',
-                style: 'cancel'
-            }])
+        return new Promise<boolean>((resolve, reject) => {
+            Alert.alert(
+                'Terminar treino',
+                'Tem certeza que quer terminar o treino?',
+                [{
+                    text: 'Sim',
+                    onPress: () => {
+                        navigation.navigate('Home')
+                        resolve(true)
+                    }
+                },
+                {
+                    text: 'Não',
+                    style: 'cancel'
+                }])
+        })
     }, [])
     const createSerie = useCallback((currentExercise: ExercisesInWorkoutType) => {
         setWorkoutCopy(old => {
@@ -75,20 +81,7 @@ const WorkoutSeason: React.FC<Navigation> = ({ navigation, route }) => {
 
         return isDone
     }, [])
-    const finishWorkout = useCallback((seconds: number) => {
-        if (realm) {
-            realm.write(() => {
-                realm.create<HistoricType>('Historic', {
-                    workout: JSON.stringify(workoutCopy),
-                    date: new Date(),
-                    timerInSeconds: seconds,
-                    _id: realm.objects('Historic').length + 1
-                })
-            })
-
-            setWorkoutCopy(undefined)
-        }
-    }, [realm])
+    
 
     const cancelWorkout = useCallback(() => {
         setWorkoutCopy(undefined)
@@ -99,7 +92,6 @@ const WorkoutSeason: React.FC<Navigation> = ({ navigation, route }) => {
             workout.exercises.forEach(exercise => {
                 exercise.series.forEach(serie => serie.done = false)
             })
-            setTimer(0)
             setWorkoutCopy(workout)
         }
     }, [])
@@ -162,7 +154,10 @@ const WorkoutSeason: React.FC<Navigation> = ({ navigation, route }) => {
                     </S.GoBack>
                     <S.Title numberOfLines={1}>{workoutCopy?.title}</S.Title>
                 </S.Left>
-                <S.CancelWorkoutBtn onPressIn={() => navigation.goBack()}>
+                <S.CancelWorkoutBtn onPressIn={() => {
+                    cancelWorkout()
+                    navigation.goBack()
+                }}>
                     <S.CancelWorkoutTxt>Cancelar</S.CancelWorkoutTxt>
                 </S.CancelWorkoutBtn>
             </S.Header>
@@ -196,10 +191,7 @@ const WorkoutSeason: React.FC<Navigation> = ({ navigation, route }) => {
                     />
                 )}
             />
-
-            <S.finishWorkout onPressIn={() => handleFineshWorkout()}>
-                <S.FineshText>Terminar treino {String(Math.floor(timer / 60)).padStart(2, '0')}:{String(timer % 60).padStart(2, '0')}</S.FineshText>
-            </S.finishWorkout>
+            <ChronometerButton handleFineshWorkout={handleFineshWorkout} />
         </S.Container >
     )
 }

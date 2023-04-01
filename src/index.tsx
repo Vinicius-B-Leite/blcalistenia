@@ -12,6 +12,7 @@ import WorkoutProvider from './contexts/WorkoutContext';
 import Routes from './routes';
 import { darkMode } from './theme/darkMode';
 import { lightMode } from './theme/lightMode';
+import TimerProvider from './contexts/TimerContext';
 
 
 const Index: React.FC = () => {
@@ -26,7 +27,9 @@ const Index: React.FC = () => {
                         <AuthProvider>
                             <SuggestWorkoutProvider>
                                 <TabBarProvider>
-                                    <Routes />
+                                    <TimerProvider>
+                                        <Routes />
+                                    </TimerProvider>
                                 </TabBarProvider>
                             </SuggestWorkoutProvider>
                         </AuthProvider>

@@ -5,7 +5,7 @@ facil
     - selecter
 
 medio
-    - mostrar os total de tempo descançado no cronometro 
+
     - fazer os graficos realmente funcionar
     - fazer backup na nuvem
 
