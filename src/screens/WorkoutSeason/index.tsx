@@ -34,15 +34,21 @@ const WorkoutSeason: React.FC<Navigation> = ({ navigation, route }) => {
     useFocusEffect(useCallback(() => hideTabBar(), []))
 
     const handleFineshWorkout = useCallback(() => {
-        return new Promise<boolean>((resolve, reject) => {
+
+        return new Promise<{
+            isFinished: boolean;
+            workoutCopy: WorkoutType | undefined;
+        }>((resolve, reject) => {
             Alert.alert(
                 'Terminar treino',
                 'Tem certeza que quer terminar o treino?',
                 [{
                     text: 'Sim',
                     onPress: () => {
+                        setWorkoutCopy(undefined)
                         navigation.navigate('Home')
-                        resolve(true)
+                        const returnData = { isFinished: true, workoutCopy: workoutCopy }
+                        resolve(returnData)
                     }
                 },
                 {
@@ -81,7 +87,7 @@ const WorkoutSeason: React.FC<Navigation> = ({ navigation, route }) => {
 
         return isDone
     }, [])
-    
+
 
     const cancelWorkout = useCallback(() => {
         setWorkoutCopy(undefined)

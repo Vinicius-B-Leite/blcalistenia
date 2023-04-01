@@ -13,6 +13,7 @@ import FlashList from '@shopify/flash-list/dist/FlashList';
 type Props = {
     item: ExercisesInWorkoutType,
     showCreateSerie: boolean,
+    showDeleteExerciseBtn?: boolean,
     showRest: boolean,
     showDeleteSerieButton: boolean,
     showSucessButton: boolean,
@@ -24,7 +25,7 @@ type Props = {
     changeSerie?: (currentExercise: ExercisesInWorkoutType, serieNumber: number, newSerie: SerieType) => void
 }
 
-const ExerciseInWorkoutItem: React.FC<Props> = ({ item, showCreateSerie, createSerieFunction, showRest, showDeleteSerieButton, deleteSerieFunction, showSucessButton, sucessButtonFunction, deleteExerciseFuntion, changeSerie, updateSerie }) => {
+const ExerciseInWorkoutItem: React.FC<Props> = ({ item, showCreateSerie, createSerieFunction, showRest, showDeleteSerieButton, deleteSerieFunction, showSucessButton, sucessButtonFunction, deleteExerciseFuntion, changeSerie, updateSerie, showDeleteExerciseBtn }) => {
     const theme = useTheme()
 
     const handleSucessButton = useCallback((serie: number) => {
@@ -42,15 +43,15 @@ const ExerciseInWorkoutItem: React.FC<Props> = ({ item, showCreateSerie, createS
     }, [])
 
     console.log('exercise render ' + item.exercise_id);
-    
+
 
     return (
         <S.Exercise>
             <S.ExerciseHeader>
                 <S.ExerciseName>{item.exercise_id}</S.ExerciseName>
-                <TouchableOpacity onPressIn={() => deleteExerciseFuntion && deleteExerciseFuntion(item)}>
+                {showDeleteExerciseBtn && (<TouchableOpacity onPressIn={() => deleteExerciseFuntion && deleteExerciseFuntion(item)}>
                     <FontAwesome name='trash' size={theme.sizes.icons.sm} color={theme.colors.alert} />
-                </TouchableOpacity>
+                </TouchableOpacity>)}
             </S.ExerciseHeader>
             <S.ExerciseAnotation
                 placeholder='Anotação'

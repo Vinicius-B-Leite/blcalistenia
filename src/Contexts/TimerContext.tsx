@@ -7,6 +7,8 @@ type TimerContext = {
     timer: number
     stopTimer: () => void
     startTimer: () => void
+    setTimer: React.Dispatch<React.SetStateAction<number>>
+
 }
 
 export const TimerContext = createContext({} as TimerContext)
@@ -35,7 +37,7 @@ const TimerProvider: React.FC<Props> = ({ children }) => {
     }, [])
 
     return (
-        <TimerContext.Provider value={{ stopTimer, timer , startTimer}}>
+        <TimerContext.Provider value={{ stopTimer, timer , startTimer, setTimer}}>
             {children}
         </TimerContext.Provider>
     )

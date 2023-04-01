@@ -18,6 +18,7 @@ import { useRealm } from '../../contexts/RealmContext';
 import { ExercisesInWorkoutType } from '../../models/ExercisesInWorkoutType';
 import { SerieType } from '../../models/SerieType';
 import { createContext, useContextSelector } from 'use-context-selector';
+import { useFocusEffect } from '@react-navigation/native';
 
 
 
@@ -37,7 +38,13 @@ const CreateWorkout: React.FC<Navigation> = ({ route, navigation }) => {
     const [imageURI, setImageURI] = useState(route?.params?.workout?.banner as string || '')
     const workout_id = useMemo(() => route?.params?.workout?._id as string || uuid.v4().toString(), [])
     const { realm } = useRealm()
-    const initialState = useMemo(() => ({ _id: route?.params?.workout?._id as string || uuid.v4().toString(), banner: route?.params?.workout?.banner as string || '', exercises: exercises || [], title: route?.params?.workout?.title as string || '', anotation: route?.params?.workout?.anotation as string || '' }), [])
+    const [initialState, _] = useState({
+        _id: route?.params?.workout?._id as string || uuid.v4().toString(),
+        banner: route?.params?.workout?.banner as string || '',
+        exercises: exercises || [],
+        title: route?.params?.workout?.title as string || '',
+        anotation: route?.params?.workout?.anotation as string || ''
+    })
 
     const saveWorkout = useCallback(({ banner, exercises, title, anotation, _id }: WorkoutType) => {
         realm && realm.write(() => {
@@ -115,7 +122,6 @@ const CreateWorkout: React.FC<Navigation> = ({ route, navigation }) => {
     }, [workoutName, anotation, imageURI, exercises])
 
     useEffect(() => {
-        hideTabBar()
         setExercises(route?.params?.workout?.exercises || [])
         const sub = navigation.addListener('beforeRemove', async (e) => {
             e.preventDefault()
@@ -126,6 +132,12 @@ const CreateWorkout: React.FC<Navigation> = ({ route, navigation }) => {
 
         return sub
     }, [])
+
+    useFocusEffect(useCallback(() => {
+        hideTabBar()
+
+        return showTabBar
+    }, []))
 
     const handleGoBack = useCallback(async () => {
         return new Promise<void>((resolve, reject) => {
@@ -155,7 +167,6 @@ const CreateWorkout: React.FC<Navigation> = ({ route, navigation }) => {
             )
         })
     }, [])
-    console.log('create workout render');
 
     const handleImagePicker = useCallback(async () => {
         const { assets } = await pickeImage()

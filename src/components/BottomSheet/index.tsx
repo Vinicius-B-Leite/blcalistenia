@@ -1,10 +1,11 @@
-import React, { memo, useCallback, useImperativeHandle } from 'react';
+import React, { memo, useCallback, useEffect, useImperativeHandle } from 'react';
 import { View } from 'react-native'
 import { Dimensions, StyleSheet } from 'react-native';
 import { Gesture, GestureDetector } from 'react-native-gesture-handler';
-import Animated, { useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated';
+import Animated, { runOnJS, useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated';
 
 import * as S from './styles'
+import { useTabBar } from '../../contexts/TabBarContext';
 
 
 const { height } = Dimensions.get('screen')
@@ -22,6 +23,9 @@ const BottomSheet = React.forwardRef<BottomSheetRefProps, Props>(({ children }, 
     const animatedHeigh = useSharedValue(height)
     const startValue = useSharedValue({ y: 0 })
     const visible = useSharedValue(false)
+    const { showTabBar } = useTabBar()
+
+    
 
     const scrollTo = useCallback((destination: number, duration?: number) => {
         'worklet'
@@ -47,11 +51,13 @@ const BottomSheet = React.forwardRef<BottomSheetRefProps, Props>(({ children }, 
             }
         })
         .onEnd((ev) => {
-            if (animatedHeigh.value <= height / 4 || ev.velocityX <= -height / 2) {
+            if (animatedHeigh.value <= height / 2.6 || ev.velocityX <= -height / 2) {
                 scrollTo(0, 500)
             }
-            else if (animatedHeigh.value > height / 3.5 || ev.velocityY > height) {
+            else if (animatedHeigh.value > height / 2.5 || ev.velocityY > height) {
                 scrollTo(height, 500)
+                runOnJS(showTabBar)()
+                
             }
         })
 
@@ -72,10 +78,10 @@ const BottomSheet = React.forwardRef<BottomSheetRefProps, Props>(({ children }, 
                         <S.ControllIcon />
                     </S.ControllArea>
                 </GestureDetector>
-
                 {
                     children
                 }
+
             </S.Container>
         </Animated.View>
     )

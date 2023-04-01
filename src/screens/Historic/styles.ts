@@ -30,6 +30,10 @@ export const FilterText = styled.Text`
 `
 
 
+export const WorkoutContainer = styled.View`
+    flex:  1;
+    padding-bottom: ${({theme}) => theme.sizes.vh * 0.1}px;
+`
 export const WorkoutHeader = styled.View`
     width: 100%;
     flex-direction: row;

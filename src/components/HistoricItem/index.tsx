@@ -2,6 +2,7 @@ import React from 'react';
 import * as S from './styles'
 import { HistoricType } from '../../models/HistoricType';
 import { WorkoutType } from '../../models/WorkoutType';
+import { useTabBar } from '../../contexts/TabBarContext';
 
 type Props = {
     item: HistoricType,
@@ -9,21 +10,24 @@ type Props = {
 }
 
 const HistoricItem: React.FC<Props> = ({ item, onClick }) => {
-    const {title, exercises }: WorkoutType = JSON.parse(item.workout)
-
+    const { title, exercises }: WorkoutType = JSON.parse(item.workout)
+    const { hideTabBar } = useTabBar()
     const day = String(item.date.getDate()).padStart(2, '0')
     const month = String(item.date.getMonth() + 1).padStart(2, '0')
     const year = item.date.getFullYear()
 
     const seriesLength = exercises[0]?.series?.length
-    const firtsRep  = exercises[0]?.series[0]?.rep
+    const firtsRep = exercises[0]?.series[0]?.rep
     const exerciseName = exercises[0]?.exercise_id
 
     const minutes = String((item.timerInSeconds / 60).toFixed(0)).padStart(2, '0')
     const seconds = String((item.timerInSeconds % 60).toFixed(0)).padStart(2, '0')
-    
+
     return (
-        <S.Container onPressIn={() => onClick({...item})}>
+        <S.Container onPressIn={() => {
+            hideTabBar()
+            onClick({ ...item })
+        }}>
             <S.Header>
                 <S.Title>{title}</S.Title>
                 <S.Date>{day}/{month}/{year}</S.Date>
