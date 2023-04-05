@@ -51,7 +51,6 @@ const Serie: React.FC<Props> = ({ item, exercise, deleteSerieButton, showRest, s
         }
     }
 
-    console.log(exercise.exercise_id + ' / ' + item.serie + '   - render');
     
     const handleMarkAsDone = () => {
         setDone(!item.done)

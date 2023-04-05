@@ -220,6 +220,7 @@ const CreateWorkout: React.FC<Navigation> = ({ route, navigation }) => {
                         deleteSerieFunction={deleteSerie}
                         deleteExerciseFuntion={deleteExercise}
                         updateSerie={updateSerie}
+                        showDeleteExerciseBtn={true}
                     />
                 )}
                 ListFooterComponent={() => (

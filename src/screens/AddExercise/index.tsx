@@ -29,17 +29,11 @@ const AddExercise: React.FC<Navigation> = ({ navigation }) => {
     const [filters, setFilters] = useState<FilterType>({ category: 'empurrar', muscles: 'Peitoral' })
 
     useFocusEffect(useCallback(() => {
-        getExercises()
-    }, []))
+        getExercises(searchExerciseInput)
+    }, [searchExerciseInput]))
 
-    const exerisesFilteredByInput = useMemo(() => {
-        if (realm) {
-            let exercises = realm.objects<ExerciseType[]>('Exercise').filtered(`name CONTAINS '${searchExerciseInput}'`).toJSON() as ExerciseType[]
-            return exercises.sort()
-        }
-    }, [searchExerciseInput])
 
-    const getExercises = useCallback(() => {
+    const getExercises = useCallback((text?: string) => {
         if (realm) {
 
             let exercises = realm.objects<ExerciseType[]>('Exercise').sorted('name').toJSON() as ExerciseType[]
@@ -49,6 +43,10 @@ const AddExercise: React.FC<Navigation> = ({ navigation }) => {
                     createExercise(exercise)
                 })
                 return
+            }
+
+            if (text){
+                exercises = realm.objects<ExerciseType[]>('Exercise').filtered(`name CONTAINS '${text}'`).sorted('name').toJSON() as ExerciseType[]
             }
 
             exercises.sort()
@@ -126,7 +124,7 @@ const AddExercise: React.FC<Navigation> = ({ navigation }) => {
                 <S.ExerciseListContainer>
                     <FlashList
                         estimatedItemSize={15}
-                        data={(exerisesFilteredByInput && exerisesFilteredByInput?.length > 1) ? exerisesFilteredByInput : exercisList}
+                        data={ exercisList}
                         keyExtractor={item => String(item.name)}
                         renderItem={({ item }) => <Exercise item={item} deleteExercise={(exerciseName) => deleteExercise(exerciseName)} />}
                         showsVerticalScrollIndicator={false}

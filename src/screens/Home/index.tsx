@@ -26,7 +26,6 @@ const Home: React.FC = () => {
     const navigation = useNavigation<Navigation>()
     const [workoutsList, setWorkoutList] = useState<WorkoutType[]>([]);
     const { getSuggestsWorkouts, suggestsWorkouts } = useContext(SuggestWorkoutContext)
-    const [calendarVisible, setCalendarVisible] = useState<boolean>(false)
     const [searchWorkoutInput, setSearchWorkoutInput] = useState('')
     const [muscleFilterSelected, setMuscleFilterSelected] = useState('Todos')
     const [workoutLeveSuggest, setWorkoutLevelSuggest] = useState<WorkoutLevel>('begginer')
@@ -40,24 +39,27 @@ const Home: React.FC = () => {
 
             if (text && text.length > 1) {
                 workout = realm.objects<WorkoutType[]>('Workout').filtered(`title CONTAINS '${text}'`).toJSON()
+                setWorkoutList(workout as WorkoutType[])
+                return
             }
-            setWorkoutList(workout as WorkoutType[])
+            realm.objects<WorkoutType[]>('Workout').addListener((value, changes) => {
+                setWorkoutList(value.toJSON() as WorkoutType[])
+            })
+
         }
     }, [realm])
 
     const filterWorkoutByMuscle = useCallback((muscle: string) => {
-        if (realm) {
 
+
+        if (realm) {
             const workouts = realm.objects('Workout').toJSON() as WorkoutType[]
 
             if (!(muscles.includes(muscle))) {
                 setWorkoutList(workouts)
                 return
             }
-
             const exercises = realm.objects('Exercise').toJSON() as ExerciseType[]
-
-
             const exercisesHaveMuscleSelected = exercises.filter(e => e.muscles.includes(muscle))
             let workoutsWithMuscleSelected: WorkoutType[] = []
 
@@ -68,7 +70,6 @@ const Home: React.FC = () => {
                 })
 
             })
-
             setWorkoutList(workoutsWithMuscleSelected)
         }
     }, [realm])

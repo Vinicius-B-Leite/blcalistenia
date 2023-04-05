@@ -36,8 +36,6 @@ const WorkoutProvider = ({ children }: { children: React.ReactNode }) => {
 
     }, [])
 
-
-
     const deleteWorkout = useCallback((workoutID: string) => {
         realm && realm.write(() => {
             realm.delete(realm.objectForPrimaryKey('Workout', workoutID))
@@ -50,6 +48,8 @@ const WorkoutProvider = ({ children }: { children: React.ReactNode }) => {
             setExercises,
             exercises,
             deleteWorkout,
+
+            
         }}>
             {children}
         </WorkoutContext.Provider>

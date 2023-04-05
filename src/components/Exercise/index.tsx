@@ -7,6 +7,7 @@ import { ExerciseType } from '../../models/ExerciseType';
 import { RootStackParamList } from '../../routes/Models';
 import * as S from './styles'
 import { FlashList } from '@shopify/flash-list'
+import { FlatList } from 'react-native';
 
 
 type Prosp = { item: ExerciseType, deleteExercise: (exerciseName: String) => void }
@@ -47,11 +48,10 @@ const Exercise: React.FC<Prosp> = ({ item, deleteExercise }) => {
     return (
         <S.ExerciseContainer onPress={handleAddExercise} onLongPress={handleDelete}>
             <S.ExerciseName>{item.name}</S.ExerciseName>
-            <FlashList
+            <FlatList
                 data={item.muscles}
                 horizontal
                 
-                estimatedItemSize={5}
                 showsHorizontalScrollIndicator={false}
                 scrollEnabled={false}
                 renderItem={({ item: m }) => (

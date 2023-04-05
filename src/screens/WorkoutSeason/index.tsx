@@ -66,7 +66,6 @@ const WorkoutSeason: React.FC<Navigation> = ({ navigation, route }) => {
                     rest: 30,
                     serie: old.exercises[index].series.length + 1
                 })
-                console.log(old.exercises[index].series.length);
                 return { ...old, exercises: [...old.exercises] }
             }
         })
@@ -105,7 +104,6 @@ const WorkoutSeason: React.FC<Navigation> = ({ navigation, route }) => {
     const deleteSerie = useCallback((currentExercise: ExercisesInWorkoutType, serieNumber: number) => {
         setWorkoutCopy(old => {
             if (old) {
-                console.log('aaa');
 
                 const exericseIndex = old.exercises.findIndex((v) => v.exercise_id == currentExercise.exercise_id)
 
@@ -149,7 +147,6 @@ const WorkoutSeason: React.FC<Navigation> = ({ navigation, route }) => {
     }, [])
 
 
-    console.log('workout render');
 
     return (
         <S.Container>
@@ -194,6 +191,7 @@ const WorkoutSeason: React.FC<Navigation> = ({ navigation, route }) => {
                         sucessButtonFunction={markSerieAsDone}
                         deleteExerciseFuntion={deleteExercise}
                         changeSerie={changeSerie}
+                        showDeleteExerciseBtn={true}
                     />
                 )}
             />

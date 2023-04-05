@@ -42,8 +42,8 @@ const ExerciseInWorkoutItem: React.FC<Props> = ({ item, showCreateSerie, createS
         }
     }, [])
 
-    console.log('exercise render ' + item.exercise_id);
 
+    
 
     return (
         <S.Exercise>
