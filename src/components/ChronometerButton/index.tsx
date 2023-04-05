@@ -18,7 +18,7 @@ const ChronometerButton: React.FC<Props> = ({ handleFineshWorkout }) => {
     const { realm } = useRealm()
 
     useEffect(() => {
-        startTimer()
+        if (timer < 0) startTimer()
     }, [])
 
     const finishWorkout = useCallback((seconds: number, workoutCopy: WorkoutType) => {

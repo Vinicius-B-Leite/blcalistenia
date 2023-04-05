@@ -1,5 +1,6 @@
 import React, { createContext, useCallback, useContext, useEffect, useState } from 'react';
 import { View } from 'react-native';
+import BackgroundService from 'react-native-background-actions';
 
 
 
@@ -18,26 +19,42 @@ type Props = {
 }
 const TimerProvider: React.FC<Props> = ({ children }) => {
     const [timer, setTimer] = useState(-1)
-    const [stop, setStop] = useState(true)
+    const options = {
+        taskName: 'Cronometro',
+        taskTitle: 'Volte ao treino',
+        taskDesc: 'Tempo: ',
+        taskIcon: {
+            name: 'ic_launcher',
+            type: 'mipmap',
+        },
+        color: '#FF8A00',
+        linkingURI: 'blcalistenia://home/WorkoutSeason', // See Deep Linking for more info
+    };
 
-    useEffect(() => {
-        if (!stop) {
-            setTimeout(() => {
-                setTimer(old => old + 1)
-            }, 1000)
-        }
-    }, [timer, stop])
-
-    const stopTimer = useCallback(() => {
-        setStop(true)
+    const stopTimer = useCallback(async () => {
+        await BackgroundService.stop()
     }, [])
 
-    const startTimer = useCallback(() => {
-        setStop(false)
+    const sleep = (time: number) => new Promise<void>((resolve) => setTimeout(() => resolve(), time));
+
+    const veryIntensiveTask = async () => {
+        await new Promise(async (resolve) => {
+            for (let i = 0; BackgroundService.isRunning(); i++) {
+                setTimer(i)
+                BackgroundService.updateNotification({
+                    taskDesc: `Tempo atual: ${String(Math.floor(i / 60)).padStart(2, '0')}:${String(i % 60).padStart(2, '0')}`
+                })
+                await sleep(1000);
+            }
+        });
+    };
+
+    const startTimer = useCallback(async () => {
+        await BackgroundService.start(veryIntensiveTask, options);
     }, [])
 
     return (
-        <TimerContext.Provider value={{ stopTimer, timer , startTimer, setTimer}}>
+        <TimerContext.Provider value={{ stopTimer, timer, startTimer, setTimer }}>
             {children}
         </TimerContext.Provider>
     )

@@ -19,7 +19,10 @@ import { useUser } from '../../contexts/AuthContext';
 import { WorkoutType } from '../../models/WorkoutType';
 import { ExerciseType } from '../../models/ExerciseType';
 
+
 type Navigation = StackNavigationProp<RootStackParamList, 'Home'>
+
+
 
 const Home: React.FC = () => {
     const theme = useTheme()
@@ -33,7 +36,8 @@ const Home: React.FC = () => {
     const { user } = useUser()
     const calendarRef = useRef<CalendarRef>(null)
 
-    const getWorkoutsList = useCallback((text?: string) => {
+    const getWorkoutsList = useCallback(async (text?: string) => {
+
         if (realm) {
             let workout = realm.objects<WorkoutType[]>('Workout').toJSON()
 
