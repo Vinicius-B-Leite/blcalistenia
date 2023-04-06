@@ -6,10 +6,9 @@ import BackgroundService from 'react-native-background-actions';
 
 type TimerContext = {
     timer: number
-    stopTimer: () => void
-    startTimer: () => void
+    startTimer: () => Promise<void>
     setTimer: React.Dispatch<React.SetStateAction<number>>
-
+    stopBGTimer: () => Promise<void>
 }
 
 export const TimerContext = createContext({} as TimerContext)
@@ -17,29 +16,34 @@ export const TimerContext = createContext({} as TimerContext)
 type Props = {
     children: React.ReactNode
 }
+
+const options = {
+    taskName: 'Cronometro',
+    taskTitle: 'Volte ao treino',
+    taskDesc: 'Tempo: ',
+    taskIcon: {
+        name: 'ic_launcher',
+        type: 'mipmap',
+    },
+    color: '#FF8A00',
+    linkingURI: 'blcalistenia://home/WorkoutSeason', // See Deep Linking for more info
+};
 const TimerProvider: React.FC<Props> = ({ children }) => {
     const [timer, setTimer] = useState(-1)
-    const options = {
-        taskName: 'Cronometro',
-        taskTitle: 'Volte ao treino',
-        taskDesc: 'Tempo: ',
-        taskIcon: {
-            name: 'ic_launcher',
-            type: 'mipmap',
-        },
-        color: '#FF8A00',
-        linkingURI: 'blcalistenia://home/WorkoutSeason', // See Deep Linking for more info
-    };
-
-    const stopTimer = useCallback(async () => {
-        await BackgroundService.stop()
-    }, [])
 
     const sleep = (time: number) => new Promise<void>((resolve) => setTimeout(() => resolve(), time));
 
+    const stopBGTimer = async () => {
+        await BackgroundService.stop()
+        setTimer(-1)
+    }
     const veryIntensiveTask = async () => {
+        if (timer > -1) return
+        console.log('veryIntensiveTask called')
         await new Promise(async (resolve) => {
             for (let i = 0; BackgroundService.isRunning(); i++) {
+
+                console.log('timer is running')
                 setTimer(i)
                 BackgroundService.updateNotification({
                     taskDesc: `Tempo atual: ${String(Math.floor(i / 60)).padStart(2, '0')}:${String(i % 60).padStart(2, '0')}`
@@ -54,7 +58,7 @@ const TimerProvider: React.FC<Props> = ({ children }) => {
     }, [])
 
     return (
-        <TimerContext.Provider value={{ stopTimer, timer, startTimer, setTimer }}>
+        <TimerContext.Provider value={{ timer, startTimer, setTimer, stopBGTimer }}>
             {children}
         </TimerContext.Provider>
     )

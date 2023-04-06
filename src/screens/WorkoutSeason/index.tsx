@@ -19,12 +19,16 @@ import { useFocusEffect } from '@react-navigation/native';
 
 type Navigation = StackScreenProps<RootStackParamList, 'WorkoutSeason'>
 
+export type ReturnTypeHandleFineshWorkout = {
+    isFinished: boolean;
+    workoutCopy: WorkoutType | undefined;
+}
+
 const WorkoutSeason: React.FC<Navigation> = ({ navigation, route }) => {
     const theme = useTheme()
     const { workout } = route.params
     const { hideTabBar, showTabBar } = useTabBar()
     const { setWorkoutCopy, workoutCopy } = useContext(WorkoutSeasonContext)
-    const { realm } = useRealm()
 
     useEffect(() => {
         startWorkout(workout)
@@ -34,20 +38,16 @@ const WorkoutSeason: React.FC<Navigation> = ({ navigation, route }) => {
     useFocusEffect(useCallback(() => hideTabBar(), []))
 
     const handleFineshWorkout = useCallback(() => {
-
-        return new Promise<{
-            isFinished: boolean;
-            workoutCopy: WorkoutType | undefined;
-        }>((resolve, reject) => {
+        return new Promise<ReturnTypeHandleFineshWorkout>((resolve, reject) => {
             Alert.alert(
                 'Terminar treino',
                 'Tem certeza que quer terminar o treino?',
                 [{
                     text: 'Sim',
                     onPress: () => {
+                        const returnData = { isFinished: true, workoutCopy: workoutCopy }
                         setWorkoutCopy(undefined)
                         navigation.navigate('Home')
-                        const returnData = { isFinished: true, workoutCopy: workoutCopy }
                         resolve(returnData)
                     }
                 },
@@ -56,7 +56,7 @@ const WorkoutSeason: React.FC<Navigation> = ({ navigation, route }) => {
                     style: 'cancel'
                 }])
         })
-    }, [])
+    }, [workoutCopy])
     const createSerie = useCallback((currentExercise: ExercisesInWorkoutType) => {
         setWorkoutCopy(old => {
             if (old) {
@@ -86,12 +86,9 @@ const WorkoutSeason: React.FC<Navigation> = ({ navigation, route }) => {
 
         return isDone
     }, [])
-
-
     const cancelWorkout = useCallback(() => {
         setWorkoutCopy(undefined)
     }, [])
-
     const startWorkout = useCallback((workout: WorkoutType) => {
         if (!workoutCopy) {
             workout.exercises.forEach(exercise => {
@@ -100,7 +97,6 @@ const WorkoutSeason: React.FC<Navigation> = ({ navigation, route }) => {
             setWorkoutCopy(workout)
         }
     }, [])
-
     const deleteSerie = useCallback((currentExercise: ExercisesInWorkoutType, serieNumber: number) => {
         setWorkoutCopy(old => {
             if (old) {
@@ -123,7 +119,6 @@ const WorkoutSeason: React.FC<Navigation> = ({ navigation, route }) => {
             }
         })
     }, [])
-
     const changeSerie = useCallback((currentExercise: ExercisesInWorkoutType, serieNumber: number, newSerie: SerieType) => {
         setWorkoutCopy(old => {
             if (old) {
@@ -133,7 +128,6 @@ const WorkoutSeason: React.FC<Navigation> = ({ navigation, route }) => {
             }
         })
     }, [])
-
     const deleteExercise = useCallback((exercise: ExercisesInWorkoutType) => {
         setWorkoutCopy(old => {
             if (old) {

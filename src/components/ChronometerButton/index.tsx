@@ -3,22 +3,21 @@ import { useTimer } from '../../contexts/TimerContext';
 import * as S from './styles'
 import { useRealm } from '../../contexts/RealmContext';
 import { HistoricType } from '../../models/HistoricType';
-import { WorkoutSeasonContext } from '../../contexts/WorkooutSeason';
+import BackgroundService from 'react-native-background-actions';
 import { WorkoutType } from '../../models/WorkoutType';
+import { ReturnTypeHandleFineshWorkout } from '../../screens/WorkoutSeason';
 
 type Props = {
-    handleFineshWorkout: () => Promise<{
-        isFinished: boolean;
-        workoutCopy: WorkoutType | undefined;
-    }>
+    handleFineshWorkout: () => Promise<ReturnTypeHandleFineshWorkout>
 }
 
 const ChronometerButton: React.FC<Props> = ({ handleFineshWorkout }) => {
-    const { startTimer, timer, stopTimer, setTimer } = useTimer()
+    const { startTimer, timer, setTimer, stopBGTimer } = useTimer()
     const { realm } = useRealm()
 
+
     useEffect(() => {
-        if (timer < 0) startTimer()
+        startTimer()
     }, [])
 
     const finishWorkout = useCallback((seconds: number, workoutCopy: WorkoutType) => {
@@ -35,11 +34,10 @@ const ChronometerButton: React.FC<Props> = ({ handleFineshWorkout }) => {
     }, [realm])
 
     return (
-        <S.finishWorkout onPressIn={() => handleFineshWorkout().then(({ isFinished, workoutCopy }) => {
+        <S.finishWorkout onPressIn={() => handleFineshWorkout().then(async ({ isFinished, workoutCopy }) => {
             if (isFinished && workoutCopy) {
-                stopTimer()
-                setTimer(0)
-                finishWorkout(timer, workoutCopy)
+                finishWorkout(timer, workoutCopy )
+                await stopBGTimer()
             }
         })}>
             <S.FineshText>Terminar treino {String(Math.floor(timer / 60)).padStart(2, '0')}:{String(timer % 60).padStart(2, '0')}</S.FineshText>
