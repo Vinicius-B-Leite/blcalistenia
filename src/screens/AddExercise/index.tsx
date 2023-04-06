@@ -1,5 +1,6 @@
-import React, { useEffect, useContext, useRef, useState, useCallback, memo, useMemo } from 'react';
+import React, { useEffect, useRef, useState, useCallback } from 'react';
 import * as S from './styles'
+import { ActivityIndicator } from 'react-native'
 import AntDesign from 'react-native-vector-icons/AntDesign'
 import { useTheme } from 'styled-components';
 import { StackScreenProps } from '@react-navigation/stack';
@@ -12,9 +13,7 @@ import FilterExercise from '../../components/FilterExercise';
 import { ExerciseType } from '../../models/ExerciseType';
 import { useRealm } from '../../contexts/RealmContext';
 import { initialsExercises } from '../../utils/initialsExercises';
-import { useFocusEffect } from '@react-navigation/native';
 import { FlashList } from '@shopify/flash-list';
-import { Dimensions } from 'react-native';
 
 
 type Navigation = StackScreenProps<RootStackParamList, 'AddExercise'>
@@ -28,27 +27,23 @@ const AddExercise: React.FC<Navigation> = ({ navigation }) => {
     const [filterExerciseVisible, setFilterExercciseVisible] = useState(false)
     const [filters, setFilters] = useState<FilterType>({ category: 'empurrar', muscles: 'Peitoral' })
 
-    useFocusEffect(useCallback(() => {
+    useEffect(() => {
         getExercises(searchExerciseInput)
-    }, [searchExerciseInput]))
-
+    }, [searchExerciseInput])
 
     const getExercises = useCallback((text?: string) => {
         if (realm) {
-
             let exercises = realm.objects<ExerciseType[]>('Exercise').sorted('name').toJSON() as ExerciseType[]
-
             if (exercises.length === 0) {
                 initialsExercises.forEach(exercise => {
                     createExercise(exercise)
                 })
                 return
             }
-
-            if (text){
-                exercises = realm.objects<ExerciseType[]>('Exercise').filtered(`name CONTAINS '${text}'`).sorted('name').toJSON() as ExerciseType[]
+            if (text) {
+                setExerciseList(exercises.filter(e => e.name.toLocaleLowerCase().includes(text.toLocaleLowerCase())).sort())
+                return
             }
-
             exercises.sort()
             setExerciseList(exercises)
         }
@@ -124,7 +119,8 @@ const AddExercise: React.FC<Navigation> = ({ navigation }) => {
                 <S.ExerciseListContainer>
                     <FlashList
                         estimatedItemSize={15}
-                        data={ exercisList}
+                        data={exercisList}
+                        ListEmptyComponent={() => <ActivityIndicator size={theme.sizes.icons.md} color={theme.colors.contrast} />}
                         keyExtractor={item => String(item.name)}
                         renderItem={({ item }) => <Exercise item={item} deleteExercise={(exerciseName) => deleteExercise(exerciseName)} />}
                         showsVerticalScrollIndicator={false}
