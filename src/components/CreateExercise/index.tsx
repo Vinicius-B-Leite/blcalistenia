@@ -31,7 +31,7 @@ const CreateExercise: React.FC<Props> = ({ createExercise }) => {
         if (musclesSelected.includes(muscle)) {
             const index = musclesSelected.indexOf(muscle)
             musclesSelected.splice(index, 1)
-            setCategoriesSelected([...musclesSelected])
+            setMusclesSelected([...musclesSelected])
             return
         }
         setMusclesSelected(oldMusclesSelected => [...oldMusclesSelected, muscle])
