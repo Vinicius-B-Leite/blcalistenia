@@ -17,7 +17,11 @@ const CalendarDaysTrained = forwardRef<CalendarRef>(({ }, ref) => {
     const theme = useTheme()
     const top = useSharedValue(-(Dimensions.get('screen').height))
     const { getDatesTrained } = useContext(HistoricContext)
-    const [markedDates, setMarkedDates] = useState<MarkedDates>({})
+    const [markedDates, setMarkedDates] = useState<MarkedDates>(getDatesTrained({
+        selected: false,
+        marked: true,
+        dotColor: theme.colors.contrast
+    }))
 
     const animatedStyle = useAnimatedStyle(() => {
         return {
@@ -25,19 +29,10 @@ const CalendarDaysTrained = forwardRef<CalendarRef>(({ }, ref) => {
         }
     })
 
-    useEffect(() => {
-        setMarkedDates(getDatesTrained({
-            selected: false,
-            marked: true,
-            dotColor: theme.colors.contrast
-        }))
-    }, [])
-
     const openCalendar = () => {
-        
         top.value = withTiming(0, { duration: 1000 })
     }
-    const closeCalendar = () => {        
+    const closeCalendar = () => {
         top.value = withTiming(-(Dimensions.get('screen').height), { duration: 1000 })
     }
     useImperativeHandle(ref, () => ({ openCalendar, closeCalendar }), [openCalendar, closeCalendar])

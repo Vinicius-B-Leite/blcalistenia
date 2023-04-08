@@ -39,11 +39,8 @@ const TimerProvider: React.FC<Props> = ({ children }) => {
     }
     const veryIntensiveTask = async () => {
         if (timer > -1) return
-        console.log('veryIntensiveTask called')
         await new Promise(async (resolve) => {
             for (let i = 0; BackgroundService.isRunning(); i++) {
-
-                console.log('timer is running')
                 setTimer(i)
                 BackgroundService.updateNotification({
                     taskDesc: `Tempo atual: ${String(Math.floor(i / 60)).padStart(2, '0')}:${String(i % 60).padStart(2, '0')}`

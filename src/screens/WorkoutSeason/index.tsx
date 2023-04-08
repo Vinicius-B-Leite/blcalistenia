@@ -70,12 +70,13 @@ const WorkoutSeason: React.FC<Navigation> = ({ navigation, route }) => {
             }
         })
     }, [])
-    const markSerieAsDone = useCallback((currentExercise: ExercisesInWorkoutType, serieNumber: number) => {
+    const markSerieAsDone = (currentExercise: ExercisesInWorkoutType, serieNumber: number) => {
         let isDone = false
 
         setWorkoutCopy(old => {
             if (old) {
                 const exerciseIndex = old.exercises.indexOf(currentExercise)
+                if (exerciseIndex == -1) return old
                 const serieIndex = serieNumber - 1
                 old.exercises[exerciseIndex].series[serieIndex].done = !old.exercises[exerciseIndex].series[serieIndex].done
 
@@ -85,7 +86,7 @@ const WorkoutSeason: React.FC<Navigation> = ({ navigation, route }) => {
         })
 
         return isDone
-    }, [])
+    }
     const cancelWorkout = useCallback(() => {
         setWorkoutCopy(undefined)
     }, [])
@@ -131,11 +132,11 @@ const WorkoutSeason: React.FC<Navigation> = ({ navigation, route }) => {
     const deleteExercise = useCallback((exercise: ExercisesInWorkoutType) => {
         setWorkoutCopy(old => {
             if (old) {
-                let copy = old
-                const index = copy.exercises.findIndex((v) => v.exercise_id == exercise.exercise_id)
-                copy.exercises.splice(index, 1)
 
-                return { ...copy, exercises: [...old.exercises] }
+                const index = old.exercises.findIndex((v) => v.exercise_id == exercise.exercise_id)
+                old.exercises.splice(index, 1)
+
+                return { ...old , exercises: [...old.exercises]}
             }
         })
     }, [])

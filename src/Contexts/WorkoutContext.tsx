@@ -6,7 +6,6 @@ import { useRealm } from './RealmContext';
 
 type WorkoutContext = {
     addExercise: (newExercise: String) => void,
-    deleteWorkout: (workoutID: string) => void
     setExercises: React.Dispatch<React.SetStateAction<ExercisesInWorkoutType[]>>,
     exercises: ExercisesInWorkoutType[],
 }
@@ -17,7 +16,6 @@ export const WorkoutContext = createContext({} as WorkoutContext)
 
 const WorkoutProvider = ({ children }: { children: React.ReactNode }) => {
     const [exercises, setExercises] = useState<ExercisesInWorkoutType[]>([])
-    const { realm } = useRealm()
 
     const addExercise = useCallback((newExercise: String) => {
         setExercises(old => [
@@ -35,21 +33,11 @@ const WorkoutProvider = ({ children }: { children: React.ReactNode }) => {
         ])
 
     }, [])
-
-    const deleteWorkout = useCallback((workoutID: string) => {
-        realm && realm.write(() => {
-            realm.delete(realm.objectForPrimaryKey('Workout', workoutID))
-        })
-    }, [realm])
-
     return (
         <WorkoutContext.Provider value={{
             addExercise,
             setExercises,
-            exercises,
-            deleteWorkout,
-
-            
+            exercises,            
         }}>
             {children}
         </WorkoutContext.Provider>

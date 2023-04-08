@@ -7,6 +7,7 @@ import { WorkoutContext } from '../../contexts/WorkoutContext';
 import { WorkoutType } from '../../models/WorkoutType';
 import { RootStackParamList } from '../../routes/Models';
 import * as S from './styles'
+import { useRealm } from '../../contexts/RealmContext';
 
 type Props = {
     data: WorkoutType,
@@ -16,7 +17,13 @@ type Navigation = StackNavigationProp<RootStackParamList, 'Home'>
 
 const Workout: React.FC<Props> = ({ data }) => {
     const navigation = useNavigation<Navigation>()
-    const { deleteWorkout } = useContext(WorkoutContext)
+    const { realm } = useRealm()
+    
+    const deleteWorkout = (workoutID: string) => {
+        realm && realm.write(() => {
+            realm.delete(realm.objectForPrimaryKey('Workout', workoutID))
+        })
+    }
 
     const handleDelete = () => {
         Alert.alert(

@@ -29,22 +29,16 @@ const CreateWorkout: React.FC<Navigation> = ({ route, navigation }) => {
     const theme = useTheme()
     const { showTabBar, hideTabBar } = useTabBar()
     const {
-        deleteWorkout,
         exercises,
         setExercises,
     } = useContext(WorkoutContext)
+
     const [workoutName, setWorkoutName] = useState(route?.params?.workout?.title as string || '')
     const [anotation, setAnotation] = useState(route?.params?.workout?.anotation as string || '')
     const [imageURI, setImageURI] = useState(route?.params?.workout?.banner as string || '')
     const workout_id = useMemo(() => route?.params?.workout?._id as string || uuid.v4().toString(), [])
     const { realm } = useRealm()
-    const [initialState, _] = useState({
-        _id: route?.params?.workout?._id as string || uuid.v4().toString(),
-        banner: route?.params?.workout?.banner as string || '',
-        exercises: exercises || [],
-        title: route?.params?.workout?.title as string || '',
-        anotation: route?.params?.workout?.anotation as string || ''
-    })
+
 
     const saveWorkout = useCallback(({ banner, exercises, title, anotation, _id }: WorkoutType) => {
         realm && realm.write(() => {
@@ -110,27 +104,16 @@ const CreateWorkout: React.FC<Navigation> = ({ route, navigation }) => {
         })
     }, [])
 
-    useEffect(() => {
-        saveWorkout({
-            banner: imageURI,
-            exercises: exercises,
-            title: workoutName || 'Desconhecido',
-            anotation: anotation,
-            _id: route?.params?.workout?._id || workout_id
-        })
-
-    }, [workoutName, anotation, imageURI, exercises])
+    saveWorkout({
+        banner: imageURI,
+        exercises: exercises,
+        title: workoutName || 'Desconhecido',
+        anotation: anotation,
+        _id: route?.params?.workout?._id || workout_id
+    })
 
     useEffect(() => {
         setExercises(route?.params?.workout?.exercises || [])
-        const sub = navigation.addListener('beforeRemove', async (e) => {
-            e.preventDefault()
-            await handleGoBack()
-            showTabBar()
-            navigation.dispatch(e.data.action)
-        })
-
-        return sub
     }, [])
 
     useFocusEffect(useCallback(() => {
@@ -138,35 +121,6 @@ const CreateWorkout: React.FC<Navigation> = ({ route, navigation }) => {
 
         return showTabBar
     }, []))
-
-    const handleGoBack = useCallback(async () => {
-        return new Promise<void>((resolve, reject) => {
-
-            Alert.alert(
-                'Atenção',
-                'Deseja salvar as alterações?',
-                [
-                    {
-                        text: 'Não',
-                        style: 'cancel',
-                        onPress: () => {
-                            if (!(route?.params?.workout)) deleteWorkout(workout_id)
-                            else {
-                                if (initialState) saveWorkout({ ...initialState })
-                            }
-                            resolve()
-                        }
-                    },
-                    {
-                        text: 'Sim',
-                        onPress: () => {
-                            resolve()
-                        }
-                    }
-                ]
-            )
-        })
-    }, [])
 
     const handleImagePicker = useCallback(async () => {
         const { assets } = await pickeImage()

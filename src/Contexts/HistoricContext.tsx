@@ -33,6 +33,7 @@ const HistoricProvider = ({ children }: { children: React.ReactNode }) => {
             datesConfigureds[key] = config
         })
 
+        console.log(datesConfigureds);
 
         return datesConfigureds
     }

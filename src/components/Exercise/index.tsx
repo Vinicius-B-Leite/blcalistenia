@@ -43,7 +43,6 @@ const Exercise: React.FC<Prosp> = ({ item, deleteExercise }) => {
         )
     }
 
-    console.log('Exercise render')
 
     return (
         <S.ExerciseContainer onPress={handleAddExercise} onLongPress={handleDelete}>
