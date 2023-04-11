@@ -2,17 +2,11 @@ import React, { useContext } from 'react';
 import { View } from 'react-native';
 import { ThemeProvider } from 'styled-components/native';
 import AuthProvider from './contexts/AuthContext';
-import HistoricProvider from './contexts/HistoricContext';
-import RealmProvider from './contexts/RealmContext';
-import SuggestWorkoutProvider from './contexts/SuggestWorkoutContex';
 import TabBarProvider from './contexts/TabBarContext';
 import { ThemeContext } from './contexts/ThemeContext';
-import WorkoutSeasonProvider from './contexts/WorkooutSeason';
-import WorkoutProvider from './contexts/WorkoutContext';
 import Routes from './routes';
 import { darkMode } from './theme/darkMode';
 import { lightMode } from './theme/lightMode';
-import TimerProvider from './contexts/TimerContext';
 
 
 const Index: React.FC = () => {
@@ -21,21 +15,11 @@ const Index: React.FC = () => {
 
     return (
         <ThemeProvider theme={theme == 'dark' ? darkMode : lightMode}>
-            <WorkoutProvider>
-                <WorkoutSeasonProvider>
-                    <HistoricProvider>
-                        <AuthProvider>
-                            <SuggestWorkoutProvider>
-                                <TabBarProvider>
-                                    <TimerProvider>
-                                        <Routes />
-                                    </TimerProvider>
-                                </TabBarProvider>
-                            </SuggestWorkoutProvider>
-                        </AuthProvider>
-                    </HistoricProvider>
-                </WorkoutSeasonProvider>
-            </WorkoutProvider>
+            <AuthProvider>
+                <TabBarProvider>
+                    <Routes />
+                </TabBarProvider>
+            </AuthProvider>
         </ThemeProvider>
     )
 }

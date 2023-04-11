@@ -1,5 +1,4 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
-import { View } from 'react-native';
 import { getRealm } from '../services/realm';
 
 

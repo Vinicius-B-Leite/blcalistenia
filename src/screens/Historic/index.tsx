@@ -1,7 +1,5 @@
 import React, { useCallback, useContext, useEffect, useRef, useState } from 'react';
 import * as S from './styles'
-import { View } from 'react-native'
-import { HistoricContext } from '../../contexts/HistoricContext';
 import { HistoricType } from '../../models/HistoricType';
 import HistoricItem from '../../components/HistoricItem';
 import BottomSheet, { BottomSheetRefProps } from '../../components/BottomSheet';
@@ -10,15 +8,21 @@ import ExerciseInWorkoutItem from '../../components/ExerciseInWorkoutItem';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { useFocusEffect } from '@react-navigation/native';
 import { FlashList } from '@shopify/flash-list';
-import { useTabBar } from '../../contexts/TabBarContext';
+import { useRealm } from '../../contexts/RealmContext';
 
 
 const Historic: React.FC = () => {
-    const { getHistoric } = useContext(HistoricContext)
     const [historic, setHistoric] = useState<HistoricType[]>([])
     const bottomsheetRef = useRef<BottomSheetRefProps>(null)
     const [bottomSheetItem, setBottomSheetItem] = useState<HistoricType | null>(null)
+    const { realm } = useRealm()
 
+    const getHistoric = () => {
+        if (realm) {
+            const historic = realm.objects('Historic').toJSON() as HistoricType[]
+            return historic
+        }
+    }
     useFocusEffect(useCallback(() => {
         const historicCache = getHistoric()
         historicCache && setHistoric(historicCache)
@@ -77,11 +81,6 @@ const HistoricBottomSheetItem = ({ item }: { item: HistoricType }) => {
                 nestedScrollEnabled
                 renderItem={({ item }) => <ExerciseInWorkoutItem
                     item={item}
-                    showCreateSerie={false}
-                    showDeleteSerieButton={false}
-                    showRest={false}
-                    showSucessButton={false}
-                    showDeleteExerciseBtn={false}
                 />}
             />
         </S.WorkoutContainer>

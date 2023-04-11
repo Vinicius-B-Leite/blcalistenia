@@ -2,6 +2,7 @@ import styled from "styled-components/native"
 
 export const Exercise = styled.View`
     padding: 5%;
+    width: ${({theme}) => theme.sizes.vw}px;
 `
 
 export const ExerciseHeader = styled.View`

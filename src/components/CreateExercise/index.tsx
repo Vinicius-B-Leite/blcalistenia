@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, {  useState } from 'react';
 import { useTheme } from 'styled-components/native';
 import { ExerciseType } from '../../models/ExerciseType';
 import { category } from '../../utils/category';

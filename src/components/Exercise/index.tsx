@@ -1,13 +1,13 @@
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
-import React, { memo, useContext, useCallback } from 'react';
-import {  Alert } from 'react-native';
-import { WorkoutContext } from '../../contexts/WorkoutContext';
+import React, { memo, useCallback } from 'react';
+import { Alert } from 'react-native';
 import { ExerciseType } from '../../models/ExerciseType';
 import { RootStackParamList } from '../../routes/Models';
 import * as S from './styles'
-import { FlashList } from '@shopify/flash-list'
 import { FlatList } from 'react-native';
+import { useDispatch } from 'react-redux'
+import { addExercise } from '../../features/Workout/workoutSlicer'
 
 
 type Prosp = { item: ExerciseType, deleteExercise: (exerciseName: String) => void }
@@ -16,10 +16,10 @@ type Navigation = StackNavigationProp<RootStackParamList, 'AddExercise'>
 
 const Exercise: React.FC<Prosp> = ({ item, deleteExercise }) => {
     const navigation = useNavigation<Navigation>()
-    const { addExercise } = useContext(WorkoutContext)
+    const dispatch = useDispatch()
 
     const handleAddExercise = useCallback(() => {
-        addExercise(item.name)
+        dispatch(addExercise({ exercise_id: item.name, series: [{ rep: 0, rest: 0, serie: 1, done: false }]  }))
         navigation.goBack()
     }, [])
 
@@ -50,7 +50,7 @@ const Exercise: React.FC<Prosp> = ({ item, deleteExercise }) => {
             <FlatList
                 data={item.muscles}
                 horizontal
-                
+
                 showsHorizontalScrollIndicator={false}
                 scrollEnabled={false}
                 renderItem={({ item: m }) => (

@@ -1,5 +1,4 @@
-import React, { memo, useCallback, useEffect, useImperativeHandle } from 'react';
-import { View } from 'react-native'
+import React, { memo, useCallback, useImperativeHandle } from 'react';
 import { Dimensions, StyleSheet } from 'react-native';
 import { Gesture, GestureDetector } from 'react-native-gesture-handler';
 import Animated, { runOnJS, useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated';

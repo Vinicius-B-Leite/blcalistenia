@@ -1,4 +1,3 @@
-import { FlashList } from '@shopify/flash-list';
 import React, { memo } from 'react';
 import { Modal, ModalProps, FlatList } from 'react-native';
 import { FilterType } from '../../screens/AddExercise';

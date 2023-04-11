@@ -12,7 +12,7 @@ const ListEmptyComponent: React.FC = () => {
     const navigation = useNavigation<Navigation>()
 
     return (
-        <S.Container onPressIn={() => navigation.navigate('CreateWorkout', { workout: undefined })}>
+        <S.Container onPressIn={() => navigation.navigate('Workout', { workout: undefined })}>
             <S.Banner
                 source={{uri: 'https://t4.ftcdn.net/jpg/03/37/55/05/360_F_337550559_PvlwclphnxWPMYz4ZSYsSBygld4R7Y4M.jpg'}}
                 resizeMode={FastImage.resizeMode.cover}

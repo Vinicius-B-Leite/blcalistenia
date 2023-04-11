@@ -1,46 +1,26 @@
-import React, { useCallback, useContext, useEffect } from 'react';
-import { useTimer } from '../../contexts/TimerContext';
+import React from 'react';
 import * as S from './styles'
-import { useRealm } from '../../contexts/RealmContext';
-import { HistoricType } from '../../models/HistoricType';
-import BackgroundService from 'react-native-background-actions';
-import { WorkoutType } from '../../models/WorkoutType';
-import { ReturnTypeHandleFineshWorkout } from '../../screens/WorkoutSeason';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../store';
 
 type Props = {
-    handleFineshWorkout: () => Promise<ReturnTypeHandleFineshWorkout>
+    startWorkout: () => Promise<void>,
+    finishWorkout: (seconds: number) => void
 }
 
-const ChronometerButton: React.FC<Props> = ({ handleFineshWorkout }) => {
-    const { startTimer, timer, setTimer, stopBGTimer } = useTimer()
-    const { realm } = useRealm()
-
-
-    useEffect(() => {
-        startTimer()
-    }, [])
-
-    const finishWorkout = useCallback((seconds: number, workoutCopy: WorkoutType) => {
-        if (realm) {
-            realm.write(() => {
-                realm.create<HistoricType>('Historic', {
-                    workout: JSON.stringify(workoutCopy),
-                    date: new Date(),
-                    timerInSeconds: seconds,
-                    _id: realm.objects('Historic').length + 1
-                })
-            })
-        }
-    }, [realm])
+const ChronometerButton: React.FC<Props> = ({ startWorkout, finishWorkout }) => {
+    const timer = useSelector((state: RootState) => state.workout.timer)
 
     return (
-        <S.finishWorkout onPressIn={() => handleFineshWorkout().then(async ({ isFinished, workoutCopy }) => {
-            if (isFinished && workoutCopy) {
-                finishWorkout(timer, workoutCopy )
-                await stopBGTimer()
+        <S.finishWorkout onPressIn={() => timer ? finishWorkout(Number(timer)) : startWorkout()}>
+            {
+                timer ? (
+                    <S.FineshText>Terminar treino {String(Math.floor(timer / 60)).padStart(2, '0')}:{String(timer % 60).padStart(2, '0')}</S.FineshText>
+                )
+                    : (
+                        <S.FineshText>Iniciar treino</S.FineshText>
+                    )
             }
-        })}>
-            <S.FineshText>Terminar treino {String(Math.floor(timer / 60)).padStart(2, '0')}:{String(timer % 60).padStart(2, '0')}</S.FineshText>
         </S.finishWorkout>
     )
 }

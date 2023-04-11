@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import * as S from './styles'
 
 type Props = {
@@ -9,10 +9,10 @@ type Props = {
 
 const Muscle = ({ muscle, muscleSelected, onClick }: Props) => {
     return (
-        <S.Container  selected={muscle == muscleSelected} onPressIn={() => onClick(muscle)}>
+        <S.Container selected={muscle == muscleSelected} onPressIn={() => onClick(muscle)}>
             <S.MuscleName selected={muscle == muscleSelected}>{muscle}</S.MuscleName>
         </S.Container>
     )
 }
-
-export default Muscle;
+//nxt.muscleSelected !== prv.muscle && 
+export default memo(Muscle, (prv, nxt) => (nxt.muscleSelected === nxt.muscle || prv.muscle === prv.muscleSelected) ? false : true);

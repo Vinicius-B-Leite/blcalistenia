@@ -1,10 +1,12 @@
-import React, { forwardRef, useContext, useEffect, useImperativeHandle, useState } from 'react';
+import React, { forwardRef, memo, useImperativeHandle, useState } from 'react';
 import { Calendar } from 'react-native-calendars';
 import { StyleSheet, TouchableOpacity, Dimensions } from 'react-native'
 import { useTheme } from 'styled-components/native';
 import Animated, { useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated';
-import { HistoricContext } from '../../contexts/HistoricContext';
 import { MarkedDates } from 'react-native-calendars/src/types';
+import { MarkingProps } from 'react-native-calendars/src/calendar/day/marking';
+import { HistoricType } from '../../models/HistoricType';
+import { useRealm } from '../../contexts/RealmContext';
 
 
 
@@ -16,12 +18,24 @@ export type CalendarRef = {
 const CalendarDaysTrained = forwardRef<CalendarRef>(({ }, ref) => {
     const theme = useTheme()
     const top = useSharedValue(-(Dimensions.get('screen').height))
-    const { getDatesTrained } = useContext(HistoricContext)
-    const [markedDates, setMarkedDates] = useState<MarkedDates>(getDatesTrained({
-        selected: false,
-        marked: true,
-        dotColor: theme.colors.contrast
-    }))
+    const { realm } = useRealm()
+    const getDatesTrained = (config: MarkingProps) => {
+        if (realm) {
+            const historics = realm.objects('Historic').toJSON() as HistoricType[]
+            const dates = historics?.map(h => h.date)
+
+            let datesConfigureds: MarkedDates = {}
+
+            dates?.forEach(d => {
+                const key = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`
+                datesConfigureds[key] = config
+            })
+
+            console.log(datesConfigureds);
+
+            return datesConfigureds
+        }
+    }
 
     const animatedStyle = useAnimatedStyle(() => {
         return {
@@ -60,7 +74,11 @@ const CalendarDaysTrained = forwardRef<CalendarRef>(({ }, ref) => {
                 firstDay={1}
                 onPressArrowLeft={subtractMonth => subtractMonth()}
                 onPressArrowRight={addMonth => addMonth()}
-                markedDates={markedDates}
+                markedDates={getDatesTrained({
+                    selected: false,
+                    marked: true,
+                    dotColor: theme.colors.contrast
+                })}
             />
 
             <TouchableOpacity
@@ -84,4 +102,4 @@ const styles = StyleSheet.create({
     }
 })
 
-export default CalendarDaysTrained;
+export default memo(CalendarDaysTrained);

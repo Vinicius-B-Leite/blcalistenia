@@ -32,10 +32,17 @@ export const Title = styled.TextInput`
     font-size: ${({ theme }) => theme.sizes.fontSize.md}px ;
     margin-left: 3%;
 `
+
+export const CancelWorkoutBtn = styled.TouchableOpacity``
 export const ImagePickerButton = styled.TouchableOpacity`
     justify-content: center;
     align-items: center;
     padding: 3% ;
+`
+
+export const CancelWorkoutTxt = styled.Text`
+    color: ${({ theme }) => theme.colors.text};
+    font-size: ${({ theme }) => theme.sizes.fontSize.vsm}px ;
 `
 
 export const AnotationContainer = styled.View`
@@ -49,6 +56,11 @@ export const Anotation = styled.TextInput`
     background-color: ${({theme}) => theme.colors.darkBackground};
     font-size: ${({ theme }) => theme.sizes.fontSize.vsm}px;
     border-radius: ${({theme}) => theme.sizes.borderRadius.sm}px;
+`
+
+export const ExercisesContainer = styled.View`
+    width: ${({theme}) => theme.sizes.vw}px;
+    height: ${({theme}) => theme.sizes.vh * 0.6}px;
 `
 
 export const AddExerciseButton = styled.TouchableOpacity`

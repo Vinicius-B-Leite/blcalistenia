@@ -1,55 +1,37 @@
-import React, { memo, useCallback } from 'react';
+import React, { memo } from 'react';
 import { TouchableOpacity, FlatList } from 'react-native';
 import { useTheme } from 'styled-components/native';
 import { ExercisesInWorkoutType } from '../../models/ExercisesInWorkoutType';
 import * as S from './styles'
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import Serie from '../Serie';
-import { SerieType } from '../../models/SerieType';
-import FlashList from '@shopify/flash-list/dist/FlashList';
-
-
+import { useDispatch, useSelector } from 'react-redux'
+import { removeExercise, addSerie } from '../../features/Workout/workoutSlicer'
+import { RootState } from '../../store';
+import { FlashList } from '@shopify/flash-list';
 
 type Props = {
     item: ExercisesInWorkoutType,
-    showCreateSerie: boolean,
+    showCreateSerie?: boolean,
+    showRest?: boolean,
+    showDeleteSerieButton?: boolean,
     showDeleteExerciseBtn?: boolean,
-    showRest: boolean,
-    showDeleteSerieButton: boolean,
-    showSucessButton: boolean,
-    createSerieFunction?: (exercise: ExercisesInWorkoutType) => void,
-    deleteSerieFunction?: (exercise: ExercisesInWorkoutType, serie: number) => void,
-    sucessButtonFunction?: (currentExercise: ExercisesInWorkoutType, serieNumber: number) => boolean,
-    deleteExerciseFuntion?: (exercise: ExercisesInWorkoutType) => void,
-    updateSerie?: (serieNumber: number, exercise: ExercisesInWorkoutType, newSerie: SerieType) => void,
-    changeSerie?: (currentExercise: ExercisesInWorkoutType, serieNumber: number, newSerie: SerieType) => void
 }
 
-const ExerciseInWorkoutItem: React.FC<Props> = ({ item, showCreateSerie, createSerieFunction, showRest, showDeleteSerieButton, deleteSerieFunction, showSucessButton, sucessButtonFunction, deleteExerciseFuntion, changeSerie, updateSerie, showDeleteExerciseBtn }) => {
+const ExerciseInWorkoutItem: React.FC<Props> = ({ item, showCreateSerie, showRest, showDeleteSerieButton, showDeleteExerciseBtn }) => {
     const theme = useTheme()
-
-    const handleSucessButton = useCallback((serie: number) => {
-        let isDone = false
-        if (sucessButtonFunction) {
-            isDone = sucessButtonFunction(item, serie)
-        }
-        return isDone
-    }, [])
-
-    const handleDeleteSerie = useCallback((e: ExercisesInWorkoutType, serie: number) => {
-        if (deleteSerieFunction) {
-            deleteSerieFunction(e, serie)
-        }
-    }, [])
+    const dispatch = useDispatch()
+    const isWorkingout = useSelector((state: RootState) => state.workout.isWorkingout)
 
 
+
+    console.log('exercise render ' + item.exercise_id);
     
-
     return (
         <S.Exercise>
             <S.ExerciseHeader>
                 <S.ExerciseName>{item.exercise_id}</S.ExerciseName>
-                {showDeleteExerciseBtn && (<TouchableOpacity onPressIn={() => deleteExerciseFuntion && deleteExerciseFuntion(item)}>
+                {showDeleteExerciseBtn && (<TouchableOpacity onPressIn={() => dispatch(removeExercise(item))}>
                     <FontAwesome name='trash' size={theme.sizes.icons.sm} color={theme.colors.alert} />
                 </TouchableOpacity>)}
             </S.ExerciseHeader>
@@ -60,10 +42,11 @@ const ExerciseInWorkoutItem: React.FC<Props> = ({ item, showCreateSerie, createS
             <S.Row>
                 <S.Title>Série</S.Title>
                 <S.Title>Repetições</S.Title>
-                {showRest && <S.Title>Descanso(s)</S.Title>}
-                {showSucessButton && <S.Title>Concluída</S.Title>}
+                {!isWorkingout && <S.Title>Descanso(s)</S.Title>}
+                {isWorkingout && <S.Title>Concluída</S.Title>}
             </S.Row>
-            <FlatList
+            <FlashList
+                estimatedItemSize={10}
                 data={item.series}
                 extraData={item.series}
                 nestedScrollEnabled
@@ -72,16 +55,10 @@ const ExerciseInWorkoutItem: React.FC<Props> = ({ item, showCreateSerie, createS
                         item={serie}
                         exercise={item}
                         deleteSerieButton={showDeleteSerieButton}
-                        showRest={showRest}
-                        showSucessButton={showSucessButton}
-                        sucessButton={handleSucessButton}
-                        deleteSerie={handleDeleteSerie}
-                        updateSerie={updateSerie}
-                        changeSerie={changeSerie}
                     />
                 )}
                 ListFooterComponent={() => showCreateSerie ? (
-                    <S.CreateNewSerieButton onPressIn={() => createSerieFunction && createSerieFunction(item)}>
+                    <S.CreateNewSerieButton onPress={() => dispatch(addSerie(item))}>
                         <S.CreateNewSerieText>+</S.CreateNewSerieText>
                     </S.CreateNewSerieButton>
                 ) : <></>}
@@ -90,4 +67,4 @@ const ExerciseInWorkoutItem: React.FC<Props> = ({ item, showCreateSerie, createS
     )
 }
 
-export default memo(ExerciseInWorkoutItem, (p, n) => p?.item?.series?.length !== n?.item?.series?.length)
+export default memo(ExerciseInWorkoutItem)

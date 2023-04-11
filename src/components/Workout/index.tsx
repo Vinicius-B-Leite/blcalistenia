@@ -1,13 +1,17 @@
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
-import React, { useContext } from 'react';
+import React, { memo } from 'react';
 import { Alert } from 'react-native';
 import FastImage from 'react-native-fast-image';
-import { WorkoutContext } from '../../contexts/WorkoutContext';
 import { WorkoutType } from '../../models/WorkoutType';
 import { RootStackParamList } from '../../routes/Models';
 import * as S from './styles'
 import { useRealm } from '../../contexts/RealmContext';
+import { useDispatch } from 'react-redux'
+import { removeWorkout } from '../../features/WorkoutList/workoutListSlicer'
+
+
+
 
 type Props = {
     data: WorkoutType,
@@ -18,10 +22,12 @@ type Navigation = StackNavigationProp<RootStackParamList, 'Home'>
 const Workout: React.FC<Props> = ({ data }) => {
     const navigation = useNavigation<Navigation>()
     const { realm } = useRealm()
-    
+    const dispatch = useDispatch()
+
     const deleteWorkout = (workoutID: string) => {
         realm && realm.write(() => {
             realm.delete(realm.objectForPrimaryKey('Workout', workoutID))
+            dispatch(removeWorkout(data))
         })
     }
 
@@ -43,7 +49,7 @@ const Workout: React.FC<Props> = ({ data }) => {
     }
     return (
         <S.Container
-            onPress={() => navigation.navigate('CreateWorkout', { workout: data })}
+            onPress={() => navigation.navigate('Workout', { workout: data })}
             onLongPress={handleDelete}>
             <S.Banner
                 source={{ uri: data.banner.length > 0 ? data.banner : 'https://www.salonlfc.com/wp-content/uploads/2018/01/image-not-found-1-scaled-1150x647.png' }}
@@ -56,4 +62,4 @@ const Workout: React.FC<Props> = ({ data }) => {
     )
 }
 
-export default Workout;
+export default memo(Workout, (p, n) => p.data === n.data);

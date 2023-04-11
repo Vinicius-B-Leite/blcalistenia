@@ -14,18 +14,21 @@ import { ExerciseType } from '../../models/ExerciseType';
 import { useRealm } from '../../contexts/RealmContext';
 import { initialsExercises } from '../../utils/initialsExercises';
 import { FlashList } from '@shopify/flash-list';
-
-
 type Navigation = StackScreenProps<RootStackParamList, 'AddExercise'>
 export type FilterType = { category: string, muscles: string }
+
 const AddExercise: React.FC<Navigation> = ({ navigation }) => {
     const theme = useTheme()
-    const [exercisList, setExerciseList] = useState<ExerciseType[]>([])
     const { realm } = useRealm()
+
     const bottomSheetRef = useRef<BottomSheetRefProps>(null)
+
+    const [exercisList, setExerciseList] = useState<ExerciseType[]>([])
     const [searchExerciseInput, setSearchExerciseInput] = useState<string | undefined>(undefined)
     const [filterExerciseVisible, setFilterExercciseVisible] = useState(false)
     const [filters, setFilters] = useState<FilterType>({ category: 'empurrar', muscles: 'Peitoral' })
+
+    console.log('renderizou')
 
     useEffect(() => {
         getExercises(searchExerciseInput)
@@ -120,7 +123,7 @@ const AddExercise: React.FC<Navigation> = ({ navigation }) => {
                     <FlashList
                         estimatedItemSize={15}
                         data={exercisList}
-                        ListEmptyComponent={() => <ActivityIndicator size={theme.sizes.icons.md} color={theme.colors.contrast} />}
+                        ListEmptyComponent={() => (searchExerciseInput && searchExerciseInput?.length > 0) ? <ActivityIndicator size={theme.sizes.icons.md} color={theme.colors.contrast} /> : <></>}
                         keyExtractor={item => String(item.name)}
                         renderItem={({ item }) => <Exercise item={item} deleteExercise={(exerciseName) => deleteExercise(exerciseName)} />}
                         showsVerticalScrollIndicator={false}

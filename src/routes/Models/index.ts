@@ -4,13 +4,11 @@ import { WorkoutType } from '../../models/WorkoutType';
 
 export type RootStackParamList = {
     Home: undefined,
-    CreateWorkout: {
+    Workout: {
         workout?: WorkoutType
     },
     AddExercise: undefined, 
-    WorkoutSeason: {
-        workout: WorkoutType
-    },
+
     Rest:{
         totalSeconds: Number
     },

@@ -1,5 +1,4 @@
-import React, { useContext, useRef, useState } from 'react';
-import { ActivityIndicator, FlatList, TouchableOpacity } from 'react-native';
+import React, { useContext, useState } from 'react';
 import * as S from './styles'
 import Feather from 'react-native-vector-icons/Feather'
 import { useTheme } from 'styled-components/native';

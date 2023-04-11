@@ -7,23 +7,14 @@ import { SuggestWorkout } from "../schema/SuggestWorkoutSchema";
 import { UserSchema } from "../schema/UserSchema";
 import { WorkoutSchema } from '../schema/WorkoutSchema'
 
-export function getRealm(): Promise<Realm> {
-    return new Promise(async (resolve, reject) => {
+export async function getRealm(): Promise<Realm> {
 
-        try {
 
-            const realm = await Realm.open({
-                schema: [WorkoutSchema, ExerciseSchema, SerieSchema, ExerciseWorkout, HistoricSchema, UserSchema, SuggestWorkout],
-                schemaVersion: 2,
-                deleteRealmIfMigrationNeeded: true,
-
-            })
-            resolve(realm)
-
-        } catch (error) {
-            reject(error)
-        }
-
+    const realm = await Realm.open({
+        schema: [WorkoutSchema, ExerciseSchema, SerieSchema, ExerciseWorkout, HistoricSchema, UserSchema, SuggestWorkout],
+        schemaVersion: 2,
+        deleteRealmIfMigrationNeeded: true,
 
     })
+    return realm
 } 
