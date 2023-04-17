@@ -1,17 +1,20 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit"
 import { ExercisesInWorkoutType } from "../../models/ExercisesInWorkoutType"
 import { SerieType } from "../../models/SerieType"
+import { WorkoutType } from "../../models/WorkoutType"
 
 type WorkoutState = {
     exercises: ExercisesInWorkoutType[],
     timer: number | null,
-    isWorkingout: boolean
+    isWorkingout: boolean,
+    workoutCopy: WorkoutType | undefined
 }
 
 const initalState: WorkoutState = {
     exercises: [],
     timer: null,
-    isWorkingout: false
+    isWorkingout: false,
+    workoutCopy: undefined
 }
 
 export const workoutSlice = createSlice({
@@ -56,7 +59,12 @@ export const workoutSlice = createSlice({
         }>) => {
             const index = state.exercises.findIndex(e => e.exercise_id === action.payload.exercise_id)
 
+            if (index === -1) return
+
             state.exercises[index].series[action.payload.serieNumber - 1] = action.payload.newSerie
+            if (state.workoutCopy) {
+                state.workoutCopy.exercises[index].series[action.payload.serieNumber - 1] = action.payload.newSerie
+            }
         },
         reseteExercises: (state) => {
             state.exercises = []
@@ -69,7 +77,9 @@ export const workoutSlice = createSlice({
             state.timer = null
             state.isWorkingout = false
         },
-        
+        setWorkoutCopy: (state, action: PayloadAction<WorkoutType>) => {
+            state.workoutCopy = action.payload
+        }
     }
 })
 
@@ -81,5 +91,6 @@ export const {
     updateSerie,
     reseteExercises,
     updateTimer,
-    resetTimer, } = workoutSlice.actions
+    resetTimer,
+    setWorkoutCopy } = workoutSlice.actions
 export const WorkoutReducer = workoutSlice.reducer

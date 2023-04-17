@@ -1,4 +1,4 @@
-import React, { useCallback, useContext, useEffect, useRef, useState } from 'react';
+import React, { useCallback, useRef, useState } from 'react';
 import * as S from './styles'
 import { HistoricType } from '../../models/HistoricType';
 import HistoricItem from '../../components/HistoricItem';
@@ -20,13 +20,12 @@ const Historic: React.FC = () => {
     const getHistoric = () => {
         if (realm) {
             const historic = realm.objects('Historic').toJSON() as HistoricType[]
-            return historic
+            setHistoric(historic)
         }
     }
     useFocusEffect(useCallback(() => {
-        const historicCache = getHistoric()
-        historicCache && setHistoric(historicCache)
-    }, []))
+        getHistoric()
+    }, [realm]))
 
 
     return (
@@ -79,9 +78,7 @@ const HistoricBottomSheetItem = ({ item }: { item: HistoricType }) => {
                 data={workout.exercises}
                 estimatedItemSize={10}
                 nestedScrollEnabled
-                renderItem={({ item }) => <ExerciseInWorkoutItem
-                    item={item}
-                />}
+                renderItem={({ item }) => <ExerciseInWorkoutItem item={item} />}
             />
         </S.WorkoutContainer>
     )

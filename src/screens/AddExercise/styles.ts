@@ -60,6 +60,6 @@ export const FloatButtonIcon = styled.Text`
     font-weight: 700;
 `
 export const ExerciseListContainer = styled.View`
-    height: ${({theme}) => theme.sizes.vh * 0.60 }px;
+    height: ${({theme}) => theme.sizes.vh * 0.67}px;
     width: ${({theme}) => theme.sizes.vw}px;
 `

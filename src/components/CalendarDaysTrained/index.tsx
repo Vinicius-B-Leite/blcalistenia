@@ -31,7 +31,6 @@ const CalendarDaysTrained = forwardRef<CalendarRef>(({ }, ref) => {
                 datesConfigureds[key] = config
             })
 
-            console.log(datesConfigureds);
 
             return datesConfigureds
         }

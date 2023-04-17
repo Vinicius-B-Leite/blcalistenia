@@ -13,7 +13,7 @@ import { WorkoutType } from '../../models/WorkoutType';
 import { useRealm } from '../../contexts/RealmContext';
 import { RootState } from '../../store';
 import { useDispatch, useSelector } from 'react-redux'
-import { addExercise, resetTimer, reseteExercises, updateTimer } from '../../features/Workout/workoutSlicer'
+import { addExercise, resetTimer, reseteExercises, setWorkoutCopy, updateTimer } from '../../features/Workout/workoutSlicer'
 import ChronometerButton from '../../components/ChronometerButton';
 import BackgroundService from 'react-native-background-actions'
 import { options, sleep } from '../../utils/backgroundActionsConfig';
@@ -40,11 +40,9 @@ const Workout: React.FC<Navigation> = ({ route, navigation }) => {
         if (route.params.workout?.exercises) {
             dispatch(addExercise(route.params.workout?.exercises))
         }
-
-        navigation.addListener('beforeRemove', (ev) => {
+        return () => {
             dispatch(reseteExercises())
-        })
-
+        }
     }, [])
 
     const saveWorkout = () => {
@@ -64,9 +62,9 @@ const Workout: React.FC<Navigation> = ({ route, navigation }) => {
 
     const startWorkout = async () => {
         await BackgroundService.start(veryIntensiveTask, options)
+        dispatch(setWorkoutCopy({ _id: workoutID, banner: '', exercises, title: workoutName, anotation }))
     }
 
-    console.log('rende ')
     const veryIntensiveTask = async () => {
 
         await new Promise(async (resolve) => {
@@ -87,17 +85,19 @@ const Workout: React.FC<Navigation> = ({ route, navigation }) => {
             [
                 {
                     text: 'Sim',
-                    onPress: async () => {
-                        realm?.write(() => {
-                            realm.create<HistoricType>('Historic', {
-                                workout: JSON.stringify(workoutCopy),
-                                date: new Date(),
-                                timerInSeconds: seconds,
-                                _id: realm.objects('Historic').length + 1
+                    onPress: () => {
+                        BackgroundService.stop().then(() => {
+                            realm?.write(() => {
+                                realm.create<HistoricType>('Historic', {
+                                    workout: JSON.stringify(workoutCopy),
+                                    date: new Date(),
+                                    timerInSeconds: seconds,
+                                    _id: realm.objects('Historic').length + 1
+                                })
+                                dispatch(resetTimer())
+                                navigation.goBack()
                             })
                         })
-                        dispatch(resetTimer())
-                        await BackgroundService.stop()
 
                     }
                 },
@@ -176,7 +176,6 @@ const Workout: React.FC<Navigation> = ({ route, navigation }) => {
                     renderItem={({ item }) => (
                         <ExerciseInWorkoutItem
                             item={item}
-                            showRest={true}
                             showCreateSerie={true}
                             showDeleteSerieButton={true}
                             showDeleteExerciseBtn={true}
@@ -191,13 +190,15 @@ const Workout: React.FC<Navigation> = ({ route, navigation }) => {
             </S.ExercisesContainer>
             <ChronometerButton
                 startWorkout={startWorkout}
-                finishWorkout={(seconds) => finishWorkout(seconds, {
-                    _id: workoutID,
-                    banner: '',
-                    exercises: exercises,
-                    title: workoutName,
-                    anotation: anotation
-                })} />
+                finishWorkout={(seconds) => {
+                    finishWorkout(seconds, {
+                        _id: workoutID,
+                        banner: '',
+                        exercises: exercises,
+                        title: workoutName,
+                        anotation: anotation
+                    })
+                }} />
 
         </S.Container>
 

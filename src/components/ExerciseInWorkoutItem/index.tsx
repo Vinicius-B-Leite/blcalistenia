@@ -13,20 +13,18 @@ import { FlashList } from '@shopify/flash-list';
 type Props = {
     item: ExercisesInWorkoutType,
     showCreateSerie?: boolean,
-    showRest?: boolean,
     showDeleteSerieButton?: boolean,
     showDeleteExerciseBtn?: boolean,
 }
 
-const ExerciseInWorkoutItem: React.FC<Props> = ({ item, showCreateSerie, showRest, showDeleteSerieButton, showDeleteExerciseBtn }) => {
+const ExerciseInWorkoutItem: React.FC<Props> = ({ item, showCreateSerie, showDeleteSerieButton, showDeleteExerciseBtn }) => {
     const theme = useTheme()
     const dispatch = useDispatch()
     const isWorkingout = useSelector((state: RootState) => state.workout.isWorkingout)
 
 
 
-    console.log('exercise render ' + item.exercise_id);
-    
+
     return (
         <S.Exercise>
             <S.ExerciseHeader>

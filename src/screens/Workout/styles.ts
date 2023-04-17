@@ -60,7 +60,7 @@ export const Anotation = styled.TextInput`
 
 export const ExercisesContainer = styled.View`
     width: ${({theme}) => theme.sizes.vw}px;
-    height: ${({theme}) => theme.sizes.vh * 0.6}px;
+    height: ${({theme}) => theme.sizes.vh * 0.55}px;
 `
 
 export const AddExerciseButton = styled.TouchableOpacity`
@@ -70,6 +70,7 @@ export const AddExerciseButton = styled.TouchableOpacity`
 `
 export const AddExerciseText = styled.Text`
     color: ${({theme}) => theme.colors.contrast};
+    
     font-size: ${({theme}) => theme.sizes.fontSize.sm}px;
     text-decoration: underline;
 `

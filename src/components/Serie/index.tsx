@@ -27,13 +27,12 @@ const Serie: React.FC<Props> = ({ item, deleteSerieButton, exercise }) => {
 
     const [rep, setRep] = useState(item?.rep)
     const [rest, setRest] = useState(item?.rest)
-    const [done, setDone] = useState(false)
+    const [done, setDone] = useState(item?.done || false)
 
     const newSerie: SerieType = { rep, rest, done, serie: item.serie }
 
     dispatch(updateSerie({ exercise_id: exercise.exercise_id as string, newSerie, serieNumber: item.serie as number }))
 
-    console.log('serie ' + item.serie)
     return (
         <S.Container>
             {
