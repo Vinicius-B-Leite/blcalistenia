@@ -15,6 +15,7 @@ import Workout from '../../../components/Workout';
 import AntDesign from 'react-native-vector-icons/AntDesign'
 import { ExerciseType } from '../../../models/ExerciseType';
 import FilterMuscle from './FilterMuscle';
+import { useFocusEffect } from '@react-navigation/native';
 
 
 const MyWorkouts: React.FC = () => {
@@ -32,12 +33,12 @@ const MyWorkouts: React.FC = () => {
     }, [searchWorkoutInput, realm])
 
 
-    useEffect(() => {
-        getWorkoutsList(searchWorkoutInput)
-    }, [realm])
+    useFocusEffect(useCallback(() => {
+        getWorkoutsList()
+    }, [realm]))
 
 
-    const getWorkoutsList = (text?: string) => {
+    const getWorkoutsList = () => {
         if (realm) {
             let workouts = realm.objects('Workout').toJSON() as WorkoutType[]
             dispatch(setWorkoutList(workouts))

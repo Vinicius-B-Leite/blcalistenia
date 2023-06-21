@@ -30,9 +30,6 @@ export const Main = styled.View`
 `
 export const FilterButton = styled.TouchableOpacity`
     width: 25%;
-    height: 10%;
-    justify-content: center;
-    align-items: center;
 `
 export const FilterText = styled.Text`
     color: ${({ theme }) => theme.colors.text};
@@ -60,6 +57,5 @@ export const FloatButtonIcon = styled.Text`
     font-weight: 700;
 `
 export const ExerciseListContainer = styled.View`
-    height: ${({theme}) => theme.sizes.vh * 0.67}px;
-    width: ${({theme}) => theme.sizes.vw}px;
+    flex: 1;
 `

@@ -8,9 +8,10 @@ import { useTheme } from 'styled-components/native';
 import Entypo from 'react-native-vector-icons/Entypo'
 import Octicons from 'react-native-vector-icons/Octicons'
 import HomeStack from './HomeStack';
+import { TabParamList } from './Models';
 
 export const TAB_BAR_HEIGHT = Dimensions.get('screen').height * 0.06
-const { Navigator, Screen } = createMaterialTopTabNavigator()
+const { Navigator, Screen } = createMaterialTopTabNavigator<TabParamList>()
 
 const Routes: React.FC = () => {
     const theme = useTheme()
@@ -22,6 +23,7 @@ const Routes: React.FC = () => {
         <NavigationContainer  >
             <StatusBar backgroundColor={theme.colors.background} barStyle={theme.name == 'dark' ? 'light-content' : 'dark-content'} />
             <Navigator
+                id='tabBar'
                 tabBarPosition='bottom'
                 screenOptions={{
                     tabBarIndicatorStyle: { display: 'none' },
@@ -30,8 +32,8 @@ const Routes: React.FC = () => {
                         backgroundColor: theme.colors.background,
                         height: TAB_BAR_HEIGHT
                     },
-                    tabBarActiveTintColor: theme.colors.contrast
-
+                    tabBarActiveTintColor: theme.colors.contrast,
+                    
                 }}
             >
                 <Screen name='HomeStack' component={HomeStack}

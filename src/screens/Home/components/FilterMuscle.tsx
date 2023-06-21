@@ -35,7 +35,7 @@ const FilterMuscle: React.FC = () => {
     }
 
     return (
-        < S.CategotyList
+        <S.CategotyList
             horizontal
             showsHorizontalScrollIndicator={false}
             data={muscles}

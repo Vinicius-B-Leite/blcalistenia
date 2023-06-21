@@ -3,19 +3,23 @@ import * as S from './styles'
 import { HistoricType } from '../../models/HistoricType';
 import HistoricItem from '../../components/HistoricItem';
 import BottomSheet, { BottomSheetRefProps } from '../../components/BottomSheet';
-import { WorkoutType } from '../../models/WorkoutType';
-import ExerciseInWorkoutItem from '../../components/ExerciseInWorkoutItem';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
-import { useFocusEffect, useNavigation } from '@react-navigation/native';
+import { NavigationProp, useFocusEffect, useNavigation } from '@react-navigation/native';
 import { FlashList } from '@shopify/flash-list';
 import { useRealm } from '../../contexts/RealmContext';
+import { TabParamList } from '../../routes/Models';
+import { HistoricBS } from './components/HistoricBS';
 
+
+type Nav = NavigationProp<TabParamList, 'Historic'>
 
 const Historic: React.FC = () => {
     const [historic, setHistoric] = useState<HistoricType[]>([])
     const bottomsheetRef = useRef<BottomSheetRefProps>(null)
     const [bottomSheetItem, setBottomSheetItem] = useState<HistoricType | null>(null)
     const { realm } = useRealm()
+    const navigation = useNavigation<Nav>()
+
 
     const getHistoric = () => {
         if (realm) {
@@ -28,9 +32,11 @@ const Historic: React.FC = () => {
     }, [realm]))
 
 
+    
+
+
     return (
         <GestureHandlerRootView style={{ flex: 1 }} >
-
             <S.Container>
                 <S.Header>
                     <S.Title>Histórico</S.Title>
@@ -41,47 +47,26 @@ const Historic: React.FC = () => {
                 <S.HistoricListContainer>
                     <FlashList
                         nestedScrollEnabled
-                        estimatedItemSize={20}
+                        estimatedItemSize={historic.length || 10}
+                        keyExtractor={item => String(item._id)}
                         data={historic}
-                        renderItem={({ item }) => <HistoricItem item={item} onClick={(bsItem) => {
-                            setBottomSheetItem(bsItem)
-                            bottomsheetRef.current?.scrollTo(300, 1000)
-                        }} />}
+                        renderItem={({ item }) => <HistoricItem
+                            item={item}
+                            onClick={(bsItem) => {
+                                setBottomSheetItem(bsItem)
+                                bottomsheetRef.current?.scrollTo({ destination: 200, duration: 1000 })
+                            }} />}
                     />
                 </S.HistoricListContainer>
                 {
                     bottomSheetItem &&
-                    <BottomSheet ref={bottomsheetRef} >
-                        <HistoricBottomSheetItem item={bottomSheetItem} />
+                    <BottomSheet onClose={() => setBottomSheetItem(null)} ref={bottomsheetRef} >
+                        <HistoricBS item={bottomSheetItem} />
                     </BottomSheet>
                 }
             </S.Container>
         </GestureHandlerRootView>
 
     )
-}
-
-
-const HistoricBottomSheetItem = ({ item }: { item: HistoricType }) => {
-    const workout: WorkoutType = JSON.parse(item.workout)
-    const minutes = String((item.timerInSeconds / 60).toFixed(0)).padStart(2, '0')
-    const seconds = String((item.timerInSeconds % 60).toFixed(0)).padStart(2, '0')
-
-    return (
-        <S.WorkoutContainer>
-            <S.WorkoutHeader>
-                <S.WorkoutName>{workout.title}</S.WorkoutName>
-                <S.WorkoutTime>{minutes}:{seconds}</S.WorkoutTime>
-            </S.WorkoutHeader>
-            <S.WorkoutAnotation>{workout.anotation}</S.WorkoutAnotation>
-            <FlashList
-                data={workout.exercises}
-                estimatedItemSize={10}
-                nestedScrollEnabled
-                renderItem={({ item }) => <ExerciseInWorkoutItem item={item} />}
-            />
-        </S.WorkoutContainer>
-    )
-
 }
 export default Historic;

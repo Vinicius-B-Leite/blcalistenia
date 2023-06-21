@@ -20,23 +20,8 @@ export const Anotation = styled.TextInput`
     border-radius: ${({theme}) => theme.sizes.borderRadius.sm}px;
 `
 
-export const ExercisesContainer = styled.View`
-    width: ${({theme}) => theme.sizes.vw}px;
-    min-height: 50px;
-    height: ${({theme}) => theme.sizes.vh * 0.55}px;
-`
 
-export const AddExerciseButton = styled.TouchableOpacity`
-    align-self: center;
-    margin: 5% 0%;
-    padding: 3% 5%;
-`
-export const AddExerciseText = styled.Text`
-    color: ${({theme}) => theme.colors.contrast};
-    
-    font-size: ${({theme}) => theme.sizes.fontSize.sm}px;
-    text-decoration: underline;
-`
+
 export const StartWorkout = styled.TouchableOpacity`
     width: 90%;
     background-color: ${({theme}) => theme.colors.contrast};

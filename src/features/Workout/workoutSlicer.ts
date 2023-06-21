@@ -12,7 +12,7 @@ type WorkoutState = {
 const initalState: WorkoutState = {
     timer: null,
     isWorkingout: false,
-    workout: {} as WorkoutType
+    workout: { _id: '', banner: '', exercises: [], title: '', anotation: '' } 
 }
 
 export const workoutSlice = createSlice({
@@ -55,11 +55,12 @@ export const workoutSlice = createSlice({
             newSerie: SerieType,
             serieNumber: number
         }>) => {
-            const index = state.workout.exercises.findIndex(e => e.exercise_id === action.payload.exercise_id)
+            const index = state.workout.exercises?.findIndex(e => e.exercise_id === action.payload.exercise_id)
 
-            if (index === -1) return
+            if (index !== -1) {
+                state.workout.exercises[index].series[action.payload.serieNumber - 1] = action.payload.newSerie
+            }
 
-            state.workout.exercises[index].series[action.payload.serieNumber - 1] = action.payload.newSerie
 
         },
         reseteExercises: (state) => {
@@ -72,6 +73,7 @@ export const workoutSlice = createSlice({
         resetTimer: (state) => {
             state.timer = null
             state.isWorkingout = false
+            state.workout = {} as WorkoutType
         },
         setWorkout: (state, action: PayloadAction<WorkoutType>) => {
             state.workout = action.payload

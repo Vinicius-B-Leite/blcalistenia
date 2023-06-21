@@ -37,7 +37,7 @@ const Serie: React.FC<Props> = ({ item, deleteSerieButton, exercise }) => {
             newSerie,
             serieNumber: item.serie as number
         }))
-    }, [rep, rest, done, item.serie])
+    }, [rep, rest, done])
 
 
     return (

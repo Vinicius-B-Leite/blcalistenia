@@ -9,10 +9,9 @@ type Props = {
 
 const Muscle = ({ muscle, muscleSelected, onClick }: Props) => {
     return (
-        <S.Container selected={muscle == muscleSelected} onPressIn={() => onClick(muscle)}>
+        <S.Container selected={muscle == muscleSelected} onPress={() => onClick(muscle)}>
             <S.MuscleName selected={muscle == muscleSelected}>{muscle}</S.MuscleName>
         </S.Container>
     )
 }
-//nxt.muscleSelected !== prv.muscle && 
-export default memo(Muscle, (prv, nxt) => (nxt.muscleSelected === nxt.muscle || prv.muscle === prv.muscleSelected) ? false : true);
+export default Muscle

@@ -22,7 +22,7 @@ const HistoricItem: React.FC<Props> = ({ item, onClick }) => {
     const seconds = String((item.timerInSeconds % 60).toFixed(0)).padStart(2, '0')
 
     return (
-        <S.Container onPressIn={() => {
+        <S.Container onPress={() => {
             onClick({ ...item })
         }}>
             <S.Header>

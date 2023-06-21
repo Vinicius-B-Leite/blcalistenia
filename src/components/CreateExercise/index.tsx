@@ -1,20 +1,33 @@
-import React, {  useState } from 'react';
+import React, { useState } from 'react';
 import { useTheme } from 'styled-components/native';
 import { ExerciseType } from '../../models/ExerciseType';
 import { category } from '../../utils/category';
 import { muscles } from '../../utils/muscles';
 import * as S from './styles'
+import { useRealm } from '../../contexts/RealmContext';
 
 
-type Props = {
-    createExercise: ({ name, muscles, categories }: ExerciseType) => void
-}
 
-const CreateExercise: React.FC<Props> = ({ createExercise }) => {
+const CreateExercise: React.FC = () => {
     const theme = useTheme()
     const [categoriesSelected, setCategoriesSelected] = useState<string[]>([])
     const [musclesSelected, setMusclesSelected] = useState<string[]>([])
     const [exerciseNameInput, setExerciseNameInput] = useState('')
+
+    const { realm } = useRealm()
+
+
+    const createExercise = ({ name, muscles, categories }: ExerciseType) => {
+        if (realm) {
+            realm.write(() => {
+                realm.create<ExerciseType>('Exercise', {
+                    name,
+                    muscles,
+                    categories
+                })
+            })
+        }
+    }
 
 
     const selectCategory = (category: string) => {

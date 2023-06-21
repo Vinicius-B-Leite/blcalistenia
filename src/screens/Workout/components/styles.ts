@@ -19,7 +19,6 @@ export const GoBack = styled.TouchableOpacity`
     justify-content: center;
     border-radius: ${({theme}) => theme.sizes.borderRadius.full}px;
 `
-
 export const Title = styled.TextInput`
     color: ${({ theme }) => theme.colors.contrast};
     width: 75%;
@@ -30,8 +29,6 @@ export const Title = styled.TextInput`
     margin-left: 3%;
 `
 export const CancelWorkoutBtn = styled.TouchableOpacity``
-
-
 export const CancelWorkoutTxt = styled.Text`
     color: ${({ theme }) => theme.colors.text};
     font-size: ${({ theme }) => theme.sizes.fontSize.vsm}px ;
@@ -40,4 +37,24 @@ export const ImagePickerButton = styled.TouchableOpacity`
     justify-content: center;
     align-items: center;
     padding: 3% ;
+`
+
+
+
+export const ExercisesContainer = styled.View`
+    width: ${({theme}) => theme.sizes.vw}px;
+    min-height: 50px;
+    height: ${({theme}) => theme.sizes.vh * 0.55}px;
+`
+
+export const AddExerciseButton = styled.TouchableOpacity`
+    align-self: center;
+    margin: 5% 0%;
+    padding: 3% 5%;
+`
+export const AddExerciseText = styled.Text`
+    color: ${({theme}) => theme.colors.contrast};
+    
+    font-size: ${({theme}) => theme.sizes.fontSize.sm}px;
+    text-decoration: underline;
 `

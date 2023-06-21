@@ -17,11 +17,9 @@ import { ExerciseType } from '../../../models/ExerciseType';
 import { ExercisesInWorkoutType } from '../../../models/ExercisesInWorkoutType';
 
 
-type Nav = NavigationProp<RootStackParamList>
-type Props = {
+type Nav = NavigationProp<RootStackParamList, 'Workout'>
 
-}
-const Header: React.FC<Props> = ({ }) => {
+const Header: React.FC = () => {
 
 
     const theme = useTheme()
@@ -40,7 +38,7 @@ const Header: React.FC<Props> = ({ }) => {
             [
                 {
                     text: 'Sim',
-                    onPress: async () => {
+                    onPress: () => {
                         BackgroundService.stop()
                             .then(() => {
                                 dispatch(resetTimer())

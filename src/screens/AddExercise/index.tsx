@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState, useCallback } from 'react';
+import React, { useEffect, useRef, useState, useCallback, useMemo } from 'react';
 import * as S from './styles'
 import { ActivityIndicator } from 'react-native'
 import AntDesign from 'react-native-vector-icons/AntDesign'
@@ -14,6 +14,9 @@ import { ExerciseType } from '../../models/ExerciseType';
 import { useRealm } from '../../contexts/RealmContext';
 import { initialsExercises } from '../../utils/initialsExercises';
 import { FlashList } from '@shopify/flash-list';
+
+
+
 type Navigation = StackScreenProps<RootStackParamList, 'AddExercise'>
 export type FilterType = { category: string, muscles: string }
 
@@ -24,47 +27,29 @@ const AddExercise: React.FC<Navigation> = ({ navigation }) => {
     const bottomSheetRef = useRef<BottomSheetRefProps>(null)
 
     const [exercisList, setExerciseList] = useState<ExerciseType[]>([])
-    const [searchExerciseInput, setSearchExerciseInput] = useState<string | undefined>(undefined)
     const [filterExerciseVisible, setFilterExercciseVisible] = useState(false)
     const [filters, setFilters] = useState<FilterType>({ category: 'empurrar', muscles: 'Peitoral' })
 
+    const [searchExerciseInput, setSearchExerciseInput] = useState<string>('')
+    const exercisesSearched = useMemo(() => {
+        const exercises = realm?.objects('Exercise').toJSON() as ExerciseType[]
+
+        return exercises?.filter(e => e.name.toLocaleLowerCase().includes(searchExerciseInput?.toLocaleLowerCase()))
+    }, [searchExerciseInput])
 
     useEffect(() => {
-        getExercises(searchExerciseInput)
-    }, [searchExerciseInput])
+        getExercises()
+    }, [])
 
     const getExercises = useCallback((text?: string) => {
         if (realm) {
-            let exercises = realm.objects<ExerciseType[]>('Exercise').sorted('name').toJSON() as ExerciseType[]
-            if (exercises.length === 0) {
-                initialsExercises.forEach(exercise => {
-                    createExercise(exercise)
-                })
-                return
-            }
-            if (text) {
-                setExerciseList(exercises.filter(e => e.name.toLocaleLowerCase().includes(text.toLocaleLowerCase())).sort())
-                return
-            }
-            exercises.sort()
-            setExerciseList(exercises)
-        }
-    }, [realm])
-    const createExercise = useCallback(({ name, muscles, categories }: ExerciseType) => {
-
-        if (realm) {
-
-            realm.write(() => {
-                const exerciseResponse = realm.create<ExerciseType>('Exercise', {
-                    name,
-                    muscles,
-                    categories
-                }).toJSON() as ExerciseType
-
-                setExerciseList(old => [...old, exerciseResponse])
+            const exercisesListener = realm.objects('Exercise')
+            exercisesListener.addListener((collection, changes) => {
+                setExerciseList(collection.toJSON() as ExerciseType[])
             })
         }
     }, [realm])
+
     const filterExercises = useCallback((category: string, muscle: string) => {
         if (realm) {
             const exerciesesFiltereds = realm.objects('Exercise')
@@ -76,18 +61,7 @@ const AddExercise: React.FC<Navigation> = ({ navigation }) => {
         }
 
     }, [realm])
-    const deleteExercise = useCallback((exerciseName: String) => {
-        if (realm) {
-            realm.write(() => {
-                realm.delete(realm.objectForPrimaryKey('Exercise', exerciseName as string))
-                setExerciseList(old => {
-                    const index = old.findIndex((v) => v.name == exerciseName)
-                    old.splice(index, 1)
-                    return [...old]
-                })
-            })
-        }
-    }, [realm])
+
 
 
     return (
@@ -113,32 +87,29 @@ const AddExercise: React.FC<Navigation> = ({ navigation }) => {
             </S.Header>
 
             <S.Main>
-                <S.FilterButton onPressIn={() => setFilterExercciseVisible(true)}>
-                    <S.FilterText>Filtros</S.FilterText>
-                </S.FilterButton>
-
-
                 <S.ExerciseListContainer>
                     <FlashList
                         estimatedItemSize={15}
-                        data={exercisList}
-                        ListEmptyComponent={() => (searchExerciseInput && searchExerciseInput?.length > 0) ? <ActivityIndicator size={theme.sizes.icons.md} color={theme.colors.contrast} /> : <></>}
+                        data={searchExerciseInput ? exercisesSearched : exercisList}
                         keyExtractor={item => String(item.name)}
-                        renderItem={({ item }) => <Exercise item={item} deleteExercise={(exerciseName) => deleteExercise(exerciseName)} />}
+                        renderItem={({ item }) => <Exercise item={item} />}
+                        ListHeaderComponent={() => (
+                            <S.FilterButton onPressIn={() => setFilterExercciseVisible(true)}>
+                                <S.FilterText>Filtros</S.FilterText>
+                            </S.FilterButton>
+                        )}
                         showsVerticalScrollIndicator={false}
                     />
                 </S.ExerciseListContainer>
             </S.Main>
 
-            <S.FloatButton onPressIn={() => {
-                bottomSheetRef?.current?.scrollTo(theme.sizes.vh / 5, 1000)
-            }}>
+            <S.FloatButton onPressIn={() => bottomSheetRef?.current?.scrollTo({ destination: theme.sizes.vh / 5, duration: 1000 })}>
                 <S.FloatButtonIcon>+</S.FloatButtonIcon>
             </S.FloatButton>
 
 
             <BottomSheet ref={bottomSheetRef}>
-                <CreateExercise createExercise={createExercise} />
+                <CreateExercise />
             </BottomSheet>
 
             <FilterExercise
