@@ -16,7 +16,6 @@ const HomeStack: React.FC = () => {
                 cardOverlayEnabled: true,
                 cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
                 headerShown: false,
-                detachPreviousScreen: false,
                 cardStyle: {
                     backgroundColor: 'transparent'
                 }

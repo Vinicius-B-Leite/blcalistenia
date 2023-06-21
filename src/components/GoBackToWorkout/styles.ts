@@ -1,4 +1,5 @@
 import styled from "styled-components/native";
+import { TAB_BAR_HEIGHT } from "../../routes";
 
 export const GoWorkout = styled.TouchableOpacity`
     padding: 3%;
@@ -26,5 +27,5 @@ export const NavBar = styled.View`
     justify-content: space-around;
     align-items: center;
     padding: 4% 0%;
-    background-color: ${({theme}) => theme.colors.darkBackground};
+    background-color: ${({ theme }) => theme.colors.darkBackground};
 `

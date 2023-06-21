@@ -5,7 +5,7 @@ import { WorkoutType } from '../../models/WorkoutType';
 export type RootStackParamList = {
     Home: undefined,
     Workout: {
-        workout?: WorkoutType
+        workout?: WorkoutType | undefined
     },
     AddExercise: undefined, 
 

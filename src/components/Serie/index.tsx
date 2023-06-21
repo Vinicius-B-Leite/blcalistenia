@@ -1,4 +1,4 @@
-import React, { memo, useState } from 'react';
+import React, { memo, useEffect, useState } from 'react';
 import { ExercisesInWorkoutType } from '../../models/ExercisesInWorkoutType';
 import * as S from './styles'
 import AntDesign from 'react-native-vector-icons/AntDesign'
@@ -25,13 +25,20 @@ const Serie: React.FC<Props> = ({ item, deleteSerieButton, exercise }) => {
     const dispatch = useDispatch()
     const showSucessButton = useSelector((state: RootState) => state.workout.isWorkingout)
 
-    const [rep, setRep] = useState(item?.rep)
-    const [rest, setRest] = useState(item?.rest)
+    const [rep, setRep] = useState(item?.rep || 0)
+    const [rest, setRest] = useState(item?.rest || 0)
     const [done, setDone] = useState(item?.done || false)
 
-    const newSerie: SerieType = { rep, rest, done, serie: item.serie }
 
-    dispatch(updateSerie({ exercise_id: exercise.exercise_id as string, newSerie, serieNumber: item.serie as number }))
+    useEffect(() => {
+        const newSerie: SerieType = { rep, rest, done, serie: item.serie }
+        dispatch(updateSerie({
+            exercise_id: exercise.exercise_id as string,
+            newSerie,
+            serieNumber: item.serie as number
+        }))
+    }, [rep, rest, done, item.serie])
+
 
     return (
         <S.Container>

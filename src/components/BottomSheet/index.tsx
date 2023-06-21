@@ -4,7 +4,6 @@ import { Gesture, GestureDetector } from 'react-native-gesture-handler';
 import Animated, { runOnJS, useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated';
 
 import * as S from './styles'
-import { useTabBar } from '../../contexts/TabBarContext';
 
 
 const { height } = Dimensions.get('screen')
@@ -22,7 +21,6 @@ const BottomSheet = React.forwardRef<BottomSheetRefProps, Props>(({ children }, 
     const animatedHeigh = useSharedValue(height)
     const startValue = useSharedValue({ y: 0 })
     const visible = useSharedValue(false)
-    const { showTabBar } = useTabBar()
 
     
 
@@ -54,9 +52,7 @@ const BottomSheet = React.forwardRef<BottomSheetRefProps, Props>(({ children }, 
                 scrollTo(0, 500)
             }
             else if (animatedHeigh.value > height / 2.5 || ev.velocityY > height) {
-                scrollTo(height, 500)
-                runOnJS(showTabBar)()
-                
+                scrollTo(height, 500)                
             }
         })
 

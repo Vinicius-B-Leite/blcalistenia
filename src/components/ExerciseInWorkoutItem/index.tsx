@@ -43,25 +43,21 @@ const ExerciseInWorkoutItem: React.FC<Props> = ({ item, showCreateSerie, showDel
                 {!isWorkingout && <S.Title>Descanso(s)</S.Title>}
                 {isWorkingout && <S.Title>Concluída</S.Title>}
             </S.Row>
-            <FlashList
-                estimatedItemSize={10}
-                data={item.series}
-                extraData={item.series}
-                nestedScrollEnabled
-                renderItem={({ item: serie }) => (
+            {
+                item.series.map(serie => (
                     <Serie
+                        key={serie.serie as React.Key}
                         item={serie}
                         exercise={item}
                         deleteSerieButton={showDeleteSerieButton}
                     />
-                )}
-                ListFooterComponent={() => showCreateSerie ? (
-                    <S.CreateNewSerieButton onPress={() => dispatch(addSerie(item))}>
-                        <S.CreateNewSerieText>+</S.CreateNewSerieText>
-                    </S.CreateNewSerieButton>
-                ) : <></>}
-            />
-        </S.Exercise>
+                ))
+            }
+            <S.CreateNewSerieButton onPress={() => dispatch(addSerie(item))}>
+                <S.CreateNewSerieText>+</S.CreateNewSerieText>
+            </S.CreateNewSerieButton>
+
+        </S.Exercise >
     )
 }
 

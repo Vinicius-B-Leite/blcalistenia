@@ -76,3 +76,9 @@ export const CreateNewSerieText = styled.Text`
     font-size: ${({theme}) => theme.sizes.fontSize.md}px;
     color: ${({ theme }) => theme.colors.text};
 `
+
+export const SeriresListContainer = styled.Text`
+    width: 100%;
+    height: 100px;
+    /* background-color: red; */
+`

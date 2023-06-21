@@ -42,7 +42,11 @@ export const WorkoutListSlicer = createSlice({
             })
         },
         addWorkout: (state, action: PayloadAction<WorkoutType>) => {
-            state.workouts.push(action.payload)
+            const indexOfWorkout = state.workouts.findIndex(val => val._id === action.payload._id)
+            if (indexOfWorkout === -1) {
+                state.workouts.push(action.payload)
+            }
+            state.workouts[indexOfWorkout] = action.payload
         }
     }
 })

@@ -1,4 +1,4 @@
-import React, { useCallback, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import * as S from './styles'
 import { HistoricType } from '../../models/HistoricType';
 import HistoricItem from '../../components/HistoricItem';
@@ -6,7 +6,7 @@ import BottomSheet, { BottomSheetRefProps } from '../../components/BottomSheet';
 import { WorkoutType } from '../../models/WorkoutType';
 import ExerciseInWorkoutItem from '../../components/ExerciseInWorkoutItem';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
-import { useFocusEffect } from '@react-navigation/native';
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import { FlashList } from '@shopify/flash-list';
 import { useRealm } from '../../contexts/RealmContext';
 
@@ -19,7 +19,7 @@ const Historic: React.FC = () => {
 
     const getHistoric = () => {
         if (realm) {
-            const historic = realm.objects('Historic').toJSON() as HistoricType[]
+            const historic = realm.objects('Historic').sorted('date', true).toJSON() as HistoricType[]
             setHistoric(historic)
         }
     }
