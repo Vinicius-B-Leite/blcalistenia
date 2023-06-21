@@ -38,8 +38,7 @@
     "react-redux": "^8.0.5",
     "realm": "^11.3.2",
     "scheduler": "^0.23.0",
-    "styled-components": "^5.3.6",
-    "use-context-selector": "^1.4.1"
+    "styled-components": "^5.3.6"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",
