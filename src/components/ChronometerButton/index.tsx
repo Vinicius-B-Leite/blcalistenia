@@ -7,11 +7,12 @@ import BackgroundService from 'react-native-background-actions'
 import { resetTimer, setWorkout, updateTimer } from '../../features/Workout/workoutSlicer';
 import { options, sleep } from '../../utils/backgroundActionsConfig';
 import { ExercisesInWorkoutType } from '../../models/ExercisesInWorkoutType';
-import { useRealm } from '../../contexts/RealmContext';
 import { WorkoutType } from '../../models/WorkoutType';
 import { HistoricType } from '../../models/HistoricType';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
 import { RootStackParamList } from '../../routes/Models';
+import { useRealm } from '../../services/realm';
+import { useUser } from '@realm/react';
 
 
 type Nav = NavigationProp<RootStackParamList>
@@ -20,7 +21,8 @@ const ChronometerButton: React.FC = ({ }) => {
     const timer = useSelector((state: RootState) => state.workout.timer)
     const dispatch = useDispatch()
     const workout = useSelector((state: RootState) => state.workout.workout)
-    const { realm } = useRealm()
+    const realm  = useRealm()
+    const user = useUser()
     const navigation = useNavigation<Nav>()
 
     const everyIntensiveTask = async () => {
@@ -40,7 +42,8 @@ const ChronometerButton: React.FC = ({ }) => {
                     workout: JSON.stringify(workout),
                     date: new Date(),
                     timerInSeconds: timer as number,
-                    _id: realm.objects('Historic').length + 1
+                    _id: realm.objects('Historic').length + 1,
+                    user_id: user.id
                 })
                 dispatch(resetTimer())
                 dispatch(setWorkout({} as WorkoutType))

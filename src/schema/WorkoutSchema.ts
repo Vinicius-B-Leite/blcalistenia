@@ -9,11 +9,7 @@ export const WorkoutSchema = {
         banner: 'string',
         exercises: 'ExerciseWorkout[]',//id exerciese[]
         anotation: 'string?',
-        // assignee: {
-        //     type: 'linkingObjects',
-        //     objectType: 'Historic',
-        //     property: 'workout'
-        //   }
+        user_id: 'string'
     },
     primaryKey: '_id',
 };

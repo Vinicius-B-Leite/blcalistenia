@@ -1,5 +1,4 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
-import { getRealm } from '../services/realm';
 
 
 type RealmContextType = {
@@ -16,7 +15,7 @@ const RealmProvider: React.FC<Props> = ({ children }) => {
     const [realm, setRealm] = useState<Realm | undefined>(undefined)
 
     useEffect(() => {
-        getRealm().then((r) => setRealm(r))
+        // getRealm().then((r) => setRealm(r))
     }, [])
 
 

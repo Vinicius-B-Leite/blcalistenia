@@ -1,3 +1,4 @@
+import Realm from 'realm'
 import React, { useContext, useState } from 'react';
 import * as S from './styles'
 import Feather from 'react-native-vector-icons/Feather'
@@ -9,23 +10,61 @@ import { pickeImage } from '../../utils/pickImage';
 import FastImage from 'react-native-fast-image';
 import ThemeSelect from '../../components/ThemeSelect';
 import ChangeUsername from '../../components/ChangeUsername';
-
+import { GoogleSignin, GoogleSigninButton, statusCodes, } from "@react-native-google-signin/google-signin";
+import { useApp, useUser } from '@realm/react';
 
 
 type NavigationProps = NativeStackScreenProps<RootStackParamList, 'Profile'>
+GoogleSignin.configure({
+    webClientId: "80963280941-oncq7jrtuj5b4slm20okbhtonvvc211t.apps.googleusercontent.com",
+});
+
 
 const Profile: React.FC<NavigationProps> = ({ navigation }) => {
 
     const theme = useTheme()
-    const { user, changePhoto } = useContext(AuthContext)
+    const { changePhoto } = useContext(AuthContext)
     const [showThemeSelect, setShowThemeSelect] = useState(false)
     const [showChangeUsername, setShowChangeUsername] = useState(false)
+    const app = useApp()
+    const user = useUser()
 
     const handlePickImage = async () => {
         const image = await pickeImage()
         if (image.assets && image.assets[0].uri) {
             changePhoto(image.assets[0].uri)
         }
+    }
+
+    const getGoogleCredentials = async () => {
+        try {
+
+            await GoogleSignin.hasPlayServices({ showPlayServicesUpdateDialog: true });
+            const { idToken } = await GoogleSignin.signIn();
+
+            if (!idToken) {
+                return
+            }
+            const credential = Realm.Credentials.jwt(idToken)
+            return credential
+        } catch (error) {
+            throw error
+        }
+    }
+
+    const singUp = async () => {
+        try {
+            const googleCredentials = await getGoogleCredentials()
+            if (googleCredentials) {
+                await app.currentUser?.linkCredentials(googleCredentials)
+            }
+        } catch (error) {
+            console.log('SingUp with google error => ' + error)
+        }
+    }
+
+    const logout = async () => {
+        await app.currentUser?.logOut()
     }
 
     return (
@@ -36,12 +75,12 @@ const Profile: React.FC<NavigationProps> = ({ navigation }) => {
             <S.ButtonChangeImage onPressIn={handlePickImage}>
                 <S.Avatar
                     source={{
-                        uri: user.photoURI,
+                        uri: user.profile.picture as string || 'https://pbs.twimg.com/media/FOq9YuBXsBgTIQM.jpg',
                     }}
                     resizeMode={FastImage.resizeMode.cover}
                 />
             </S.ButtonChangeImage>
-            <S.Username>{user.username}</S.Username>
+            <S.Username>{user.profile.name || 'Desconhecido'}</S.Username>
 
             <S.OptionContainer onPressIn={() => setShowChangeUsername(true)}>
                 <S.Left>
@@ -55,14 +94,25 @@ const Profile: React.FC<NavigationProps> = ({ navigation }) => {
                 </S.Left>
                 <S.OptionTitle>Tema</S.OptionTitle>
             </S.OptionContainer>
-            <S.OptionContainer>
+
+
+
+            <S.OptionContainer onPress={singUp}>
                 <S.Left>
                     <Feather name='upload-cloud' size={theme.sizes.icons.md} color={theme.colors.contrast} />
                 </S.Left>
                 <S.OptionTitle>Sincronizar na nuvem</S.OptionTitle>
             </S.OptionContainer>
 
-            <ChangeUsername  visible={showChangeUsername} onRequestClose={() => setShowChangeUsername(false)} animationType='slide' transparent/>
+
+            <S.OptionContainer onPress={logout}>
+                <S.Left>
+                    <Feather name='log-out' size={theme.sizes.icons.md} color={theme.colors.contrast} />
+                </S.Left>
+                <S.OptionTitle>Sair da conta</S.OptionTitle>
+            </S.OptionContainer> 
+
+            <ChangeUsername visible={showChangeUsername} onRequestClose={() => setShowChangeUsername(false)} animationType='slide' transparent />
             <ThemeSelect transparent animationType='fade' visible={showThemeSelect} onRequestClose={() => setShowThemeSelect(false)} />
         </S.Container>
     )

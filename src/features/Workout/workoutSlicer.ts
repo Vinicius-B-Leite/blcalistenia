@@ -1,3 +1,4 @@
+import { Realm } from "@realm/react"
 import { createSlice, PayloadAction } from "@reduxjs/toolkit"
 import { ExercisesInWorkoutType } from "../../models/ExercisesInWorkoutType"
 import { SerieType } from "../../models/SerieType"
@@ -12,7 +13,7 @@ type WorkoutState = {
 const initalState: WorkoutState = {
     timer: null,
     isWorkingout: false,
-    workout: { _id: '', banner: '', exercises: [], title: '', anotation: '' } 
+    workout: { _id: '', banner: '', exercises: [], title: '', anotation: '', user_id: '' }
 }
 
 export const workoutSlice = createSlice({

@@ -5,8 +5,8 @@ import uuid from 'react-native-uuid'
 export const suggests: SuggestWorkoutType[] = [
     {
         level: 'begginer',
-        id: String(uuid.v4()),
-        workout: {
+        _id: String(uuid.v4()),
+        workout: JSON.stringify({
             _id: String(uuid.v4()),
             banner: 'https://previous-assets.menshealth.pt/files/2017/09/iStock-1094479308.jpg',
             title: 'Flexão',
@@ -72,12 +72,12 @@ export const suggests: SuggestWorkoutType[] = [
                     ]
                 },
             ]
-        }
+        })
     },
     {
         level: 'begginer',
-        id: String(uuid.v4()),
-        workout: {
+        _id: String(uuid.v4()),
+        workout: JSON.stringify({
             _id: String(uuid.v4()),
             banner: 'https://www.blog.bioritmo.com.br/wp-content/uploads/2021/10/shutterstock_753521752-1.jpg',
             title: 'Barra fixa',
@@ -143,12 +143,12 @@ export const suggests: SuggestWorkoutType[] = [
                     ]
                 },
             ]
-        }
+        })
     },
     {
         level: 'intermate',
-        id: String(uuid.v4()),
-        workout: {
+        _id: String(uuid.v4()),
+        workout: JSON.stringify({
             _id: String(uuid.v4()),
             banner: 'https://img.freepik.com/premium-photo/man-doing-handstand-push-ups-bars_126745-1514.jpg?w=2000',
             title: 'Handstand pushup',
@@ -234,12 +234,12 @@ export const suggests: SuggestWorkoutType[] = [
                     ]
                 },
             ]
-        }
+        })
     },
     {
         level: 'intermate',
-        id: String(uuid.v4()),
-        workout: {
+        _id: String(uuid.v4()),
+        workout: JSON.stringify({
             _id: String(uuid.v4()),
             banner: 'https://media.istockphoto.com/id/1196816311/pt/foto/athlete-doing-a-typewriter-archer-pull-up.jpg?s=170667a&w=0&k=20&c=ssP4GKcTN4O4qyDgnZX6P3S4BkZCiE23UocNqlWjw8g=',
             title: 'Barra arqueira',
@@ -325,6 +325,6 @@ export const suggests: SuggestWorkoutType[] = [
                     ]
                 },
             ]
-        }
+        })
     },
 ]

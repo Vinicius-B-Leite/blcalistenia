@@ -1,6 +1,7 @@
+import Realm from 'realm';
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { UserType } from '../models/UserType';
-import { useRealm } from './RealmContext';
+import { useApp, useUser as useRealmUser } from '@realm/react';
 
 
 
@@ -16,32 +17,15 @@ export const AuthContext = createContext({} as AuthContextType)
 type Props = { children: React.ReactNode }
 
 const AuthProvider: React.FC<Props> = ({ children }) => {
-    const [user, setUser] = useState<UserType>({ username: 'Desconhecido', photoURI: 'https://pbs.twimg.com/media/FOq9YuBXsBgTIQM.jpg' })
-    const { realm } = useRealm()
-    useEffect(() => {
-        getUser()
-    }, [realm])
+    const [user, setUser] = useState<UserType>({ _id: '', username: 'Desconhecido', photoURI: 'https://pbs.twimg.com/media/FOq9YuBXsBgTIQM.jpg' })
+    const app = useApp()
+    const userRealm = useRealmUser()
+    const realm: Realm | undefined = undefined
 
-    const getUser = () => {
-        if (realm) {
+   
 
 
-            const userRealm = realm.objects('User')[0]
 
-            if (typeof userRealm === 'undefined') {
-                realm.write(() => {
-                    realm.create<UserType>('User', {
-                        username: 'Desconhecido',
-                        photoURI: 'https://pbs.twimg.com/media/FOq9YuBXsBgTIQM.jpg'
-                    })
-                })
-            } else {
-                setUser(userRealm.toJSON() as UserType)
-            }
-        }
-
-
-    }
     const changePhoto = (uri: string) => {
         if (uri.length > 0) {
             setUser(old => ({ ...old, photoURI: uri }))
@@ -52,14 +36,14 @@ const AuthProvider: React.FC<Props> = ({ children }) => {
     const updateUserCache = (newUser: UserType) => {
         if (realm) {
 
-            realm.write(() => {
-                realm.create<UserType>(
-                    'User',
-                    {
-                        ...newUser
-                    },
-                    Realm.UpdateMode.Modified)
-            })
+            // realm.write(() => {
+            //     realm.create<UserType>(
+            //         'User',
+            //         {
+            //             ...newUser
+            //         },
+            //         Realm.UpdateMode.Modified)
+            // })
         }
     }
 
@@ -79,5 +63,5 @@ const AuthProvider: React.FC<Props> = ({ children }) => {
 }
 
 
-export const useUser = () => useContext(AuthContext )
+export const useUser = () => useContext(AuthContext)
 export default AuthProvider;

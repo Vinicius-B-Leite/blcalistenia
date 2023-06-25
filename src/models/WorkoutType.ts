@@ -7,5 +7,6 @@ export type WorkoutType = {
     banner: string,
     exercises: ExercisesInWorkoutType[],
     anotation?: string
+    user_id: string
 }
 

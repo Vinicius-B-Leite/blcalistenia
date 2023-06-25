@@ -1,7 +1,8 @@
 export const SuggestWorkout: Realm.ObjectSchema = {
     name: 'SuggestWorkout',
+    primaryKey: '_id',
     properties:{
-        id: {
+        _id: {
             type: 'string',
             indexed: true
         },

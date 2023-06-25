@@ -11,10 +11,12 @@ import BottomSheet from '../../components/BottomSheet';
 import CreateExercise from '../../components/CreateExercise';
 import FilterExercise from '../../components/FilterExercise';
 import { ExerciseType } from '../../models/ExerciseType';
-import { useRealm } from '../../contexts/RealmContext';
 import { initialsExercises } from '../../utils/initialsExercises';
 import { FlashList } from '@shopify/flash-list';
-
+import { WorkoutType } from '../../models/WorkoutType';
+import { useFocusEffect } from '@react-navigation/native';
+import { useQuery, useRealm } from '../../services/realm';
+import *  as uuid from 'react-native-uuid'
 
 
 type Navigation = StackScreenProps<RootStackParamList, 'AddExercise'>
@@ -22,11 +24,10 @@ export type FilterType = { category: string, muscles: string }
 
 const AddExercise: React.FC<Navigation> = ({ navigation }) => {
     const theme = useTheme()
-    const { realm } = useRealm()
+    const realm = useRealm()
 
     const bottomSheetRef = useRef<BottomSheetRefProps>(null)
 
-    const [exercisList, setExerciseList] = useState<ExerciseType[]>([])
     const [filterExerciseVisible, setFilterExercciseVisible] = useState(false)
     const [filters, setFilters] = useState<FilterType>({ category: 'empurrar', muscles: 'Peitoral' })
 
@@ -37,32 +38,18 @@ const AddExercise: React.FC<Navigation> = ({ navigation }) => {
         return exercises?.filter(e => e.name.toLocaleLowerCase().includes(searchExerciseInput?.toLocaleLowerCase()))
     }, [searchExerciseInput])
 
-    useEffect(() => {
-        getExercises()
-    }, [])
-
-    const getExercises = useCallback((text?: string) => {
-        if (realm) {
-            const exercisesListener = realm.objects('Exercise')
-            exercisesListener.addListener((collection, changes) => {
-                setExerciseList(collection.toJSON() as ExerciseType[])
-            })
-        }
-    }, [realm])
-
-    const filterExercises = useCallback((category: string, muscle: string) => {
-        if (realm) {
-            const exerciesesFiltereds = realm.objects('Exercise')
-                .filtered(`categories CONTAINS  '${category}'`)
-                .filtered(`muscles CONTAINS '${muscle}'`)
-                .toJSON() as ExerciseType[]
-
-            setExerciseList([...exerciesesFiltereds])
-        }
-
-    }, [realm])
+    const [exercisList, setExerciseList] = useState([...useQuery('Exercise').toJSON(), ...initialsExercises] as ExerciseType[])
 
 
+
+    const filterExercises = (category: string, muscle: string) => {
+        const exerciesesFiltereds = realm.objects('Exercise')
+            .filtered(`categories CONTAINS  '${category}'`)
+            .filtered(`muscles CONTAINS '${muscle}'`)
+            .toJSON() as ExerciseType[]
+        console.log("🚀 ~ file: index.tsx:50 ~ filterExercises ~ exerciesesFiltereds:", exerciesesFiltereds)
+        setExerciseList([...exerciesesFiltereds])
+    }
 
     return (
         <S.Container>

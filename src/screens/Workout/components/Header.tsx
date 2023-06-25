@@ -10,11 +10,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../../store';
 import BackgroundService from 'react-native-background-actions'
 import { resetTimer, setWorkout } from '../../../features/Workout/workoutSlicer';
-import { useRealm } from '../../../contexts/RealmContext';
+// import { useRealm } from '../../../contexts/RealmContext';
 import { WorkoutType } from '../../../models/WorkoutType';
 import { addWorkout } from '../../../features/WorkoutList/workoutListSlicer';
 import { ExerciseType } from '../../../models/ExerciseType';
 import { ExercisesInWorkoutType } from '../../../models/ExercisesInWorkoutType';
+import { useRealm } from '../../../services/realm';
+import { useUser } from '@realm/react';
 
 
 type Nav = NavigationProp<RootStackParamList, 'Workout'>
@@ -26,7 +28,7 @@ const Header: React.FC = () => {
     const navigation = useNavigation<Nav>()
     const isWorkingout = useSelector((state: RootState) => state.workout.isWorkingout)
     const dispatch = useDispatch()
-    const { realm } = useRealm()
+    const realm = useRealm()
 
     const workout = useSelector((state: RootState) => state.workout.workout)
 
@@ -63,11 +65,13 @@ const Header: React.FC = () => {
                     anotation: workout.anotation,
                     exercises: workout.exercises,
                     title: workout.title,
-                    banner: ''
+                    banner: '',
+                    user_id: workout.user_id
                 },
                 Realm.UpdateMode.Modified)
+                
             dispatch(addWorkout(newWorkout.toJSON() as WorkoutType))
-            navigation.navigate('Home')
+            navigation.navigate('Home') 
         })
 
     }

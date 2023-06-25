@@ -1,38 +1,19 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import * as S from './styles'
 import { HistoricType } from '../../models/HistoricType';
 import HistoricItem from '../../components/HistoricItem';
 import BottomSheet, { BottomSheetRefProps } from '../../components/BottomSheet';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
-import { NavigationProp, useFocusEffect, useNavigation } from '@react-navigation/native';
 import { FlashList } from '@shopify/flash-list';
-import { useRealm } from '../../contexts/RealmContext';
-import { TabParamList } from '../../routes/Models';
 import { HistoricBS } from './components/HistoricBS';
+import { useQuery } from '../../services/realm';
 
 
-type Nav = NavigationProp<TabParamList, 'Historic'>
 
 const Historic: React.FC = () => {
-    const [historic, setHistoric] = useState<HistoricType[]>([])
     const bottomsheetRef = useRef<BottomSheetRefProps>(null)
     const [bottomSheetItem, setBottomSheetItem] = useState<HistoricType | null>(null)
-    const { realm } = useRealm()
-    const navigation = useNavigation<Nav>()
-
-
-    const getHistoric = () => {
-        if (realm) {
-            const historic = realm.objects('Historic').sorted('date', true).toJSON() as HistoricType[]
-            setHistoric(historic)
-        }
-    }
-    useFocusEffect(useCallback(() => {
-        getHistoric()
-    }, [realm]))
-
-
-    
+    const historics = useQuery('Historic').toJSON() as HistoricType[]
 
 
     return (
@@ -47,9 +28,9 @@ const Historic: React.FC = () => {
                 <S.HistoricListContainer>
                     <FlashList
                         nestedScrollEnabled
-                        estimatedItemSize={historic.length || 10}
+                        estimatedItemSize={historics.length || 10}
                         keyExtractor={item => String(item._id)}
-                        data={historic}
+                        data={historics}
                         renderItem={({ item }) => <HistoricItem
                             item={item}
                             onClick={(bsItem) => {

@@ -2,7 +2,7 @@ import { Action, createSlice, PayloadAction } from "@reduxjs/toolkit"
 import { ExercisesInWorkoutType } from "../../models/ExercisesInWorkoutType"
 import { SerieType } from "../../models/SerieType"
 import { WorkoutType } from "../../models/WorkoutType"
-import { getRealm } from "../../services/realm"
+// import { getRealm } from "../../services/realm"
 import { ExerciseType } from "../../models/ExerciseType"
 
 type WorkoutListState = {
@@ -25,21 +25,21 @@ export const WorkoutListSlicer = createSlice({
             state.workouts = action.payload
         },
         filterByMuscle: (state, action: PayloadAction<{ muscle: string }>) => {
-            getRealm().then(realm => {
-                const workouts = realm.objects<WorkoutType[]>('Workout').toJSON() as WorkoutType[]
-                const exercises = realm?.objects<ExerciseType[]>('Exercise').toJSON() as ExerciseType[]
-                const exercisesHaveMuscleSelected = exercises.filter(e => e.muscles.includes(action.payload.muscle))
-                let workoutsWithMuscleSelected: WorkoutType[] = []
+            // getRealm().then(realm => {
+            //     const workouts = realm.objects<WorkoutType[]>('Workout').toJSON() as WorkoutType[]
+            //     const exercises = realm?.objects<ExerciseType[]>('Exercise').toJSON() as ExerciseType[]
+            //     const exercisesHaveMuscleSelected = exercises.filter(e => e.muscles.includes(action.payload.muscle))
+            //     let workoutsWithMuscleSelected: WorkoutType[] = []
 
-                workouts.forEach(w => {
-                    w.exercises.forEach(e => {
-                        const index = exercisesHaveMuscleSelected.findIndex(v => v.name == e.exercise_id)
-                        if (index > -1) workoutsWithMuscleSelected.push(w)
-                    })
-                })
+            //     workouts.forEach(w => {
+            //         w.exercises.forEach(e => {
+            //             const index = exercisesHaveMuscleSelected.findIndex(v => v.name == e.exercise_id)
+            //             if (index > -1) workoutsWithMuscleSelected.push(w)
+            //         })
+            //     })
 
-                state.workouts = workoutsWithMuscleSelected
-            })
+            //     state.workouts = workoutsWithMuscleSelected
+            // })
         },
         addWorkout: (state, action: PayloadAction<WorkoutType>) => {
             const indexOfWorkout = state.workouts.findIndex(val => val._id === action.payload._id)

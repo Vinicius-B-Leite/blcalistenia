@@ -5,22 +5,19 @@ import { muscles } from '../../../utils/muscles';
 import Muscle from '../../../components/Muscle';
 import { WorkoutType } from '../../../models/WorkoutType';
 import { ExerciseType } from '../../../models/ExerciseType';
-import { useRealm } from '../../../contexts/RealmContext';
 import { useDispatch } from 'react-redux';
 import { setWorkoutList } from '../../../features/WorkoutList/workoutListSlicer';
+import { useQuery } from '../../../services/realm';
 
 
 const FilterMuscle: React.FC = () => {
     const [muscleFilterSelected, setMuscleFilterSelected] = useState('')
-    const { realm } = useRealm()
+    const workouts = useQuery('Workout').toJSON() as WorkoutType[]
+    const exercises = useQuery('Exercise').toJSON() as ExerciseType[]
     const dispatch = useDispatch()
 
     const filterWorkoutsByMuscle = (muscle: string) => {
-        if (!realm) return
         setMuscleFilterSelected(muscle)
-
-        let workouts = realm.objects('Workout').toJSON() as WorkoutType[]
-        const exercises = realm?.objects('Exercise').toJSON() as ExerciseType[]
 
         const exercisesHaveMuscleSelected = exercises.filter(e => e.muscles.includes(muscle))
 

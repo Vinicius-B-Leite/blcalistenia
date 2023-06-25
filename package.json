@@ -12,10 +12,12 @@
   },
   "dependencies": {
     "@react-native-async-storage/async-storage": "^1.17.11",
+    "@react-native-google-signin/google-signin": "^10.0.1",
     "@react-navigation/material-top-tabs": "^6.5.2",
     "@react-navigation/native": "^6.1.2",
     "@react-navigation/native-stack": "^6.9.8",
     "@react-navigation/stack": "^6.3.11",
+    "@realm/react": "^0.5.1",
     "@reduxjs/toolkit": "^1.9.3",
     "@shopify/flash-list": "^1.4.2",
     "lodash": "^4.17.21",
@@ -36,7 +38,7 @@
     "react-native-uuid": "^2.0.1",
     "react-native-vector-icons": "^9.2.0",
     "react-redux": "^8.0.5",
-    "realm": "^11.3.2",
+    "realm": "^11.10.1",
     "scheduler": "^0.23.0",
     "styled-components": "^5.3.6"
   },

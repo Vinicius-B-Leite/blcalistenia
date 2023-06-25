@@ -1,20 +1,13 @@
-import Realm from "realm";
+import { createRealmContext } from "@realm/react";
+import { WorkoutSchema } from "../schema/WorkoutSchema";
 import { ExerciseSchema } from "../schema/ExerciseSchema";
-import { ExerciseWorkout } from "../schema/ExerciseWorkoutSchema";
-import { HistoricSchema } from "../schema/HistoricSchema";
 import { SerieSchema } from "../schema/SerieSchema";
+import { ExerciseWorkout } from "../schema/ExerciseWorkoutSchema";
 import { SuggestWorkout } from "../schema/SuggestWorkoutSchema";
-import { UserSchema } from "../schema/UserSchema";
-import { WorkoutSchema } from '../schema/WorkoutSchema'
+import { HistoricSchema } from "../schema/HistoricSchema";
 
-export async function getRealm(): Promise<Realm> {
-
-
-    const realm = await Realm.open({
-        schema: [WorkoutSchema, ExerciseSchema, SerieSchema, ExerciseWorkout, HistoricSchema, UserSchema, SuggestWorkout],
-        schemaVersion: 2,
-        deleteRealmIfMigrationNeeded: true,
-
-    })
-    return realm
-} 
+const realmContext = createRealmContext({
+    schema: [HistoricSchema, SuggestWorkout, WorkoutSchema, ExerciseSchema, SerieSchema, ExerciseWorkout],
+    
+});
+export const { RealmProvider, useRealm, useObject, useQuery } = realmContext;

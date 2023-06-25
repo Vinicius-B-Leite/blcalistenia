@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useId, useState } from 'react';
 import { useTheme } from 'styled-components/native';
 import { ExerciseType } from '../../models/ExerciseType';
 import { category } from '../../utils/category';
 import { muscles } from '../../utils/muscles';
 import * as S from './styles'
-import { useRealm } from '../../contexts/RealmContext';
+import { useRealm } from '../../services/realm';
+import { useUser } from '@realm/react';
 
 
 
@@ -13,20 +14,22 @@ const CreateExercise: React.FC = () => {
     const [categoriesSelected, setCategoriesSelected] = useState<string[]>([])
     const [musclesSelected, setMusclesSelected] = useState<string[]>([])
     const [exerciseNameInput, setExerciseNameInput] = useState('')
+    const exerciseId = useId()
 
-    const { realm } = useRealm()
+    const realm = useRealm()
+    const user = useUser()
 
-
-    const createExercise = ({ name, muscles, categories }: ExerciseType) => {
-        if (realm) {
-            realm.write(() => {
-                realm.create<ExerciseType>('Exercise', {
-                    name,
-                    muscles,
-                    categories
-                })
+    const createExercise = ({ name, muscles, categories, _id }: ExerciseType) => {
+        realm.write(() => {
+            realm.create<ExerciseType>('Exercise', {
+                name,
+                muscles,
+                categories,
+                user_id: user.id,
+                _id
             })
-        }
+        })
+
     }
 
 
@@ -55,7 +58,8 @@ const CreateExercise: React.FC = () => {
             createExercise({
                 name: exerciseNameInput,
                 muscles: musclesSelected,
-                categories: categoriesSelected
+                categories: categoriesSelected,
+                _id: exerciseId
             })
             setCategoriesSelected([])
             setMusclesSelected([])

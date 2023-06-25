@@ -3,8 +3,9 @@ export const options = {
     taskTitle: 'Volte ao treino',
     taskDesc: 'Tempo: ',
     taskIcon: {
-        name: 'ic_launcher',
+        name: '/drawable/ic_stat_name',
         type: 'mipmap',
+        package: 'com.blcalistenia'
     },
     color: '#FF8A00',
     linkingURI: 'blcalistenia://home/WorkoutSeason', // See Deep Linking for more info
