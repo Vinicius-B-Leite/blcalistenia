@@ -4,7 +4,7 @@ import Header from './components/Header';
 import { useTheme } from 'styled-components/native';
 import { StackScreenProps } from '@react-navigation/stack';
 import { RootStackParamList } from '../../routes/Models';
-import { RootState } from '../../store';
+import { RootState } from '../../features/store';
 import { useDispatch, useSelector } from 'react-redux'
 import { setWorkout } from '../../features/Workout/workoutSlicer'
 import WorkoutList from './components/ExerciseList'

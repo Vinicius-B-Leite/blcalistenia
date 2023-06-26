@@ -6,9 +6,9 @@ import FastImage from 'react-native-fast-image';
 import { WorkoutType } from '../../models/WorkoutType';
 import { RootStackParamList } from '../../routes/Models';
 import * as S from './styles'
-import { useRealm } from '../../contexts/RealmContext';
 import { useDispatch } from 'react-redux'
 import { removeWorkout } from '../../features/WorkoutList/workoutListSlicer'
+import { useRealm } from '../../services/realm';
 
 
 
@@ -21,11 +21,11 @@ type Navigation = StackNavigationProp<RootStackParamList, 'Home'>
 
 const Workout: React.FC<Props> = ({ data }) => {
     const navigation = useNavigation<Navigation>()
-    const { realm } = useRealm()
+    const realm = useRealm()
     const dispatch = useDispatch()
 
     const deleteWorkout = (workoutID: string) => {
-        realm && realm.write(() => {
+        realm.write(() => {
             realm.delete(realm.objectForPrimaryKey('Workout', workoutID))
             dispatch(removeWorkout(data))
         })

@@ -3,7 +3,7 @@ import { View } from 'react-native';
 import * as S from '../styles'
 import { useTheme } from 'styled-components/native';
 import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '../../../store';
+import { RootState } from '../../../features/store';
 import { setWorkoutList } from '../../../features/WorkoutList/workoutListSlicer';
 import { WorkoutType } from '../../../models/WorkoutType';
 import { muscles } from '../../../utils/muscles';

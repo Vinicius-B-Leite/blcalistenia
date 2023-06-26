@@ -9,7 +9,7 @@ import { RootStackParamList } from '../../routes/Models';
 import { SerieType } from '../../models/SerieType';
 import { useDispatch, useSelector } from 'react-redux'
 import { removeSerie, updateSerie } from '../../features/Workout/workoutSlicer'
-import { RootState } from '../../store';
+import { RootState } from '../../features/store';
 
 
 type NavigationType = StackNavigationProp<RootStackParamList, 'Workout'>

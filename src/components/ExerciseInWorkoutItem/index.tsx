@@ -7,7 +7,7 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import Serie from '../Serie';
 import { useDispatch, useSelector } from 'react-redux'
 import { removeExercise, addSerie } from '../../features/Workout/workoutSlicer'
-import { RootState } from '../../store';
+import { RootState } from '../../features/store';
 import { FlashList } from '@shopify/flash-list';
 
 type Props = {

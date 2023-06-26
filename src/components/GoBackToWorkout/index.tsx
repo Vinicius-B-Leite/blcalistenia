@@ -4,7 +4,7 @@ import { useTheme } from 'styled-components/native';
 import * as S from './styles'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import { useSelector } from 'react-redux';
-import { RootState } from '../../store';
+import { RootState } from '../../features/store';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
 import { TabParamList } from '../../routes/Models';
 

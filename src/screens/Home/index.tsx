@@ -15,11 +15,10 @@ import { RootStackParamList } from '../../routes/Models';
 import { StackNavigationProp } from '@react-navigation/stack';
 import ListEmptyComponent from '../../components/ListEmptyComponent';
 import { SuggestWorkoutType, WorkoutLevel } from '../../models/SuggestsWorkoutType';
-// import { useRealm } from '../../contexts/RealmContext';
 import { WorkoutType } from '../../models/WorkoutType';
 import { ExerciseType } from '../../models/ExerciseType';
 import { useSelector, useDispatch } from 'react-redux'
-import { RootState } from '../../store';
+import { RootState } from '../../features/store';
 import { setWorkoutList } from '../../features/WorkoutList/workoutListSlicer'
 import { suggests } from '../../utils/suggestsWorkout';
 import GoBackToWorkout from '../../components/GoBackToWorkout';

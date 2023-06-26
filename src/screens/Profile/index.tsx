@@ -3,7 +3,6 @@ import React, { useContext, useState } from 'react';
 import * as S from './styles'
 import Feather from 'react-native-vector-icons/Feather'
 import { useTheme } from 'styled-components/native';
-import { AuthContext } from '../../contexts/AuthContext';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../../routes/Models';
 import { pickeImage } from '../../utils/pickImage';
@@ -12,6 +11,7 @@ import ThemeSelect from '../../components/ThemeSelect';
 import ChangeUsername from '../../components/ChangeUsername';
 import { GoogleSignin, GoogleSigninButton, statusCodes, } from "@react-native-google-signin/google-signin";
 import { useApp, useUser } from '@realm/react';
+import { getGoogleCredentials } from '../../utils/getGoogleCredentials';
 
 
 type NavigationProps = NativeStackScreenProps<RootStackParamList, 'Profile'>
@@ -23,7 +23,6 @@ GoogleSignin.configure({
 const Profile: React.FC<NavigationProps> = ({ navigation }) => {
 
     const theme = useTheme()
-    const { changePhoto } = useContext(AuthContext)
     const [showThemeSelect, setShowThemeSelect] = useState(false)
     const [showChangeUsername, setShowChangeUsername] = useState(false)
     const app = useApp()
@@ -32,25 +31,11 @@ const Profile: React.FC<NavigationProps> = ({ navigation }) => {
     const handlePickImage = async () => {
         const image = await pickeImage()
         if (image.assets && image.assets[0].uri) {
-            changePhoto(image.assets[0].uri)
+            user.profile.picture = image.assets[0].uri
         }
     }
 
-    const getGoogleCredentials = async () => {
-        try {
 
-            await GoogleSignin.hasPlayServices({ showPlayServicesUpdateDialog: true });
-            const { idToken } = await GoogleSignin.signIn();
-
-            if (!idToken) {
-                return
-            }
-            const credential = Realm.Credentials.jwt(idToken)
-            return credential
-        } catch (error) {
-            throw error
-        }
-    }
 
     const singUp = async () => {
         try {
@@ -64,7 +49,10 @@ const Profile: React.FC<NavigationProps> = ({ navigation }) => {
     }
 
     const logout = async () => {
-        await app.currentUser?.logOut()
+        await Promise.all([
+            app.currentUser?.logOut(),
+            GoogleSignin.signOut()
+        ])
     }
 
     return (
@@ -110,7 +98,7 @@ const Profile: React.FC<NavigationProps> = ({ navigation }) => {
                     <Feather name='log-out' size={theme.sizes.icons.md} color={theme.colors.contrast} />
                 </S.Left>
                 <S.OptionTitle>Sair da conta</S.OptionTitle>
-            </S.OptionContainer> 
+            </S.OptionContainer>
 
             <ChangeUsername visible={showChangeUsername} onRequestClose={() => setShowChangeUsername(false)} animationType='slide' transparent />
             <ThemeSelect transparent animationType='fade' visible={showThemeSelect} onRequestClose={() => setShowThemeSelect(false)} />

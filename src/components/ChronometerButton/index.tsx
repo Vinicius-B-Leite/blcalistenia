@@ -2,7 +2,7 @@ import React from 'react';
 import * as S from './styles'
 import { Alert } from 'react-native'
 import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '../../store';
+import { RootState } from '../../features/store';
 import BackgroundService from 'react-native-background-actions'
 import { resetTimer, setWorkout, updateTimer } from '../../features/Workout/workoutSlicer';
 import { options, sleep } from '../../utils/backgroundActionsConfig';

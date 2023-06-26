@@ -7,10 +7,9 @@ import { useTheme } from 'styled-components/native';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
 import { RootStackParamList } from '../../../routes/Models';
 import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '../../../store';
+import { RootState } from '../../../features/store';
 import BackgroundService from 'react-native-background-actions'
 import { resetTimer, setWorkout } from '../../../features/Workout/workoutSlicer';
-// import { useRealm } from '../../../contexts/RealmContext';
 import { WorkoutType } from '../../../models/WorkoutType';
 import { addWorkout } from '../../../features/WorkoutList/workoutListSlicer';
 import { ExerciseType } from '../../../models/ExerciseType';

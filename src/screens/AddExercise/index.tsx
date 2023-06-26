@@ -47,7 +47,6 @@ const AddExercise: React.FC<Navigation> = ({ navigation }) => {
             .filtered(`categories CONTAINS  '${category}'`)
             .filtered(`muscles CONTAINS '${muscle}'`)
             .toJSON() as ExerciseType[]
-        console.log("🚀 ~ file: index.tsx:50 ~ filterExercises ~ exerciesesFiltereds:", exerciesesFiltereds)
         setExerciseList([...exerciesesFiltereds])
     }
 

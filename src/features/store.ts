@@ -1,6 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit'
-import { WorkoutReducer } from './features/Workout/workoutSlicer'
-import { workoutListReducer } from './features/WorkoutList/workoutListSlicer'
+import { WorkoutReducer } from './Workout/workoutSlicer'
+import { workoutListReducer } from './WorkoutList/workoutListSlicer'
 
 export const store = configureStore({
     reducer: {

@@ -4,7 +4,7 @@ import { View } from 'react-native';
 import ExerciseInWorkoutItem from '../../../components/ExerciseInWorkoutItem';
 import * as S from './styles'
 import { useSelector } from 'react-redux';
-import { RootState } from '../../../store';
+import { RootState } from '../../../features/store';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
 import { RootStackParamList } from '../../../routes/Models';
 

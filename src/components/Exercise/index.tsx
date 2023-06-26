@@ -8,7 +8,7 @@ import * as S from './styles'
 import { FlatList } from 'react-native';
 import { useDispatch } from 'react-redux'
 import { addExercise } from '../../features/Workout/workoutSlicer'
-import { useRealm } from '../../contexts/RealmContext';
+import { useRealm } from '../../services/realm';
 
 
 type Prosp = { item: ExerciseType }
@@ -18,20 +18,18 @@ type Navigation = StackNavigationProp<RootStackParamList, 'AddExercise'>
 const Exercise: React.FC<Prosp> = ({ item }) => {
     const navigation = useNavigation<Navigation>()
     const dispatch = useDispatch()
-    const { realm } = useRealm()
+    const realm = useRealm()
 
-    const deleteExercise = useCallback((exerciseName: String) => {
-        if (realm) {
-            realm.write(() => {
-                realm.delete(realm.objectForPrimaryKey('Exercise', exerciseName as string))
-            })
-        }
-    }, [realm])
+    const deleteExercise = (exerciseName: String) => {
+        realm.write(() => {
+            realm.delete(realm.objectForPrimaryKey('Exercise', exerciseName as string))
+        })
+    }
 
-    const handleAddExercise = useCallback(() => {
+    const handleAddExercise = () => {
         dispatch(addExercise({ exercise_id: item.name, series: [{ rep: 0, rest: 0, serie: 1, done: false }] }))
         navigation.goBack()
-    }, [])
+    }
 
     const handleDelete = () => {
         Alert.alert(
