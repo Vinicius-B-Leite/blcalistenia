@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { View } from 'react-native';
 import * as S from '../styles'
 import { muscles } from '../../../utils/muscles';
 import Muscle from '../../../components/Muscle';
@@ -8,6 +7,7 @@ import { ExerciseType } from '../../../models/ExerciseType';
 import { useDispatch } from 'react-redux';
 import { setWorkoutList } from '../../../features/WorkoutList/workoutListSlicer';
 import { useQuery } from '../../../services/realm';
+import { initialsExercises } from '../../../utils/initialsExercises';
 
 
 const FilterMuscle: React.FC = () => {
@@ -19,7 +19,10 @@ const FilterMuscle: React.FC = () => {
     const filterWorkoutsByMuscle = (muscle: string) => {
         setMuscleFilterSelected(muscle)
 
-        const exercisesHaveMuscleSelected = exercises.filter(e => e.muscles.includes(muscle))
+        const exercisesHaveMuscleSelected = [
+            ...exercises.filter(e => e.muscles.includes(muscle.toLowerCase())),
+            ...initialsExercises.filter(e => e.muscles.includes(muscle.toLowerCase()))
+        ]
 
         let workoutsWithMuscleSelected: WorkoutType[] = []
         workouts.forEach(w => {

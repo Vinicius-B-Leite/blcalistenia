@@ -36,7 +36,6 @@ const Profile: React.FC<NavigationProps> = ({ navigation }) => {
     }
 
 
-
     const singUp = async () => {
         try {
             const googleCredentials = await getGoogleCredentials()
@@ -84,13 +83,16 @@ const Profile: React.FC<NavigationProps> = ({ navigation }) => {
             </S.OptionContainer>
 
 
+            {
+                !(user.providerType == 'custom-token') &&
 
-            <S.OptionContainer onPress={singUp}>
-                <S.Left>
-                    <Feather name='upload-cloud' size={theme.sizes.icons.md} color={theme.colors.contrast} />
-                </S.Left>
-                <S.OptionTitle>Sincronizar na nuvem</S.OptionTitle>
-            </S.OptionContainer>
+                <S.OptionContainer onPress={singUp}>
+                    <S.Left>
+                        <Feather name='upload-cloud' size={theme.sizes.icons.md} color={theme.colors.contrast} />
+                    </S.Left>
+                    <S.OptionTitle>Sincronizar na nuvem</S.OptionTitle>
+                </S.OptionContainer>
+            }
 
 
             <S.OptionContainer onPress={logout}>

@@ -14,4 +14,4 @@ const Muscle = ({ muscle, muscleSelected, onClick }: Props) => {
         </S.Container>
     )
 }
-export default Muscle
+export default memo(Muscle, (prv, nxt) => Object.is(prv, nxt))
