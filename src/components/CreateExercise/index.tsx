@@ -6,25 +6,27 @@ import { muscles } from '../../utils/muscles';
 import * as S from './styles'
 import { useRealm } from '../../services/realm';
 import { useUser } from '@realm/react';
-
+import uuid from 'react-native-uuid'
+import { useDispatch } from 'react-redux';
 
 
 const CreateExercise: React.FC = () => {
     const theme = useTheme()
+
     const [categoriesSelected, setCategoriesSelected] = useState<string[]>([])
     const [musclesSelected, setMusclesSelected] = useState<string[]>([])
     const [exerciseNameInput, setExerciseNameInput] = useState('')
-    const exerciseId = useId()
 
     const realm = useRealm()
     const user = useUser()
+    
 
     const createExercise = ({ name, muscles, categories, _id }: ExerciseType) => {
         realm.write(() => {
             realm.create<ExerciseType>('Exercise', {
                 name,
-                muscles,
-                categories,
+                muscles: muscles.map(m => m.toLowerCase()),
+                categories: categories.map(c => c.toLowerCase()),
                 user_id: user.id,
                 _id
             })
@@ -59,7 +61,7 @@ const CreateExercise: React.FC = () => {
                 name: exerciseNameInput,
                 muscles: musclesSelected,
                 categories: categoriesSelected,
-                _id: exerciseId
+                _id: uuid.v4().toString()
             })
             setCategoriesSelected([])
             setMusclesSelected([])

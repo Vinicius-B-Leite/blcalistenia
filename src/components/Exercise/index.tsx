@@ -9,6 +9,7 @@ import { FlatList } from 'react-native';
 import { useDispatch } from 'react-redux'
 import { addExercise } from '../../features/Workout/workoutSlicer'
 import { useRealm } from '../../services/realm';
+import { initialsExercises } from '../../utils/initialsExercises';
 
 
 type Prosp = { item: ExerciseType }
@@ -20,25 +21,26 @@ const Exercise: React.FC<Prosp> = ({ item }) => {
     const dispatch = useDispatch()
     const realm = useRealm()
 
-    const deleteExercise = (exerciseName: String) => {
+    const deleteExercise = (id: string) => {
         realm.write(() => {
-            realm.delete(realm.objectForPrimaryKey('Exercise', exerciseName as string))
+            realm.delete(realm.objectForPrimaryKey('Exercise', id))
         })
     }
 
     const handleAddExercise = () => {
-        dispatch(addExercise({ exercise_id: item.name, series: [{ rep: 0, rest: 0, serie: 1, done: false }] }))
+        dispatch(addExercise({ exercise_id: item.name, series: [{ rep: 0, rest: 0, serie: 1, done: false }], anotatiom: '' }))
         navigation.goBack()
     }
 
     const handleDelete = () => {
+        if (initialsExercises.includes(item)) return
         Alert.alert(
             'Deletar exercício',
             'Você deseja deletar o exercício ' + item.name,
             [
                 {
                     text: 'Sim',
-                    onPress: () => deleteExercise(item.name)
+                    onPress: () => deleteExercise(item._id)
                 },
                 {
                     text: 'Não',
@@ -58,7 +60,6 @@ const Exercise: React.FC<Prosp> = ({ item }) => {
             <FlatList
                 data={item.muscles}
                 horizontal
-
                 showsHorizontalScrollIndicator={false}
                 scrollEnabled={false}
                 renderItem={({ item: m }) => (
@@ -69,4 +70,4 @@ const Exercise: React.FC<Prosp> = ({ item }) => {
     )
 }
 
-export default memo(Exercise);
+export default memo(Exercise, (prev, nxt) => Object.is(prev, nxt));

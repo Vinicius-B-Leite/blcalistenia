@@ -5,6 +5,7 @@ export const Container = styled.View`
     background-color: ${({ theme }) => theme.colors.darkBackgroundOpacity};
     justify-content: center;
 `
+
 export const CloseModal = styled.TouchableOpacity`
     position: absolute;
     top: 0;
@@ -19,7 +20,7 @@ export const Main = styled.View`
     border-radius: ${({ theme }) => theme.sizes.borderRadius.sm}px;
 `
 
-type Props = { selected: boolean }
+
 
 export const Title = styled.Text`
     color: ${({ theme }) => theme.colors.text};
@@ -34,16 +35,6 @@ export const FilterTitle = styled.Text`
     margin-top: 5%;
 `
 
-export const ItemContainer = styled.TouchableOpacity<Props>`
-    background-color: ${({ theme, selected }) => selected ? theme.colors.contrast : theme.colors.darkBackground};
-    margin: 2%;
-    padding: 1.5% 4%;
-    border-radius: ${({ theme }) => theme.sizes.borderRadius.full}px;
-`
-
-export const ItemLabel = styled.Text`
-    color: ${({ theme }) => theme.colors.text};
-`
 
 export const ApplyFilter = styled.TouchableOpacity`
     width: 100%;
