@@ -3,6 +3,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit"
 import { ExercisesInWorkoutType } from "../../models/ExercisesInWorkoutType"
 import { SerieType } from "../../models/SerieType"
 import { WorkoutType } from "../../models/WorkoutType"
+import { ExerciseType } from "../../models/ExerciseType"
 
 type WorkoutState = {
     timer: number | null,
@@ -78,6 +79,12 @@ export const workoutSlice = createSlice({
         },
         setWorkout: (state, action: PayloadAction<WorkoutType>) => {
             state.workout = action.payload
+        },
+        updateAnotation: (state, action: PayloadAction<{ newAnotation: string, exerciseID: string }>) => {
+            const index = state.workout.exercises.findIndex((v) => v.exercise_id === action.payload.exerciseID)
+            if (index === -1) return
+
+            state.workout.exercises[index].anotation = action.payload.newAnotation
         }
 
     }
@@ -92,5 +99,6 @@ export const {
     reseteExercises,
     updateTimer,
     resetTimer,
-    setWorkout } = workoutSlice.actions
+    setWorkout,
+    updateAnotation } = workoutSlice.actions
 export const WorkoutReducer = workoutSlice.reducer

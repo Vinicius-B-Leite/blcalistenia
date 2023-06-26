@@ -6,6 +6,7 @@ import { ExerciseType } from '../../../models/ExerciseType';
 import Exercise from '../../../components/Exercise';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../features/store';
+import Animated, { FadeInDown, Layout, SlideInRight, SlideOutRight } from 'react-native-reanimated';
 
 type Props = {
     openModal: () => void
@@ -30,7 +31,13 @@ const ExercisesList: React.FC<Props> = ({ openModal }) => {
                     estimatedItemSize={15}
                     data={searchExerciseInput ? exercisesSearched : exercisList}
                     keyExtractor={item => String(item.name)}
-                    renderItem={({ item }) => <Exercise item={item} />}
+                    renderItem={({ item }) => (
+                        <Animated.View
+                            exiting={SlideOutRight.duration(300)}
+                            layout={Layout.springify().delay(300)}>
+                            <Exercise item={item} />
+                        </Animated.View >
+                    )}
                     ListHeaderComponent={() => (
                         <S.FilterButton onPress={openModal}>
                             <S.FilterText>Filtros</S.FilterText>

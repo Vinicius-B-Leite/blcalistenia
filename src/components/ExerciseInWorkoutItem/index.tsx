@@ -6,7 +6,7 @@ import * as S from './styles'
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import Serie from '../Serie';
 import { useDispatch, useSelector } from 'react-redux'
-import { removeExercise, addSerie } from '../../features/Workout/workoutSlicer'
+import { removeExercise, addSerie, updateAnotation } from '../../features/Workout/workoutSlicer'
 import { RootState } from '../../features/store';
 import { FlashList } from '@shopify/flash-list';
 
@@ -21,7 +21,7 @@ const ExerciseInWorkoutItem: React.FC<Props> = ({ item, showCreateSerie, showDel
     const theme = useTheme()
     const dispatch = useDispatch()
     const isWorkingout = useSelector((state: RootState) => state.workout.isWorkingout)
-
+    const exercises = useSelector((state: RootState) => state.workout.workout.exercises)
 
 
 
@@ -29,13 +29,20 @@ const ExerciseInWorkoutItem: React.FC<Props> = ({ item, showCreateSerie, showDel
         <S.Exercise>
             <S.ExerciseHeader>
                 <S.ExerciseName>{item.exercise_id}</S.ExerciseName>
-                {showDeleteExerciseBtn && (<TouchableOpacity onPressIn={() => dispatch(removeExercise(item))}>
-                    <FontAwesome name='trash' size={theme.sizes.icons.sm} color={theme.colors.alert} />
-                </TouchableOpacity>)}
+                {
+                    showDeleteExerciseBtn &&
+                    (
+                        <TouchableOpacity onPressIn={() => dispatch(removeExercise(item))}>
+                            <FontAwesome name='trash' size={theme.sizes.icons.sm} color={theme.colors.alert} />
+                        </TouchableOpacity>
+                    )
+                }
             </S.ExerciseHeader>
             <S.ExerciseAnotation
                 placeholder='Anotação'
                 placeholderTextColor={theme.colors.darkText}
+                value={exercises[exercises.findIndex(v => v.exercise_id == item.exercise_id)].anotation}
+                onChangeText={(txt) => dispatch(updateAnotation({exerciseID: item.exercise_id, newAnotation: txt}))}
             />
             <S.Row>
                 <S.Title>Série</S.Title>

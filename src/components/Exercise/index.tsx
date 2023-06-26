@@ -10,6 +10,7 @@ import { useDispatch } from 'react-redux'
 import { addExercise } from '../../features/Workout/workoutSlicer'
 import { useRealm } from '../../services/realm';
 import { initialsExercises } from '../../utils/initialsExercises';
+import Animated, { FadeInDown, SlideInRight } from 'react-native-reanimated';
 
 
 type Prosp = { item: ExerciseType }
@@ -55,18 +56,18 @@ const Exercise: React.FC<Prosp> = ({ item }) => {
 
 
     return (
-        <S.ExerciseContainer onPress={handleAddExercise} onLongPress={handleDelete}>
-            <S.ExerciseName>{item.name}</S.ExerciseName>
-            <FlatList
-                data={item.muscles}
-                horizontal
-                showsHorizontalScrollIndicator={false}
-                scrollEnabled={false}
-                renderItem={({ item: m }) => (
-                    <S.ExerciseMuscles>{m}</S.ExerciseMuscles>
-                )}
-            />
-        </S.ExerciseContainer >
+            <S.ExerciseContainer onPress={handleAddExercise} onLongPress={handleDelete}>
+                <S.ExerciseName>{item.name}</S.ExerciseName>
+                <FlatList
+                    data={item.muscles}
+                    horizontal
+                    showsHorizontalScrollIndicator={false}
+                    scrollEnabled={false}
+                    renderItem={({ item: m }) => (
+                        <S.ExerciseMuscles>{m}</S.ExerciseMuscles>
+                    )}
+                />
+            </S.ExerciseContainer >
     )
 }
 

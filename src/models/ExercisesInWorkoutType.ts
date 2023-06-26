@@ -1,7 +1,7 @@
 import { SerieType } from "./SerieType"
 
 export type ExercisesInWorkoutType = {
-    exercise_id: String,
-    anotatiom?: String,
+    exercise_id: string,
+    anotation?: string,
     series: SerieType[]
 }
