@@ -20,7 +20,7 @@ const Index: React.FC = () => {
     return (
         <ThemeProvider theme={theme == 'dark' ? darkMode : lightMode}>
             <UserProvider fallback={<Login />}>
-                <RealmProvider sync={syncConfig}>
+                <RealmProvider sync={syncConfig} >
                     <Provider store={store}>
                         <Routes />
                     </Provider>

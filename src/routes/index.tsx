@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { StatusBar, Dimensions } from 'react-native'
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import { NavigationContainer, useTheme as useNavTheme } from '@react-navigation/native';
@@ -9,6 +9,10 @@ import Entypo from 'react-native-vector-icons/Entypo'
 import Octicons from 'react-native-vector-icons/Octicons'
 import HomeStack from './HomeStack';
 import { TabParamList } from './Models';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '../features/store';
+import { setUser } from '../features/User/userSlicer';
+import { useUser } from '@realm/react';
 
 export const TAB_BAR_HEIGHT = Dimensions.get('screen').height * 0.06
 const { Navigator, Screen } = createMaterialTopTabNavigator<TabParamList>()
@@ -18,7 +22,7 @@ const Routes: React.FC = () => {
     const navTheme = useNavTheme()
 
     navTheme.colors.background = theme.colors.background
-    
+   
     return (
         <NavigationContainer  >
             <StatusBar backgroundColor={theme.colors.background} barStyle={theme.name == 'dark' ? 'light-content' : 'dark-content'} />
@@ -33,7 +37,7 @@ const Routes: React.FC = () => {
                         height: TAB_BAR_HEIGHT
                     },
                     tabBarActiveTintColor: theme.colors.contrast,
-                    
+
                 }}
             >
                 <Screen name='HomeStack' component={HomeStack}
@@ -52,7 +56,7 @@ const Routes: React.FC = () => {
                     }}
                 />
             </Navigator>
-                    
+
         </NavigationContainer>
 
     )

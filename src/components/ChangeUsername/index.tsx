@@ -5,19 +5,15 @@ import * as S from './style'
 import { useUser } from '@realm/react';
 
 
-type ChangeUsernameProps = ModalProps
-const ChangeUsername: React.FC<ChangeUsernameProps> = (props) => {
+type ChangeUsernameProps = ModalProps & {
+    changeName: (newName: string) => Promise<void>
+}
+const ChangeUsername: React.FC<ChangeUsernameProps> = ({ changeName, ...props }) => {
 
     const { colors } = useTheme()
-    const user = useUser()
     const [newName, setNewName] = useState('')
+    const user = useUser()
 
-    const handleChangeName = async () => {
-        if (newName.length > 0) {
-            user.profile.name = newName
-            ToastAndroid.show('Nome salvo', ToastAndroid.SHORT)
-        }
-    }
     return (
         <Modal {...props} >
             <S.CloseModal onPressIn={props.onRequestClose} />
@@ -25,13 +21,13 @@ const ChangeUsername: React.FC<ChangeUsernameProps> = (props) => {
                 <S.Title>Alterar nome</S.Title>
 
                 <S.Input
-                    placeholder={user.profile.name}
+                    placeholder={user?.customData?.username as string || 'Desconhecido'}
                     value={newName}
                     onChangeText={setNewName}
                     placeholderTextColor={colors.darkText}
                 />
 
-                <S.Submit onPressIn={handleChangeName}>
+                <S.Submit onPressIn={() => changeName(newName)}>
                     <S.Label>Salvar</S.Label>
                 </S.Submit>
             </S.Container>

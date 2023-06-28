@@ -1,7 +1,4 @@
 export type UserType = {
-    _id: string
-    username: string,
-    email?: string,
-    password?: string,
-    photoURI: string
+    avatar: string,
+    username: string
 }

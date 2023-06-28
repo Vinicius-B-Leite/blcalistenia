@@ -5,12 +5,11 @@ export const Header = styled.View`
     padding: 5%;
     align-items: center;
     width: 100%;
-    justify-content: space-between;
 `
 export const Left = styled.View`
     flex-direction: row;
     align-items: center;
-
+    flex: 1;
 `
 export const GoBack = styled.TouchableOpacity`
     width: 10%;
@@ -33,10 +32,11 @@ export const CancelWorkoutTxt = styled.Text`
     color: ${({ theme }) => theme.colors.text};
     font-size: ${({ theme }) => theme.sizes.fontSize.vsm}px ;
 `
-export const ImagePickerButton = styled.TouchableOpacity`
+export const ButtonContainer = styled.TouchableOpacity`
     justify-content: center;
     align-items: center;
     padding: 3% ;
+    margin-right: 2%;
 `
 
 

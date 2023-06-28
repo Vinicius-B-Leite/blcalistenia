@@ -7,7 +7,7 @@ export const store = configureStore({
     reducer: {
         workout: WorkoutReducer,
         workoutList: workoutListReducer,
-        exercise: exerciseReducer
+        exercise: exerciseReducer,
     }
 })
 

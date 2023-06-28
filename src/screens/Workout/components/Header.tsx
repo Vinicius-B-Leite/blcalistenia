@@ -13,6 +13,7 @@ import { resetTimer, setWorkout } from '../../../features/Workout/workoutSlicer'
 import { WorkoutType } from '../../../models/WorkoutType';
 import { addWorkout } from '../../../features/WorkoutList/workoutListSlicer';
 import { useRealm } from '../../../services/realm';
+import { pickeImage } from '../../../utils/pickImage';
 
 
 type Nav = NavigationProp<RootStackParamList, 'Workout'>
@@ -62,7 +63,7 @@ const Header: React.FC = () => {
                     anotation: workout.anotation,
                     exercises: workout.exercises,
                     title: workout.title,
-                    banner: '',
+                    banner: workout.banner,
                     user_id: workout.user_id
                 },
                 Realm.UpdateMode.Modified)
@@ -73,6 +74,16 @@ const Header: React.FC = () => {
 
     }
 
+    const handleSelectImage = async () => {
+        try {
+            const res = await pickeImage()
+            if (res.assets && res.assets[0].uri) {
+                dispatch(setWorkout({ ...workout, banner: res.assets[0].uri }))
+            }
+        } catch (error) {
+
+        }
+    }
     useEffect(() => {
         navigation.addListener('beforeRemove', (event) => {
             if (event.data.action.type == 'GO_BACK') {
@@ -118,10 +129,15 @@ const Header: React.FC = () => {
                         <S.CancelWorkoutTxt>Cancelar</S.CancelWorkoutTxt>
                     </S.CancelWorkoutBtn>
                 ) : (
-                    <S.ImagePickerButton onPressIn={saveWorkout}>
-                        <Feather name='save' size={theme.sizes.icons.sm} color={theme.colors.contrast} />
-                    </S.ImagePickerButton>
+                    <>
+                        <S.ButtonContainer onPress={saveWorkout}>
+                            <Feather name='save' size={theme.sizes.icons.sm} color={theme.colors.contrast} />
+                        </S.ButtonContainer>
 
+                        <S.ButtonContainer onPress={handleSelectImage}>
+                            <Feather name='image' size={theme.sizes.icons.sm} color={theme.colors.contrast} />
+                        </S.ButtonContainer>
+                    </>
                 )
             }
         </S.Header>

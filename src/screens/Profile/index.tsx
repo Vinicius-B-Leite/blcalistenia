@@ -26,13 +26,55 @@ const Profile: React.FC<NavigationProps> = ({ navigation }) => {
     const [showThemeSelect, setShowThemeSelect] = useState(false)
     const [showChangeUsername, setShowChangeUsername] = useState(false)
     const app = useApp()
-    const user = useUser()
+    const userRealm = useUser()
+    const [user, setUser] = useState(app.currentUser?.customData)
+
+
+    const customUserDataCollection = userRealm
+        .mongoClient('mongodb-atlas')
+        .db('blcalistenia')
+        .collection('custom-user-data')
+
+    const filter = {
+        user_id: userRealm.id,
+    };
 
     const handlePickImage = async () => {
         const image = await pickeImage()
+
         if (image.assets && image.assets[0].uri) {
-            user.profile.picture = image.assets[0].uri
+
+
+            const updateDoc = {
+                $set: {
+                    user_id: userRealm.id,
+                    avatar: image.assets[0].uri,
+                },
+            };
+            const options = { upsert: true }
+
+            customUserDataCollection.updateOne(filter, updateDoc, options)
+
+            const customUserData = await userRealm.refreshCustomData();
+            setUser(customUserData)
         }
+    }
+
+    const handleChangeName = async (newName: string) => {
+        if (!newName) return
+        const updateDoc = {
+            $set: {
+                user_id: userRealm.id,
+                username: newName,
+            },
+        };
+        const options = { upsert: true }
+
+        customUserDataCollection.updateOne(filter, updateDoc, options)
+
+        const customUserData = await app.currentUser?.refreshCustomData();
+        setUser(customUserData)
+        setShowChangeUsername(false)
     }
 
 
@@ -62,12 +104,12 @@ const Profile: React.FC<NavigationProps> = ({ navigation }) => {
             <S.ButtonChangeImage onPressIn={handlePickImage}>
                 <S.Avatar
                     source={{
-                        uri: user.profile.picture as string || 'https://pbs.twimg.com/media/FOq9YuBXsBgTIQM.jpg',
+                        uri: user?.avatar as string || 'https://pbs.twimg.com/media/FOq9YuBXsBgTIQM.jpg',
                     }}
                     resizeMode={FastImage.resizeMode.cover}
                 />
             </S.ButtonChangeImage>
-            <S.Username>{user.profile.name || 'Desconhecido'}</S.Username>
+            <S.Username>{user?.username as string || 'Desconhecido'}</S.Username>
 
             <S.OptionContainer onPressIn={() => setShowChangeUsername(true)}>
                 <S.Left>
@@ -84,7 +126,7 @@ const Profile: React.FC<NavigationProps> = ({ navigation }) => {
 
 
             {
-                !(user.providerType == 'custom-token') &&
+                !(userRealm.profile.name) &&
 
                 <S.OptionContainer onPress={singUp}>
                     <S.Left>
@@ -102,7 +144,13 @@ const Profile: React.FC<NavigationProps> = ({ navigation }) => {
                 <S.OptionTitle>Sair da conta</S.OptionTitle>
             </S.OptionContainer>
 
-            <ChangeUsername visible={showChangeUsername} onRequestClose={() => setShowChangeUsername(false)} animationType='slide' transparent />
+            <ChangeUsername
+                visible={showChangeUsername}
+                onRequestClose={() => setShowChangeUsername(false)}
+                animationType='slide'
+                transparent
+                changeName={(newName) => handleChangeName(newName)}
+            />
             <ThemeSelect transparent animationType='fade' visible={showThemeSelect} onRequestClose={() => setShowThemeSelect(false)} />
         </S.Container>
     )
