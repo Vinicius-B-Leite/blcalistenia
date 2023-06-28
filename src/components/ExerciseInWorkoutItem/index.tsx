@@ -41,8 +41,9 @@ const ExerciseInWorkoutItem: React.FC<Props> = ({ item, showCreateSerie, showDel
             <S.ExerciseAnotation
                 placeholder='Anotação'
                 placeholderTextColor={theme.colors.darkText}
-                value={exercises[exercises.findIndex(v => v.exercise_id == item.exercise_id)].anotation}
-                onChangeText={(txt) => dispatch(updateAnotation({exerciseID: item.exercise_id, newAnotation: txt}))}
+                value={showCreateSerie ? exercises[exercises.findIndex(v => v.exercise_id == item.exercise_id)].anotation : item.anotation}
+                onChangeText={(txt) => dispatch(updateAnotation({ exerciseID: item.exercise_id, newAnotation: txt }))}
+                editable={showCreateSerie}
             />
             <S.Row>
                 <S.Title>Série</S.Title>
@@ -60,9 +61,12 @@ const ExerciseInWorkoutItem: React.FC<Props> = ({ item, showCreateSerie, showDel
                     />
                 ))
             }
-            <S.CreateNewSerieButton onPress={() => dispatch(addSerie(item))}>
-                <S.CreateNewSerieText>+</S.CreateNewSerieText>
-            </S.CreateNewSerieButton>
+            {
+                showCreateSerie &&
+                <S.CreateNewSerieButton onPress={() => dispatch(addSerie(item))}>
+                    <S.CreateNewSerieText>+</S.CreateNewSerieText>
+                </S.CreateNewSerieButton>
+            }
 
         </S.Exercise >
     )

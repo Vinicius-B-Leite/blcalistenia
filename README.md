@@ -46,7 +46,7 @@ As principais funcionalidades são:
  - Visualizar seu histórico de treino
  - Marcar suas séries e repetições durante sua sessão de treino
  - Analisar seu desempenho através de gráficos (FUTURA)
- - Backup em nuvem (FUTURA)
+ - Backup em nuvem 
 
 ## Links
  - LinkedIn:  www.linkedin.com/in/vinicius-b-leite

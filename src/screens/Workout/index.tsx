@@ -1,5 +1,6 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import * as S from './styles'
+import { Alert } from 'react-native'
 import Header from './components/Header';
 import { useTheme } from 'styled-components/native';
 import { StackScreenProps } from '@react-navigation/stack';
@@ -18,35 +19,39 @@ type Navigation = StackScreenProps<RootStackParamList, 'Workout'>
 const Workout: React.FC<Navigation> = ({ route, navigation }) => {
     const theme = useTheme()
 
-    const dispatch = useDispatch()
     const user = useUser()
 
+    const dispatch = useDispatch()
     const isTrainig = useSelector((state: RootState) => state.workout?.isWorkingout)
     const workout = useSelector((state: RootState) => state.workout?.workout)
+
 
     useEffect(() => {
         if (route.params.workout) {
             dispatch(setWorkout({ ...route.params.workout }))
         } else {
+            const _id = uuid.v4().toString()
+
             dispatch(setWorkout({
                 ...workout,
                 user_id: user.id,
-                _id: uuid.v4().toString()
+                _id
             }))
         }
 
         return () => {
-            if (!isTrainig){
+            if (!isTrainig) {
                 dispatch(setWorkout({} as WorkoutType))
             }
         }
     }, [])
 
 
+
     return (
         <S.Container>
 
-            <Header />
+            <Header  />
 
             <S.AnotationContainer>
                 <S.Anotation

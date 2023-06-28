@@ -44,12 +44,11 @@ const Historic: React.FC = () => {
                         }
                     />
                 </S.HistoricListContainer>
-                {
-                    bottomSheetItem &&
-                    <BottomSheet onClose={() => setBottomSheetItem(null)} ref={bottomsheetRef} >
-                        <HistoricBS item={bottomSheetItem} />
-                    </BottomSheet>
-                }
+
+                <BottomSheet onClose={() => setBottomSheetItem(null)} ref={bottomsheetRef} >
+                    <HistoricBS item={bottomSheetItem}  />
+                </BottomSheet>
+
             </S.Container>
         </GestureHandlerRootView>
 

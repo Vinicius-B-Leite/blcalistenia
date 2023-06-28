@@ -34,7 +34,7 @@ const AddExercise: React.FC = () => {
             <ListHeader />
             <ExercisesList openModal={() => setFilterExercciseVisible(true)} />
 
-            <S.FloatButton onPress={() => bottomSheetRef?.current?.scrollTo({ destination: theme.sizes.vh / 5, duration: 1000 })}>
+            <S.FloatButton onPress={() => bottomSheetRef?.current?.scrollTo({ destination: theme.sizes.vh / 8, duration: 1000 })}>
                 <S.FloatButtonIcon>+</S.FloatButtonIcon>
             </S.FloatButton>
 

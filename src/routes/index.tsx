@@ -29,7 +29,7 @@ const Routes: React.FC = () => {
                     tabBarIndicatorStyle: { display: 'none' },
                     tabBarShowLabel: false,
                     tabBarStyle: {
-                        backgroundColor: theme.colors.background,
+                        backgroundColor: theme.colors.darkBackground,
                         height: TAB_BAR_HEIGHT
                     },
                     tabBarActiveTintColor: theme.colors.contrast,

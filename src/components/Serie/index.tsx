@@ -31,12 +31,14 @@ const Serie: React.FC<Props> = ({ item, deleteSerieButton, exercise }) => {
 
 
     useEffect(() => {
-        const newSerie: SerieType = { rep, rest, done, serie: item.serie }
-        dispatch(updateSerie({
-            exercise_id: exercise.exercise_id as string,
-            newSerie,
-            serieNumber: item.serie as number
-        }))
+        if (deleteSerieButton) {
+            const newSerie: SerieType = { rep, rest, done, serie: item.serie }
+            dispatch(updateSerie({
+                exercise_id: exercise.exercise_id as string,
+                newSerie,
+                serieNumber: item.serie as number
+            }))
+        }
     }, [rep, rest, done])
 
 

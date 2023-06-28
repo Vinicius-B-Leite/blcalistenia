@@ -20,6 +20,7 @@ const CreateExercise: React.FC = () => {
     const realm = useRealm()
     const user = useUser()
     
+    
 
     const createExercise = ({ name, muscles, categories, _id }: ExerciseType) => {
         realm.write(() => {

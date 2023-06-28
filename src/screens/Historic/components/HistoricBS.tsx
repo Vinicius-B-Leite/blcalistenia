@@ -8,7 +8,9 @@ import * as S from './styles'
 
 
 
-export const HistoricBS = ({ item }: { item: HistoricType }) => {
+export const HistoricBS = ({ item }: { item: HistoricType | null }) => {
+    if (item == null) return <></>
+
     const workout: WorkoutType = JSON.parse(item.workout)
     const minutes = String((item.timerInSeconds / 60).toFixed(0)).padStart(2, '0')
     const seconds = String((item.timerInSeconds % 60).toFixed(0)).padStart(2, '0')
@@ -25,7 +27,7 @@ export const HistoricBS = ({ item }: { item: HistoricType }) => {
                 data={workout.exercises}
                 estimatedItemSize={10}
                 nestedScrollEnabled
-                renderItem={({ item }) => <ExerciseInWorkoutItem item={item} />}
+                renderItem={({ item }) => <ExerciseInWorkoutItem showCreateSerie={false} item={item} />}
             />
         </S.WorkoutContainer>
     )

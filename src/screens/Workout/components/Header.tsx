@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect } from 'react';
 import { Alert } from 'react-native'
 import * as S from './styles'
 import AntDesign from 'react-native-vector-icons/AntDesign'
@@ -12,10 +12,7 @@ import BackgroundService from 'react-native-background-actions'
 import { resetTimer, setWorkout } from '../../../features/Workout/workoutSlicer';
 import { WorkoutType } from '../../../models/WorkoutType';
 import { addWorkout } from '../../../features/WorkoutList/workoutListSlicer';
-import { ExerciseType } from '../../../models/ExerciseType';
-import { ExercisesInWorkoutType } from '../../../models/ExercisesInWorkoutType';
 import { useRealm } from '../../../services/realm';
-import { useUser } from '@realm/react';
 
 
 type Nav = NavigationProp<RootStackParamList, 'Workout'>
@@ -25,11 +22,12 @@ const Header: React.FC = () => {
 
     const theme = useTheme()
     const navigation = useNavigation<Nav>()
-    const isWorkingout = useSelector((state: RootState) => state.workout.isWorkingout)
-    const dispatch = useDispatch()
     const realm = useRealm()
 
+    const dispatch = useDispatch()
+    const isWorkingout = useSelector((state: RootState) => state.workout.isWorkingout)
     const workout = useSelector((state: RootState) => state.workout.workout)
+
 
 
     const cancelWorkout = () => {
@@ -43,7 +41,7 @@ const Header: React.FC = () => {
                         BackgroundService.stop()
                             .then(() => {
                                 dispatch(resetTimer())
-                                navigation.goBack()
+                                navigation.navigate('Home')
                             })
                     }
                 },
@@ -68,12 +66,39 @@ const Header: React.FC = () => {
                     user_id: workout.user_id
                 },
                 Realm.UpdateMode.Modified)
-                
+
             dispatch(addWorkout(newWorkout.toJSON() as WorkoutType))
-            navigation.navigate('Home') 
+            navigation.navigate('Home')
         })
 
     }
+
+    useEffect(() => {
+        navigation.addListener('beforeRemove', (event) => {
+            if (event.data.action.type == 'GO_BACK') {
+                event.preventDefault()
+
+                Alert.alert(
+                    'Salvar o treino',
+                    'As alterações não foram salvas. Deseja sair mesmo assim?',
+                    [
+                        {
+                            text: 'Sim',
+                            style: 'destructive',
+                            onPress: () => navigation.dispatch(event.data.action)
+                        },
+                        {
+                            text: 'Não',
+                            style: 'cancel'
+                        }
+                    ]
+                )
+            }
+        })
+    }, [])
+
+
+
     return (
         <S.Header>
             <S.Left>
