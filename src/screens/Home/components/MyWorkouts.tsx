@@ -16,6 +16,7 @@ import { ExerciseType } from '../../../models/ExerciseType';
 import FilterMuscle from './FilterMuscle';
 import { useFocusEffect } from '@react-navigation/native';
 import { useQuery } from '../../../services/realm';
+import Animated, { FadeInDown, Layout } from 'react-native-reanimated';
 
 
 const MyWorkouts: React.FC = () => {
@@ -61,7 +62,11 @@ const MyWorkouts: React.FC = () => {
                 }}
                 ListEmptyComponent={() => <ListEmptyComponent />}
                 ListHeaderComponent={() => <CreateWorkoutButton />}
-                renderItem={({ item }) => <Workout data={item} />}
+                renderItem={({ item, index }) =>
+                    <Animated.View entering={FadeInDown.delay(index * 400)} layout={Layout.springify()}>
+                        <Workout data={item} />
+                    </Animated.View>
+                }
             />
         </S.WorkoutContainer>
     )

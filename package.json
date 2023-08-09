@@ -21,7 +21,7 @@
     "@reduxjs/toolkit": "^1.9.3",
     "@shopify/flash-list": "^1.4.2",
     "lodash": "^4.17.21",
-    "react": "^18.2.0",
+    "react": "18.2.0",
     "react-native": "0.71.3",
     "react-native-background-actions": "^3.0.0",
     "react-native-calendars": "^1.1293.0",

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { Alert } from 'react-native'
 import * as S from './styles'
 import AntDesign from 'react-native-vector-icons/AntDesign'
@@ -29,7 +29,11 @@ const Header: React.FC = () => {
     const isWorkingout = useSelector((state: RootState) => state.workout.isWorkingout)
     const workout = useSelector((state: RootState) => state.workout.workout)
 
+    const isWorkingoutRef = useRef(isWorkingout)
+    isWorkingoutRef.current = isWorkingout
 
+    const workoutRef = useRef(workout)
+    workoutRef.current = workout
 
     const cancelWorkout = () => {
         Alert.alert(
@@ -55,23 +59,22 @@ const Header: React.FC = () => {
     }
 
     const saveWorkout = () => {
-        realm?.write(() => {
+        realm.write(() => {
             const newWorkout = realm.create<WorkoutType>(
                 'Workout',
                 {
-                    _id: workout._id,
-                    anotation: workout.anotation,
-                    exercises: workout.exercises,
-                    title: workout.title,
-                    banner: workout.banner,
-                    user_id: workout.user_id
+                    _id: workoutRef.current._id,
+                    anotation: workoutRef.current.anotation,
+                    exercises: workoutRef.current.exercises,
+                    title: workoutRef.current.title,
+                    banner: workoutRef.current.banner || '',
+                    user_id: workoutRef.current.user_id
                 },
                 Realm.UpdateMode.Modified)
 
             dispatch(addWorkout(newWorkout.toJSON() as WorkoutType))
             navigation.navigate('Home')
         })
-
     }
 
     const handleSelectImage = async () => {
@@ -84,26 +87,11 @@ const Header: React.FC = () => {
 
         }
     }
+
     useEffect(() => {
         navigation.addListener('beforeRemove', (event) => {
-            if (event.data.action.type == 'GO_BACK') {
-                event.preventDefault()
-
-                Alert.alert(
-                    'Salvar o treino',
-                    'As alterações não foram salvas. Deseja sair mesmo assim?',
-                    [
-                        {
-                            text: 'Sim',
-                            style: 'destructive',
-                            onPress: () => navigation.dispatch(event.data.action)
-                        },
-                        {
-                            text: 'Não',
-                            style: 'cancel'
-                        }
-                    ]
-                )
+            if (event.data.action.type == 'GO_BACK' && !isWorkingoutRef.current) {
+                saveWorkout()
             }
         })
     }, [])
@@ -113,7 +101,7 @@ const Header: React.FC = () => {
     return (
         <S.Header>
             <S.Left>
-                <S.GoBack onPressIn={() => navigation.navigate('Home')}>
+                <S.GoBack onPressIn={() => navigation.goBack()}>
                     <AntDesign name='arrowleft' size={theme.sizes.icons.md} color={theme.colors.contrast} />
                 </S.GoBack>
                 <S.Title
@@ -129,15 +117,9 @@ const Header: React.FC = () => {
                         <S.CancelWorkoutTxt>Cancelar</S.CancelWorkoutTxt>
                     </S.CancelWorkoutBtn>
                 ) : (
-                    <>
-                        <S.ButtonContainer onPress={saveWorkout}>
-                            <Feather name='save' size={theme.sizes.icons.sm} color={theme.colors.contrast} />
-                        </S.ButtonContainer>
-
-                        <S.ButtonContainer onPress={handleSelectImage}>
-                            <Feather name='image' size={theme.sizes.icons.sm} color={theme.colors.contrast} />
-                        </S.ButtonContainer>
-                    </>
+                    <S.ButtonContainer onPress={handleSelectImage}>
+                        <Feather name='image' size={theme.sizes.icons.sm} color={theme.colors.contrast} />
+                    </S.ButtonContainer>
                 )
             }
         </S.Header>

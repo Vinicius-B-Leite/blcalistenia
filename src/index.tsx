@@ -9,6 +9,7 @@ import { RealmProvider, syncConfig } from './services/realm';
 import { Provider } from 'react-redux';
 import Login from './screens/Login';
 import { store } from './features/store';
+import { GoogleSignin } from '@react-native-google-signin/google-signin';
 
 
 

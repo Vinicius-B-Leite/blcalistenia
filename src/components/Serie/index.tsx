@@ -86,4 +86,4 @@ const Serie: React.FC<Props> = ({ item, deleteSerieButton, exercise }) => {
         </S.Container >)
 }
 
-export default memo(Serie, (prev, nxt) => (prev.item.serie === nxt.item.serie));
+export default memo(Serie, (prev, nxt) => Object.is(prev, nxt));

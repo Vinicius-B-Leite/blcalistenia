@@ -32,7 +32,7 @@ const ExerciseInWorkoutItem: React.FC<Props> = ({ item, showCreateSerie, showDel
                 {
                     showDeleteExerciseBtn &&
                     (
-                        <TouchableOpacity onPressIn={() => dispatch(removeExercise(item))}>
+                        <TouchableOpacity onPress={() => dispatch(removeExercise(item))}>
                             <FontAwesome name='trash' size={theme.sizes.icons.sm} color={theme.colors.alert} />
                         </TouchableOpacity>
                     )
@@ -72,4 +72,4 @@ const ExerciseInWorkoutItem: React.FC<Props> = ({ item, showCreateSerie, showDel
     )
 }
 
-export default memo(ExerciseInWorkoutItem)
+export default memo(ExerciseInWorkoutItem, (p, n) => Object.is(p, n))

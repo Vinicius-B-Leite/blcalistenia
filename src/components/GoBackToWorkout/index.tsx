@@ -17,6 +17,7 @@ const GoBackToWorkout: React.FC = () => {
     const navigation = useNavigation<Nav>()
 
     const isWorkingout = useSelector((state: RootState) => state.workout.isWorkingout)
+    const currentWorkout = useSelector((state: RootState) => state.workout.workout)
     const timer = useSelector((state: RootState) => state.workout.timer)
 
     if (!isWorkingout || !timer) {
@@ -26,7 +27,7 @@ const GoBackToWorkout: React.FC = () => {
     return (
         <S.GoWorkout onPress={() => navigation.navigate('HomeStack', {
             screen: 'Workout', params: {
-                workout: undefined
+                workout: currentWorkout
             }
         })} >
             <View>

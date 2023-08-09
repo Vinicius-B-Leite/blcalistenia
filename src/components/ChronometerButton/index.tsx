@@ -13,6 +13,7 @@ import { NavigationProp, useNavigation } from '@react-navigation/native';
 import { RootStackParamList } from '../../routes/Models';
 import { useRealm } from '../../services/realm';
 import { useUser } from '@realm/react';
+import { addWorkout } from '../../features/WorkoutList/workoutListSlicer';
 
 
 type Nav = NavigationProp<RootStackParamList>
@@ -21,7 +22,7 @@ const ChronometerButton: React.FC = ({ }) => {
     const timer = useSelector((state: RootState) => state.workout.timer)
     const dispatch = useDispatch()
     const workout = useSelector((state: RootState) => state.workout.workout)
-    const realm  = useRealm()
+    const realm = useRealm()
     const user = useUser()
     const navigation = useNavigation<Nav>()
 
@@ -45,9 +46,22 @@ const ChronometerButton: React.FC = ({ }) => {
                     _id: realm.objects('Historic').length + 1,
                     user_id: user.id
                 })
+                const newWorkout = realm.create<WorkoutType>(
+                    'Workout',
+                    {
+                        _id: workout._id,
+                        anotation: workout.anotation,
+                        exercises: workout.exercises,
+                        title: workout.title,
+                        banner: workout.banner || '',
+                        user_id: workout.user_id
+                    },
+                    Realm.UpdateMode.Modified)
+
+                dispatch(addWorkout(newWorkout.toJSON() as WorkoutType))
                 dispatch(resetTimer())
                 dispatch(setWorkout({} as WorkoutType))
-                navigation.goBack()
+                navigation.navigate('Home')
             })
         })
     }

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import * as S from './styles'
 import { Alert } from 'react-native'
 import Header from './components/Header';
@@ -16,7 +16,7 @@ import { WorkoutType } from '../../models/WorkoutType';
 
 type Navigation = StackScreenProps<RootStackParamList, 'Workout'>
 
-const Workout: React.FC<Navigation> = ({ route, navigation }) => {
+const Workout: React.FC<Navigation> = ({ route }) => {
     const theme = useTheme()
 
     const user = useUser()
@@ -25,22 +25,27 @@ const Workout: React.FC<Navigation> = ({ route, navigation }) => {
     const isTrainig = useSelector((state: RootState) => state.workout?.isWorkingout)
     const workout = useSelector((state: RootState) => state.workout?.workout)
 
+    const isTrainigRef = useRef(isTrainig)
+    isTrainigRef.current = isTrainig
 
     useEffect(() => {
-        if (route.params.workout) {
+        if (route.params.workout?._id) {
             dispatch(setWorkout({ ...route.params.workout }))
         } else {
-            const _id = uuid.v4().toString()
+            if (!isTrainig) {
+                console.log('Entrou')
+                const _id = uuid.v4().toString()
 
-            dispatch(setWorkout({
-                ...workout,
-                user_id: user.id,
-                _id
-            }))
+                dispatch(setWorkout({
+                    ...workout,
+                    user_id: user.id,
+                    _id
+                }))
+            }
         }
 
         return () => {
-            if (!isTrainig) {
+            if (!isTrainigRef.current) {
                 dispatch(setWorkout({} as WorkoutType))
             }
         }
@@ -51,7 +56,7 @@ const Workout: React.FC<Navigation> = ({ route, navigation }) => {
     return (
         <S.Container>
 
-            <Header  />
+            <Header />
 
             <S.AnotationContainer>
                 <S.Anotation

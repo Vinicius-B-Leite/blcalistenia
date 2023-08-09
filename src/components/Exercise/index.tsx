@@ -29,7 +29,7 @@ const Exercise: React.FC<Prosp> = ({ item }) => {
     }
 
     const handleAddExercise = () => {
-        dispatch(addExercise({ exercise_id: item.name, series: [{ rep: 0, rest: 0, serie: 1, done: false }], anotatiom: '' }))
+        dispatch(addExercise({ exercise_id: item.name, series: [{ rep: 0, rest: 0, serie: 1, done: false }], anotation: '' }))
         navigation.goBack()
     }
 

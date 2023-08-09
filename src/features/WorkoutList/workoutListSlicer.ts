@@ -24,23 +24,7 @@ export const WorkoutListSlicer = createSlice({
         setWorkoutList: (state, action: PayloadAction<WorkoutType[]>) => {
             state.workouts = action.payload
         },
-        filterByMuscle: (state, action: PayloadAction<{ muscle: string }>) => {
-            // getRealm().then(realm => {
-            //     const workouts = realm.objects<WorkoutType[]>('Workout').toJSON() as WorkoutType[]
-            //     const exercises = realm?.objects<ExerciseType[]>('Exercise').toJSON() as ExerciseType[]
-            //     const exercisesHaveMuscleSelected = exercises.filter(e => e.muscles.includes(action.payload.muscle))
-            //     let workoutsWithMuscleSelected: WorkoutType[] = []
 
-            //     workouts.forEach(w => {
-            //         w.exercises.forEach(e => {
-            //             const index = exercisesHaveMuscleSelected.findIndex(v => v.name == e.exercise_id)
-            //             if (index > -1) workoutsWithMuscleSelected.push(w)
-            //         })
-            //     })
-
-            //     state.workouts = workoutsWithMuscleSelected
-            // })
-        },
         addWorkout: (state, action: PayloadAction<WorkoutType>) => {
             const indexOfWorkout = state.workouts.findIndex(val => val._id === action.payload._id)
             if (indexOfWorkout === -1) {
@@ -51,5 +35,5 @@ export const WorkoutListSlicer = createSlice({
     }
 })
 
-export const { removeWorkout, setWorkoutList, filterByMuscle, addWorkout } = WorkoutListSlicer.actions
+export const { removeWorkout, setWorkoutList, addWorkout } = WorkoutListSlicer.actions
 export const workoutListReducer = WorkoutListSlicer.reducer

@@ -4,6 +4,7 @@ import { getGoogleCredentials } from "../../utils/getGoogleCredentials"
 import * as S from './styles'
 import { useState } from "react"
 import { useTheme } from "styled-components/native"
+import { GoogleSignin } from "@react-native-google-signin/google-signin"
 
 
 export default function Login() {

@@ -15,9 +15,6 @@ import { getGoogleCredentials } from '../../utils/getGoogleCredentials';
 
 
 type NavigationProps = NativeStackScreenProps<RootStackParamList, 'Profile'>
-GoogleSignin.configure({
-    webClientId: "80963280941-oncq7jrtuj5b4slm20okbhtonvvc211t.apps.googleusercontent.com",
-});
 
 
 const Profile: React.FC<NavigationProps> = ({ navigation }) => {

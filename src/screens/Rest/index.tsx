@@ -1,5 +1,6 @@
 import { StackScreenProps } from '@react-navigation/stack';
-import React, {  useRef, useEffect } from 'react';
+import React, { useRef } from 'react';
+import {Vibration} from 'react-native'
 import CountDown, { CountDownRef } from '../../components/CountDown';
 import { RootStackParamList } from '../../routes/Models';
 import * as S from './styles'
@@ -18,16 +19,21 @@ const Rest: React.FC<NavigationPropsType> = ({ route, navigation }) => {
         countDownRef.current?.lessSecond(10)
     }
 
+    const onChronometerFineshed = () => { 
+
+        // Vibration.vibrate()
+        navigation.goBack()
+    }
     return (
         <S.Container>
-            <CountDown totalSeconds={route.params.totalSeconds as number} ref={countDownRef} onFineshed={() => navigation.goBack()} />
+            <CountDown totalSeconds={route.params.totalSeconds as number} ref={countDownRef} onFineshed={onChronometerFineshed} />
 
             <S.ButtonsContainer>
-                <S.CountDownButton bg='contrast' onPressIn={increaseSecondsInCountdown}>
+                <S.CountDownButton bg='contrast' onPress={increaseSecondsInCountdown}>
                     <S.CountDownButtonText>{'+ 10s'}</S.CountDownButtonText>
                 </S.CountDownButton>
 
-                <S.CountDownButton bg='darkContrast' onPressIn={decreaseSecondsInCountdown}>
+                <S.CountDownButton bg='darkContrast' onPress={decreaseSecondsInCountdown}>
                     <S.CountDownButtonText>{'- 10s'}</S.CountDownButtonText>
                 </S.CountDownButton>
             </S.ButtonsContainer>

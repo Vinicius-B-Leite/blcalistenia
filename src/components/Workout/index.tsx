@@ -62,4 +62,4 @@ const Workout: React.FC<Props> = ({ data }) => {
     )
 }
 
-export default memo(Workout, (p, n) => p.data === n.data);
+export default memo(Workout, (p, n) => Object.is(p, n));

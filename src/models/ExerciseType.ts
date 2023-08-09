@@ -1,7 +1,7 @@
 
 export type ExerciseType = {
     _id: string
-    name: String,
+    name: string,
     categories: String[],
     muscles: String[],
     user_id?: string

@@ -69,7 +69,9 @@ export const workoutSlice = createSlice({
             state.workout.exercises = []
         },
         updateTimer: (state, action: PayloadAction<number>) => {
-            if (!(state.isWorkingout)) state.isWorkingout = true
+            if (!state.isWorkingout) {
+                state.isWorkingout = true
+            }
             state.timer = action.payload
         },
         resetTimer: (state) => {
