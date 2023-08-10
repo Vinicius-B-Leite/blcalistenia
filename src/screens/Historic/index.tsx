@@ -14,7 +14,7 @@ import Animated, { FadeInDown } from 'react-native-reanimated';
 const Historic: React.FC = () => {
     const bottomsheetRef = useRef<BottomSheetRefProps>(null)
     const [bottomSheetItem, setBottomSheetItem] = useState<HistoricType | null>(null)
-    const historics = useQuery('Historic').toJSON() as HistoricType[]
+    const historics = useQuery('Historic').sorted('date', true).toJSON() as HistoricType[]
 
 
     return (

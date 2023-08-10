@@ -84,7 +84,7 @@ const Header: React.FC = () => {
                 dispatch(setWorkout({ ...workout, banner: res.assets[0].uri }))
             }
         } catch (error) {
-
+            console.log('handleSelectImage => ' + error)
         }
     }
 

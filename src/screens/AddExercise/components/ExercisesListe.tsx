@@ -7,6 +7,7 @@ import Exercise from '../../../components/Exercise';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../features/store';
 import Animated, { FadeInDown, Layout, SlideInRight, SlideOutRight } from 'react-native-reanimated';
+import { initialsExercises } from '../../../utils/initialsExercises';
 
 type Props = {
     openModal: () => void
@@ -18,7 +19,7 @@ const ExercisesList: React.FC<Props> = ({ openModal }) => {
     const exercisList = useSelector((state: RootState) => state.exercise.exercises)
 
     const exercisesSearched = useMemo(() => {
-        const exercises = realm?.objects('Exercise').toJSON() as ExerciseType[]
+        const exercises = [...realm?.objects('Exercise').toJSON() as ExerciseType[], ...initialsExercises]
 
         return exercises?.filter(e => e.name.toLocaleLowerCase().includes(searchExerciseInput?.toLocaleLowerCase()))
     }, [searchExerciseInput])

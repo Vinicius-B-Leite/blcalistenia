@@ -6,7 +6,6 @@ import { RootState } from '../../features/store';
 import BackgroundService from 'react-native-background-actions'
 import { resetTimer, setWorkout, updateTimer } from '../../features/Workout/workoutSlicer';
 import { options, sleep } from '../../utils/backgroundActionsConfig';
-import { ExercisesInWorkoutType } from '../../models/ExercisesInWorkoutType';
 import { WorkoutType } from '../../models/WorkoutType';
 import { HistoricType } from '../../models/HistoricType';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
@@ -46,7 +45,7 @@ const ChronometerButton: React.FC = ({ }) => {
                     _id: realm.objects('Historic').length + 1,
                     user_id: user.id
                 })
-                const newWorkout = realm.create<WorkoutType>(
+                realm.create<WorkoutType>(
                     'Workout',
                     {
                         _id: workout._id,
@@ -58,10 +57,10 @@ const ChronometerButton: React.FC = ({ }) => {
                     },
                     Realm.UpdateMode.Modified)
 
-                dispatch(addWorkout(newWorkout.toJSON() as WorkoutType))
                 dispatch(resetTimer())
                 dispatch(setWorkout({} as WorkoutType))
                 navigation.navigate('Home')
+                console.log('salvou tudo')
             })
         })
     }
