@@ -14,6 +14,7 @@ import { WorkoutType } from '../../../models/WorkoutType';
 import { addWorkout } from '../../../features/WorkoutList/workoutListSlicer';
 import { useRealm } from '../../../services/realm';
 import { pickeImage } from '../../../utils/pickImage';
+import { useUser } from '@realm/react';
 
 
 type Nav = NavigationProp<RootStackParamList, 'Workout'>
@@ -24,6 +25,7 @@ const Header: React.FC = () => {
     const theme = useTheme()
     const navigation = useNavigation<Nav>()
     const realm = useRealm()
+    const user = useUser()
 
     const dispatch = useDispatch()
     const isWorkingout = useSelector((state: RootState) => state.workout.isWorkingout)
@@ -59,6 +61,9 @@ const Header: React.FC = () => {
     }
 
     const saveWorkout = () => {
+        const isWorkoutSuggest = workoutRef.current._id.includes('suggestWorkout')
+        if (isWorkoutSuggest) return
+
         realm.write(() => {
             const newWorkout = realm.create<WorkoutType>(
                 'Workout',
@@ -68,7 +73,7 @@ const Header: React.FC = () => {
                     exercises: workoutRef.current.exercises,
                     title: workoutRef.current.title,
                     banner: workoutRef.current.banner || '',
-                    user_id: workoutRef.current.user_id
+                    user_id: user.id
                 },
                 Realm.UpdateMode.Modified)
 

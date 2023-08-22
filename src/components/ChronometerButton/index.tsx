@@ -36,6 +36,7 @@ const ChronometerButton: React.FC = ({ }) => {
     };
 
     const finishWorkout = () => {
+        const isWorkoutSuggest = workout._id.includes('suggestWorkout')
         BackgroundService.stop().then(() => {
             realm?.write(() => {
                 realm.create<HistoricType>('Historic', {
@@ -45,22 +46,24 @@ const ChronometerButton: React.FC = ({ }) => {
                     _id: realm.objects('Historic').length + 1,
                     user_id: user.id
                 })
-                realm.create<WorkoutType>(
-                    'Workout',
-                    {
-                        _id: workout._id,
-                        anotation: workout.anotation,
-                        exercises: workout.exercises,
-                        title: workout.title,
-                        banner: workout.banner || '',
-                        user_id: workout.user_id
-                    },
-                    Realm.UpdateMode.Modified)
+
+                if (!isWorkoutSuggest) {
+                    realm.create<WorkoutType>(
+                        'Workout',
+                        {
+                            _id: workout._id,
+                            anotation: workout.anotation,
+                            exercises: workout.exercises,
+                            title: workout.title,
+                            banner: workout.banner || '',
+                            user_id: user.id
+                        },
+                        Realm.UpdateMode.Modified)
+                }
 
                 dispatch(resetTimer())
                 dispatch(setWorkout({} as WorkoutType))
                 navigation.navigate('Home')
-                console.log('salvou tudo')
             })
         })
     }

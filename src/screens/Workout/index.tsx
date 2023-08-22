@@ -52,7 +52,7 @@ const Workout: React.FC<Navigation> = ({ route }) => {
     }, [])
 
 
-
+console.log(workout._id)
     return (
         <S.Container>
 

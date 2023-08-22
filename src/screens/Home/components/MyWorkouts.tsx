@@ -54,6 +54,7 @@ const MyWorkouts: React.FC = () => {
             <FilterMuscle />
             <S.WorkoutList
                 data={searchWorkoutInput ? searchWorkout : workoutList}
+                extraData={searchWorkoutInput ? searchWorkout : workoutList}
                 horizontal
                 keyExtractor={(item) => item._id}
                 showsHorizontalScrollIndicator={false}

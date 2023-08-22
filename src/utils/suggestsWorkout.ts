@@ -7,7 +7,7 @@ export const suggests: SuggestWorkoutType[] = [
         level: 'begginer',
         _id: String(uuid.v4()),
         workout: JSON.stringify({
-            _id: String(uuid.v4()),
+            _id: 'suggestWorkout1',
             banner: 'https://previous-assets.menshealth.pt/files/2017/09/iStock-1094479308.jpg',
             title: 'Flexão',
             exercises: [
@@ -78,7 +78,7 @@ export const suggests: SuggestWorkoutType[] = [
         level: 'begginer',
         _id: String(uuid.v4()),
         workout: JSON.stringify({
-            _id: String(uuid.v4()),
+            _id: 'suggestWorkout2',
             banner: 'https://www.blog.bioritmo.com.br/wp-content/uploads/2021/10/shutterstock_753521752-1.jpg',
             title: 'Barra fixa',
             exercises: [
@@ -149,7 +149,7 @@ export const suggests: SuggestWorkoutType[] = [
         level: 'intermate',
         _id: String(uuid.v4()),
         workout: JSON.stringify({
-            _id: String(uuid.v4()),
+            _id: 'suggestWorkout3',
             banner: 'https://img.freepik.com/premium-photo/man-doing-handstand-push-ups-bars_126745-1514.jpg?w=2000',
             title: 'Handstand pushup',
             exercises: [
@@ -240,7 +240,7 @@ export const suggests: SuggestWorkoutType[] = [
         level: 'intermate',
         _id: String(uuid.v4()),
         workout: JSON.stringify({
-            _id: String(uuid.v4()),
+            _id:'suggestWorkout4' ,
             banner: 'https://media.istockphoto.com/id/1196816311/pt/foto/athlete-doing-a-typewriter-archer-pull-up.jpg?s=170667a&w=0&k=20&c=ssP4GKcTN4O4qyDgnZX6P3S4BkZCiE23UocNqlWjw8g=',
             title: 'Barra arqueira',
             exercises: [
