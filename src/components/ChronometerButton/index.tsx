@@ -63,6 +63,7 @@ const ChronometerButton: React.FC = ({ }) => {
 
                 dispatch(resetTimer())
                 dispatch(setWorkout({} as WorkoutType))
+                dispatch(addWorkout(workout))
                 navigation.navigate('Home')
             })
         })
