@@ -4,7 +4,6 @@ import * as S from '../styles'
 import { useTheme } from 'styled-components/native';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../../features/store';
-import { setWorkoutList } from '../../../features/WorkoutList/workoutListSlicer';
 import { WorkoutType } from '../../../models/WorkoutType';
 import { muscles } from '../../../utils/muscles';
 import Muscle from '../../../components/Muscle';
@@ -21,7 +20,8 @@ import Animated, { FadeInDown, Layout } from 'react-native-reanimated';
 
 const MyWorkouts: React.FC = () => {
     const theme = useTheme()
-    const workoutList = useSelector((state: RootState) => state.workoutList.workouts)
+    const filteredWorkouts = useSelector((state: RootState) => state.workoutList.filteredWorkouts)
+    console.log("🚀 ~ file: MyWorkouts.tsx:24 ~ filteredWorkouts:", filteredWorkouts)
     const workoutsRealm = useQuery('Workout').toJSON() as WorkoutType[]
     const dispatch = useDispatch()
 
@@ -32,11 +32,6 @@ const MyWorkouts: React.FC = () => {
         return workoutsRealm.filter(val => val.title.toLocaleLowerCase().includes(searchWorkoutInput.toLocaleLowerCase()))
 
     }, [searchWorkoutInput])
-
-
-    useEffect(() => {
-        dispatch(setWorkoutList(workoutsRealm))
-    }, [])
 
     return (
         <S.WorkoutContainer>
@@ -53,8 +48,7 @@ const MyWorkouts: React.FC = () => {
 
             <FilterMuscle />
             <S.WorkoutList
-                data={searchWorkoutInput ? searchWorkout : workoutList}
-                extraData={searchWorkoutInput ? searchWorkout : workoutList}
+                data={searchWorkoutInput ? searchWorkout : filteredWorkouts ? filteredWorkouts : workoutsRealm}
                 horizontal
                 keyExtractor={(item) => item._id}
                 showsHorizontalScrollIndicator={false}

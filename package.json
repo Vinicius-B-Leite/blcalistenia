@@ -28,6 +28,7 @@
     "react-native-chart-kit": "^6.12.0",
     "react-native-fast-image": "^8.6.3",
     "react-native-gesture-handler": "^2.9.0",
+    "react-native-image-cache-wrapper": "^1.0.7",
     "react-native-image-picker": "^5.0.1",
     "react-native-pager-view": "^6.1.2",
     "react-native-reanimated": "^2.14.4",
@@ -39,6 +40,7 @@
     "react-native-vector-icons": "^9.2.0",
     "react-redux": "^8.0.5",
     "realm": "^11.10.1",
+    "rn-fetch-blob": "^0.10.16",
     "scheduler": "^0.23.0",
     "styled-components": "^5.3.6"
   },

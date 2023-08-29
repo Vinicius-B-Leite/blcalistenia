@@ -11,7 +11,6 @@ import { RootState } from '../../../features/store';
 import BackgroundService from 'react-native-background-actions'
 import { resetTimer, setWorkout } from '../../../features/Workout/workoutSlicer';
 import { WorkoutType } from '../../../models/WorkoutType';
-import { addWorkout } from '../../../features/WorkoutList/workoutListSlicer';
 import { useRealm } from '../../../services/realm';
 import { pickeImage } from '../../../utils/pickImage';
 import { useUser } from '@realm/react';
@@ -63,21 +62,20 @@ const Header: React.FC = () => {
     const saveWorkout = () => {
         const isWorkoutSuggest = workoutRef.current._id.includes('suggestWorkout')
         if (isWorkoutSuggest) return
-
+        console.log(workoutRef.current.banner)
         realm.write(() => {
-            const newWorkout = realm.create<WorkoutType>(
+            realm.create<WorkoutType>(
                 'Workout',
                 {
                     _id: workoutRef.current._id,
                     anotation: workoutRef.current.anotation,
                     exercises: workoutRef.current.exercises,
-                    title: workoutRef.current.title,
+                    title: workoutRef.current.title || 'Novo Treino',
                     banner: workoutRef.current.banner || '',
                     user_id: user.id
                 },
                 Realm.UpdateMode.Modified)
 
-            dispatch(addWorkout(newWorkout.toJSON() as WorkoutType))
             navigation.navigate('Home')
         })
     }

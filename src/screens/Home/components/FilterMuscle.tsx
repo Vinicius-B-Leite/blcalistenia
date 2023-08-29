@@ -5,7 +5,7 @@ import Muscle from '../../../components/Muscle';
 import { WorkoutType } from '../../../models/WorkoutType';
 import { ExerciseType } from '../../../models/ExerciseType';
 import { useDispatch } from 'react-redux';
-import { setWorkoutList } from '../../../features/WorkoutList/workoutListSlicer';
+import { cancelFilteredWorkout, filteredWorkouts } from '../../../features/WorkoutList/workoutListSlicer';
 import { useQuery } from '../../../services/realm';
 import { initialsExercises } from '../../../utils/initialsExercises';
 
@@ -17,6 +17,11 @@ const FilterMuscle: React.FC = () => {
     const dispatch = useDispatch()
 
     const filterWorkoutsByMuscle = (muscle: string) => {
+        if (muscleFilterSelected === muscle) {
+            dispatch(cancelFilteredWorkout())
+            setMuscleFilterSelected('')
+            return
+        }
         setMuscleFilterSelected(muscle)
 
         const exercisesHaveMuscleSelected = [
@@ -31,7 +36,7 @@ const FilterMuscle: React.FC = () => {
                 if (index > -1) workoutsWithMuscleSelected.push(w)
             })
         })
-        dispatch(setWorkoutList(workoutsWithMuscleSelected))
+        dispatch(filteredWorkouts(workoutsWithMuscleSelected))
     }
 
     return (

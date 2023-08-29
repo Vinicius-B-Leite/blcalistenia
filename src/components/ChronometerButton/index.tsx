@@ -12,7 +12,6 @@ import { NavigationProp, useNavigation } from '@react-navigation/native';
 import { RootStackParamList } from '../../routes/Models';
 import { useRealm } from '../../services/realm';
 import { useUser } from '@realm/react';
-import { addWorkout } from '../../features/WorkoutList/workoutListSlicer';
 
 
 type Nav = NavigationProp<RootStackParamList>
@@ -63,7 +62,6 @@ const ChronometerButton: React.FC = ({ }) => {
 
                 dispatch(resetTimer())
                 dispatch(setWorkout({} as WorkoutType))
-                dispatch(addWorkout(workout))
                 navigation.navigate('Home')
             })
         })

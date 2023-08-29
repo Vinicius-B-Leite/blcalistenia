@@ -7,7 +7,6 @@ import { WorkoutType } from '../../models/WorkoutType';
 import { RootStackParamList } from '../../routes/Models';
 import * as S from './styles'
 import { useDispatch } from 'react-redux'
-import { removeWorkout } from '../../features/WorkoutList/workoutListSlicer'
 import { useRealm } from '../../services/realm';
 
 
@@ -22,12 +21,10 @@ type Navigation = StackNavigationProp<RootStackParamList, 'Home'>
 const Workout: React.FC<Props> = ({ data }) => {
     const navigation = useNavigation<Navigation>()
     const realm = useRealm()
-    const dispatch = useDispatch()
 
     const deleteWorkout = (workoutID: string) => {
         realm.write(() => {
             realm.delete(realm.objectForPrimaryKey('Workout', workoutID))
-            dispatch(removeWorkout(data))
         })
     }
 
@@ -52,8 +49,11 @@ const Workout: React.FC<Props> = ({ data }) => {
             onPress={() => navigation.navigate('Workout', { workout: data })}
             onLongPress={handleDelete}>
             <S.Banner
-                source={{ uri: data.banner.length > 0 ? data.banner : 'https://www.salonlfc.com/wp-content/uploads/2018/01/image-not-found-1-scaled-1150x647.png' }}
+                source={{
+                    uri: data.banner.length > 0 ? data.banner : 'https://www.salonlfc.com/wp-content/uploads/2018/01/image-not-found-1-scaled-1150x647.png',
+                }}
                 resizeMode={FastImage.resizeMode.cover}
+
             />
             <S.TextContainer>
                 <S.Text >{data.title}</S.Text>
