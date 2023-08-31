@@ -33,8 +33,14 @@ export const workoutSlice = createSlice({
             state.workout.exercises.splice(index, 1)
         },
         addSerie: (state, action: PayloadAction<ExercisesInWorkoutType>) => {
-            const index = state.workout.exercises.findIndex(e => e.exercise_id === action.payload.exercise_id)
-            state.workout.exercises[index].series.push({ rep: 0, rest: 0, serie: state.workout.exercises[index].series.length + 1 })
+            const exerciseIndex = state.workout.exercises.findIndex(e => e.exercise_id === action.payload.exercise_id)
+            const currentExercise = state.workout.exercises[exerciseIndex]
+            const lengthOfSeries = currentExercise.series.length
+
+           
+            let lastSerie = currentExercise.series[lengthOfSeries - 1]
+            currentExercise.series.push({ rep: lastSerie.rep, rest: lastSerie.rest, serie: lengthOfSeries + 1 })
+
         },
         removeSerie: (state, action: PayloadAction<{ exercise_id: string, serieNumber: number }>) => {
             const index = state.workout.exercises.findIndex(e => e.exercise_id === action.payload.exercise_id)

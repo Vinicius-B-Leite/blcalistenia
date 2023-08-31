@@ -6,9 +6,7 @@ import FastImage from 'react-native-fast-image';
 import { WorkoutType } from '../../models/WorkoutType';
 import { RootStackParamList } from '../../routes/Models';
 import * as S from './styles'
-import { useDispatch } from 'react-redux'
 import { useRealm } from '../../services/realm';
-
 
 
 
@@ -44,6 +42,8 @@ const Workout: React.FC<Props> = ({ data }) => {
             ]
         )
     }
+
+    
     return (
         <S.Container
             onPress={() => navigation.navigate('Workout', { workout: data })}
