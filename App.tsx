@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import ThemeContextProvider from './src/contexts/ThemeContext';
 import Index from './src';
 import './src/services/calendarConfig'
 import { AppProvider } from '@realm/react';
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
+import SplashScreen from 'react-native-splash-screen';
 
 
 
@@ -14,6 +15,10 @@ GoogleSignin.configure({
 
 const App = () => {
 
+  useEffect(() => {
+    SplashScreen.hide();
+  }, []);
+  
   return (
     <ThemeContextProvider>
       <AppProvider id='application-0-fcyzd'>
