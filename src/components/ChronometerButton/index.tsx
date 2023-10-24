@@ -10,7 +10,7 @@ import { WorkoutType } from '../../models/WorkoutType';
 import { HistoricType } from '../../models/HistoricType';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
 import { RootStackParamList } from '../../routes/Models';
-import { useRealm } from '../../services/realm';
+import { useRealm } from '../../services/realm/realm';
 import { useUser } from '@realm/react';
 
 

@@ -6,7 +6,7 @@ import Animated, { useAnimatedStyle, useSharedValue, withTiming } from 'react-na
 import { MarkedDates } from 'react-native-calendars/src/types';
 import { MarkingProps } from 'react-native-calendars/src/calendar/day/marking';
 import { HistoricType } from '../../models/HistoricType';
-import { useQuery, useRealm } from '../../services/realm';
+import { useQuery, useRealm } from '../../services/realm/realm';
 
 
 

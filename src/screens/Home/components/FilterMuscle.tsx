@@ -6,7 +6,7 @@ import { WorkoutType } from '../../../models/WorkoutType';
 import { ExerciseType } from '../../../models/ExerciseType';
 import { useDispatch } from 'react-redux';
 import { cancelFilteredWorkout, filteredWorkouts } from '../../../features/WorkoutList/workoutListSlicer';
-import { useQuery } from '../../../services/realm';
+import { useQuery } from '../../../services/realm/realm';
 import { initialsExercises } from '../../../utils/initialsExercises';
 
 

@@ -11,7 +11,7 @@ import { RootState } from '../../../features/store';
 import BackgroundService from 'react-native-background-actions'
 import { resetTimer, setWorkout } from '../../../features/Workout/workoutSlicer';
 import { WorkoutType } from '../../../models/WorkoutType';
-import { useRealm } from '../../../services/realm';
+import { useRealm } from '../../../services/realm/realm';
 import { pickeImage } from '../../../utils/pickImage';
 import { useUser } from '@realm/react';
 

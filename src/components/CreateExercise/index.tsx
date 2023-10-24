@@ -4,7 +4,7 @@ import { ExerciseType } from '../../models/ExerciseType';
 import { category } from '../../utils/category';
 import { muscles } from '../../utils/muscles';
 import * as S from './styles'
-import { useRealm } from '../../services/realm';
+import { useRealm } from '../../services/realm/realm';
 import { useUser } from '@realm/react';
 import uuid from 'react-native-uuid'
 import { useDispatch } from 'react-redux';
@@ -19,8 +19,8 @@ const CreateExercise: React.FC = () => {
 
     const realm = useRealm()
     const user = useUser()
-    
-    
+
+
 
     const createExercise = ({ name, muscles, categories, _id }: ExerciseType) => {
         realm.write(() => {

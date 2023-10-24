@@ -7,7 +7,8 @@ import Header from './components/Header'
 import WorkoutSuggest from './components/WorkoutSuggest';
 import MyWorkouts from './components/MyWorkouts';
 import { useApp, useUser } from '@realm/react';
-import { useRealm } from '../../services/realm';
+import { useRealm } from '../../services/realm/realm';
+import { addSubs } from '../../services/realm/subscription';
 
 
 
@@ -20,21 +21,11 @@ const Home: React.FC = () => {
     const realm = useRealm()
     const app = useApp()
 
-    const addSubs = async () => {
-        await realm.subscriptions.update((sub, realm) => {
-            const historicToSync = realm.objects('Historic').filtered(`user_id == '${user.id}'`)
-            const workoutToSync = realm.objects('Workout').filtered(`user_id == '${user.id}'`)
-            const exercisesToSync = realm.objects('Exercise').filtered(`user_id == '${user.id}'`)
 
-            sub.add(historicToSync, { name: 'historic-Teste' })
-            sub.add(exercisesToSync, { name: 'exercises-Teste' })
-            sub.add(workoutToSync, { name: 'Workout-TEste' })
-        })
-    }
 
     useEffect(() => {
         if (app.currentUser?.isLoggedIn) {
-            addSubs()
+            addSubs(realm, user.id)
         }
     }, [realm])
 

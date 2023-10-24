@@ -14,7 +14,7 @@ import AntDesign from 'react-native-vector-icons/AntDesign'
 import { ExerciseType } from '../../../models/ExerciseType';
 import FilterMuscle from './FilterMuscle';
 import { useFocusEffect } from '@react-navigation/native';
-import { useQuery } from '../../../services/realm';
+import { useQuery } from '../../../services/realm/realm';
 import Animated, { FadeInDown, Layout } from 'react-native-reanimated';
 
 

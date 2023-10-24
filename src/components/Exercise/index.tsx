@@ -8,7 +8,7 @@ import * as S from './styles'
 import { FlatList } from 'react-native';
 import { useDispatch } from 'react-redux'
 import { addExercise } from '../../features/Workout/workoutSlicer'
-import { useRealm } from '../../services/realm';
+import { useRealm } from '../../services/realm/realm';
 import { initialsExercises } from '../../utils/initialsExercises';
 import Animated, { FadeInDown, SlideInRight } from 'react-native-reanimated';
 
@@ -56,18 +56,18 @@ const Exercise: React.FC<Prosp> = ({ item }) => {
 
 
     return (
-            <S.ExerciseContainer onPress={handleAddExercise} onLongPress={handleDelete}>
-                <S.ExerciseName>{item.name}</S.ExerciseName>
-                <FlatList
-                    data={item.muscles}
-                    horizontal
-                    showsHorizontalScrollIndicator={false}
-                    scrollEnabled={false}
-                    renderItem={({ item: m }) => (
-                        <S.ExerciseMuscles>{m}</S.ExerciseMuscles>
-                    )}
-                />
-            </S.ExerciseContainer >
+        <S.ExerciseContainer onPress={handleAddExercise} onLongPress={handleDelete}>
+            <S.ExerciseName>{item.name}</S.ExerciseName>
+            <FlatList
+                data={item.muscles}
+                horizontal
+                showsHorizontalScrollIndicator={false}
+                scrollEnabled={false}
+                renderItem={({ item: m }) => (
+                    <S.ExerciseMuscles>{m}</S.ExerciseMuscles>
+                )}
+            />
+        </S.ExerciseContainer >
     )
 }
 

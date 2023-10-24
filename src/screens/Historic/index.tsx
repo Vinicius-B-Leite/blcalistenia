@@ -6,7 +6,7 @@ import BottomSheet, { BottomSheetRefProps } from '../../components/BottomSheet';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { FlashList } from '@shopify/flash-list';
 import { HistoricBS } from './components/HistoricBS';
-import { useQuery } from '../../services/realm';
+import { useQuery } from '../../services/realm/realm';
 import Animated, { FadeInDown } from 'react-native-reanimated';
 
 
@@ -46,7 +46,7 @@ const Historic: React.FC = () => {
                 </S.HistoricListContainer>
 
                 <BottomSheet onClose={() => setBottomSheetItem(null)} ref={bottomsheetRef} >
-                    <HistoricBS item={bottomSheetItem}  />
+                    <HistoricBS item={bottomSheetItem} />
                 </BottomSheet>
 
             </S.Container>
