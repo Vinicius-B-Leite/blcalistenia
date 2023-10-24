@@ -1,27 +1,22 @@
-import React, { useEffect, useRef } from 'react';
-import { Alert } from 'react-native'
-import * as S from './styles'
-import AntDesign from 'react-native-vector-icons/AntDesign'
-import Feather from 'react-native-vector-icons/Feather'
-import { useTheme } from 'styled-components/native';
-import { NavigationProp, useNavigation } from '@react-navigation/native';
-import { RootStackParamList } from '../../../routes/Models';
 import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '../../../features/store';
+import { RootState } from '../../../../features/store';
 import BackgroundService from 'react-native-background-actions'
-import { resetTimer, setWorkout } from '../../../features/Workout/workoutSlicer';
-import { WorkoutType } from '../../../models/WorkoutType';
-import { useRealm } from '../../../services/realm/realm';
-import { pickeImage } from '../../../utils/pickImage';
+import { resetTimer, setWorkout } from '../../../../features/Workout/workoutSlicer';
+import { WorkoutType } from '../../../../models/WorkoutType';
+import { useRealm } from '../../../../services/realm/realm';
+import { pickeImage } from '../../../../utils/pickImage';
 import { useUser } from '@realm/react';
+import { NavigationProp, useNavigation } from '@react-navigation/native';
+import { RootStackParamList } from '@/routes/Models';
+import { Alert } from 'react-native';
+import { useEffect, useRef } from 'react';
+
 
 
 type Nav = NavigationProp<RootStackParamList, 'Workout'>
 
-const Header: React.FC = () => {
 
-
-    const theme = useTheme()
+export default function useWorkoutHeader() {
     const navigation = useNavigation<Nav>()
     const realm = useRealm()
     const user = useUser()
@@ -80,6 +75,7 @@ const Header: React.FC = () => {
         })
     }
 
+
     const handleSelectImage = async () => {
         try {
             const res = await pickeImage()
@@ -99,34 +95,11 @@ const Header: React.FC = () => {
         })
     }, [])
 
-
-
-    return (
-        <S.Header>
-            <S.Left>
-                <S.GoBack onPressIn={() => navigation.goBack()}>
-                    <AntDesign name='arrowleft' size={theme.sizes.icons.md} color={theme.colors.contrast} />
-                </S.GoBack>
-                <S.Title
-                    value={workout.title}
-                    onChangeText={(txt) => dispatch(setWorkout({ ...workout, title: txt }))}
-                    placeholder='Título do treino'
-                    placeholderTextColor={theme.colors.darkContrast}
-                />
-            </S.Left>
-            {
-                isWorkingout ? (
-                    <S.CancelWorkoutBtn onPress={cancelWorkout}>
-                        <S.CancelWorkoutTxt>Cancelar</S.CancelWorkoutTxt>
-                    </S.CancelWorkoutBtn>
-                ) : (
-                    <S.ButtonContainer onPress={handleSelectImage}>
-                        <Feather name='image' size={theme.sizes.icons.sm} color={theme.colors.contrast} />
-                    </S.ButtonContainer>
-                )
-            }
-        </S.Header>
-    )
+    return {
+        handleSelectImage,
+        isWorkingout,
+        workout,
+        cancelWorkout,
+        onChangeTitleText: (txt: string) => dispatch(setWorkout({ ...workout, title: txt }))
+    }
 }
-
-export default Header;

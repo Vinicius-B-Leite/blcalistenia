@@ -16,7 +16,7 @@ export const GoBack = styled.TouchableOpacity`
     padding: 4% 0;
     align-items: center;
     justify-content: center;
-    border-radius: ${({theme}) => theme.sizes.borderRadius.full}px;
+    border-radius: ${({ theme }) => theme.sizes.borderRadius.full}px;
 `
 export const Title = styled.TextInput`
     color: ${({ theme }) => theme.colors.contrast};
@@ -42,9 +42,9 @@ export const ButtonContainer = styled.TouchableOpacity`
 
 
 export const ExercisesContainer = styled.View`
-    width: ${({theme}) => theme.sizes.vw}px;
+    width: ${({ theme }) => theme.sizes.vw}px;
     min-height: 50px;
-    height: ${({theme}) => theme.sizes.vh * 0.55}px;
+    height: ${({ theme }) => theme.sizes.vh * 0.55}px;
 `
 
 export const AddExerciseButton = styled.TouchableOpacity`
@@ -53,8 +53,20 @@ export const AddExerciseButton = styled.TouchableOpacity`
     padding: 3% 5%;
 `
 export const AddExerciseText = styled.Text`
-    color: ${({theme}) => theme.colors.contrast};
+    color: ${({ theme }) => theme.colors.contrast};
     
-    font-size: ${({theme}) => theme.sizes.fontSize.sm}px;
+    font-size: ${({ theme }) => theme.sizes.fontSize.sm}px;
     text-decoration: underline;
+`
+export const CreateNewSerieButton = styled.TouchableOpacity`
+    border-radius: ${({ theme }) => theme.sizes.borderRadius.full}px;
+    width: 8%;
+    align-items: center;
+    justify-content: center;
+    background-color: ${({ theme }) => theme.colors.contrast};
+    align-self: center;
+`
+export const CreateNewSerieText = styled.Text`
+    font-size: ${({ theme }) => theme.sizes.fontSize.md}px;
+    color: ${({ theme }) => theme.colors.text};
 `

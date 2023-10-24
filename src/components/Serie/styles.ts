@@ -18,6 +18,7 @@ export const SerieInfo = styled.TextInput.attrs({
     width: 12%;
     font-size: ${({ theme }) => theme.sizes.fontSize.sm}px;
     padding: 0 ;
+    color: ${({ theme }) => theme.colors.text}; 
 `
 
 export const DeleteSerieButton = styled.TouchableOpacity`

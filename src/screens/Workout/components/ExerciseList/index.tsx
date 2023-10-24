@@ -1,19 +1,26 @@
 import { FlashList } from '@shopify/flash-list';
 import React from 'react';
-import { View } from 'react-native';
-import ExerciseInWorkoutItem from '../../../components/ExerciseInWorkoutItem';
-import * as S from './styles'
-import { useSelector } from 'react-redux';
-import { RootState } from '../../../features/store';
+import { TouchableOpacity, View } from 'react-native';
+import ExerciseInWorkoutItem from '../../../../components/ExerciseInWorkoutItem';
+import * as S from '../styles'
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '../../../../features/store';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
-import { RootStackParamList } from '../../../routes/Models';
+import { RootStackParamList } from '../../../../routes/Models';
+import { addSerie, removeExercise } from '@/features/Workout/workoutSlicer';
+import FontAwesome from 'react-native-vector-icons/FontAwesome'
+import { useTheme } from 'styled-components/native';
 
 
 
 type Nav = NavigationProp<RootStackParamList>
 const ExerciseList: React.FC = () => {
+    const theme = useTheme()
+
     const workout = useSelector((state: RootState) => state.workout.workout)
     const navigation = useNavigation<Nav>()
+    const dispatch = useDispatch()
+
     return (
         <S.ExercisesContainer>
             <FlashList
@@ -25,9 +32,17 @@ const ExerciseList: React.FC = () => {
                 renderItem={({ item }) => (
                     <ExerciseInWorkoutItem
                         item={item}
-                        showCreateSerie={true}
+                        createSerieBtn={
+                            <S.CreateNewSerieButton onPress={() => dispatch(addSerie(item))}>
+                                <S.CreateNewSerieText>+</S.CreateNewSerieText>
+                            </S.CreateNewSerieButton>
+                        }
                         showDeleteSerieButton={true}
-                        showDeleteExerciseBtn={true}
+                        deleteExerciseBtn={
+                            <TouchableOpacity onPress={() => dispatch(removeExercise(item))}>
+                                <FontAwesome name='trash' size={theme.sizes.icons.sm} color={theme.colors.alert} />
+                            </TouchableOpacity>
+                        }
                     />
                 )}
                 ListFooterComponent={() => (
