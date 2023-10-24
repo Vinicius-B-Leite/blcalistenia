@@ -1,7 +1,7 @@
 import { useNavigation } from '@react-navigation/native';
 import React from 'react';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { RootStackParamList } from '../../routes/Models';
+import { RootStackParamList } from '../../../../../routes/Models';
 import * as S from './styles'
 
 type ScreenProps = StackNavigationProp<RootStackParamList, 'Home'>

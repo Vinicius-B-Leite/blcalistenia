@@ -10,7 +10,7 @@ type WorkoutListState = {
 }
 
 const initalState: WorkoutListState = {
-    filteredWorkouts: null
+    filteredWorkouts: []
 }
 
 export const WorkoutListSlicer = createSlice({

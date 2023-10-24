@@ -1,10 +1,11 @@
-import styled from "styled-components/native"
+import styled from "styled-components/native";
 
 export const Header = styled.View`
     flex-direction: row;
     padding: 5%;
     justify-content: space-between;
 `
+
 export const Left = styled.TouchableOpacity`
     flex-direction: row;
     gap: ${({ theme }) => theme.sizes.vw * 0.05}px;

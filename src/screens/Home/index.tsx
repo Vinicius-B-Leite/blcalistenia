@@ -1,6 +1,5 @@
-import React, { useCallback, useEffect, useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import Container from '../../components/Container';
-import { View } from 'react-native'
 import CalendarDaysTrained, { CalendarRef } from '../../components/CalendarDaysTrained';
 import GoBackToWorkout from '../../components/GoBackToWorkout';
 import Header from './components/Header'
@@ -24,7 +23,8 @@ const Home: React.FC = () => {
 
 
     useEffect(() => {
-        if (app.currentUser?.isLoggedIn) {
+        const isUserLogged = app.currentUser?.isLoggedIn
+        if (isUserLogged) {
             addSubs(realm, user.id)
         }
     }, [realm])
@@ -32,7 +32,7 @@ const Home: React.FC = () => {
 
 
     return (
-        <View style={{ flex: 1 }}>
+        <>
             <Container>
                 <CalendarDaysTrained ref={calendarRef} />
                 <Header openCalendar={() => calendarRef.current?.openCalendar()} />
@@ -42,7 +42,7 @@ const Home: React.FC = () => {
                 <WorkoutSuggest />
             </Container>
             <GoBackToWorkout />
-        </View>
+        </>
     )
 }
 

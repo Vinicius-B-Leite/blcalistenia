@@ -2,7 +2,7 @@ import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import React from 'react';
 import FastImage from 'react-native-fast-image';
-import { RootStackParamList } from '../../routes/Models';
+import { RootStackParamList } from '../../../../../routes/Models';
 import * as S from './style'
 
 
@@ -14,7 +14,7 @@ const ListEmptyComponent: React.FC = () => {
     return (
         <S.Container onPressIn={() => navigation.navigate('Workout', { workout: undefined })}>
             <S.Banner
-                source={{uri: 'https://t4.ftcdn.net/jpg/03/37/55/05/360_F_337550559_PvlwclphnxWPMYz4ZSYsSBygld4R7Y4M.jpg'}}
+                source={{ uri: 'https://t4.ftcdn.net/jpg/03/37/55/05/360_F_337550559_PvlwclphnxWPMYz4ZSYsSBygld4R7Y4M.jpg' }}
                 resizeMode={FastImage.resizeMode.cover}
             />
             <S.TextContainer>

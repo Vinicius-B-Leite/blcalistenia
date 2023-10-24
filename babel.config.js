@@ -21,6 +21,7 @@ module.exports = {
           "@/types": "./src/types",
           "@/utils": "./src/utils",
           "@/index": "./src/index.tsx",
+          "@/hooks": "./src/hooks",
         }
       }
     ]
