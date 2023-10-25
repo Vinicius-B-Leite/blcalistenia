@@ -1,23 +1,24 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '../../../../features/store';
+import { RootState } from '@/features/store';
 import BackgroundService from 'react-native-background-actions'
-import { resetTimer, setWorkout } from '../../../../features/Workout/workoutSlicer';
-import { WorkoutType } from '../../../../models/WorkoutType';
-import { useRealm } from '../../../../services/realm/realm';
-import { pickeImage } from '../../../../utils/pickImage';
+import { resetTimer, setWorkout } from '@/features/Workout/workoutSlicer';
+import { WorkoutType } from '@/models/WorkoutType';
+import { useRealm } from '@/services/realm/realm';
+import { pickeImage } from '@/utils/pickImage';
 import { useUser } from '@realm/react';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
 import { RootStackParamList } from '@/routes/Models';
 import { Alert } from 'react-native';
 import { useEffect, useRef } from 'react';
+import { useAppNavigation } from '@/hooks/useAppNavigation';
 
 
 
-type Nav = NavigationProp<RootStackParamList, 'Workout'>
+
 
 
 export default function useWorkoutHeader() {
-    const navigation = useNavigation<Nav>()
+    const navigation = useAppNavigation()
     const realm = useRealm()
     const user = useUser()
 
@@ -42,7 +43,7 @@ export default function useWorkoutHeader() {
                         BackgroundService.stop()
                             .then(() => {
                                 dispatch(resetTimer())
-                                navigation.navigate('Home')
+                                navigation.navigate('HomeStack', { screen: 'Home' })
                             })
                     }
                 },
@@ -71,7 +72,7 @@ export default function useWorkoutHeader() {
                 },
                 Realm.UpdateMode.Modified)
 
-            navigation.navigate('Home')
+            navigation.navigate('HomeStack', { screen: 'Home' })
         })
     }
 

@@ -6,10 +6,11 @@ import { useTheme } from 'styled-components/native';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../../features/store';
 import { setSearchInput } from '../../../features/Exercises/exerciseSlicer';
+import { useAppNavigation } from '@/hooks/useAppNavigation';
 
 
 const ListHeader: React.FC = () => {
-    const navigation = useNavigation()
+    const navigation = useAppNavigation()
     const theme = useTheme()
 
     const searchExerciseInput = useSelector((state: RootState) => state.exercise.searchInput)

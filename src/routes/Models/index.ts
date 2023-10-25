@@ -1,4 +1,4 @@
-import {  NavigatorScreenParams } from '@react-navigation/native';
+import { NavigatorScreenParams } from '@react-navigation/native';
 import { WorkoutType } from '../../models/WorkoutType';
 
 
@@ -7,9 +7,9 @@ export type RootStackParamList = {
     Workout: {
         workout?: WorkoutType | undefined
     },
-    AddExercise: undefined, 
+    AddExercise: undefined,
 
-    Rest:{
+    Rest: {
         totalSeconds: Number
     },
     Profile: undefined
@@ -20,4 +20,4 @@ export type TabParamList = {
     HomeStack: NavigatorScreenParams<RootStackParamList>,
     Dashboard: undefined,
     Historic: undefined,
-  };
+};

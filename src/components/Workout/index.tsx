@@ -7,6 +7,7 @@ import { WorkoutType } from '../../models/WorkoutType';
 import { RootStackParamList } from '../../routes/Models';
 import * as S from './styles'
 import { useRealm } from '../../services/realm/realm';
+import { useAppNavigation } from '@/hooks/useAppNavigation';
 
 
 
@@ -14,10 +15,9 @@ type Props = {
     data: WorkoutType,
 }
 
-type Navigation = StackNavigationProp<RootStackParamList, 'Home'>
 
 const Workout: React.FC<Props> = ({ data }) => {
-    const navigation = useNavigation<Navigation>()
+    const navigation = useAppNavigation()
     const realm = useRealm()
 
     const deleteWorkout = (workoutID: string) => {
@@ -46,7 +46,7 @@ const Workout: React.FC<Props> = ({ data }) => {
 
     return (
         <S.Container
-            onPress={() => navigation.navigate('Workout', { workout: data })}
+            onPress={() => navigation.navigate('HomeStack', { screen: 'Workout', params: { workout: data } })}
             onLongPress={handleDelete}>
             <S.Banner
                 source={{

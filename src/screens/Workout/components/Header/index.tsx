@@ -6,7 +6,7 @@ import Feather from 'react-native-vector-icons/Feather'
 import { useTheme } from 'styled-components/native';
 import { RootStackParamList } from '../../../../routes/Models';
 import useWorkoutHeader from './useWorkoutHeader';
-import { useNavigation } from '@react-navigation/native';
+import { useAppNavigation } from '@/hooks/useAppNavigation';
 
 
 
@@ -14,7 +14,7 @@ import { useNavigation } from '@react-navigation/native';
 const Header: React.FC = () => {
 
     const theme = useTheme()
-    const navigation = useNavigation()
+    const navigation = useAppNavigation()
 
 
     const { handleSelectImage, isWorkingout, workout, onChangeTitleText, cancelWorkout } = useWorkoutHeader()

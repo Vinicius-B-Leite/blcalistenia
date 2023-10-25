@@ -1,13 +1,15 @@
 import { StackScreenProps } from '@react-navigation/stack';
 import React, { useRef } from 'react';
-import {Vibration} from 'react-native'
+import { Vibration } from 'react-native'
 import CountDown, { CountDownRef } from '../../components/CountDown';
 import { RootStackParamList } from '../../routes/Models';
 import * as S from './styles'
+import { useRoute } from '@react-navigation/native';
 
 type NavigationPropsType = StackScreenProps<RootStackParamList, 'Rest'>
-const Rest: React.FC<NavigationPropsType> = ({ route, navigation }) => {
 
+const Rest: React.FC<NavigationPropsType> = ({ route, navigation }) => {
+    const { } = useRoute()
 
     const countDownRef = useRef<CountDownRef>(null)
 
@@ -19,9 +21,7 @@ const Rest: React.FC<NavigationPropsType> = ({ route, navigation }) => {
         countDownRef.current?.lessSecond(10)
     }
 
-    const onChronometerFineshed = () => { 
-
-        // Vibration.vibrate()
+    const onChronometerFineshed = () => {
         navigation.goBack()
     }
     return (

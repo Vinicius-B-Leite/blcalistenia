@@ -10,15 +10,16 @@ import { RootStackParamList } from '../../../../routes/Models';
 import { addSerie, removeExercise } from '@/features/Workout/workoutSlicer';
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import { useTheme } from 'styled-components/native';
+import { useAppNavigation } from '@/hooks/useAppNavigation';
 
 
 
-type Nav = NavigationProp<RootStackParamList>
+
 const ExerciseList: React.FC = () => {
     const theme = useTheme()
 
     const workout = useSelector((state: RootState) => state.workout.workout)
-    const navigation = useNavigation<Nav>()
+    const navigation = useAppNavigation()
     const dispatch = useDispatch()
 
     return (
@@ -46,7 +47,7 @@ const ExerciseList: React.FC = () => {
                     />
                 )}
                 ListFooterComponent={() => (
-                    <S.AddExerciseButton onPress={() => navigation.navigate('AddExercise')}>
+                    <S.AddExerciseButton onPress={() => navigation.navigate('HomeStack', { screen: 'AddExercise' })}>
                         <S.AddExerciseText>Adiconar exercício</S.AddExerciseText>
                     </S.AddExerciseButton>
                 )}

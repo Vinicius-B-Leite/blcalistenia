@@ -6,6 +6,7 @@ import { NavigationProp, useFocusEffect, useNavigation } from '@react-navigation
 import { RootStackParamList } from '@/routes/Models';
 import { useApp } from '@realm/react';
 import DefaultUserPhoto from '@/assets/defaultUserPhoto.png'
+import { useAppNavigation } from '@/hooks/useAppNavigation';
 
 type Nav = NavigationProp<RootStackParamList>
 type HeaderProps = {
@@ -14,7 +15,7 @@ type HeaderProps = {
 
 const Header: React.FC<HeaderProps> = ({ openCalendar }) => {
     const theme = useTheme()
-    const navigation = useNavigation<Nav>()
+    const navigation = useAppNavigation()
     const app = useApp()
     const [user, setUser] = useState(app.currentUser?.customData)
 
@@ -25,7 +26,7 @@ const Header: React.FC<HeaderProps> = ({ openCalendar }) => {
 
     return (
         <S.Header>
-            <S.Left onPressIn={() => navigation.navigate('Profile')} >
+            <S.Left onPressIn={() => navigation.navigate('HomeStack', { screen: 'Profile' })} >
                 <S.Avatar source={user?.avatar ? { uri: user?.avatar as string } : DefaultUserPhoto} />
 
                 <S.TextContainer>

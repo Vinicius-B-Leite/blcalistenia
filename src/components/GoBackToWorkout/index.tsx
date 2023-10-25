@@ -7,6 +7,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../../features/store';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
 import { TabParamList } from '../../routes/Models';
+import { useAppNavigation } from '@/hooks/useAppNavigation';
 
 
 
@@ -14,7 +15,7 @@ type Nav = NavigationProp<TabParamList>
 
 const GoBackToWorkout: React.FC = () => {
     const { colors, sizes } = useTheme()
-    const navigation = useNavigation<Nav>()
+    const navigation = useAppNavigation()
 
     const isWorkingout = useSelector((state: RootState) => state.workout.isWorkingout)
     const currentWorkout = useSelector((state: RootState) => state.workout.workout)

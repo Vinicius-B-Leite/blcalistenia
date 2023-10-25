@@ -1,5 +1,6 @@
 import { removeSerie, updateSerie } from '@/features/Workout/workoutSlicer';
 import { RootState } from '@/features/store';
+import { useAppNavigation } from '@/hooks/useAppNavigation';
 import { useAppSelector } from '@/hooks/useAppSelector';
 import { ExercisesInWorkoutType } from '@/models/ExercisesInWorkoutType';
 import { SerieType } from '@/models/SerieType';
@@ -17,7 +18,7 @@ type useSerieProps = {
     deleteSerieButton?: boolean,
 }
 export default function useSerie({ item, exercise, deleteSerieButton }: useSerieProps) {
-    const navigation = useNavigation<NavigationType>()
+    const navigation = useAppNavigation()
 
     const dispatch = useDispatch()
     const showSucessButton = useAppSelector((state) => state.workout.isWorkingout)
@@ -45,7 +46,7 @@ export default function useSerie({ item, exercise, deleteSerieButton }: useSerie
             serieNumber: item.serie as number
         }))
         setDone(!done)
-        navigation.navigate('Rest', { totalSeconds: item.rest })
+        navigation.navigate('HomeStack', { screen: 'Rest', params: { totalSeconds: item.rest } })
     }
 
     const handleDeleteSerie = () => {
