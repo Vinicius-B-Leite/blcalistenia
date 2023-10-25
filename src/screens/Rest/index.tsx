@@ -2,14 +2,16 @@ import { StackScreenProps } from '@react-navigation/stack';
 import React, { useRef } from 'react';
 import { Vibration } from 'react-native'
 import CountDown, { CountDownRef } from '../../components/CountDown';
-import { RootStackParamList } from '../../routes/Models';
+import { RootStackParamList, TabParamList } from '../../routes/Models';
 import * as S from './styles'
-import { useRoute } from '@react-navigation/native';
+import { RouteProp, useRoute } from '@react-navigation/native';
+import { useAppNavigation } from '@/hooks/useAppNavigation';
 
-type NavigationPropsType = StackScreenProps<RootStackParamList, 'Rest'>
+type Route = RouteProp<RootStackParamList, 'Rest'>
 
-const Rest: React.FC<NavigationPropsType> = ({ route, navigation }) => {
-    const { } = useRoute()
+const Rest: React.FC = () => {
+    const { totalSeconds } = useRoute<Route>().params
+    const navigation = useAppNavigation()
 
     const countDownRef = useRef<CountDownRef>(null)
 
@@ -26,7 +28,7 @@ const Rest: React.FC<NavigationPropsType> = ({ route, navigation }) => {
     }
     return (
         <S.Container>
-            <CountDown totalSeconds={route.params.totalSeconds as number} ref={countDownRef} onFineshed={onChronometerFineshed} />
+            <CountDown totalSeconds={totalSeconds as number} ref={countDownRef} onFineshed={onChronometerFineshed} />
 
             <S.ButtonsContainer>
                 <S.CountDownButton bg='contrast' onPress={increaseSecondsInCountdown}>

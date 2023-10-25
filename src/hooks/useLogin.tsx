@@ -1,9 +1,7 @@
 import { GoogleSignin } from "@react-native-google-signin/google-signin"
 import { useState } from "react"
-import { getGoogleCredentials } from "../../utils/getGoogleCredentials"
+import { getGoogleCredentials } from "../utils/getGoogleCredentials"
 import { Realm, useApp } from "@realm/react"
-
-
 
 export default function useLogin() {
     const app = useApp()
@@ -35,12 +33,30 @@ export default function useLogin() {
             setIsSingInAnonymousLoading(false)
         }
     }
+    const logout = async () => {
+        await Promise.all([
+            app.currentUser?.logOut(),
+            GoogleSignin.signOut()
+        ])
+    }
+    const singUp = async () => {
+        try {
+            const googleCredentials = await getGoogleCredentials()
+            if (googleCredentials) {
+                await app.currentUser?.linkCredentials(googleCredentials)
+            }
+        } catch (error) {
+            console.log('SingUp with google error => ' + error)
+        }
+    }
 
 
     return {
         singInGoogle,
         singInAnonymous,
         isSingInAnonymousLoading,
-        isSingInGoogleLoading
+        isSingInGoogleLoading,
+        logout,
+        singUp,
     }
 }

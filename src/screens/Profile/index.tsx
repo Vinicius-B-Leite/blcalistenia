@@ -1,17 +1,15 @@
 import Realm from 'realm'
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 import * as S from './styles'
 import Feather from 'react-native-vector-icons/Feather'
 import { useTheme } from 'styled-components/native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../../routes/Models';
-import { pickeImage } from '../../utils/pickImage';
 import FastImage from 'react-native-fast-image';
 import ThemeSelect from '../../components/ThemeSelect';
 import ChangeUsername from '../../components/ChangeUsername';
-import { GoogleSignin, GoogleSigninButton, statusCodes, } from "@react-native-google-signin/google-signin";
-import { useApp, useUser } from '@realm/react';
-import { getGoogleCredentials } from '../../utils/getGoogleCredentials';
+import useLogin from '@/hooks/useLogin';
+import useProfile from './useProfile';
 
 
 type NavigationProps = NativeStackScreenProps<RootStackParamList, 'Profile'>
@@ -21,77 +19,14 @@ const Profile: React.FC<NavigationProps> = ({ navigation }) => {
 
     const theme = useTheme()
     const [showThemeSelect, setShowThemeSelect] = useState(false)
-    const [showChangeUsername, setShowChangeUsername] = useState(false)
-    const app = useApp()
-    const userRealm = useUser()
-    const [user, setUser] = useState(app.currentUser?.customData)
 
 
-    const customUserDataCollection = userRealm
-        .mongoClient('mongodb-atlas')
-        .db('blcalistenia')
-        .collection('custom-user-data')
-
-    const filter = {
-        user_id: userRealm.id,
-    };
-
-    const handlePickImage = async () => {
-        const image = await pickeImage()
-
-        if (image.assets && image.assets[0].uri) {
+    const { logout, singUp } = useLogin()
+    const { handleChangeName, handlePickImage, showChangeUsername, user, userRealm, openChangeUsernameModal, closeChangeUsernameModal } = useProfile()
 
 
-            const updateDoc = {
-                $set: {
-                    user_id: userRealm.id,
-                    avatar: image.assets[0].uri,
-                },
-            };
-            const options = { upsert: true }
-
-            customUserDataCollection.updateOne(filter, updateDoc, options)
-
-            const customUserData = await userRealm.refreshCustomData();
-            setUser(customUserData)
-        }
-    }
-
-    const handleChangeName = async (newName: string) => {
-        if (!newName) return
-        const updateDoc = {
-            $set: {
-                user_id: userRealm.id,
-                username: newName,
-            },
-        };
-        const options = { upsert: true }
-
-        customUserDataCollection.updateOne(filter, updateDoc, options)
-
-        const customUserData = await app.currentUser?.refreshCustomData();
-        setUser(customUserData)
-        setShowChangeUsername(false)
-    }
 
 
-    const singUp = async () => {
-        try {
-            const googleCredentials = await getGoogleCredentials()
-            if (googleCredentials) {
-                await app.currentUser?.linkCredentials(googleCredentials)
-            }
-        } catch (error) {
-            console.log('SingUp with google error => ' + error)
-        }
-    }
-
-    const logout = async () => {
-        await Promise.all([
-            app.currentUser?.logOut(),
-            GoogleSignin.signOut()
-        ])
-    }
 
     return (
         <S.Container>
@@ -108,7 +43,7 @@ const Profile: React.FC<NavigationProps> = ({ navigation }) => {
             </S.ButtonChangeImage>
             <S.Username>{user?.username as string || 'Desconhecido'}</S.Username>
 
-            <S.OptionContainer onPressIn={() => setShowChangeUsername(true)}>
+            <S.OptionContainer onPressIn={openChangeUsernameModal}>
                 <S.Left>
                     <Feather name='user' size={theme.sizes.icons.md} color={theme.colors.contrast} />
                 </S.Left>
@@ -143,7 +78,7 @@ const Profile: React.FC<NavigationProps> = ({ navigation }) => {
 
             <ChangeUsername
                 visible={showChangeUsername}
-                onRequestClose={() => setShowChangeUsername(false)}
+                onRequestClose={closeChangeUsernameModal}
                 animationType='slide'
                 transparent
                 changeName={(newName) => handleChangeName(newName)}

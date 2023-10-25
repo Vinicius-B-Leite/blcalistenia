@@ -1,7 +1,7 @@
 import { ActivityIndicator } from 'react-native'
 import * as S from './styles'
 import { useTheme } from "styled-components/native"
-import useLogin from './useLogin'
+import useLogin from '@/hooks/useLogin'
 
 
 
@@ -12,9 +12,9 @@ export default function Login() {
 
     return (
         <S.Container>
-            <S.ImageBG source={require('../../assets/loginBackground.png')} />
+            <S.ImageBG source={require('@/assets/loginBackground.png')} />
 
-            <S.Logo source={require('../../assets/logo.png')} />
+            <S.Logo source={require('@/assets/logo.png')} />
 
             <S.Button bgTransparent={false} onPress={singInGoogle}>
                 {
