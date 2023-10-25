@@ -7,13 +7,14 @@ import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../../features/store';
 import { setSearchInput } from '../../../features/Exercises/exerciseSlicer';
 import { useAppNavigation } from '@/hooks/useAppNavigation';
+import { useAppSelector } from '@/hooks/useAppSelector';
 
 
 const ListHeader: React.FC = () => {
     const navigation = useAppNavigation()
     const theme = useTheme()
 
-    const searchExerciseInput = useSelector((state: RootState) => state.exercise.searchInput)
+    const searchExerciseInput = useAppSelector((state) => state.exercise.searchInput)
     const dispatch = useDispatch()
 
     return (

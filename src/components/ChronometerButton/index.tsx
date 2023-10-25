@@ -12,14 +12,15 @@ import { NavigationProp, useNavigation } from '@react-navigation/native';
 import { RootStackParamList } from '../../routes/Models';
 import { useRealm } from '../../services/realm/realm';
 import { useUser } from '@realm/react';
+import { useAppSelector } from '@/hooks/useAppSelector';
 
 
 type Nav = NavigationProp<RootStackParamList>
 
 const ChronometerButton: React.FC = ({ }) => {
-    const timer = useSelector((state: RootState) => state.workout.timer)
+    const timer = useAppSelector((state) => state.workout.timer)
     const dispatch = useDispatch()
-    const workout = useSelector((state: RootState) => state.workout.workout)
+    const workout = useAppSelector((state) => state.workout.workout)
     const realm = useRealm()
     const user = useUser()
     const navigation = useNavigation<Nav>()

@@ -6,6 +6,7 @@ import Serie from '../Serie';
 import { useDispatch, useSelector } from 'react-redux'
 import { updateAnotation } from '../../features/Workout/workoutSlicer'
 import { RootState } from '../../features/store';
+import { useAppSelector } from '@/hooks/useAppSelector';
 
 type Props = {
     item: ExercisesInWorkoutType,
@@ -20,7 +21,7 @@ const ExerciseInWorkoutItem: React.FC<Props> = ({ item, createSerieBtn, showDele
     const theme = useTheme()
 
     const dispatch = useDispatch()
-    const isWorkingout = useSelector((state: RootState) => state.workout.isWorkingout)
+    const isWorkingout = useAppSelector((state) => state.workout.isWorkingout)
 
 
 

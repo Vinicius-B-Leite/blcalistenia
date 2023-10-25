@@ -11,6 +11,7 @@ import { addSerie, removeExercise } from '@/features/Workout/workoutSlicer';
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import { useTheme } from 'styled-components/native';
 import { useAppNavigation } from '@/hooks/useAppNavigation';
+import { useAppSelector } from '@/hooks/useAppSelector';
 
 
 
@@ -18,7 +19,7 @@ import { useAppNavigation } from '@/hooks/useAppNavigation';
 const ExerciseList: React.FC = () => {
     const theme = useTheme()
 
-    const workout = useSelector((state: RootState) => state.workout.workout)
+    const workout = useAppSelector((state) => state.workout.workout)
     const navigation = useAppNavigation()
     const dispatch = useDispatch()
 

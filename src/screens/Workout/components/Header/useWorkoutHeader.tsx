@@ -11,6 +11,7 @@ import { RootStackParamList } from '@/routes/Models';
 import { Alert } from 'react-native';
 import { useEffect, useRef } from 'react';
 import { useAppNavigation } from '@/hooks/useAppNavigation';
+import { useAppSelector } from '@/hooks/useAppSelector';
 
 
 
@@ -23,8 +24,8 @@ export default function useWorkoutHeader() {
     const user = useUser()
 
     const dispatch = useDispatch()
-    const isWorkingout = useSelector((state: RootState) => state.workout.isWorkingout)
-    const workout = useSelector((state: RootState) => state.workout.workout)
+    const isWorkingout = useAppSelector((state) => state.workout.isWorkingout)
+    const workout = useAppSelector((state) => state.workout.workout)
 
     const isWorkingoutRef = useRef(isWorkingout)
     isWorkingoutRef.current = isWorkingout

@@ -8,18 +8,17 @@ import { RootState } from '../../features/store';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
 import { TabParamList } from '../../routes/Models';
 import { useAppNavigation } from '@/hooks/useAppNavigation';
+import { useAppSelector } from '@/hooks/useAppSelector';
 
 
-
-type Nav = NavigationProp<TabParamList>
 
 const GoBackToWorkout: React.FC = () => {
     const { colors, sizes } = useTheme()
     const navigation = useAppNavigation()
 
-    const isWorkingout = useSelector((state: RootState) => state.workout.isWorkingout)
-    const currentWorkout = useSelector((state: RootState) => state.workout.workout)
-    const timer = useSelector((state: RootState) => state.workout.timer)
+    const isWorkingout = useAppSelector((state) => state.workout.isWorkingout)
+    const currentWorkout = useAppSelector((state) => state.workout.workout)
+    const timer = useAppSelector((state) => state.workout.timer)
 
     if (!isWorkingout || !timer) {
         return <></>
