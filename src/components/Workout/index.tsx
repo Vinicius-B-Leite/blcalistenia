@@ -1,62 +1,33 @@
-import { useNavigation } from '@react-navigation/native';
-import { StackNavigationProp } from '@react-navigation/stack';
 import React, { memo } from 'react';
-import { Alert } from 'react-native';
 import FastImage from 'react-native-fast-image';
 import { WorkoutType } from '../../models/WorkoutType';
-import { RootStackParamList } from '../../routes/Models';
 import * as S from './styles'
-import { useRealm } from '../../services/realm/realm';
 import { useAppNavigation } from '@/hooks/useAppNavigation';
-
+import useWorkout from './useWorkout';
+import ImageNotFound from '@/assets/imageNotFound.png'
 
 
 type Props = {
-    data: WorkoutType,
+    workout: WorkoutType,
 }
 
 
-const Workout: React.FC<Props> = ({ data }) => {
+const Workout: React.FC<Props> = ({ workout }) => {
     const navigation = useAppNavigation()
-    const realm = useRealm()
-
-    const deleteWorkout = (workoutID: string) => {
-        realm.write(() => {
-            realm.delete(realm.objectForPrimaryKey('Workout', workoutID))
-        })
-    }
-
-    const handleDelete = () => {
-        Alert.alert(
-            'Deletar',
-            'Deseja deletar o treino ' + data.title + '?',
-            [
-                {
-                    text: 'Sim',
-                    onPress: () => deleteWorkout(data._id),
-                },
-                {
-                    text: 'Não',
-                    style: 'cancel'
-                }
-            ]
-        )
-    }
+    const { handleDelete } = useWorkout()
 
 
     return (
         <S.Container
-            onPress={() => navigation.navigate('HomeStack', { screen: 'Workout', params: { workout: data } })}
-            onLongPress={handleDelete}>
+            onPress={() => navigation.navigate('HomeStack', { screen: 'Workout', params: { workout: workout } })}
+            onLongPress={() => handleDelete(workout.title, workout._id)}>
             <S.Banner
-                source={{
-                    uri: data.banner.length > 0 ? data.banner : 'https://www.salonlfc.com/wp-content/uploads/2018/01/image-not-found-1-scaled-1150x647.png',
-                }}
+                source={workout.banner.length > 0 ? { uri: workout.banner } : ImageNotFound}
                 resizeMode={FastImage.resizeMode.cover}
 
             />
             <S.TextContainer>
-                <S.Text >{data.title}</S.Text>
+                <S.Text >{workout.title}</S.Text>
             </S.TextContainer>
         </S.Container>
     )

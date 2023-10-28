@@ -8,9 +8,12 @@ type Props = {
 }
 
 const Muscle = ({ muscle, muscleSelected, onClick }: Props) => {
+
+    const isSelected = muscle === muscleSelected
+
     return (
-        <S.Container selected={muscle == muscleSelected} onPress={() => onClick(muscle)}>
-            <S.MuscleName selected={muscle == muscleSelected}>{muscle}</S.MuscleName>
+        <S.Container selected={isSelected} onPress={() => onClick(muscle)}>
+            <S.MuscleName selected={isSelected}>{muscle}</S.MuscleName>
         </S.Container>
     )
 }

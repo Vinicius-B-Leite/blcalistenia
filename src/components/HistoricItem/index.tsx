@@ -10,6 +10,7 @@ type Props = {
 
 const HistoricItem: React.FC<Props> = ({ item, onClick }) => {
     const { title, exercises }: WorkoutType = JSON.parse(item.workout)
+
     const day = String(item.date.getDate()).padStart(2, '0')
     const month = String(item.date.getMonth() + 1).padStart(2, '0')
     const year = item.date.getFullYear()

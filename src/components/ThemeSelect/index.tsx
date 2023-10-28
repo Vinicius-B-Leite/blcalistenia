@@ -8,6 +8,10 @@ import * as S from './styles'
 type Props = ModalProps
 const ThemeSelect: React.FC<Props> = (props) => {
     const { toggleTheme, theme } = useContext(ThemeContext)
+
+    const isDarkSelected = theme === 'dark'
+    const isLightSelected = theme === 'light'
+
     return (
         <Modal {...props}>
             <S.Container >
@@ -15,17 +19,17 @@ const ThemeSelect: React.FC<Props> = (props) => {
                 <S.Main>
 
                     <S.OptionContainer onPress={() => toggleTheme('dark')}>
-                        <S.OptionCircleBorder selected={theme == 'dark'}>
-                            <S.OptionCircle selected={theme == 'dark'} />
+                        <S.OptionCircleBorder selected={isDarkSelected}>
+                            <S.OptionCircle selected={isDarkSelected} />
                         </S.OptionCircleBorder>
-                        <S.OptionName selected={theme == 'dark'}>Escuro</S.OptionName>
+                        <S.OptionName selected={isDarkSelected}>Escuro</S.OptionName>
                     </S.OptionContainer>
 
                     <S.OptionContainer onPress={() => toggleTheme('light')}>
-                        <S.OptionCircleBorder selected={theme == 'light'}>
-                            <S.OptionCircle selected={theme == 'light'} />
+                        <S.OptionCircleBorder selected={isLightSelected}>
+                            <S.OptionCircle selected={isLightSelected} />
                         </S.OptionCircleBorder>
-                        <S.OptionName selected={theme == 'light'}>Claro</S.OptionName>
+                        <S.OptionName selected={isLightSelected}>Claro</S.OptionName>
                     </S.OptionContainer>
 
 
