@@ -19,7 +19,7 @@ const ListHeader: React.FC = () => {
 
     return (
         <S.Header>
-            <S.GoBack onPressIn={() => navigation.goBack()}>
+            <S.GoBack onPress={() => navigation.goBack()}>
                 <AntDesign name='arrowleft' size={theme.sizes.icons.md} color={theme.colors.text} />
             </S.GoBack>
             <S.InputArea>

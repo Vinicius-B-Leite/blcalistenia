@@ -16,7 +16,7 @@ const ChangeUsername: React.FC<ChangeUsernameProps> = ({ changeName, ...props })
 
     return (
         <Modal {...props} >
-            <S.CloseModal onPressIn={props.onRequestClose} />
+            <S.CloseModal onPress={props.onRequestClose} />
             <S.Container>
                 <S.Title>Alterar nome</S.Title>
 
@@ -27,7 +27,7 @@ const ChangeUsername: React.FC<ChangeUsernameProps> = ({ changeName, ...props })
                     placeholderTextColor={colors.darkText}
                 />
 
-                <S.Submit onPressIn={() => changeName(newName)}>
+                <S.Submit onPress={() => changeName(newName)}>
                     <S.Label>Salvar</S.Label>
                 </S.Submit>
             </S.Container>

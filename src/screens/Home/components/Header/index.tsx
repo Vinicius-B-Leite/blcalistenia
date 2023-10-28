@@ -26,7 +26,7 @@ const Header: React.FC<HeaderProps> = ({ openCalendar }) => {
 
     return (
         <S.Header>
-            <S.Left onPressIn={() => navigation.navigate('HomeStack', { screen: 'Profile' })} >
+            <S.Left onPress={() => navigation.navigate('HomeStack', { screen: 'Profile' })} >
                 <S.Avatar source={user?.avatar ? { uri: user?.avatar as string } : DefaultUserPhoto} />
 
                 <S.TextContainer>
@@ -36,7 +36,7 @@ const Header: React.FC<HeaderProps> = ({ openCalendar }) => {
 
             </S.Left>
 
-            <S.Right onPressIn={openCalendar}>
+            <S.Right onPress={openCalendar}>
                 <AntDesign size={theme.sizes.icons.md} color={theme.colors.text} name='calendar' />
             </S.Right>
         </S.Header>

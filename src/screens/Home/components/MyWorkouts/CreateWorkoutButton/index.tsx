@@ -10,7 +10,7 @@ const CreateWorkoutButton: React.FC = () => {
 
     const navigation = useAppNavigation()
     return (
-        <S.Container onPressIn={() => navigation.navigate('HomeStack', { screen: 'Workout', params: { workout: undefined } })}>
+        <S.Container onPress={() => navigation.navigate('HomeStack', { screen: 'Workout', params: { workout: undefined } })}>
             <S.Icon>+</S.Icon>
         </S.Container>
     )

@@ -13,7 +13,7 @@ const ListEmptyComponent: React.FC = () => {
     const navigation = useAppNavigation()
 
     return (
-        <S.Container onPressIn={() => navigation.navigate('HomeStack', { screen: 'Workout', params: { workout: undefined } })}>
+        <S.Container onPress={() => navigation.navigate('HomeStack', { screen: 'Workout', params: { workout: undefined } })}>
             <S.Banner
                 source={{ uri: 'https://t4.ftcdn.net/jpg/03/37/55/05/360_F_337550559_PvlwclphnxWPMYz4ZSYsSBygld4R7Y4M.jpg' }}
                 resizeMode={FastImage.resizeMode.cover}

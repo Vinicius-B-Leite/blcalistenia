@@ -25,7 +25,7 @@ const CreateExercise: React.FC = () => {
             <S.List>
                 {
                     category.map(c => (
-                        <S.ItemContainer key={c} onPressIn={() => selectCategory(c)} selected={categoriesSelected.includes(c)}>
+                        <S.ItemContainer key={c} onPress={() => selectCategory(c)} selected={categoriesSelected.includes(c)}>
                             <S.ItemName>{c}</S.ItemName>
                         </S.ItemContainer>
                     ))
@@ -35,14 +35,14 @@ const CreateExercise: React.FC = () => {
             <S.List>
                 {
                     muscles.map(m => (
-                        <S.ItemContainer key={m} onPressIn={() => selectMuscle(m)} selected={musclesSelected.includes(m)}>
+                        <S.ItemContainer key={m} onPress={() => selectMuscle(m)} selected={musclesSelected.includes(m)}>
                             <S.ItemName>{m}</S.ItemName>
                         </S.ItemContainer>
                     ))
                 }
             </S.List>
 
-            <S.Butotn onPressIn={handleCreateExercise}>
+            <S.Butotn onPress={handleCreateExercise}>
                 <S.ButotnText>Concluir</S.ButotnText>
             </S.Butotn>
         </>
