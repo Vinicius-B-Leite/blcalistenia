@@ -1,58 +1,50 @@
 import React, { memo } from 'react';
-import { TouchableOpacity, FlatList } from 'react-native';
 import { useTheme } from 'styled-components/native';
 import { ExercisesInWorkoutType } from '../../models/ExercisesInWorkoutType';
 import * as S from './styles'
-import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import Serie from '../Serie';
 import { useDispatch, useSelector } from 'react-redux'
-import { removeExercise, addSerie, updateAnotation } from '../../features/Workout/workoutSlicer'
+import { updateAnotation } from '../../features/Workout/workoutSlicer'
 import { RootState } from '../../features/store';
-import { FlashList } from '@shopify/flash-list';
+import { useAppSelector } from '@/hooks/useAppSelector';
 
 type Props = {
     item: ExercisesInWorkoutType,
-    showCreateSerie?: boolean,
     showDeleteSerieButton?: boolean,
-    showDeleteExerciseBtn?: boolean,
+    deleteExerciseBtn?: React.ReactNode,
+    createSerieBtn?: React.ReactNode,
 }
 
-const ExerciseInWorkoutItem: React.FC<Props> = ({ item, showCreateSerie, showDeleteSerieButton, showDeleteExerciseBtn }) => {
+const ExerciseInWorkoutItem: React.FC<Props> = ({ item, createSerieBtn, showDeleteSerieButton, deleteExerciseBtn }) => {
+    const { exercise_id, series, anotation } = item
+
     const theme = useTheme()
+
     const dispatch = useDispatch()
-    const isWorkingout = useSelector((state: RootState) => state.workout.isWorkingout)
-    const exercises = useSelector((state: RootState) => state.workout.workout.exercises)
+    const isWorkingout = useAppSelector((state) => state.workout.isWorkingout)
 
 
 
     return (
         <S.Exercise>
             <S.ExerciseHeader>
-                <S.ExerciseName>{item.exercise_id}</S.ExerciseName>
-                {
-                    showDeleteExerciseBtn &&
-                    (
-                        <TouchableOpacity onPress={() => dispatch(removeExercise(item))}>
-                            <FontAwesome name='trash' size={theme.sizes.icons.sm} color={theme.colors.alert} />
-                        </TouchableOpacity>
-                    )
-                }
+                <S.ExerciseName>{exercise_id}</S.ExerciseName>
+                {deleteExerciseBtn}
             </S.ExerciseHeader>
             <S.ExerciseAnotation
                 placeholder='Anotação'
                 placeholderTextColor={theme.colors.darkText}
-                value={showCreateSerie ? exercises[exercises.findIndex(v => v.exercise_id == item.exercise_id)].anotation : item.anotation}
-                onChangeText={(txt) => dispatch(updateAnotation({ exerciseID: item.exercise_id, newAnotation: txt }))}
-                editable={showCreateSerie}
+                value={anotation}
+                onChangeText={(txt) => dispatch(updateAnotation({ exerciseID: exercise_id, newAnotation: txt }))}
+                editable={!!createSerieBtn}
             />
             <S.Row>
                 <S.Title>Série</S.Title>
                 <S.Title>Repetições</S.Title>
-                {!isWorkingout && <S.Title>Descanso(s)</S.Title>}
-                {isWorkingout && <S.Title>Concluída</S.Title>}
+                <S.Title>{isWorkingout ? 'Concluída' : 'Descanso(s)'}</S.Title>
             </S.Row>
             {
-                item.series.map(serie => (
+                series.map(serie => (
                     <Serie
                         key={serie.serie as React.Key}
                         item={serie}
@@ -61,12 +53,7 @@ const ExerciseInWorkoutItem: React.FC<Props> = ({ item, showCreateSerie, showDel
                     />
                 ))
             }
-            {
-                showCreateSerie &&
-                <S.CreateNewSerieButton onPress={() => dispatch(addSerie(item))}>
-                    <S.CreateNewSerieText>+</S.CreateNewSerieText>
-                </S.CreateNewSerieButton>
-            }
+            {createSerieBtn}
 
         </S.Exercise >
     )

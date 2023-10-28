@@ -7,7 +7,7 @@ import CreateExercise from '../../components/CreateExercise';
 import FilterExercise from '../../components/FilterExercise';
 import { ExerciseType } from '../../models/ExerciseType';
 import { initialsExercises } from '../../utils/initialsExercises';
-import { useQuery } from '../../services/realm';
+import { useQuery } from '../../services/realm/realm';
 import ExercisesList from './components/ExercisesListe';
 import { useDispatch } from 'react-redux';
 import { setExercises } from '../../features/Exercises/exerciseSlicer';

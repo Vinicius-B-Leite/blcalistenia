@@ -1,19 +1,23 @@
 import React from 'react';
-import { View } from 'react-native';
 import { WorkoutType } from '../../../models/WorkoutType';
-import { HistoricType } from '../../../models/HistoricType';
 import { FlashList } from '@shopify/flash-list';
 import ExerciseInWorkoutItem from '../../../components/ExerciseInWorkoutItem';
 import * as S from './styles'
 
 
+type HistoricBSProps = {
+    workout?: WorkoutType
+    timerInSeconds?: number,
+} | {
+    workout: WorkoutType
+    timerInSeconds: number,
+}
 
-export const HistoricBS = ({ item }: { item: HistoricType | null }) => {
-    if (item == null) return <></>
+export const HistoricBS = ({ timerInSeconds, workout }: HistoricBSProps) => {
+    if (!timerInSeconds || !workout) return <></>
 
-    const workout: WorkoutType = JSON.parse(item.workout)
-    const minutes = String((item.timerInSeconds / 60).toFixed(0)).padStart(2, '0')
-    const seconds = String((item.timerInSeconds % 60).toFixed(0)).padStart(2, '0')
+    const minutes = String((timerInSeconds / 60).toFixed(0)).padStart(2, '0')
+    const seconds = String((timerInSeconds % 60).toFixed(0)).padStart(2, '0')
 
 
     return (
@@ -27,7 +31,8 @@ export const HistoricBS = ({ item }: { item: HistoricType | null }) => {
                 data={workout.exercises}
                 estimatedItemSize={10}
                 nestedScrollEnabled
-                renderItem={({ item }) => <ExerciseInWorkoutItem showCreateSerie={false} item={item} />}
+                renderItem={({ item }) =>
+                    <ExerciseInWorkoutItem item={item} />}
             />
         </S.WorkoutContainer>
     )

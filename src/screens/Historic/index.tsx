@@ -1,20 +1,21 @@
 import React, { useRef, useState } from 'react';
 import * as S from './styles'
-import { HistoricType } from '../../models/HistoricType';
-import HistoricItem from '../../components/HistoricItem';
-import BottomSheet, { BottomSheetRefProps } from '../../components/BottomSheet';
+import { HistoricType } from '@/models/HistoricType';
+import HistoricItem from '@/components/HistoricItem';
+import BottomSheet, { BottomSheetRefProps } from '@/components/BottomSheet';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { FlashList } from '@shopify/flash-list';
 import { HistoricBS } from './components/HistoricBS';
-import { useQuery } from '../../services/realm';
+import { useQuery } from '@/services/realm/realm';
 import Animated, { FadeInDown } from 'react-native-reanimated';
 
 
 
 const Historic: React.FC = () => {
+    const historics = useQuery('Historic').sorted('date', true).toJSON() as HistoricType[]
+
     const bottomsheetRef = useRef<BottomSheetRefProps>(null)
     const [bottomSheetItem, setBottomSheetItem] = useState<HistoricType | null>(null)
-    const historics = useQuery('Historic').sorted('date', true).toJSON() as HistoricType[]
 
 
     return (
@@ -46,7 +47,7 @@ const Historic: React.FC = () => {
                 </S.HistoricListContainer>
 
                 <BottomSheet onClose={() => setBottomSheetItem(null)} ref={bottomsheetRef} >
-                    <HistoricBS item={bottomSheetItem}  />
+                    <HistoricBS timerInSeconds={bottomSheetItem?.timerInSeconds} workout={JSON.parse(bottomSheetItem?.workout || '{}')} />
                 </BottomSheet>
 
             </S.Container>

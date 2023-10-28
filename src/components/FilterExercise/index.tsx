@@ -4,7 +4,7 @@ import { FilterType } from '../../screens/AddExercise';
 import { category } from '../../utils/category';
 import { muscles } from '../../utils/muscles';
 import * as S from './style'
-import { useRealm } from '../../services/realm';
+import { useRealm } from '../../services/realm/realm';
 import { ExerciseType } from '../../models/ExerciseType';
 import { initialsExercises } from '../../utils/initialsExercises';
 import { useDispatch } from 'react-redux';
@@ -35,7 +35,7 @@ const FilterExercise: React.FC<FilterExerciseProps> = ({ modalProps, closeModal 
             let copy = v
             const categoryFiltered = copy.categories.includes(filters.category.toLowerCase())
             const exercisesFiltered = copy.muscles.includes(filters.muscles.toLowerCase())
-            
+
             if (filters.category && filters.muscles) {
                 return categoryFiltered && exercisesFiltered
             }

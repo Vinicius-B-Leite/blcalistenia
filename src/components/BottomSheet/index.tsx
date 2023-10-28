@@ -5,6 +5,7 @@ import Animated, { event, runOnJS, useAnimatedStyle, useSharedValue, withTiming 
 
 import * as S from './styles'
 import { useNavigation } from '@react-navigation/native';
+import { useAppNavigation } from '@/hooks/useAppNavigation';
 
 
 const { height } = Dimensions.get('screen')
@@ -30,7 +31,7 @@ const BottomSheet = React.forwardRef<BottomSheetRefProps, Props>(({ children, on
     const animatedHeigh = useSharedValue(height)
     const startValue = useSharedValue({ y: 0 })
     const visible = useSharedValue(false)
-    const navigation = useNavigation()
+    const navigation = useAppNavigation()
     const tab = navigation.getParent('tabBar' as unknown as undefined)
 
 

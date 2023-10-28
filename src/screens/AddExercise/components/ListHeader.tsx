@@ -6,18 +6,20 @@ import { useTheme } from 'styled-components/native';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../../features/store';
 import { setSearchInput } from '../../../features/Exercises/exerciseSlicer';
+import { useAppNavigation } from '@/hooks/useAppNavigation';
+import { useAppSelector } from '@/hooks/useAppSelector';
 
 
 const ListHeader: React.FC = () => {
-    const navigation = useNavigation()
+    const navigation = useAppNavigation()
     const theme = useTheme()
 
-    const searchExerciseInput = useSelector((state: RootState) => state.exercise.searchInput)
+    const searchExerciseInput = useAppSelector((state) => state.exercise.searchInput)
     const dispatch = useDispatch()
 
     return (
         <S.Header>
-            <S.GoBack onPressIn={() => navigation.goBack()}>
+            <S.GoBack onPress={() => navigation.goBack()}>
                 <AntDesign name='arrowleft' size={theme.sizes.icons.md} color={theme.colors.text} />
             </S.GoBack>
             <S.InputArea>

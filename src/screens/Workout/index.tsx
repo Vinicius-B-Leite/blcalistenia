@@ -13,6 +13,7 @@ import ChronometerButton from '../../components/ChronometerButton';
 import { useUser } from '@realm/react';
 import uuid from 'react-native-uuid'
 import { WorkoutType } from '../../models/WorkoutType';
+import { useAppSelector } from '@/hooks/useAppSelector';
 
 type Navigation = StackScreenProps<RootStackParamList, 'Workout'>
 
@@ -22,20 +23,16 @@ const Workout: React.FC<Navigation> = ({ route }) => {
     const user = useUser()
 
     const dispatch = useDispatch()
-    const isTrainig = useSelector((state: RootState) => state.workout?.isWorkingout)
-    const workout = useSelector((state: RootState) => state.workout?.workout)
-
-    const isTrainigRef = useRef(isTrainig)
-    isTrainigRef.current = isTrainig
+    const isTrainig = useAppSelector((state) => state.workout?.isWorkingout)
+    const workout = useAppSelector((state) => state.workout?.workout)
 
     useEffect(() => {
-        if (route.params.workout?._id) {
+        const isEditingWorkout = route.params.workout?._id
+        if (isEditingWorkout) {
             dispatch(setWorkout({ ...route.params.workout }))
         } else {
             if (!isTrainig) {
-                console.log('Entrou')
                 const _id = uuid.v4().toString()
-
                 dispatch(setWorkout({
                     ...workout,
                     user_id: user.id,
@@ -43,13 +40,12 @@ const Workout: React.FC<Navigation> = ({ route }) => {
                 }))
             }
         }
-
         return () => {
-            if (!isTrainigRef.current) {
+            if (isTrainig) {
                 dispatch(setWorkout({} as WorkoutType))
             }
         }
-    }, [])
+    }, [isTrainig])
 
 
     return (

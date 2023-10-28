@@ -1,15 +1,14 @@
 import React, { useContext } from 'react';
 import { ThemeProvider } from 'styled-components/native';
-import { ThemeContext } from './contexts/ThemeContext';
-import Routes from './routes';
-import { darkMode } from './theme/darkMode';
-import { lightMode } from './theme/lightMode';
+import { ThemeContext } from '@/contexts/ThemeContext';
+import Routes from '@/routes';
+import { darkMode } from '@/theme/darkMode';
+import { lightMode } from '@/theme/lightMode';
 import { UserProvider } from '@realm/react';
-import { RealmProvider, syncConfig } from './services/realm';
+import { RealmProvider, syncConfig } from '@/services/realm/realm';
 import { Provider } from 'react-redux';
-import Login from './screens/Login';
-import { store } from './features/store';
-import { GoogleSignin } from '@react-native-google-signin/google-signin';
+import Login from '@/screens/Login';
+import { store } from '@/features/store';
 
 
 
