@@ -4,7 +4,7 @@ import { FilterType } from '../../screens/AddExercise';
 import { category } from '../../utils/category';
 import { muscles } from '../../utils/muscles';
 import * as S from './style'
-import { useRealm } from '../../services/realm/realm';
+import { useRealm } from '@/services/realm/realm';
 import { ExerciseType } from '../../models/ExerciseType';
 import { initialsExercises } from '../../utils/initialsExercises';
 import { useDispatch } from 'react-redux';

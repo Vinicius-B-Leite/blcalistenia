@@ -1,8 +1,8 @@
 import { addExercise } from "@/features/Workout/workoutSlicer"
 import { useAppNavigation } from "@/hooks/useAppNavigation"
 import { ExerciseType } from "@/models/ExerciseType"
+import { useRealm } from "@/services/realm/realm"
 import { initialsExercises } from "@/utils/initialsExercises"
-import { useApp, useRealm } from "@realm/react"
 import { Alert } from "react-native"
 import { useDispatch } from "react-redux"
 

@@ -1,5 +1,6 @@
 import { ExerciseType } from "@/models/ExerciseType"
-import { useRealm, useUser } from "@realm/react"
+import { useRealm } from "@/services/realm/realm"
+import { useUser } from "@realm/react"
 import { useState } from "react"
 import uuid from 'react-native-uuid'
 

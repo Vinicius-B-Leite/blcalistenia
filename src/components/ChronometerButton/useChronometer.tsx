@@ -1,6 +1,6 @@
 import { useAppNavigation } from "@/hooks/useAppNavigation"
 import { useAppSelector } from "@/hooks/useAppSelector"
-import { useRealm, useUser } from "@realm/react"
+import { useUser } from "@realm/react"
 import { useDispatch } from "react-redux"
 import BackgroundService from 'react-native-background-actions'
 import { resetTimer, setWorkout, updateTimer } from "@/features/Workout/workoutSlicer"
@@ -8,6 +8,7 @@ import { options, sleep } from "@/utils/backgroundActionsConfig"
 import { HistoricType } from "@/models/HistoricType"
 import { WorkoutType } from "@/models/WorkoutType"
 import { Alert } from "react-native"
+import { useRealm } from "@/services/realm/realm"
 
 
 export default function useChronometer() {

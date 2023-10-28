@@ -22,12 +22,12 @@ const Workout: React.FC<Props> = ({ workout }) => {
             onPress={() => navigation.navigate('HomeStack', { screen: 'Workout', params: { workout: workout } })}
             onLongPress={() => handleDelete(workout.title, workout._id)}>
             <S.Banner
-                source={workout.banner.length > 0 ? { uri: workout.banner } : ImageNotFound}
+                source={workout?.banner?.length > 0 ? { uri: workout.banner } : ImageNotFound}
                 resizeMode={FastImage.resizeMode.cover}
 
             />
             <S.TextContainer>
-                <S.Text >{workout.title}</S.Text>
+                <S.Text >{workout?.title}</S.Text>
             </S.TextContainer>
         </S.Container>
     )

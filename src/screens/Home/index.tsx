@@ -1,13 +1,13 @@
 import React, { useEffect, useRef } from 'react';
-import Container from '../../components/Container';
 import CalendarDaysTrained, { CalendarRef } from '../../components/CalendarDaysTrained';
 import GoBackToWorkout from '../../components/GoBackToWorkout';
 import Header from './components/Header'
 import WorkoutSuggest from './components/WorkoutSuggest';
 import MyWorkouts from './components/MyWorkouts';
 import { useApp, useUser } from '@realm/react';
-import { useRealm } from '../../services/realm/realm';
+import { useRealm } from '@/services/realm/realm';
 import { addSubs } from '../../services/realm/subscription';
+import { View } from 'react-native';
 
 
 
@@ -33,14 +33,14 @@ const Home: React.FC = () => {
 
     return (
         <>
-            <Container>
+            <View style={{ flex: 1 }}>
                 <CalendarDaysTrained ref={calendarRef} />
                 <Header openCalendar={() => calendarRef.current?.openCalendar()} />
 
                 <MyWorkouts />
 
                 <WorkoutSuggest />
-            </Container>
+            </View>
             <GoBackToWorkout />
         </>
     )

@@ -19,7 +19,7 @@ const WorkoutSuggest: React.FC = () => {
                 showsHorizontalScrollIndicator={false}
                 horizontal
                 keyExtractor={(item) => item._id}
-                renderItem={({ item }) => <Workout data={item} />}
+                renderItem={({ item }) => <Workout workout={item} />}
             />
         </S.WorkoutContainer>
     )

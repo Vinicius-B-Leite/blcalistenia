@@ -46,7 +46,7 @@ const MyWorkouts: React.FC = () => {
                 ListHeaderComponent={() => <CreateWorkoutButton />}
                 renderItem={({ item, index }) =>
                     <Animated.View entering={FadeInDown.delay(index * 400)} layout={Layout.springify()}>
-                        <Workout data={item} />
+                        <Workout workout={item} />
                     </Animated.View>
                 }
             />

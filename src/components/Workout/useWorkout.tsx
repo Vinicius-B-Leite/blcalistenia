@@ -1,4 +1,4 @@
-import { useRealm } from '../../services/realm/realm';
+import { useRealm } from '@/services/realm/realm';
 import { Alert } from 'react-native';
 
 
