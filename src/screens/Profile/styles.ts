@@ -42,8 +42,8 @@ export const OptionContainer = styled.TouchableOpacity`
 export const Left = styled.View`
     background-color: ${({ theme }) => theme.colors.darkContrast};
     border-radius: ${({ theme }) => theme.sizes.borderRadius.full}px;
-    width: 10%;
-    height: 65%;
+    width: ${({ theme }) => theme.sizes.vw * 0.10}px;
+    height: ${({ theme }) => theme.sizes.vw * 0.10}px;
     justify-content: center;
     align-items: center;
     margin-right: 3%;
