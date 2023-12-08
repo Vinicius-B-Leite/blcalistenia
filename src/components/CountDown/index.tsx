@@ -74,7 +74,7 @@ const CountDown = React.forwardRef<CountDownRef, CountDownProps>(({ totalSeconds
 
     const lessSecond = (seconds: number) => {
         setCounter(old => {
-            setTotalTimer(oldT => oldT - seconds )
+            setTotalTimer(oldT => oldT - seconds)
             if (old - seconds < 0) {
                 return 0
             }
@@ -87,29 +87,31 @@ const CountDown = React.forwardRef<CountDownRef, CountDownProps>(({ totalSeconds
 
     return (
         <View style={{ position: 'relative', width: '100%', height: '60%' }}>
-            <Svg viewBox='0 0 100 80'>
-                <G rotation='270' origin={`${RADIUS + 15}, ${RADIUS + 4}`} >
-                    <Circle
-                        cx='50'
-                        cy='40'
-                        r={RADIUS}
-                        stroke={theme.colors.darkContrast}
-                        fill='transparent'
-                        strokeWidth={3}
-                    />
-                    <AnimatedCircle
-                        animatedProps={animatedProps}
-                        cx='50'
-                        cy='40'
-                        r={RADIUS}
-                        stroke={theme.colors.contrast}
-                        fill='transparent'
-                        strokeWidth={3}
-                        strokeDasharray={CIRCUMFERENCE}
-                        strokeLinecap='round'
-                    />
-                </G>
-            </Svg>
+            <View style={{ justifyContent: 'center', alignItems: 'center' }}>
+                <Svg viewBox='0 0 100 80'>
+                    <G rotation='270' origin={`${RADIUS + 15}, ${RADIUS + 4}`} >
+                        <Circle
+                            cx='50'
+                            cy='40'
+                            r={RADIUS}
+                            stroke={theme.colors.darkContrast}
+                            fill='transparent'
+                            strokeWidth={3}
+                        />
+                        <AnimatedCircle
+                            animatedProps={animatedProps}
+                            cx='50'
+                            cy='40'
+                            r={RADIUS}
+                            stroke={theme.colors.contrast}
+                            fill='transparent'
+                            strokeWidth={3}
+                            strokeDasharray={CIRCUMFERENCE}
+                            strokeLinecap='round'
+                        />
+                    </G>
+                </Svg>
+            </View>
             <S.Counter>{String(Math.floor(counter / 60)).padStart(2, '0')}:{String(counter % 60).padStart(2, '0')}</S.Counter>
             <S.TotalTimes>{String(Math.floor(totalTimer / 60)).padStart(2, '0')}:{String(totalTimer % 60).padStart(2, '0')}</S.TotalTimes>
         </View>

@@ -43,7 +43,7 @@ export const ButtonContainer = styled.TouchableOpacity`
 
 export const ExercisesContainer = styled.View`
     width: ${({ theme }) => theme.sizes.vw}px;
-    min-height: 50px;
+    flex: 1;
     height: ${({ theme }) => theme.sizes.vh * 0.55}px;
 `
 
