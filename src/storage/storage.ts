@@ -22,7 +22,9 @@ export const storage: Storage = {
 
     let dataCreated = {} as T;
     realm.write(() => {
-      dataCreated = realm.create<T>(key, data).toJSON() as T;
+      dataCreated = realm
+        .create<T>(key, data, Realm.UpdateMode.Modified)
+        .toJSON() as T;
     });
 
     return dataCreated;

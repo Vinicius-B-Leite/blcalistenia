@@ -11,8 +11,8 @@ export const exerciseService = {
   },
   createExercise: async (exercise: Omit<ExerciseType, '_id'>) => {
     const exerciseCreated = await storage.upset<ExerciseType>('Exercise', {
-      ...exercise,
       _id: uuid.v4().toString(),
+      ...exercise,
     });
 
     return exerciseCreated;

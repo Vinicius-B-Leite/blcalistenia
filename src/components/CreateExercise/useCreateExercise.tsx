@@ -1,11 +1,11 @@
-import {ExerciseType} from '@/models/ExerciseType';
-import {useRealm} from '@/services/realm/realm';
 import {useCreateExercise as useDomainCreateExercise} from '../../domains/Exercise/useCases/useCreateExercise';
 import {useState} from 'react';
 import {useDispatch} from 'react-redux';
 import {addExercise} from '@/features/Exercises/exerciseSlicer';
+import {useAuth} from '@/contexts/AuthContext';
 
 export default function useCreateExercise() {
+  const {user} = useAuth();
   const {createExercise} = useDomainCreateExercise();
   const dispatch = useDispatch();
 
@@ -41,7 +41,7 @@ export default function useCreateExercise() {
         categories: categoriesSelected.map(m => m.toLocaleLowerCase()),
         muscles: musclesSelected.map(c => c.toLocaleLowerCase()),
         name: exerciseNameInput,
-        user_id: 'asd123',
+        user_id: user!.uid,
       });
       setCategoriesSelected([]);
       setMusclesSelected([]);

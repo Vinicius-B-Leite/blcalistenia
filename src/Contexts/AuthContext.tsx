@@ -22,9 +22,8 @@ const UserContextProvider = ({children}: {children: React.ReactNode}) => {
 
   const updateUser = async (newUser: UserType) => {
     setUser(newUser);
-    updateUserFromStorage(newUser);
+    await updateUserFromStorage(newUser);
   };
-  console.log('user', user);
 
   return (
     <UserContext.Provider value={{user, updateUser}}>

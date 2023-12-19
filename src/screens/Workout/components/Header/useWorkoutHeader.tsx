@@ -11,10 +11,11 @@ import {useAppNavigation} from '@/hooks/useAppNavigation';
 import {useAppSelector} from '@/hooks/useAppSelector';
 import {useCreateWorkout} from '../../../../domains/Workout/useCases/useCreateWorkout';
 import {addWorkouts} from '@/features/WorkoutList/workoutListSlicer';
+import {useAuth} from '@/contexts/AuthContext';
 
 export default function useWorkoutHeader() {
   const navigation = useAppNavigation();
-
+  const {user} = useAuth();
   const {handleCreateWorkout} = useCreateWorkout();
 
   const dispatch = useDispatch();
@@ -50,7 +51,10 @@ export default function useWorkoutHeader() {
     const isWorkoutSuggest = workoutRef.current._id.includes('suggestWorkout');
     if (isWorkoutSuggest) return;
 
-    const workoutCreated = await handleCreateWorkout(workoutRef.current);
+    const workoutCreated = await handleCreateWorkout({
+      ...workoutRef.current,
+      user_id: user!.uid,
+    });
     dispatch(addWorkouts(workoutCreated));
 
     navigation.navigate('HomeStack', {screen: 'Home'});
