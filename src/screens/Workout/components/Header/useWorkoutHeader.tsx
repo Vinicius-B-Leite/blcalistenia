@@ -3,7 +3,6 @@ import {useDispatch} from 'react-redux';
 import BackgroundService from 'react-native-background-actions';
 import {resetTimer, setWorkout} from '@/features/Workout/workoutSlicer';
 import {WorkoutType} from '@/models/WorkoutType';
-import {useRealm} from '@/services/realm/realm';
 import {pickeImage} from '@/utils/pickImage';
 
 import {Alert} from 'react-native';
@@ -11,6 +10,7 @@ import {useEffect, useRef} from 'react';
 import {useAppNavigation} from '@/hooks/useAppNavigation';
 import {useAppSelector} from '@/hooks/useAppSelector';
 import {useCreateWorkout} from '../../../../domains/Workout/useCases/useCreateWorkout';
+import {addWorkouts} from '@/features/WorkoutList/workoutListSlicer';
 
 export default function useWorkoutHeader() {
   const navigation = useAppNavigation();
@@ -51,6 +51,7 @@ export default function useWorkoutHeader() {
     if (isWorkoutSuggest) return;
 
     const workoutCreated = await handleCreateWorkout(workoutRef.current);
+    dispatch(addWorkouts(workoutCreated));
 
     navigation.navigate('HomeStack', {screen: 'Home'});
   };

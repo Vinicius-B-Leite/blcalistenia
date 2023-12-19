@@ -24,6 +24,16 @@ export const WorkoutListSlicer = createSlice({
     setWorkouts: (state, action: PayloadAction<WorkoutType[]>) => {
       state.workouts = action.payload;
     },
+    addWorkouts: (
+      state,
+      action: PayloadAction<WorkoutType[] | WorkoutType>,
+    ) => {
+      if (Array.isArray(action.payload)) {
+        state.workouts = [...state.workouts, ...action.payload];
+        return;
+      }
+      state.workouts.push(action.payload);
+    },
     deleteWorkout: (state, action: PayloadAction<{workoutId: string}>) => {
       const index = state.workouts.findIndex(
         v => v._id === action.payload.workoutId,
@@ -50,5 +60,6 @@ export const {
   setWorkouts,
   setMuscleSelected,
   deleteWorkout,
+  addWorkouts,
 } = WorkoutListSlicer.actions;
 export const workoutListReducer = WorkoutListSlicer.reducer;
