@@ -10,12 +10,15 @@ import {Alert} from 'react-native';
 import {useEffect, useRef} from 'react';
 import {useAppNavigation} from '@/hooks/useAppNavigation';
 import {useAppSelector} from '@/hooks/useAppSelector';
+import {useCreateWorkout} from '../../../../domains/Workout/useCases/useCreateWorkout';
 
 export default function useWorkoutHeader() {
   const navigation = useAppNavigation();
-  const realm = useRealm();
+
+  const {handleCreateWorkout} = useCreateWorkout();
 
   const dispatch = useDispatch();
+
   const isWorkingout = useAppSelector(state => state.workout.isWorkingout);
   const workout = useAppSelector(state => state.workout.workout);
 
@@ -43,26 +46,13 @@ export default function useWorkoutHeader() {
     ]);
   };
 
-  const saveWorkout = () => {
+  const saveWorkout = async () => {
     const isWorkoutSuggest = workoutRef.current._id.includes('suggestWorkout');
     if (isWorkoutSuggest) return;
-    console.log(workoutRef.current.banner);
-    realm.write(() => {
-      realm.create<WorkoutType>(
-        'Workout',
-        {
-          _id: workoutRef.current._id,
-          anotation: workoutRef.current.anotation,
-          exercises: workoutRef.current.exercises,
-          title: workoutRef.current.title || 'Novo Treino',
-          banner: workoutRef.current.banner || '',
-          user_id: '',
-        },
-        Realm.UpdateMode.Modified,
-      );
 
-      navigation.navigate('HomeStack', {screen: 'Home'});
-    });
+    const workoutCreated = await handleCreateWorkout(workoutRef.current);
+
+    navigation.navigate('HomeStack', {screen: 'Home'});
   };
 
   const handleSelectImage = async () => {
