@@ -1,6 +1,4 @@
-import {openRealm} from '@/services/realm/realm';
 import {exerciseAdapter} from './exerciseAdapter';
-import {SCHEMA_KEYS} from '../../storage/config';
 import {ExerciseType} from '@/models/ExerciseType';
 import uuid from 'react-native-uuid';
 import {storage} from '@/storage/storage';

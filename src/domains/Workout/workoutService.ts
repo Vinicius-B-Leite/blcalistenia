@@ -2,12 +2,11 @@ import {openRealm} from '@/services/realm/realm';
 import {workoutAdapter} from './workoutAdapter';
 import {WorkoutType} from '@/models/WorkoutType';
 import {SCHEMA_KEYS} from '../../storage/config';
+import {storage} from '@/storage/storage';
 
 export const workoutService = {
   getWorkouts: async () => {
-    const realm = await openRealm();
-
-    const workoutsObject = realm.objects(SCHEMA_KEYS.Workout).toJSON();
+    const workoutsObject = await storage.get('Workout');
 
     const workouts = workoutsObject.map(workoutAdapter.adapter);
     return workouts;
@@ -20,32 +19,18 @@ export const workoutService = {
     user_id,
     anotation,
   }: WorkoutType) => {
-    const realm = await openRealm();
-
-    let workoutCreated = {} as WorkoutType;
-    realm.write(() => {
-      workoutCreated = realm.create<WorkoutType>(
-        'Workout',
-        {
-          _id: _id,
-          anotation: anotation,
-          exercises: exercises,
-          title: title || 'Novo Treino',
-          banner: banner || '',
-          user_id: user_id,
-        },
-        Realm.UpdateMode.Modified,
-      );
+    const workoutCreated = await storage.upset('Workout', {
+      _id: _id,
+      anotation: anotation,
+      exercises: exercises,
+      title: title || 'Novo Treino',
+      banner: banner || '',
+      user_id: user_id,
     });
 
     return workoutCreated;
   },
   deleteWorkout: async (exerciseId: string) => {
-    const realm = await openRealm();
-
-    const workout = realm.objectForPrimaryKey(SCHEMA_KEYS.Workout, exerciseId);
-    realm.write(() => {
-      realm.delete(workout);
-    });
+    await storage.delete('Workout', exerciseId);
   },
 };
