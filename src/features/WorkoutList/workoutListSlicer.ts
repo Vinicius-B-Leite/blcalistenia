@@ -24,10 +24,13 @@ export const WorkoutListSlicer = createSlice({
     setWorkouts: (state, action: PayloadAction<WorkoutType[]>) => {
       state.workouts = action.payload;
     },
-    addWorkouts: (state, action: PayloadAction<WorkoutType>) => {
-      const workoutAlreadyExists =
-        state.workouts.findIndex(v => v._id === action.payload._id) > -1;
-      if (workoutAlreadyExists) return;
+    upsetWorkout: (state, action: PayloadAction<WorkoutType>) => {
+      const index = state.workouts.findIndex(v => v._id === action.payload._id);
+      const workoutAlreadyExists = index > -1;
+      if (workoutAlreadyExists) {
+        state.workouts[index] = action.payload;
+        return;
+      }
       state.workouts.push(action.payload);
     },
     deleteWorkout: (state, action: PayloadAction<{workoutId: string}>) => {
@@ -56,6 +59,6 @@ export const {
   setWorkouts,
   setMuscleSelected,
   deleteWorkout,
-  addWorkouts,
+  upsetWorkout,
 } = WorkoutListSlicer.actions;
 export const workoutListReducer = WorkoutListSlicer.reducer;

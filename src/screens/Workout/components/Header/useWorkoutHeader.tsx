@@ -10,7 +10,7 @@ import {useEffect, useRef} from 'react';
 import {useAppNavigation} from '@/hooks/useAppNavigation';
 import {useAppSelector} from '@/hooks/useAppSelector';
 import {useCreateWorkout} from '../../../../domains/Workout/useCases/useCreateWorkout';
-import {addWorkouts} from '@/features/WorkoutList/workoutListSlicer';
+import {upsetWorkout} from '@/features/WorkoutList/workoutListSlicer';
 import {useAuth} from '@/contexts/AuthContext';
 
 export default function useWorkoutHeader() {
@@ -55,7 +55,7 @@ export default function useWorkoutHeader() {
       ...workoutRef.current,
       user_id: user!.uid,
     });
-    dispatch(addWorkouts(workoutCreated));
+    dispatch(upsetWorkout(workoutCreated));
     dispatch(
       setWorkout({
         _id: '',
