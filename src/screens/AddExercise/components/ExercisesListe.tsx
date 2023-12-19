@@ -24,7 +24,7 @@ const ExercisesList: React.FC<Props> = ({openModal}) => {
     <S.Main>
       <S.ExerciseListContainer>
         <FlashList
-          estimatedItemSize={30}
+          estimatedItemSize={exercisList.length}
           data={searchExerciseInput ? exercisesSearched : exercisList}
           keyExtractor={item => String(item.name)}
           renderItem={({item}) => (

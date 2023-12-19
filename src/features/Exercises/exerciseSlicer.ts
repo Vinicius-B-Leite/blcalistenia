@@ -8,7 +8,7 @@ type InitialStateType = {
 };
 
 const initialState: InitialStateType = {
-  exercises: [...initialsExercises],
+  exercises: [],
   searchInput: '',
 };
 
