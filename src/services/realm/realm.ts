@@ -1,28 +1,48 @@
-import { createRealmContext } from "@realm/react";
-import { WorkoutSchema } from "../../schema/WorkoutSchema";
-import { ExerciseSchema } from "../../schema/ExerciseSchema";
-import { SerieSchema } from "../../schema/SerieSchema";
-import { ExerciseWorkout } from "../../schema/ExerciseWorkoutSchema";
-import { SuggestWorkout } from "../../schema/SuggestWorkoutSchema";
-import { HistoricSchema } from "../../schema/HistoricSchema";
-
-
+import {createRealmContext} from '@realm/react';
+import {WorkoutSchema} from '../../schema/WorkoutSchema';
+import {ExerciseSchema} from '../../schema/ExerciseSchema';
+import {SerieSchema} from '../../schema/SerieSchema';
+import {ExerciseWorkout} from '../../schema/ExerciseWorkoutSchema';
+import {SuggestWorkout} from '../../schema/SuggestWorkoutSchema';
+import {HistoricSchema} from '../../schema/HistoricSchema';
+import Realm from 'realm';
 
 const realmAccessBehavior: Realm.OpenRealmBehaviorConfiguration = {
-    type: Realm.OpenRealmBehaviorType.OpenImmediately
-}
+  type: Realm.OpenRealmBehaviorType.OpenImmediately,
+};
 
 export const syncConfig: Partial<Realm.SyncConfiguration> = {
-    flexible: true,
-    newRealmFileBehavior: realmAccessBehavior,
-    existingRealmFileBehavior: realmAccessBehavior,
-    onError: console.log,
-
-}
-
+  flexible: true,
+  newRealmFileBehavior: realmAccessBehavior,
+  existingRealmFileBehavior: realmAccessBehavior,
+  onError: console.log,
+};
 
 const realmContext = createRealmContext({
-    schema: [HistoricSchema, SuggestWorkout, WorkoutSchema, ExerciseSchema, SerieSchema, ExerciseWorkout],
-
+  schema: [
+    HistoricSchema,
+    SuggestWorkout,
+    WorkoutSchema,
+    ExerciseSchema,
+    SerieSchema,
+    ExerciseWorkout,
+  ],
 });
-export const { RealmProvider, useRealm, useObject, useQuery } = realmContext;
+export const {RealmProvider, useRealm, useObject, useQuery} = realmContext;
+
+export async function openRealm() {
+  const realm = await Realm.open({
+    deleteRealmIfMigrationNeeded: true,
+    path: '/data/data/com.blcalistenia/files/newRealm.realm',
+    schema: [
+      HistoricSchema,
+      SuggestWorkout,
+      WorkoutSchema,
+      ExerciseSchema,
+      SerieSchema,
+      ExerciseWorkout,
+    ],
+  });
+
+  return realm;
+}

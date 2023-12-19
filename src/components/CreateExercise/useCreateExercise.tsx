@@ -1,27 +1,17 @@
 import {ExerciseType} from '@/models/ExerciseType';
 import {useRealm} from '@/services/realm/realm';
-
+import {useCreateExercise as useDomainCreateExercise} from '../../domains/Exercise/useCases/useCreateExercise';
 import {useState} from 'react';
-import uuid from 'react-native-uuid';
+import {useDispatch} from 'react-redux';
+import {addExercise} from '@/features/Exercises/exerciseSlicer';
 
 export default function useCreateExercise() {
+  const {createExercise} = useDomainCreateExercise();
+  const dispatch = useDispatch();
+
   const [categoriesSelected, setCategoriesSelected] = useState<string[]>([]);
   const [musclesSelected, setMusclesSelected] = useState<string[]>([]);
   const [exerciseNameInput, setExerciseNameInput] = useState('');
-
-  const realm = useRealm();
-
-  const createExercise = ({name, muscles, categories, _id}: ExerciseType) => {
-    realm.write(() => {
-      realm.create<ExerciseType>('Exercise', {
-        name,
-        muscles: muscles.map(m => m.toLowerCase()),
-        categories: categories.map(c => c.toLowerCase()),
-        user_id: '',
-        _id,
-      });
-    });
-  };
 
   const selectCategory = (category: string) => {
     if (categoriesSelected.includes(category)) {
@@ -45,22 +35,19 @@ export default function useCreateExercise() {
     }
     setMusclesSelected(oldMusclesSelected => [...oldMusclesSelected, muscle]);
   };
-
-  const handleCreateExercise = () => {
-    if (
-      exerciseNameInput.length > 0 &&
-      categoriesSelected.length > 0 &&
-      musclesSelected.length > 0
-    ) {
-      createExercise({
+  const handleCreateExercise = async () => {
+    if (exerciseNameInput && categoriesSelected && musclesSelected) {
+      const exercisesCreated = await createExercise({
+        categories: categoriesSelected.map(m => m.toLocaleLowerCase()),
+        muscles: musclesSelected.map(c => c.toLocaleLowerCase()),
         name: exerciseNameInput,
-        muscles: musclesSelected,
-        categories: categoriesSelected,
-        _id: uuid.v4().toString(),
+        user_id: 'asd123',
       });
       setCategoriesSelected([]);
       setMusclesSelected([]);
       setExerciseNameInput('');
+
+      dispatch(addExercise(exercisesCreated));
     }
   };
 
@@ -69,10 +56,10 @@ export default function useCreateExercise() {
   return {
     selectCategory,
     selectMuscle,
-    handleCreateExercise,
     categoriesSelected,
     musclesSelected,
     onChangeExerciseNameInput,
     exerciseNameInput,
+    handleCreateExercise,
   };
 }
