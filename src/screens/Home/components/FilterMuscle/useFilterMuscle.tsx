@@ -5,27 +5,29 @@ import {useDispatch} from 'react-redux';
 import {
   cancelFilteredWorkout,
   filteredWorkouts,
+  setMuscleSelected,
 } from '@/features/WorkoutList/workoutListSlicer';
-import {useQuery} from '@/services/realm/realm';
+
 import {initialsExercises} from '@/utils/initialsExercises';
 import {useGetWorkouts} from '../../../../domains/Workout/useCases/useGetWorkouts';
 import {useGetExercises} from '../../../../domains/Exercise/useCases/useGetExercises';
+import {useAppSelector} from '@/hooks/useAppSelector';
 
 export default function useFilterMuscle() {
   const dispatch = useDispatch();
-
   const {workouts} = useGetWorkouts();
   const {exercises} = useGetExercises();
-
-  const [muscleFilterSelected, setMuscleFilterSelected] = useState('');
+  const muscleFilterSelected = useAppSelector(
+    state => state.workoutList.musclesSelected,
+  );
 
   const filterWorkoutsByMuscle = (muscle: string) => {
     if (muscleFilterSelected === muscle) {
       dispatch(cancelFilteredWorkout());
-      setMuscleFilterSelected('');
+      dispatch(setMuscleSelected(''));
       return;
     }
-    setMuscleFilterSelected(muscle);
+    dispatch(setMuscleSelected(muscle));
 
     const exercisesHaveMuscleSelected = [
       ...exercises.filter(e => e.muscles.includes(muscle.toLowerCase())),

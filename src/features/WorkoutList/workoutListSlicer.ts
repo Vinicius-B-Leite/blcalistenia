@@ -6,26 +6,40 @@ import {WorkoutType} from '../../models/WorkoutType';
 import {ExerciseType} from '../../models/ExerciseType';
 
 type WorkoutListState = {
-  filteredWorkouts: WorkoutType[] | null;
+  filteredWorkouts: WorkoutType[];
+  musclesSelected: string;
+  workouts: WorkoutType[];
 };
 
 const initalState: WorkoutListState = {
   filteredWorkouts: [],
+  workouts: [],
+  musclesSelected: '',
 };
 
 export const WorkoutListSlicer = createSlice({
   name: 'WorkoutList',
   initialState: initalState,
   reducers: {
+    setWorkouts: (state, action: PayloadAction<WorkoutType[]>) => {
+      state.workouts = action.payload;
+    },
+    setMuscleSelected: (state, action: PayloadAction<string>) => {
+      state.musclesSelected = action.payload;
+    },
     filteredWorkouts: (state, action: PayloadAction<WorkoutType[]>) => {
       state.filteredWorkouts = action.payload;
     },
     cancelFilteredWorkout: state => {
-      state.filteredWorkouts = null;
+      state.filteredWorkouts = [];
     },
   },
 });
 
-export const {filteredWorkouts, cancelFilteredWorkout} =
-  WorkoutListSlicer.actions;
+export const {
+  filteredWorkouts,
+  cancelFilteredWorkout,
+  setWorkouts,
+  setMuscleSelected,
+} = WorkoutListSlicer.actions;
 export const workoutListReducer = WorkoutListSlicer.reducer;

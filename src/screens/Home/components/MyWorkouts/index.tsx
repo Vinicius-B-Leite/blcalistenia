@@ -1,4 +1,4 @@
-import React, {useMemo, useState} from 'react';
+import React from 'react';
 import * as S from '../../styles';
 import {useTheme} from 'styled-components/native';
 
@@ -10,23 +10,13 @@ import FilterMuscle from '../FilterMuscle';
 
 import Animated, {FadeInDown, Layout} from 'react-native-reanimated';
 import useMyWorkouts from './useMyWorkouts';
+import {Keyboard} from 'react-native';
 
 const MyWorkouts: React.FC = () => {
   const theme = useTheme();
 
-  const {
-    filteredWorkouts,
-    onChangeSearchWorkoutInput,
-    searchWorkout,
-    searchWorkoutInput,
-    workouts,
-  } = useMyWorkouts();
-
-  const data = searchWorkoutInput
-    ? searchWorkout
-    : filteredWorkouts
-    ? filteredWorkouts
-    : workouts;
+  const {workoutList, onChangeSearchWorkoutInput, searchWorkoutInput} =
+    useMyWorkouts();
 
   return (
     <S.WorkoutContainer>
@@ -42,12 +32,13 @@ const MyWorkouts: React.FC = () => {
           onChangeText={onChangeSearchWorkoutInput}
           placeholder="Pesquisar treino"
           placeholderTextColor={theme.colors.darkText}
+          onEndEditing={Keyboard.dismiss}
         />
       </S.InputArea>
 
       <FilterMuscle />
       <S.WorkoutList
-        data={data}
+        data={workoutList}
         horizontal
         keyExtractor={item => item._id}
         showsHorizontalScrollIndicator={false}
