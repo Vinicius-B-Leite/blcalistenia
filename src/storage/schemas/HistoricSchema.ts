@@ -1,16 +1,16 @@
-import Realm from "realm";
+import Realm from 'realm';
 
 export const HistoricSchema: Realm.ObjectSchema = {
-    name: 'Historic',
-    properties: {
-        _id: {
-            type: 'int',
-            indexed: true
-        },
-        workout: 'string',
-        timerInSeconds: 'int',
-        date: 'date',
-        user_id: 'string'
+  name: 'Historic',
+  properties: {
+    _id: {
+      type: 'string',
+      indexed: true,
     },
-    primaryKey: '_id',
+    workout: 'string',
+    timerInSeconds: 'int',
+    date: 'date',
+    user_id: 'string',
+  },
+  primaryKey: '_id',
 };

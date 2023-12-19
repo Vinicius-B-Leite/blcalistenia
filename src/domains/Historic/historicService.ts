@@ -11,4 +11,8 @@ export const historicService = {
 
     return historic;
   },
+  createHistoric: async (historic: HistoricType) => {
+    const historicCreated = await storage.upset('Historic', historic);
+    return historicCreated;
+  },
 };
