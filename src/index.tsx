@@ -5,7 +5,6 @@ import Routes from '@/routes';
 import {darkMode} from '@/theme/darkMode';
 import {lightMode} from '@/theme/lightMode';
 
-import {RealmProvider} from '@/services/realm/realm';
 import {Provider} from 'react-redux';
 
 import {store} from '@/features/store';
@@ -15,11 +14,9 @@ const Index: React.FC = () => {
 
   return (
     <ThemeProvider theme={theme == 'dark' ? darkMode : lightMode}>
-      <RealmProvider>
-        <Provider store={store}>
-          <Routes />
-        </Provider>
-      </RealmProvider>
+      <Provider store={store}>
+        <Routes />
+      </Provider>
     </ThemeProvider>
   );
 };

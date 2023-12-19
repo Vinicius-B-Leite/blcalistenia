@@ -23,6 +23,7 @@ module.exports = {
           '@/index': './src/index.tsx',
           '@/hooks': './src/hooks',
           '@/domains': './src/domains',
+          '@/storage': './src/storage',
         },
       },
     ],

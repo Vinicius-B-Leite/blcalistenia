@@ -1,7 +1,7 @@
-import {SCHEMA_KEYS} from '../../constansts/schemaKeys';
 import {openRealm} from '@/services/realm/realm';
 import {workoutAdapter} from './workoutAdapter';
 import {WorkoutType} from '@/models/WorkoutType';
+import {SCHEMA_KEYS} from '../../storage/config';
 
 export const workoutService = {
   getWorkouts: async () => {

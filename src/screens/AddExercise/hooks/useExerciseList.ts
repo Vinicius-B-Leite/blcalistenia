@@ -14,9 +14,7 @@ export function useExerciseList() {
   const exercisList = useAppSelector(state => state.exercise.exercises);
 
   useEffect(() => {
-    if (exercisList.length === 0) {
-      dispatch(addExercise(exercises));
-    }
+    dispatch(addExercise(exercises));
   }, [exercises]);
 
   const exercisesSearched = useMemo(() => {

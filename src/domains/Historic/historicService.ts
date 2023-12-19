@@ -1,6 +1,6 @@
-import {SCHEMA_KEYS} from '../../constansts/schemaKeys';
 import {openRealm} from '@/services/realm/realm';
 import {historicAdapter} from './historicAdapter';
+import {SCHEMA_KEYS} from '../../storage/config';
 
 export const historicService = {
   getHistoric: async () => {

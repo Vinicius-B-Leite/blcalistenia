@@ -6,7 +6,7 @@ import BottomSheet, {BottomSheetRefProps} from '@/components/BottomSheet';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import {FlashList} from '@shopify/flash-list';
 import {HistoricBS} from './components/HistoricBS';
-import {useQuery} from '@/services/realm/realm';
+
 import Animated, {FadeInDown} from 'react-native-reanimated';
 import {useGetHistoric} from '../../domains/Historic/useCases/useGetHistoric';
 

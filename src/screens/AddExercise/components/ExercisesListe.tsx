@@ -1,7 +1,6 @@
 import {FlashList} from '@shopify/flash-list';
 import React, {useMemo} from 'react';
 import * as S from './style';
-import {useRealm} from '@/services/realm/realm';
 import {ExerciseType} from '../../../models/ExerciseType';
 import Exercise from '../../../components/Exercise';
 import {useSelector} from 'react-redux';
