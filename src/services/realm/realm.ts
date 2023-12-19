@@ -6,6 +6,7 @@ import {ExerciseWorkout} from '../../schema/ExerciseWorkoutSchema';
 import {SuggestWorkout} from '../../schema/SuggestWorkoutSchema';
 import {HistoricSchema} from '../../schema/HistoricSchema';
 import Realm from 'realm';
+import {UserSchema} from '@/schema/UserSchema';
 
 const realmAccessBehavior: Realm.OpenRealmBehaviorConfiguration = {
   type: Realm.OpenRealmBehaviorType.OpenImmediately,
@@ -41,6 +42,7 @@ export async function openRealm() {
       ExerciseSchema,
       SerieSchema,
       ExerciseWorkout,
+      UserSchema,
     ],
   });
 

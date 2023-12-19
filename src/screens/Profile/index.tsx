@@ -9,13 +9,15 @@ import ThemeSelect from '../../components/ThemeSelect';
 import ChangeUsername from '../../components/ChangeUsername';
 
 import useProfile from './useProfile';
+import {useGetUser} from '@/domains/User/useCases/useGetUser';
+import {useAuth} from '@/contexts/AuthContext';
 
 type NavigationProps = NativeStackScreenProps<RootStackParamList, 'Profile'>;
 
 const Profile: React.FC<NavigationProps> = ({navigation}) => {
   const theme = useTheme();
   const [showThemeSelect, setShowThemeSelect] = useState(false);
-
+  const {user} = useAuth();
   const {
     handleChangeName,
     handlePickImage,
@@ -33,12 +35,13 @@ const Profile: React.FC<NavigationProps> = ({navigation}) => {
       <S.ButtonChangeImage onPress={handlePickImage}>
         <S.Avatar
           source={{
-            uri: 'https://pbs.twimg.com/media/FOq9YuBXsBgTIQM.jpg',
+            uri:
+              user?.avatar || 'https://pbs.twimg.com/media/FOq9YuBXsBgTIQM.jpg',
           }}
           resizeMode={FastImage.resizeMode.cover}
         />
       </S.ButtonChangeImage>
-      <S.Username>{'Desconhecido'}</S.Username>
+      <S.Username>{user?.username}</S.Username>
 
       <S.OptionContainer onPress={openChangeUsernameModal}>
         <S.Left>

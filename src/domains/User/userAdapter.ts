@@ -1,0 +1,14 @@
+import {UserType} from '@/models/UserType';
+import uuid from 'react-native-uuid';
+
+function adapter(user: any): UserType {
+  return {
+    avatar: user.avatar || '',
+    uid: user._id || uuid.v4().toString(),
+    username: user.username || 'Desconhecido',
+  };
+}
+
+export const userAdapter = {
+  adapter,
+};

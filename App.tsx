@@ -5,6 +5,7 @@ import '@/services/calendarConfig';
 import {AppProvider} from '@realm/react';
 
 import SplashScreen from 'react-native-splash-screen';
+import UserContextProvider from '@/contexts/AuthContext';
 
 const App = () => {
   useEffect(() => {
@@ -14,7 +15,9 @@ const App = () => {
   return (
     <ThemeContextProvider>
       <AppProvider id="application-0-fcyzd">
-        <Index />
+        <UserContextProvider>
+          <Index />
+        </UserContextProvider>
       </AppProvider>
     </ThemeContextProvider>
   );
