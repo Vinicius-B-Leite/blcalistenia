@@ -5,12 +5,14 @@ import {RootStackParamList} from '../../routes/Models';
 import * as S from './styles';
 import {RouteProp, useRoute} from '@react-navigation/native';
 import {useAppNavigation} from '@/hooks/useAppNavigation';
+import {useTheme} from 'styled-components/native';
 
 type Route = RouteProp<RootStackParamList, 'Rest'>;
 
 const Rest: React.FC = () => {
-  const totalSeconds = useRoute<Route>().params?.totalSeconds || 1000;
+  const totalSeconds = useRoute<Route>().params?.totalSeconds || 10;
   const navigation = useAppNavigation();
+  const theme = useTheme();
 
   const countDownRef = useRef<CountDownRef>(null);
 

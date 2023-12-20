@@ -1,6 +1,6 @@
 export type SerieType = {
-    serie: Number,
-    rep: Number,
-    rest: Number,
-    done?: boolean
-}
+  serie: Number;
+  rep: Number;
+  rest: number;
+  done?: boolean;
+};

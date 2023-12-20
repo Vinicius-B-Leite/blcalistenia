@@ -1,14 +1,10 @@
-import styled from "styled-components/native";
+import styled from 'styled-components/native';
 
 export const Counter = styled.Text`
-    font-size: ${({theme}) => theme.sizes.fontSize.xlg}px;
-    color: ${({theme}) => theme.colors.text};
-    position: absolute;
-    left: 40%;
-    top: 45%;
-`
+  font-size: ${({theme}) => theme.sizes.fontSize.xlg}px;
+  color: ${({theme}) => theme.colors.text};
+  text-align: center;
+`;
 export const TotalTimes = styled(Counter)`
-    font-size: ${({theme}) => theme.sizes.fontSize.sm}px;
-    left: 46%;
-    top: 55%;
-`
+  font-size: ${({theme}) => theme.sizes.fontSize.sm}px;
+`;
