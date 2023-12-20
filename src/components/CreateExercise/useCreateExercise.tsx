@@ -5,7 +5,6 @@ import {addExercise} from '@/features/Exercises/exerciseSlicer';
 import {useAuth} from '@/contexts/AuthContext';
 
 export default function useCreateExercise() {
-  const {user} = useAuth();
   const {createExercise} = useDomainCreateExercise();
   const dispatch = useDispatch();
 
@@ -41,7 +40,6 @@ export default function useCreateExercise() {
         categories: categoriesSelected.map(m => m.toLocaleLowerCase()),
         muscles: musclesSelected.map(c => c.toLocaleLowerCase()),
         name: exerciseNameInput,
-        user_id: user!.uid,
       });
       setCategoriesSelected([]);
       setMusclesSelected([]);

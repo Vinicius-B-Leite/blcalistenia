@@ -1,6 +1,5 @@
 import {exerciseAdapter} from './exerciseAdapter';
 import {ExerciseType} from '@/models/ExerciseType';
-import uuid from 'react-native-uuid';
 import {storage} from '@/storage/storage';
 
 export const exerciseService = {
@@ -9,9 +8,8 @@ export const exerciseService = {
 
     return exercises.map(exerciseAdapter.adapter);
   },
-  createExercise: async (exercise: Omit<ExerciseType, '_id'>) => {
+  createExercise: async (exercise: ExerciseType) => {
     const exerciseCreated = await storage.upset<ExerciseType>('Exercise', {
-      _id: uuid.v4().toString(),
       ...exercise,
     });
 

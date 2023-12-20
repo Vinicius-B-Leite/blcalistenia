@@ -5,6 +5,7 @@ import uuid from 'react-native-uuid';
 import {HistoricType} from '@/models/HistoricType';
 export function useCreateHistoric() {
   const {user} = useAuth();
+
   const handleCreateHistoric = async (
     props: Omit<HistoricType, '_id' | 'user_id'>,
   ) => {

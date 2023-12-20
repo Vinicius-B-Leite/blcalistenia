@@ -18,7 +18,7 @@ import {useCreateHistoric} from '@/domains/Historic/useCases/useCreateHistoric';
 
 export default function useChronometer() {
   const dispatch = useDispatch();
-  const {user} = useAuth();
+
   const workout = useAppSelector(state => state.workout.workout);
   const {handleCreateWorkout} = useCreateWorkout();
   const {handleCreateHistoric} = useCreateHistoric();
@@ -53,7 +53,6 @@ export default function useChronometer() {
           exercises: workout.exercises,
           title: workout.title,
           banner: workout.banner || '',
-          user_id: user!.uid,
         });
       }
 

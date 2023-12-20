@@ -53,7 +53,6 @@ export default function useWorkoutHeader() {
 
     const workoutCreated = await handleCreateWorkout({
       ...workoutRef.current,
-      user_id: user!.uid,
     });
     dispatch(upsetWorkout(workoutCreated));
 
