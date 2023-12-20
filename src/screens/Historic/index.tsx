@@ -1,4 +1,4 @@
-import React, {useRef, useState} from 'react';
+import React, {useCallback, useRef, useState} from 'react';
 import * as S from './styles';
 import {HistoricType} from '@/models/HistoricType';
 import HistoricItem from '@/components/HistoricItem';
@@ -9,6 +9,7 @@ import {HistoricBS} from './components/HistoricBS';
 
 import Animated, {FadeInDown} from 'react-native-reanimated';
 import {useGetHistoric} from '../../domains/Historic/useCases/useGetHistoric';
+import {useFocusEffect} from '@react-navigation/native';
 
 const Historic: React.FC = () => {
   const bottomsheetRef = useRef<BottomSheetRefProps>(null);
@@ -16,7 +17,13 @@ const Historic: React.FC = () => {
     null,
   );
 
-  const {historic} = useGetHistoric();
+  const {historic, fetchHistoric} = useGetHistoric();
+
+  useFocusEffect(
+    useCallback(() => {
+      fetchHistoric();
+    }, []),
+  );
 
   return (
     <GestureHandlerRootView style={{flex: 1}}>

@@ -17,5 +17,6 @@ export function useGetHistoric() {
 
   return {
     historic,
+    fetchHistoric,
   };
 }
