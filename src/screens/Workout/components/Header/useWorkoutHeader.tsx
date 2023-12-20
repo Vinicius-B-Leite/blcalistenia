@@ -56,16 +56,7 @@ export default function useWorkoutHeader() {
       user_id: user!.uid,
     });
     dispatch(upsetWorkout(workoutCreated));
-    dispatch(
-      setWorkout({
-        _id: '',
-        banner: '',
-        exercises: [],
-        title: '',
-        anotation: '',
-        user_id: '',
-      }),
-    );
+
     navigation.navigate('HomeStack', {screen: 'Home'});
   };
 

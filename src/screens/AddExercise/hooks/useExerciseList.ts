@@ -15,7 +15,7 @@ export function useExerciseList() {
 
   useEffect(() => {
     const exerciseListIsEmpty =
-      exercises.length > 0 && exercisList.length === 0;
+      exercises.length >= 0 && exercisList.length === 0;
     if (exerciseListIsEmpty) {
       dispatch(addExercise([...exercises, ...initialsExercises]));
     }

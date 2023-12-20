@@ -26,6 +26,8 @@ const Workout: React.FC<Navigation> = ({route}) => {
 
   useEffect(() => {
     const isEditingWorkout = route.params.workout?._id;
+    console.log(isTrainig);
+
     if (isEditingWorkout) {
       dispatch(setWorkout({...route.params.workout}));
     } else {
@@ -41,7 +43,7 @@ const Workout: React.FC<Navigation> = ({route}) => {
       }
     }
     return () => {
-      if (isTrainig) {
+      if (!isTrainig) {
         dispatch(setWorkout({} as WorkoutType));
       }
     };
