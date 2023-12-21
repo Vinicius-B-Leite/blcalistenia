@@ -1,21 +1,18 @@
 import React, {useState} from 'react';
-import * as S from './styles';
-import Feather from 'react-native-vector-icons/Feather';
-import {useTheme} from 'styled-components/native';
-import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import {RootStackParamList} from '../../routes/Models';
-import FastImage from 'react-native-fast-image';
-import ThemeSelect from '../../components/ThemeSelect';
-import ChangeUsername from '../../components/ChangeUsername';
 
+import ThemeSelect from './components/ThemeSelect';
+import ChangeUsername from './components/ChangeUsername';
+import Container from '@/components/Container/Container';
 import useProfile from './useProfile';
-import {useGetUser} from '@/domains/User/useCases/useGetUser';
+
 import {useAuth} from '@/contexts/AuthContext';
+import Avatar from './components/Avatar/Avatar';
+import Text from '@/components/Text/Text';
 
-type NavigationProps = NativeStackScreenProps<RootStackParamList, 'Profile'>;
+import Header from './components/Header/Header';
+import Options from './components/Options/Options';
 
-const Profile: React.FC<NavigationProps> = ({navigation}) => {
-  const theme = useTheme();
+const Profile: React.FC = () => {
   const [showThemeSelect, setShowThemeSelect] = useState(false);
   const {user} = useAuth();
   const {
@@ -28,41 +25,24 @@ const Profile: React.FC<NavigationProps> = ({navigation}) => {
   } = useProfile();
 
   return (
-    <S.Container>
-      <S.Header onPress={() => navigation.goBack()}>
-        <S.Title>{'<  '}Perfil</S.Title>
-      </S.Header>
-      <S.ButtonChangeImage onPress={handlePickImage}>
-        <S.Avatar
-          source={{
-            uri:
-              user?.avatar || 'https://pbs.twimg.com/media/FOq9YuBXsBgTIQM.jpg',
-          }}
-          resizeMode={FastImage.resizeMode.cover}
-        />
-      </S.ButtonChangeImage>
-      <S.Username>{user?.username}</S.Username>
+    <Container>
+      <Header />
+      <Avatar avatar={user?.avatar || ''} handlePickImage={handlePickImage} />
 
-      <S.OptionContainer onPress={openChangeUsernameModal}>
-        <S.Left>
-          <Feather
-            name="user"
-            size={theme.sizes.icons.md}
-            color={theme.colors.contrast}
-          />
-        </S.Left>
-        <S.OptionTitle>Nome de usuário</S.OptionTitle>
-      </S.OptionContainer>
-      <S.OptionContainer onPress={() => setShowThemeSelect(true)}>
-        <S.Left>
-          <Feather
-            name="sun"
-            size={theme.sizes.icons.md}
-            color={theme.colors.contrast}
-          />
-        </S.Left>
-        <S.OptionTitle>Tema</S.OptionTitle>
-      </S.OptionContainer>
+      <Text preset="pLarge" textAlign="center" mt={14} mb={24}>
+        {user?.username}
+      </Text>
+
+      <Options
+        iconName="user"
+        label="Nome de usuário"
+        onPress={openChangeUsernameModal}
+      />
+      <Options
+        iconName="sun"
+        label="Tema"
+        onPress={() => setShowThemeSelect(true)}
+      />
 
       <ChangeUsername
         visible={showChangeUsername}
@@ -77,7 +57,7 @@ const Profile: React.FC<NavigationProps> = ({navigation}) => {
         visible={showThemeSelect}
         onRequestClose={() => setShowThemeSelect(false)}
       />
-    </S.Container>
+    </Container>
   );
 };
 

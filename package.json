@@ -20,6 +20,7 @@
     "@realm/react": "^0.5.1",
     "@reduxjs/toolkit": "^1.9.3",
     "@shopify/flash-list": "^1.4.2",
+    "@shopify/restyle": "^2.4.2",
     "lodash": "^4.17.21",
     "react": "18.2.0",
     "react-native": "0.71.3",
