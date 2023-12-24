@@ -2,16 +2,6 @@ import {Theme} from '@/theme/dark';
 import {
   createBox,
   createRestyleComponent,
-  BackgroundColorProps,
-  OpacityProps,
-  LayoutProps,
-  SpacingProps,
-  BorderProps,
-  ShadowProps,
-  PositionProps,
-  VisibleProps,
-  SpacingShorthandProps,
-  BackgroundColorShorthandProps,
   spacing,
   backgroundColor,
   opacity,
@@ -23,23 +13,15 @@ import {
   backgroundColorShorthand,
 } from '@shopify/restyle';
 import React from 'react';
-import {TouchableOpacity, TouchableOpacityProps} from 'react-native';
+import {
+  ScrollView,
+  TouchableOpacity,
+  TouchableOpacityProps,
+} from 'react-native';
+import {BoxPressableProps, BoxScrollProps} from './types';
 
 const Box = createBox<Theme>();
 export default Box;
-export type BoxType = React.ComponentProps<typeof Box>;
-
-export type BoxPressableProps = SpacingProps<Theme> &
-  BackgroundColorProps<Theme> &
-  OpacityProps<Theme> &
-  LayoutProps<Theme> &
-  BorderProps<Theme> &
-  ShadowProps<Theme> &
-  PositionProps<Theme> &
-  VisibleProps<Theme> &
-  SpacingShorthandProps<Theme> &
-  BackgroundColorShorthandProps<Theme> &
-  TouchableOpacityProps;
 
 export const BoxPressable = createRestyleComponent<BoxPressableProps, Theme>(
   [
@@ -54,4 +36,18 @@ export const BoxPressable = createRestyleComponent<BoxPressableProps, Theme>(
     backgroundColorShorthand,
   ],
   TouchableOpacity,
+);
+export const BoxScroll = createRestyleComponent<BoxScrollProps, Theme>(
+  [
+    spacing,
+    backgroundColor,
+    opacity,
+    layout,
+    border,
+    shadow,
+    visible,
+    spacingShorthand,
+    backgroundColorShorthand,
+  ],
+  ScrollView,
 );

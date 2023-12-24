@@ -15,7 +15,7 @@ const Home: React.FC = () => {
 
   return (
     <>
-      <Container>
+      <Container scrollEnabled>
         <CalendarDaysTrained ref={calendarRef} />
         <Header openCalendar={() => calendarRef.current?.openCalendar()} />
 
