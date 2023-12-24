@@ -1,19 +1,35 @@
-import { useNavigation } from '@react-navigation/native';
 import React from 'react';
-import { StackNavigationProp } from '@react-navigation/stack';
-import { RootStackParamList } from '../../../../../routes/Models';
-import * as S from './styles'
-import { useAppNavigation } from '@/hooks/useAppNavigation';
 
+import * as S from './styles';
+import {useAppNavigation} from '@/hooks/useAppNavigation';
+import {BoxPressable} from '@/components/Box/Box';
+import Text from '@/components/Text/Text';
 
 const CreateWorkoutButton: React.FC = () => {
+  const navigation = useAppNavigation();
 
-    const navigation = useAppNavigation()
-    return (
-        <S.Container onPress={() => navigation.navigate('HomeStack', { screen: 'Workout', params: { workout: undefined } })}>
-            <S.Icon>+</S.Icon>
-        </S.Container>
-    )
-}
+  const navigateToWorkout = () => {
+    navigation.navigate('HomeStack', {
+      screen: 'Workout',
+      params: {workout: undefined},
+    });
+  };
+
+  return (
+    <BoxPressable
+      borderWidth={1}
+      borderColor="contrast"
+      borderRadius={'full'}
+      width={30}
+      height={30}
+      alignItems="center"
+      justifyContent="center"
+      onPress={navigateToWorkout}>
+      <Text preset="pMedium" color="contrast" bold>
+        +
+      </Text>
+    </BoxPressable>
+  );
+};
 
 export default CreateWorkoutButton;

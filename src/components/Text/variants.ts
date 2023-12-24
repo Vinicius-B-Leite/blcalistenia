@@ -16,24 +16,24 @@ export const textsVariantsStyles: Record<
 > = {
   primaryTitle: {
     fontWeight: 'bold',
-    fontSize: 26,
-    lineHeight: 30,
+    fontSize: 30,
+    lineHeight: 34,
     color: 'text',
   },
   secondaryTitle: {
     fontWeight: 'bold',
-    fontSize: 24,
+    fontSize: 26,
     lineHeight: 30,
     color: 'text',
   },
   pLarge: {
-    fontSize: 20,
+    fontSize: 22,
     lineHeight: 26,
     color: 'text',
   },
   pMedium: {
-    fontSize: 16,
-    lineHeight: 20,
+    fontSize: 18,
+    lineHeight: 24,
     color: 'text',
   },
   pSmall: {

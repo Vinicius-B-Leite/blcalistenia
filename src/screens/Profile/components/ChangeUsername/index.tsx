@@ -37,6 +37,9 @@ const ChangeUsername: React.FC<ChangeUsernameProps> = ({
           placeholder="Digite seu novo nome"
           value={newName}
           onChangeText={setNewName}
+          boxProps={{
+            backgroundColor: 'secondBg',
+          }}
         />
 
         <Button label="Salvar" onPress={() => changeName(newName)} mt={34} />

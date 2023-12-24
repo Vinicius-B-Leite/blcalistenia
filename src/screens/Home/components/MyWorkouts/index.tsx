@@ -4,40 +4,42 @@ import {useTheme} from 'styled-components/native';
 
 import ListEmptyComponent from '@/screens/Home/components/MyWorkouts/ListEmptyComponent';
 import CreateWorkoutButton from '@/screens/Home/components/MyWorkouts/CreateWorkoutButton';
-import Workout from '@/components/Workout';
+import Workout from '@/screens/Home/components/Workout';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import FilterMuscle from '../FilterMuscle';
 
 import Animated, {FadeInDown, Layout} from 'react-native-reanimated';
 import useMyWorkouts from './useMyWorkouts';
-import {Keyboard} from 'react-native';
+import {FlatList, Keyboard} from 'react-native';
+import Box from '@/components/Box/Box';
+import Text from '@/components/Text/Text';
+import Input from '@/components/Input/Input';
+import {useAppTheme} from '@/hooks/useAppTheme';
 
 const MyWorkouts: React.FC = () => {
-  const theme = useTheme();
+  const theme = useAppTheme();
 
   const {workoutList, onChangeSearchWorkoutInput, searchWorkoutInput} =
     useMyWorkouts();
 
   return (
-    <S.WorkoutContainer>
-      <S.Title>Seus treinos</S.Title>
-      <S.InputArea>
-        <AntDesign
-          name="search1"
-          color={theme.colors.text}
-          size={theme.sizes.icons.sm}
-        />
-        <S.Input
-          value={searchWorkoutInput}
-          onChangeText={onChangeSearchWorkoutInput}
-          placeholder="Pesquisar treino"
-          placeholderTextColor={theme.colors.darkText}
-          onEndEditing={Keyboard.dismiss}
-        />
-      </S.InputArea>
+    <Box marginVertical={24}>
+      <Text preset="pLarge" bold color="contrast" mb={14}>
+        Seus treinos
+      </Text>
+
+      <Input
+        value={searchWorkoutInput}
+        onChangeText={onChangeSearchWorkoutInput}
+        placeholder="Pesquisar treino"
+        onEndEditing={Keyboard.dismiss}
+        leftIcon={
+          <AntDesign name="search1" color={theme.colors.text} size={20} />
+        }
+      />
 
       <FilterMuscle />
-      <S.WorkoutList
+      <FlatList
         data={workoutList}
         horizontal
         keyExtractor={item => item._id}
@@ -51,11 +53,11 @@ const MyWorkouts: React.FC = () => {
           <Animated.View
             entering={FadeInDown.delay(index * 400)}
             layout={Layout.springify()}>
-            <Workout workout={item} />
+            <Workout workout={item} marginLeft={index === 0 ? 34 : undefined} />
           </Animated.View>
         )}
       />
-    </S.WorkoutContainer>
+    </Box>
   );
 };
 

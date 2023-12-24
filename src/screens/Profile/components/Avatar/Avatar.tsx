@@ -1,8 +1,8 @@
-import Image from '@/components/Image/Image';
 import {UserType} from '@/models/UserType';
 import React from 'react';
 import DefaultUserPhoto from '@/assets/defaultUserPhoto.png';
 import {BoxPressable} from '@/components/Box/Box';
+import CircleImage from '@/components/CircleImage/CircleImage';
 
 type AvatarProps = Pick<UserType, 'avatar'> & {
   handlePickImage: () => Promise<void>;
@@ -11,7 +11,7 @@ type AvatarProps = Pick<UserType, 'avatar'> & {
 const Avatar: React.FC<AvatarProps> = ({avatar, handlePickImage}) => {
   return (
     <BoxPressable alignSelf="center" onPress={handlePickImage}>
-      <Image
+      <CircleImage
         source={
           avatar?.length > 0
             ? {
@@ -20,9 +20,7 @@ const Avatar: React.FC<AvatarProps> = ({avatar, handlePickImage}) => {
             : DefaultUserPhoto
         }
         resizeMode="cover"
-        height={200}
-        width={200}
-        isCircle
+        size={200}
       />
     </BoxPressable>
   );

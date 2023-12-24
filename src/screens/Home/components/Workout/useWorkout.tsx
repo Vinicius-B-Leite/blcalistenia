@@ -1,5 +1,5 @@
 import {useDispatch} from 'react-redux';
-import {useDeleteWorkout} from '../../domains/Workout/useCases/useDeleteWorkout';
+import {useDeleteWorkout} from '../../../../domains/Workout/useCases/useDeleteWorkout';
 
 import {Alert} from 'react-native';
 import {deleteWorkout} from '@/features/WorkoutList/workoutListSlicer';

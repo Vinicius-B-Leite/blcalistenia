@@ -22,7 +22,7 @@ const Input: React.FC<InputProps> = ({
   return (
     <BoxPressable
       onPress={() => inputRef.current?.focus()}
-      bg="secondBg"
+      bg="primaryBg"
       height={55}
       borderRadius={10}
       flexDirection="row"

@@ -8,20 +8,21 @@ import WorkoutSuggest from './components/WorkoutSuggest';
 import MyWorkouts from './components/MyWorkouts';
 
 import {View} from 'react-native';
+import Container from '@/components/Container/Container';
 
 const Home: React.FC = () => {
   const calendarRef = useRef<CalendarRef>(null);
 
   return (
     <>
-      <View style={{flex: 1}}>
+      <Container>
         <CalendarDaysTrained ref={calendarRef} />
         <Header openCalendar={() => calendarRef.current?.openCalendar()} />
 
         <MyWorkouts />
 
         <WorkoutSuggest />
-      </View>
+      </Container>
       <GoBackToWorkout />
     </>
   );
