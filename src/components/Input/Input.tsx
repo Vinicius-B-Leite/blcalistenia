@@ -9,12 +9,14 @@ type InputProps = TextInputProps & {
   leftIcon?: React.ReactNode;
   rightIcon?: React.ReactNode;
   boxProps?: BoxType;
+  textPreset?: keyof typeof textsVariantsStyles;
 };
 
 const Input: React.FC<InputProps> = ({
   leftIcon,
   rightIcon,
   boxProps,
+  textPreset = 'pMedium',
   ...inputProps
 }) => {
   const theme = useAppTheme();
@@ -36,7 +38,7 @@ const Input: React.FC<InputProps> = ({
         ref={inputRef}
         placeholder="askdnakjsndajk"
         style={{
-          ...textsVariantsStyles.pMedium,
+          ...textsVariantsStyles[textPreset],
           color: theme.colors.text,
           flex: 1,
         }}

@@ -9,11 +9,13 @@ import {RootStackParamList} from '../../routes/Models';
 import {useDispatch} from 'react-redux';
 import {setWorkout} from '../../features/Workout/workoutSlicer';
 import WorkoutList from './components/ExerciseList';
-import ChronometerButton from '../../components/ChronometerButton';
+import ChronometerButton from './components/ChronometerButton';
 
 import uuid from 'react-native-uuid';
 import {WorkoutType} from '../../models/WorkoutType';
 import {useAppSelector} from '@/hooks/useAppSelector';
+import Container from '@/components/Container/Container';
+import Input from '@/components/Input/Input';
 
 type Navigation = StackScreenProps<RootStackParamList, 'Workout'>;
 
@@ -50,23 +52,22 @@ const Workout: React.FC<Navigation> = ({route}) => {
   }, [isTrainig]);
 
   return (
-    <S.Container>
+    <Container>
       <Header />
 
-      <S.AnotationContainer>
-        <S.Anotation
-          value={workout?.anotation}
-          onChangeText={txt =>
-            dispatch(setWorkout({...workout, anotation: txt}))
-          }
-          placeholder="Anotação"
-          placeholderTextColor={theme.colors.darkText}
-        />
-      </S.AnotationContainer>
+      <Input
+        value={workout?.anotation}
+        onChangeText={txt => dispatch(setWorkout({...workout, anotation: txt}))}
+        placeholder="Anotação"
+        placeholderTextColor={theme.colors.darkText}
+        boxProps={{
+          mb: 34,
+        }}
+      />
 
       <WorkoutList />
       <ChronometerButton />
-    </S.Container>
+    </Container>
   );
 };
 

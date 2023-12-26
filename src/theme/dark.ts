@@ -25,6 +25,7 @@ export const dark = createTheme({
   },
   borderRadii: {
     0: 0,
+    4: 4,
     10: 10,
     full: Dimensions.get('screen').height,
   },
