@@ -2,17 +2,19 @@ import React, {useRef} from 'react';
 import {Vibration} from 'react-native';
 import CountDown, {CountDownRef} from '../../components/CountDown';
 import {RootStackParamList} from '../../routes/Models';
-import * as S from './styles';
+
 import {RouteProp, useRoute} from '@react-navigation/native';
 import {useAppNavigation} from '@/hooks/useAppNavigation';
 import {useTheme} from 'styled-components/native';
+import Container from '@/components/Container/Container';
+import Box from '@/components/Box/Box';
+import Button from '@/components/Button/Button';
 
 type Route = RouteProp<RootStackParamList, 'Rest'>;
 
 const Rest: React.FC = () => {
   const totalSeconds = useRoute<Route>().params?.totalSeconds || 10;
   const navigation = useAppNavigation();
-  const theme = useTheme();
 
   const countDownRef = useRef<CountDownRef>(null);
 
@@ -28,25 +30,23 @@ const Rest: React.FC = () => {
     navigation.goBack();
   };
   return (
-    <S.Container>
+    <Container justifyContent="center">
       <CountDown
         totalSeconds={totalSeconds as number}
         ref={countDownRef}
         onFineshed={onChronometerFineshed}
       />
 
-      <S.ButtonsContainer>
-        <S.CountDownButton bg="contrast" onPress={increaseSecondsInCountdown}>
-          <S.CountDownButtonText>{'+ 10s'}</S.CountDownButtonText>
-        </S.CountDownButton>
-
-        <S.CountDownButton
+      <Box flexDirection="row" gap={34} justifyContent="center" mt={34}>
+        <Button label="+10" onPress={increaseSecondsInCountdown} flex={1} />
+        <Button
+          label="-10"
+          onPress={decreaseSecondsInCountdown}
           bg="darkContrast"
-          onPress={decreaseSecondsInCountdown}>
-          <S.CountDownButtonText>{'- 10s'}</S.CountDownButtonText>
-        </S.CountDownButton>
-      </S.ButtonsContainer>
-    </S.Container>
+          flex={1}
+        />
+      </Box>
+    </Container>
   );
 };
 
