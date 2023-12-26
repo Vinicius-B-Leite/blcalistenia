@@ -1,7 +1,8 @@
 import React from 'react';
 
-import {BoxPressable, BoxPressableProps} from '../Box/Box';
+import {BoxPressable} from '../Box/Box';
 import Text from '../Text/Text';
+import {BoxPressableProps} from '../Box/types';
 
 type FilterProps = BoxPressableProps & {
   label: string;
@@ -16,7 +17,10 @@ const Filter: React.FC<FilterProps> = ({isActive, label, ...rest}) => {
       bg={isActive ? 'contrast' : 'secondBg'}
       borderRadius={'full'}
       {...rest}>
-      <Text preset="pSmall" color={isActive ? 'text' : 'secondText'}>
+      <Text
+        preset="pSmall"
+        color={isActive ? 'text' : 'secondText'}
+        numberOfLines={1}>
         {label}
       </Text>
     </BoxPressable>

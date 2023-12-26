@@ -1,16 +1,18 @@
 import React, {memo, useState} from 'react';
 import {Modal, ModalProps, FlatList} from 'react-native';
-import {FilterType} from '../../screens/AddExercise';
-import {category} from '../../utils/category';
-import {muscles} from '../../utils/muscles';
-import * as S from './style';
+import {FilterType} from '../..';
+import {category} from '../../../../utils/category';
+import {muscles} from '../../../../utils/muscles';
 
-import {ExerciseType} from '../../models/ExerciseType';
-import {initialsExercises} from '../../utils/initialsExercises';
+import {initialsExercises} from '../../../../utils/initialsExercises';
 import {useDispatch} from 'react-redux';
-import {setExercises} from '../../features/Exercises/exerciseSlicer';
+import {setExercises} from '../../../../features/Exercises/exerciseSlicer';
 import FilterItem from './components/FilterItem';
 import {useGetExercises} from '@/domains/Exercise/useCases/useGetExercises';
+import Box, {BoxPressable} from '@/components/Box/Box';
+import Text from '@/components/Text/Text';
+import Filter from '@/components/Filter/Filter';
+import Button from '@/components/Button/Button';
 
 type FilterExerciseProps = {
   modalProps: ModalProps;
@@ -58,52 +60,66 @@ const FilterExercise: React.FC<FilterExerciseProps> = ({
 
   return (
     <Modal {...modalProps}>
-      <S.Container>
-        <S.CloseModal onPress={modalProps.onRequestClose} />
-        <S.Main>
-          <S.Title>Filtros</S.Title>
+      <Box flex={1} bg="thirdBg" justifyContent="center">
+        <BoxPressable
+          style={{position: 'absolute'}}
+          top={0}
+          left={0}
+          width={'100%'}
+          height={'100%'}
+          onPress={modalProps.onRequestClose}
+        />
+        <Box bg="primaryBg" borderRadius={10} marginHorizontal={34} p={24}>
+          <Text preset="pLarge" bold mb={24}>
+            Filtros
+          </Text>
 
-          <S.FilterTitle>Categoria</S.FilterTitle>
+          <Text preset="pMedium">Categoria</Text>
           <FlatList
             data={category}
             numColumns={3}
             keyExtractor={item => item}
-            renderItem={({item}) => (
-              <FilterItem
-                item={item}
-                isSelected={
-                  item.toLowerCase() === filters.category.toLowerCase()
+            renderItem={({item: categoryItem}) => (
+              <Filter
+                label={categoryItem}
+                isActive={
+                  categoryItem.toLowerCase() === filters.category.toLowerCase()
                 }
-                selectItem={categorySelected =>
-                  setFilters(old => ({...old, category: categorySelected}))
+                mr={14}
+                mt={8}
+                onPress={() =>
+                  setFilters(old => ({...old, category: categoryItem}))
                 }
               />
             )}
           />
 
-          <S.FilterTitle>Músculos</S.FilterTitle>
+          <Text preset="pMedium" mt={24}>
+            Músculos
+          </Text>
+
           <FlatList
             data={muscles}
             numColumns={3}
             keyExtractor={item => item}
-            renderItem={({item}) => (
-              <FilterItem
-                item={item}
-                isSelected={
-                  item.toLowerCase() === filters.muscles.toLowerCase()
+            renderItem={({item: muscleItem}) => (
+              <Filter
+                label={muscleItem}
+                isActive={
+                  muscleItem.toLowerCase() === filters.muscles.toLowerCase()
                 }
-                selectItem={muscleSelected =>
-                  setFilters(old => ({...old, muscles: muscleSelected}))
+                onPress={() =>
+                  setFilters(old => ({...old, muscles: muscleItem}))
                 }
+                mr={14}
+                mt={8}
               />
             )}
           />
 
-          <S.ApplyFilter onPress={filterExercises}>
-            <S.ApplyText>Aplicar</S.ApplyText>
-          </S.ApplyFilter>
-        </S.Main>
-      </S.Container>
+          <Button onPress={filterExercises} label="Aplicar" mt={24} />
+        </Box>
+      </Box>
     </Modal>
   );
 };

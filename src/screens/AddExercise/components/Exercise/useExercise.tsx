@@ -1,10 +1,10 @@
-import {useDeleteExercise} from '../../domains/Exercise/useCases/useDeleteExercise';
+import {useDeleteExercise} from '../../../../domains/Exercise/useCases/useDeleteExercise';
 import {deleteExercise as deleteExerciseFromState} from '@/features/Exercises/exerciseSlicer';
 import {addExercise} from '@/features/Workout/workoutSlicer';
 import {useAppNavigation} from '@/hooks/useAppNavigation';
 import {useAppSelector} from '@/hooks/useAppSelector';
 import {ExerciseType} from '@/models/ExerciseType';
-import {useRealm} from '@/services/realm/realm';
+
 import {initialsExercises} from '@/utils/initialsExercises';
 import {Alert} from 'react-native';
 import {useDispatch} from 'react-redux';

@@ -1,23 +1,27 @@
 import React from 'react';
 
-import {BoxPressable, BoxPressableProps, BoxType} from '../Box/Box';
+import {BoxPressable} from '../Box/Box';
 import Text from '../Text/Text';
 import Spiner from '../Spiner/Spiner';
+import {BoxPressableProps} from '../Box/types';
+import {variants as textVariants} from '../Text/variants';
 
 type ButtonProps = BoxPressableProps & {
   label: string;
   isLoading?: boolean;
+  textPreset?: keyof typeof textVariants;
 };
 
 const Button: React.FC<ButtonProps> = ({
   label,
   isLoading,
   disabled,
+  textPreset = 'pLarge',
   ...boxPressableProps
 }) => {
   return (
     <BoxPressable
-      height={55}
+      height={50}
       borderRadius={10}
       bg={disabled ? 'darkContrast' : 'contrast'}
       disabled={disabled || isLoading}
@@ -27,7 +31,7 @@ const Button: React.FC<ButtonProps> = ({
       {isLoading ? (
         <Spiner />
       ) : (
-        <Text bold preset="pLarge">
+        <Text bold preset={textPreset}>
           {label}
         </Text>
       )}

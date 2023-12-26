@@ -1,8 +1,9 @@
 import React, {useRef} from 'react';
 import {TextInput, TextInputProps, View} from 'react-native';
-import Box, {BoxPressable, BoxType} from '../Box/Box';
+import Box, {BoxPressable} from '../Box/Box';
 import {useAppTheme} from '@/hooks/useAppTheme';
 import {textsVariantsStyles} from '../Text/variants';
+import {BoxType} from '../Box/types';
 
 type InputProps = TextInputProps & {
   leftIcon?: React.ReactNode;
