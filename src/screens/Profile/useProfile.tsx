@@ -1,6 +1,6 @@
-import {useAuth} from '@/contexts/AuthContext';
+import {useAuth} from '@/contexts';
 
-import {pickeImage} from '@/utils/pickImage';
+import {pickeImage} from '@/utils';
 
 import {useState} from 'react';
 

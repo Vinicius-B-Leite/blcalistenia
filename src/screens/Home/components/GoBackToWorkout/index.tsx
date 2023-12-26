@@ -3,12 +3,8 @@ import {View} from 'react-native';
 import {useTheme} from 'styled-components/native';
 import * as S from './styles';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import {useSelector} from 'react-redux';
-import {RootState} from '../../features/store';
-import {NavigationProp, useNavigation} from '@react-navigation/native';
-import {TabParamList} from '../../routes/Models';
-import {useAppNavigation} from '@/hooks/useAppNavigation';
-import {useAppSelector} from '@/hooks/useAppSelector';
+
+import {useAppSelector, useAppNavigation} from '@/hooks';
 
 const GoBackToWorkout: React.FC = () => {
   const {colors, sizes} = useTheme();

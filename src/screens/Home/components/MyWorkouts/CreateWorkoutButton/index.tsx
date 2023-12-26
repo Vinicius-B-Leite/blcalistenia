@@ -1,9 +1,9 @@
 import React from 'react';
 
-import * as S from './styles';
-import {useAppNavigation} from '@/hooks/useAppNavigation';
-import {BoxPressable} from '@/components/Box/Box';
-import Text from '@/components/Text/Text';
+
+import {useAppNavigation} from '@/hooks';
+import {BoxPressable, Text} from '@/components';
+
 
 const CreateWorkoutButton: React.FC = () => {
   const navigation = useAppNavigation();

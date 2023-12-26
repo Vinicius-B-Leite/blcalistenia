@@ -1,8 +1,8 @@
 import React from 'react';
 
-import {useAppSelector} from '@/hooks/useAppSelector';
+import {useAppSelector} from '@/hooks';
 import useChronometer from './useChronometer';
-import Button from '../../../../components/Button/Button';
+import {Button} from '@/components';
 
 const ChronometerButton: React.FC = ({}) => {
   const timer = useAppSelector(state => state.workout.timer);

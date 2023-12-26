@@ -1,18 +1,18 @@
-import React, {useCallback, useRef, useState} from 'react';
-import * as S from './styles';
+import React, {useCallback, } from 'react';
+
 import {HistoricType} from '@/models/HistoricType';
-import HistoricItem from '@/screens/Historic/components/HistoricItem';
+import HistoricItem from './components/HistoricItem';
 
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import {FlashList} from '@shopify/flash-list';
 
 import Animated, {FadeInDown} from 'react-native-reanimated';
-import {useGetHistoric} from '../../domains/Historic/useCases/useGetHistoric';
+import {useGetHistoric} from '@/domains';
 import {useFocusEffect} from '@react-navigation/native';
-import Container from '@/components/Container/Container';
+import {Container} from '@/components';
 import Header from './components/Header/Header';
 
-const Historic: React.FC = () => {
+export const Historic: React.FC = () => {
   const {historic, fetchHistoric} = useGetHistoric();
 
   useFocusEffect(
@@ -43,4 +43,4 @@ const Historic: React.FC = () => {
     </GestureHandlerRootView>
   );
 };
-export default Historic;
+

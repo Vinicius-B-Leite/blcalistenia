@@ -5,11 +5,9 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 import {useTheme} from 'styled-components/native';
 import {useDispatch} from 'react-redux';
 
-import {setSearchInput} from '../../../../features/Exercises/exerciseSlicer';
-import {useAppNavigation} from '@/hooks/useAppNavigation';
-import {useAppSelector} from '@/hooks/useAppSelector';
-import Box, {BoxPressable} from '@/components/Box/Box';
-import Input from '@/components/Input/Input';
+import {setSearchInput} from '@/features';
+import {useAppNavigation, useAppSelector} from '@/hooks';
+import {BoxPressable, Box, Input} from '@/components';
 
 const ListHeader: React.FC = () => {
   const navigation = useAppNavigation();

@@ -1,8 +1,8 @@
-import {BoxPressable} from '@/components/Box/Box';
-import Text from '@/components/Text/Text';
-import {useAppNavigation} from '@/hooks/useAppNavigation';
+import {BoxPressable, Text} from '@/components';
+
+import {useAppNavigation} from '@/hooks';
 import React from 'react';
-import {View} from 'react-native';
+
 
 // import { Container } from './styles';
 

@@ -4,17 +4,16 @@ import {TouchableOpacity, View} from 'react-native';
 import ExerciseInWorkoutItem from '../ExerciseInWorkoutItem';
 
 import {useDispatch, useSelector} from 'react-redux';
-import {RootState} from '../../../../features/store';
-import {NavigationProp, useNavigation} from '@react-navigation/native';
-import {RootStackParamList} from '../../../../routes/Models';
-import {addSerie, removeExercise} from '@/features/Workout/workoutSlicer';
+
+import {addSerie, removeExercise} from '@/features';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import {useTheme} from 'styled-components/native';
-import {useAppNavigation} from '@/hooks/useAppNavigation';
-import {useAppSelector} from '@/hooks/useAppSelector';
-import Box, {BoxPressable} from '@/components/Box/Box';
-import Text from '@/components/Text/Text';
-import Button from '@/components/Button/Button';
+import {useAppNavigation, useAppSelector} from '@/hooks';
+
+import  {BoxPressable, Box,
+  Text, 
+  Button,} from '@/components';
+
 
 const ExerciseList: React.FC = () => {
   const theme = useTheme();

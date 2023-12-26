@@ -5,7 +5,7 @@ import useLogin from '@/hooks/useLogin'
 
 
 
-export default function Login() {
+export  function Login() {
     const theme = useTheme()
     const { isSingInAnonymousLoading, isSingInGoogleLoading, singInAnonymous, singInGoogle } = useLogin()
 

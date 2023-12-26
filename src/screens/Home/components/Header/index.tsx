@@ -4,12 +4,10 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 import {useTheme} from 'styled-components/native';
 
 import DefaultUserPhoto from '@/assets/defaultUserPhoto.png';
-import {useAppNavigation} from '@/hooks/useAppNavigation';
-import {useAuth} from '@/contexts/AuthContext';
-import Box, {BoxPressable} from '@/components/Box/Box';
+import {useAppNavigation} from '@/hooks';
+import {useAuth} from '@/contexts';
+import {BoxPressable, Box, CircleImage, Text} from '@/components';
 
-import Text from '@/components/Text/Text';
-import CircleImage from '@/components/CircleImage/CircleImage';
 
 type HeaderProps = {
   openCalendar: () => void;

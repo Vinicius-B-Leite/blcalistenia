@@ -1,4 +1,4 @@
-import {openRealm} from '@/services/realm/realm';
+import {openRealm} from '@/services';
 import {Storage} from './types';
 
 export const storage: Storage = {

@@ -1,4 +1,4 @@
-import {Theme} from '@/theme/dark';
+import {Theme} from '@/theme';
 import {
   createBox,
   createRestyleComponent,
@@ -12,16 +12,13 @@ import {
   spacingShorthand,
   backgroundColorShorthand,
 } from '@shopify/restyle';
-import React from 'react';
 import {
   ScrollView,
   TouchableOpacity,
-  TouchableOpacityProps,
 } from 'react-native';
 import {BoxPressableProps, BoxScrollProps} from './types';
 
-const Box = createBox<Theme>();
-export default Box;
+export const Box = createBox<Theme>();
 
 export const BoxPressable = createRestyleComponent<BoxPressableProps, Theme>(
   [

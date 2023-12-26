@@ -1,6 +1,6 @@
 import {GoogleSignin} from '@react-native-google-signin/google-signin';
 import {useState} from 'react';
-import {getGoogleCredentials} from '../utils/getGoogleCredentials';
+import {getGoogleCredentials} from '@/utils';
 import {Realm, useApp} from '@realm/react';
 
 export default function useLogin() {

@@ -1,13 +1,12 @@
 import React, {memo} from 'react';
 import FastImage from 'react-native-fast-image';
-import {WorkoutType} from '../../../../models/WorkoutType';
-import * as S from './styles';
-import {useAppNavigation} from '@/hooks/useAppNavigation';
+import {WorkoutType} from '@/models';
+
+import {useAppNavigation} from '@/hooks';
 import useWorkout from './useWorkout';
 import ImageNotFound from '@/assets/imageNotFound.png';
-import {BoxPressable, BoxType} from '../../../../components/Box/Box';
-import {Image} from '../../../../components/Image/Image';
-import Text from '@/components/Text/Text';
+import {BoxPressable, BoxType, Text, Image} from '@/components';
+
 
 type Props = BoxType & {
   workout: WorkoutType;

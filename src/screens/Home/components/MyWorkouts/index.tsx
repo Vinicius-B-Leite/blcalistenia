@@ -1,6 +1,5 @@
 import React from 'react';
-import * as S from '../../styles';
-import {useTheme} from 'styled-components/native';
+
 
 import ListEmptyComponent from '@/screens/Home/components/MyWorkouts/ListEmptyComponent';
 import CreateWorkoutButton from '@/screens/Home/components/MyWorkouts/CreateWorkoutButton';
@@ -11,10 +10,9 @@ import FilterMuscle from '../FilterMuscle';
 import Animated, {FadeInDown, Layout} from 'react-native-reanimated';
 import useMyWorkouts from './useMyWorkouts';
 import {FlatList, Keyboard} from 'react-native';
-import Box from '@/components/Box/Box';
-import Text from '@/components/Text/Text';
-import Input from '@/components/Input/Input';
-import {useAppTheme} from '@/hooks/useAppTheme';
+
+import {Input, Text, Box} from '@/components';
+import {useAppTheme} from '@/hooks';
 
 const MyWorkouts: React.FC = () => {
   const theme = useAppTheme();

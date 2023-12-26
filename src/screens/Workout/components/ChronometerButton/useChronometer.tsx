@@ -1,5 +1,5 @@
-import {useAppNavigation} from '@/hooks/useAppNavigation';
-import {useAppSelector} from '@/hooks/useAppSelector';
+import {useAppNavigation, useAppSelector} from '@/hooks';
+
 
 import {useDispatch} from 'react-redux';
 import BackgroundService from 'react-native-background-actions';
@@ -7,14 +7,14 @@ import {
   resetTimer,
   setWorkout,
   updateTimer,
-} from '@/features/Workout/workoutSlicer';
-import {options, sleep} from '@/utils/backgroundActionsConfig';
-import {HistoricType} from '@/models/HistoricType';
-import {WorkoutType} from '@/models/WorkoutType';
+} from '@/features';
+import {options, sleep} from '@/utils';
+
+import {WorkoutType} from '@/models';
 import {Alert} from 'react-native';
-import {useCreateWorkout} from '@/domains/Workout/useCases/useCreateWorkout';
-import {useAuth} from '@/contexts/AuthContext';
-import {useCreateHistoric} from '@/domains/Historic/useCases/useCreateHistoric';
+import {useCreateWorkout, useCreateHistoric} from '@/domains';
+
+
 
 export default function useChronometer() {
   const dispatch = useDispatch();

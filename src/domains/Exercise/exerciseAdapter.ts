@@ -1,6 +1,6 @@
-import {ExerciseType} from '@/models/ExerciseType';
+import {ExerciseType} from '@/models';
 
-const adapter = (exercise): ExerciseType => {
+const adapter = (exercise: any): ExerciseType => {
   return {
     _id: exercise._id,
     categories: exercise.categories,

@@ -1,6 +1,5 @@
 import {PayloadAction, createSlice} from '@reduxjs/toolkit';
-import {ExerciseType} from '../../models/ExerciseType';
-import {initialsExercises} from '@/utils/initialsExercises';
+import {ExerciseType} from '@/models';
 
 type InitialStateType = {
   exercises: ExerciseType[];

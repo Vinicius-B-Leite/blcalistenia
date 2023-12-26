@@ -1,9 +1,9 @@
 import React, {useContext} from 'react';
 import {Modal, ModalProps} from 'react-native';
-import {ThemeContext, ThemeType} from '../../../../contexts/ThemeContext';
+import {ThemeContext, ThemeType} from '@/contexts';
 
-import Box, {BoxPressable} from '@/components/Box/Box';
-import Text from '@/components/Text/Text';
+import  {BoxPressable, Box, Text} from '@/components';
+
 
 type Props = ModalProps;
 const ThemeSelect: React.FC<Props> = props => {

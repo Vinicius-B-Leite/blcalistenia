@@ -1,10 +1,8 @@
 import {FlashList} from '@shopify/flash-list';
 import React, {useMemo} from 'react';
-import * as S from '../style';
-import {ExerciseType} from '../../../../models/ExerciseType';
+
 import Exercise from '../Exercise';
-import {useSelector} from 'react-redux';
-import {RootState} from '../../../../features/store';
+
 import Animated, {
   FadeInDown,
   Layout,
@@ -12,8 +10,7 @@ import Animated, {
   SlideOutRight,
 } from 'react-native-reanimated';
 import {useExerciseList} from '../../hooks/useExerciseList';
-import Box, {BoxPressable} from '@/components/Box/Box';
-import Text from '@/components/Text/Text';
+import {BoxPressable, Box, Text} from '@/components';
 
 type Props = {
   openModal: () => void;

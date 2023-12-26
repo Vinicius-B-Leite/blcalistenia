@@ -1,18 +1,14 @@
 import React, {memo, useState} from 'react';
 import {Modal, ModalProps, FlatList} from 'react-native';
-import {FilterType} from '../..';
-import {category} from '../../../../utils/category';
-import {muscles} from '../../../../utils/muscles';
+import {FilterType} from '../../index';
+import {category, muscles, initialsExercises} from '@/utils';
 
-import {initialsExercises} from '../../../../utils/initialsExercises';
 import {useDispatch} from 'react-redux';
-import {setExercises} from '../../../../features/Exercises/exerciseSlicer';
-import FilterItem from './components/FilterItem';
-import {useGetExercises} from '@/domains/Exercise/useCases/useGetExercises';
-import Box, {BoxPressable} from '@/components/Box/Box';
-import Text from '@/components/Text/Text';
-import Filter from '@/components/Filter/Filter';
-import Button from '@/components/Button/Button';
+import {setExercises} from '@/features';
+
+import {useGetExercises} from '@/domains';
+
+import {Button, Box, Text, Filter, BoxPressable} from '@/components';
 
 type FilterExerciseProps = {
   modalProps: ModalProps;

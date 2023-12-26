@@ -1,13 +1,13 @@
 import React from 'react';
 
 import {ImageProps, Image} from '../Image/Image';
-import {BoxType} from '../Box/Box';
+import { BoxType } from '../Box/types';
 
 type CircleImageProps = ImageProps & {
   size: BoxType['width'];
 };
 
-const CircleImage: React.FC<CircleImageProps> = ({
+export const CircleImage: React.FC<CircleImageProps> = ({
   size,
   resizeMode,
   source,
@@ -23,4 +23,4 @@ const CircleImage: React.FC<CircleImageProps> = ({
   );
 };
 
-export default CircleImage;
+

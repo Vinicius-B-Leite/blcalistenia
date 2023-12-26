@@ -1,25 +1,25 @@
 import React, {useEffect} from 'react';
-import * as S from './styles';
+
 
 import Header from './components/Header';
 import {useTheme} from 'styled-components/native';
 import {StackScreenProps} from '@react-navigation/stack';
-import {RootStackParamList} from '../../routes/Models';
+import {RootStackParamList} from '@/routes/Models';
 
 import {useDispatch} from 'react-redux';
-import {setWorkout} from '../../features/Workout/workoutSlicer';
+import {setWorkout} from '@/features';
 import WorkoutList from './components/ExerciseList';
 import ChronometerButton from './components/ChronometerButton';
 
 import uuid from 'react-native-uuid';
-import {WorkoutType} from '../../models/WorkoutType';
-import {useAppSelector} from '@/hooks/useAppSelector';
-import Container from '@/components/Container/Container';
-import Input from '@/components/Input/Input';
+import {WorkoutType} from '@/models';
+import {useAppSelector} from '@/hooks';
+import {Container, Input} from '@/components';
+
 
 type Navigation = StackScreenProps<RootStackParamList, 'Workout'>;
 
-const Workout: React.FC<Navigation> = ({route}) => {
+export const Workout: React.FC<Navigation> = ({route}) => {
   const theme = useTheme();
 
   const dispatch = useDispatch();

@@ -1,10 +1,10 @@
 import React, {memo, useCallback} from 'react';
-import {ExerciseType} from '../../../../models/ExerciseType';
+import {ExerciseType} from '@/models';
 
 import {FlatList} from 'react-native';
 import useExercise from './useExercise';
-import {BoxPressable} from '../../../../components/Box/Box';
-import Text from '../../../../components/Text/Text';
+
+import {Text, BoxPressable} from '@/components';
 
 type Prosp = {item: ExerciseType};
 

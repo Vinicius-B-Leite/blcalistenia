@@ -7,9 +7,9 @@ import Animated, {
   useSharedValue,
   withTiming,
 } from 'react-native-reanimated';
-import {HistoricType} from '../../models/HistoricType';
-import {getDatesTrained} from '@/utils/getDatesTrained';
-import {useGetHistoric} from '@/domains/Historic/useCases/useGetHistoric';
+
+import {getDatesTrained} from '@/utils/';
+import {useGetHistoric} from '@/domains';
 
 export type CalendarRef = {
   openCalendar: () => void;

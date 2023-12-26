@@ -1,15 +1,12 @@
 import React, {useEffect, useRef} from 'react';
-import {Alert} from 'react-native';
-import * as S from '../styles';
+
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import Feather from 'react-native-vector-icons/Feather';
 import {useTheme} from 'styled-components/native';
-import {RootStackParamList} from '../../../../routes/Models';
+
 import useWorkoutHeader from './useWorkoutHeader';
-import {useAppNavigation} from '@/hooks/useAppNavigation';
-import Box, {BoxPressable} from '@/components/Box/Box';
-import Input from '@/components/Input/Input';
-import Text from '@/components/Text/Text';
+import {useAppNavigation} from '@/hooks';
+import {BoxPressable, Box, Input, Text} from '@/components';
 
 const Header: React.FC = () => {
   const theme = useTheme();

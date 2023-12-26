@@ -1,12 +1,10 @@
 import React, {memo} from 'react';
-import {ExercisesInWorkoutType} from '../../../../models/ExercisesInWorkoutType';
 
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import {useTheme} from 'styled-components/native';
-import {SerieType} from '../../../../models/SerieType';
+import {SerieType, ExercisesInWorkoutType} from '@/models';
 import useSerie from './useSerie';
-import Box, {BoxPressable} from '../../../../components/Box/Box';
-import Input from '../../../../components/Input/Input';
+import {BoxPressable, Box, Input} from '@/components';
 
 type Props = {
   item: SerieType;

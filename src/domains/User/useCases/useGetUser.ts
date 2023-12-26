@@ -1,4 +1,4 @@
-import {UserType} from '@/models/UserType';
+import {UserType} from '@/models';
 import {useEffect, useState} from 'react';
 import {userService} from '../userService';
 

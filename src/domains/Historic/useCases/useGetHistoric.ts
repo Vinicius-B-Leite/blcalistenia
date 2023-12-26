@@ -1,4 +1,4 @@
-import {HistoricType} from '@/models/HistoricType';
+import {HistoricType} from '@/models';
 import {useEffect, useState} from 'react';
 import {historicService} from '../historicService';
 

@@ -1,4 +1,4 @@
-import {UserType} from '@/models/UserType';
+import {UserType} from '@/models';
 import uuid from 'react-native-uuid';
 
 function adapter(user: any): UserType {

@@ -1,12 +1,12 @@
 import {StackNavigationProp} from '@react-navigation/stack';
 import React from 'react';
 import FastImage from 'react-native-fast-image';
-import {RootStackParamList} from '../../../../../routes/Models';
-import {useAppNavigation} from '@/hooks/useAppNavigation';
+import {RootStackParamList} from '@/routes/Models';
+import {useAppNavigation} from '@/hooks';
 import NewWorkoutBanner from '@/assets/newWorkoutBanner.png';
-import Box, {BoxPressable} from '@/components/Box/Box';
-import {Image} from '@/components/Image/Image';
-import Text from '@/components/Text/Text';
+
+import {Image, Box, Text, BoxPressable} from '@/components/';
+
 
 type Navigation = StackNavigationProp<RootStackParamList, 'Home'>;
 

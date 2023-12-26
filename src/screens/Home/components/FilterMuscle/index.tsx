@@ -1,11 +1,11 @@
 import React from 'react';
 
-import {muscles} from '@/utils/muscles';
+import {muscles} from '@/utils';
 
 import useFilterMuscle from '@/screens/Home/components/FilterMuscle/useFilterMuscle';
-import Filter from '@/components/Filter/Filter';
+import {Filter} from '@/components';
 
-import {useAppTheme} from '@/hooks/useAppTheme';
+import {useAppTheme} from '@/hooks';
 import {FlatList} from 'react-native';
 
 const FilterMuscle: React.FC = () => {

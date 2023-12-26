@@ -1,6 +1,6 @@
-import {WorkoutType} from '@/models/WorkoutType';
+import {WorkoutType} from '@/models';
 import {workoutService} from '../workoutService';
-import {useAuth} from '@/contexts/AuthContext';
+import {useAuth} from '@/contexts';
 
 export function useCreateWorkout() {
   const {user} = useAuth();

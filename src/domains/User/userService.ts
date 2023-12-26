@@ -1,8 +1,6 @@
-import {UserType} from '@/models/UserType';
-import {openRealm} from '@/services/realm/realm';
+import {UserType} from '@/models';
 import {userAdapter} from './userAdapter';
-import {SCHEMA_KEYS} from '../../storage/config';
-import {storage} from '@/storage/storage';
+import {storage} from '@/storage';
 
 export const userService = {
   getUser: async () => {

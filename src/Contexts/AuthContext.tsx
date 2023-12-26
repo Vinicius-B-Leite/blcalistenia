@@ -1,8 +1,7 @@
 import React, {createContext, useState, useEffect, useContext} from 'react';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import {UserType} from '@/models/UserType';
-import {useGetUser} from '../domains/User/useCases/useGetUser';
-import {useUpdateUser} from '../domains/User/useCases/useUpdateUser';
+
+import {UserType} from '@/models';
+import {useGetUser, useUpdateUser} from '@/domains';
 
 type UserContextType = {
   user: UserType | null;

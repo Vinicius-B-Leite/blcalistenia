@@ -1,5 +1,5 @@
 import {NavigatorScreenParams} from '@react-navigation/native';
-import {WorkoutType} from '../../models/WorkoutType';
+import {WorkoutType} from '@/models';
 
 export type RootStackParamList = {
   Home: undefined;

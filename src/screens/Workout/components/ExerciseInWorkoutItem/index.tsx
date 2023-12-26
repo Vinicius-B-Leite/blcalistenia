@@ -1,15 +1,13 @@
 import React, {memo} from 'react';
 import {useTheme} from 'styled-components/native';
-import {ExercisesInWorkoutType} from '../../../../models/ExercisesInWorkoutType';
+import {ExercisesInWorkoutType} from '@/models';
 
 import Serie from '../Serie';
-import {useDispatch, useSelector} from 'react-redux';
-import {updateAnotation} from '../../../../features/Workout/workoutSlicer';
-import {RootState} from '../../../../features/store';
-import {useAppSelector} from '@/hooks/useAppSelector';
-import Box from '../../../../components/Box/Box';
-import Text from '../../../../components/Text/Text';
-import Input from '../../../../components/Input/Input';
+import {useDispatch} from 'react-redux';
+import {updateAnotation} from '@/features';
+
+import {useAppSelector} from '@/hooks';
+import {Box, Text, Input} from '@/components';
 
 type Props = {
   item: ExercisesInWorkoutType;

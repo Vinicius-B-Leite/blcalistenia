@@ -1,7 +1,7 @@
-import {ExerciseType} from '@/models/ExerciseType';
+import {ExerciseType} from '@/models';
 import {exerciseService} from '../exerciseService';
 import uuid from 'react-native-uuid';
-import {useAuth} from '@/contexts/AuthContext';
+import {useAuth} from '@/contexts';
 
 export function useCreateExercise() {
   const {user} = useAuth();

@@ -1,4 +1,4 @@
-import {WorkoutType} from '@/models/WorkoutType';
+import {WorkoutType} from '@/models';
 import {useEffect, useState} from 'react';
 import {workoutService} from '../workoutService';
 

@@ -1,4 +1,4 @@
-import {WorkoutType} from '@/models/WorkoutType';
+import {WorkoutType} from '@/models';
 
 function adapter(workout: any): WorkoutType {
   return {

@@ -1,8 +1,7 @@
-import {useCreateExercise as useDomainCreateExercise} from '../../domains/Exercise/useCases/useCreateExercise';
+import {useCreateExercise as useDomainCreateExercise} from '@/domains';
 import {useState} from 'react';
 import {useDispatch} from 'react-redux';
-import {addExercise} from '@/features/Exercises/exerciseSlicer';
-import {useAuth} from '@/contexts/AuthContext';
+import {addExercise} from '@/features';
 
 export default function useCreateExercise() {
   const {createExercise} = useDomainCreateExercise();

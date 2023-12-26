@@ -2,16 +2,15 @@ import {useDispatch} from 'react-redux';
 
 import BackgroundService from 'react-native-background-actions';
 import {resetTimer, setWorkout} from '@/features/Workout/workoutSlicer';
-import {WorkoutType} from '@/models/WorkoutType';
-import {pickeImage} from '@/utils/pickImage';
+import {pickeImage} from '@/utils';
 
 import {Alert} from 'react-native';
 import {useEffect, useRef} from 'react';
-import {useAppNavigation} from '@/hooks/useAppNavigation';
-import {useAppSelector} from '@/hooks/useAppSelector';
-import {useCreateWorkout} from '../../../../domains/Workout/useCases/useCreateWorkout';
-import {upsetWorkout} from '@/features/WorkoutList/workoutListSlicer';
-import {useAuth} from '@/contexts/AuthContext';
+import {useAppNavigation, useAppSelector} from '@/hooks';
+
+import {useCreateWorkout} from '@/domains';
+import {upsetWorkout} from '@/features';
+import {useAuth} from '@/contexts';
 
 export default function useWorkoutHeader() {
   const navigation = useAppNavigation();

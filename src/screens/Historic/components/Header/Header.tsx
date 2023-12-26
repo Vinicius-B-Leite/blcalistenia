@@ -1,5 +1,5 @@
-import Box, {BoxPressable} from '@/components/Box/Box';
-import Text from '@/components/Text/Text';
+import {BoxPressable, Box, Text} from '@/components';
+
 import React from 'react';
 
 const Header: React.FC = () => {

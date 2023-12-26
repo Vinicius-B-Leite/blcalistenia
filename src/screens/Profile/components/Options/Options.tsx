@@ -1,6 +1,6 @@
-import Box, {BoxPressable} from '@/components/Box/Box';
-import Text from '@/components/Text/Text';
-import {useAppTheme} from '@/hooks/useAppTheme';
+import {BoxPressable, Text, Box} from '@/components';
+
+import {useAppTheme} from '@/hooks';
 import React from 'react';
 import Feather from 'react-native-vector-icons/Feather';
 import {wrapper} from './styles';

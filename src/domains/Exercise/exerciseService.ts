@@ -1,6 +1,6 @@
 import {exerciseAdapter} from './exerciseAdapter';
-import {ExerciseType} from '@/models/ExerciseType';
-import {storage} from '@/storage/storage';
+import {ExerciseType} from '@/models';
+import {storage} from '@/storage';
 
 export const exerciseService = {
   getExercise: async () => {

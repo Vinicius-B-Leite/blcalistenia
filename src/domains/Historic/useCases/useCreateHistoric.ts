@@ -1,8 +1,10 @@
-import {useAuth} from '@/contexts/AuthContext';
+import {useAuth} from '@/contexts';
 import {historicService} from '../historicService';
 import uuid from 'react-native-uuid';
 
-import {HistoricType} from '@/models/HistoricType';
+import {HistoricType} from '@/models';
+
+
 export function useCreateHistoric() {
   const {user} = useAuth();
 

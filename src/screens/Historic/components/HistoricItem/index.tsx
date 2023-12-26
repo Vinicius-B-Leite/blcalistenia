@@ -1,9 +1,8 @@
 import React from 'react';
 
-import {HistoricType} from '../../../../models/HistoricType';
-import {WorkoutType} from '../../../../models/WorkoutType';
-import Box, {BoxPressable} from '../../../../components/Box/Box';
-import Text from '../../../../components/Text/Text';
+import {WorkoutType, HistoricType} from '@/models';
+import  {BoxPressable, Box, Text} from '@/components';
+
 
 type Props = {
   item: HistoricType;

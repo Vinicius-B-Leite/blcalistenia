@@ -2,17 +2,16 @@ import React, {useState} from 'react';
 
 import ThemeSelect from './components/ThemeSelect';
 import ChangeUsername from './components/ChangeUsername';
-import Container from '@/components/Container/Container';
+import {Container, Text} from '@/components';
 import useProfile from './useProfile';
 
-import {useAuth} from '@/contexts/AuthContext';
+import {useAuth} from '@/contexts';
 import Avatar from './components/Avatar/Avatar';
-import Text from '@/components/Text/Text';
 
 import Header from './components/Header/Header';
 import Options from './components/Options/Options';
 
-const Profile: React.FC = () => {
+export const Profile: React.FC = () => {
   const [showThemeSelect, setShowThemeSelect] = useState(false);
   const {user} = useAuth();
   const {
@@ -61,4 +60,4 @@ const Profile: React.FC = () => {
   );
 };
 
-export default Profile;
+

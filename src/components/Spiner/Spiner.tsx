@@ -1,5 +1,5 @@
-import {useAppTheme} from '@/hooks/useAppTheme';
-import {Theme} from '@/theme/dark';
+import {useAppTheme} from '@/hooks';
+import {Theme} from '@/theme';
 import React from 'react';
 import {ActivityIndicator, ActivityIndicatorProps} from 'react-native';
 
@@ -7,7 +7,7 @@ type SpinerPros = ActivityIndicatorProps & {
   color?: keyof Theme['colors'];
 };
 
-const Spiner: React.FC<SpinerPros> = ({
+export const Spiner: React.FC<SpinerPros> = ({
   color = 'text',
   size = 'small',
   ...rest
@@ -19,4 +19,4 @@ const Spiner: React.FC<SpinerPros> = ({
   );
 };
 
-export default Spiner;
+

@@ -1,7 +1,7 @@
 import Workout from '@/screens/Home/components/Workout';
 import useWorkoutSuggest from './useWorkoutSuggest';
-import Box, {BoxPressable} from '@/components/Box/Box';
-import Text from '@/components/Text/Text';
+import {BoxPressable, Box, Text} from '@/components';
+
 import {FlatList} from 'react-native';
 
 const WorkoutSuggest: React.FC = () => {

@@ -6,7 +6,7 @@ import {
   useTheme as useNavTheme,
 } from '@react-navigation/native';
 
-import Historic from '../screens/Historic';
+import {Historic} from '@/screens';
 import {useTheme} from 'styled-components/native';
 import Entypo from 'react-native-vector-icons/Entypo';
 import Octicons from 'react-native-vector-icons/Octicons';

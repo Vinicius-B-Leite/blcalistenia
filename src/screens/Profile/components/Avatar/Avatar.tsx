@@ -1,8 +1,8 @@
-import {UserType} from '@/models/UserType';
+import {UserType} from '@/models';
 import React from 'react';
 import DefaultUserPhoto from '@/assets/defaultUserPhoto.png';
-import {BoxPressable} from '@/components/Box/Box';
-import CircleImage from '@/components/CircleImage/CircleImage';
+import {BoxPressable, CircleImage} from '@/components';
+
 
 type AvatarProps = Pick<UserType, 'avatar'> & {
   handlePickImage: () => Promise<void>;

@@ -3,12 +3,8 @@ import {
   CardStyleInterpolators,
 } from '@react-navigation/stack';
 import React from 'react';
-import AddExercise from '../../screens/AddExercise';
-import Home from '../../screens/Home';
-import Profile from '../../screens/Profile';
-import Rest from '../../screens/Rest';
+import {Rest, Profile, Workout, Home, AddExercise} from '@/screens';
 import {RootStackParamList} from '../Models';
-import Workout from '../../screens/Workout';
 
 const {Navigator, Screen} = createStackNavigator<RootStackParamList>();
 

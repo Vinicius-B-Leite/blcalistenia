@@ -1,8 +1,8 @@
 import React from 'react';
 
 import {BoxPressable} from '../Box/Box';
-import Text from '../Text/Text';
-import Spiner from '../Spiner/Spiner';
+import {Text} from '../Text/Text';
+import {Spiner} from '../Spiner/Spiner';
 import {BoxPressableProps} from '../Box/types';
 import {variants as textVariants} from '../Text/variants';
 
@@ -12,7 +12,7 @@ type ButtonProps = BoxPressableProps & {
   textPreset?: keyof typeof textVariants;
 };
 
-const Button: React.FC<ButtonProps> = ({
+export const Button: React.FC<ButtonProps> = ({
   label,
   isLoading,
   disabled,
@@ -38,5 +38,3 @@ const Button: React.FC<ButtonProps> = ({
     </BoxPressable>
   );
 };
-
-export default Button;

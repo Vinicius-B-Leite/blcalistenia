@@ -1,5 +1,5 @@
 import styled from "styled-components/native";
-import { TAB_BAR_HEIGHT } from "../../routes";
+import { TAB_BAR_HEIGHT } from "@/routes";
 
 export const GoWorkout = styled.TouchableOpacity`
     padding: 3%;

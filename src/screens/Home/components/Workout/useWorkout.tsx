@@ -1,8 +1,8 @@
 import {useDispatch} from 'react-redux';
-import {useDeleteWorkout} from '../../../../domains/Workout/useCases/useDeleteWorkout';
+import {useDeleteWorkout} from '@/domains';
 
 import {Alert} from 'react-native';
-import {deleteWorkout} from '@/features/WorkoutList/workoutListSlicer';
+import {deleteWorkout} from '@/features';
 
 export default function useWorkout() {
   const {deleteWorkout: deleteStorageWorkout} = useDeleteWorkout();

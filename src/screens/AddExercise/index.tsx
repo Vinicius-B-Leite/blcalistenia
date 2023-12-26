@@ -1,24 +1,19 @@
 import React, {useEffect, useRef, useState} from 'react';
-import * as S from './styles';
+
 import {useTheme} from 'styled-components';
-import {BottomSheetRefProps} from '../../components/BottomSheet';
-import BottomSheet from '../../components/BottomSheet';
-import CreateExercise from '../../components/CreateExercise';
+
+import CreateExercise from './components/CreateExercise';
 import FilterExercise from './components/FilterExercise';
-import {ExerciseType} from '../../models/ExerciseType';
-import {initialsExercises} from '../../utils/initialsExercises';
 
 import ExercisesList from './components/ExercisesList/ExercisesListe';
-import {useDispatch} from 'react-redux';
-import {setExercises} from '../../features/Exercises/exerciseSlicer';
+
 import ListHeader from './components/Header/ListHeader';
-import {exerciseService} from '../../domains/Exercise/exerciseService';
-import Container from '@/components/Container/Container';
-import Button from '@/components/Button/Button';
+
+import {Button, Container, BottomSheet, BottomSheetRefProps} from '@/components';
 
 export type FilterType = {category: string; muscles: string};
 
-const AddExercise: React.FC = () => {
+export const AddExercise: React.FC = () => {
   const theme = useTheme();
 
   const bottomSheetRef = useRef<BottomSheetRefProps>(null);
@@ -64,4 +59,4 @@ const AddExercise: React.FC = () => {
   );
 };
 
-export default AddExercise;
+

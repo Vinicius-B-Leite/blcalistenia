@@ -1,6 +1,6 @@
 import {useEffect, useState} from 'react';
 import {exerciseService} from '../exerciseService';
-import {ExerciseType} from '@/models/ExerciseType';
+import {ExerciseType} from '@/models';
 
 export function useGetExercises() {
   const [exercises, setExercises] = useState<ExerciseType[]>([]);

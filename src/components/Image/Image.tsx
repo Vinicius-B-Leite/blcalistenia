@@ -1,8 +1,6 @@
-import React from 'react';
-import {Dimensions, View} from 'react-native';
 import FastImage, {FastImageProps} from 'react-native-fast-image';
-import Box, {BoxType} from '../Box/Box';
-import {Theme, dark} from '@/theme/dark';
+
+import {Theme, dark} from '@/theme';
 import {
   BackgroundColorProps,
   BackgroundColorShorthandProps,
@@ -26,9 +24,7 @@ import {
   spacingShorthand,
   visible,
 } from '@shopify/restyle';
-import {useAppTheme} from '@/hooks/useAppTheme';
 
-const {height} = Dimensions.get('screen');
 export type ImageProps = Pick<FastImageProps, 'source' | 'resizeMode'>;
 
 type RSImageProps = SpacingProps<Theme> &

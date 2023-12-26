@@ -1,7 +1,7 @@
 import React from 'react';
 
 import {BoxPressable} from '../Box/Box';
-import Text from '../Text/Text';
+import {Text} from '../Text/Text';
 import {BoxPressableProps} from '../Box/types';
 
 type FilterProps = BoxPressableProps & {
@@ -9,7 +9,7 @@ type FilterProps = BoxPressableProps & {
   isActive: boolean;
 };
 
-const Filter: React.FC<FilterProps> = ({isActive, label, ...rest}) => {
+export const Filter: React.FC<FilterProps> = ({isActive, label, ...rest}) => {
   return (
     <BoxPressable
       paddingVertical={4}
@@ -27,4 +27,4 @@ const Filter: React.FC<FilterProps> = ({isActive, label, ...rest}) => {
   );
 };
 
-export default Filter;
+

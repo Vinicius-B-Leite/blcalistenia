@@ -1,4 +1,4 @@
-import {HistoricType} from '@/models/HistoricType';
+import {HistoricType} from '@/models';
 
 const adapter = (historic: any): HistoricType => {
   return {

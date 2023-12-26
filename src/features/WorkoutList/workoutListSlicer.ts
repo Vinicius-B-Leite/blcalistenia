@@ -1,9 +1,7 @@
 import {Action, createSlice, PayloadAction} from '@reduxjs/toolkit';
-import {ExercisesInWorkoutType} from '../../models/ExercisesInWorkoutType';
-import {SerieType} from '../../models/SerieType';
-import {WorkoutType} from '../../models/WorkoutType';
-// import { getRealm } from "../../services/realm"
-import {ExerciseType} from '../../models/ExerciseType';
+
+import {WorkoutType} from '@/models';
+
 
 type WorkoutListState = {
   filteredWorkouts: WorkoutType[];

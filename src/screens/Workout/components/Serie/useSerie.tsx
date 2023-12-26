@@ -1,11 +1,7 @@
-import {removeSerie, updateSerie} from '@/features/Workout/workoutSlicer';
-import {RootState} from '@/features/store';
-import {useAppNavigation} from '@/hooks/useAppNavigation';
-import {useAppSelector} from '@/hooks/useAppSelector';
-import {ExercisesInWorkoutType} from '@/models/ExercisesInWorkoutType';
-import {SerieType} from '@/models/SerieType';
+import {removeSerie, updateSerie} from '@/features';
+import {useAppNavigation, useAppSelector} from '@/hooks';
+import {SerieType, ExercisesInWorkoutType} from '@/models';
 import {RootStackParamList} from '@/routes/Models';
-import {useNavigation} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {useEffect, useState} from 'react';
 import {useDispatch} from 'react-redux';

@@ -1,8 +1,6 @@
-import {openRealm} from '@/services/realm/realm';
 import {historicAdapter} from './historicAdapter';
-import {SCHEMA_KEYS} from '../../storage/config';
-import {storage} from '@/storage/storage';
-import {HistoricType} from '@/models/HistoricType';
+import {storage} from '@/storage';
+import {HistoricType} from '@/models';
 
 export const historicService = {
   getHistoric: async () => {

@@ -1,8 +1,8 @@
 import {useEffect, useMemo, useState} from 'react';
-import {useAppSelector} from '@/hooks/useAppSelector';
-import {useGetWorkouts} from '../../../../domains/Workout/useCases/useGetWorkouts';
+import {useAppSelector} from '@/hooks';
+import {useGetWorkouts} from '@/domains';
 import {useDispatch} from 'react-redux';
-import {setWorkouts} from '@/features/WorkoutList/workoutListSlicer';
+import {setWorkouts} from '@/features';
 
 export default function useMyWorkouts() {
   const dispatch = useDispatch();

@@ -1,7 +1,7 @@
 import React, {useRef} from 'react';
 import {TextInput, TextInputProps, View} from 'react-native';
-import Box, {BoxPressable} from '../Box/Box';
-import {useAppTheme} from '@/hooks/useAppTheme';
+import  {BoxPressable, Box} from '../Box/Box';
+import {useAppTheme} from '@/hooks';
 import {textsVariantsStyles} from '../Text/variants';
 import {BoxType} from '../Box/types';
 
@@ -12,7 +12,7 @@ type InputProps = TextInputProps & {
   textPreset?: keyof typeof textsVariantsStyles;
 };
 
-const Input: React.FC<InputProps> = ({
+export const Input: React.FC<InputProps> = ({
   leftIcon,
   rightIcon,
   boxProps,
@@ -51,4 +51,4 @@ const Input: React.FC<InputProps> = ({
   );
 };
 
-export default Input;
+

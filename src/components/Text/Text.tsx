@@ -1,4 +1,4 @@
-import {Theme} from '@/theme/dark';
+import {Theme} from '@/theme';
 import {createText} from '@shopify/restyle';
 import React from 'react';
 
@@ -12,7 +12,7 @@ type TextProps = RestyleTextProps & {
   children: React.ReactNode;
   bold?: boolean;
 };
-const Text: React.FC<TextProps> = ({preset, children, bold, ...rest}) => {
+export const Text: React.FC<TextProps> = ({preset, children, bold, ...rest}) => {
   return (
     <RestyleText
       fontWeight={bold ? 'bold' : undefined}
@@ -23,4 +23,4 @@ const Text: React.FC<TextProps> = ({preset, children, bold, ...rest}) => {
   );
 };
 
-export default Text;
+

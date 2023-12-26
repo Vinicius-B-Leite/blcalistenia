@@ -1,7 +1,7 @@
-import {useGetExercises} from '../../../domains/Exercise/useCases/useGetExercises';
-import {addExercise, setExercises} from '@/features/Exercises/exerciseSlicer';
-import {useAppSelector} from '@/hooks/useAppSelector';
-import {initialsExercises} from '@/utils/initialsExercises';
+import {useGetExercises} from '@/domains';
+import {addExercise} from '@/features';
+import {useAppSelector} from '@/hooks';
+import {initialsExercises} from '@/utils';
 import {useEffect, useMemo} from 'react';
 import {useDispatch} from 'react-redux';
 

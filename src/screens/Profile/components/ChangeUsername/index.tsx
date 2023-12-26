@@ -1,10 +1,7 @@
 import React, {useState} from 'react';
 import {Modal, ModalProps, StyleSheet} from 'react-native';
 
-import Input from '@/components/Input/Input';
-import Text from '@/components/Text/Text';
-import Box, {BoxPressable} from '@/components/Box/Box';
-import Button from '@/components/Button/Button';
+import {BoxPressable, Input, Text, Box, Button} from '@/components';
 
 type ChangeUsernameProps = ModalProps & {
   changeName: (newName: string) => Promise<void>;

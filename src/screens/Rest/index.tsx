@@ -1,18 +1,16 @@
 import React, {useRef} from 'react';
 import {Vibration} from 'react-native';
-import CountDown, {CountDownRef} from '../../components/CountDown';
-import {RootStackParamList} from '../../routes/Models';
+import CountDown, {CountDownRef} from './CountDown';
+import {RootStackParamList} from '@/routes/Models';
 
 import {RouteProp, useRoute} from '@react-navigation/native';
-import {useAppNavigation} from '@/hooks/useAppNavigation';
-import {useTheme} from 'styled-components/native';
-import Container from '@/components/Container/Container';
-import Box from '@/components/Box/Box';
-import Button from '@/components/Button/Button';
+import {useAppNavigation} from '@/hooks';
+
+import {Container, Box, Button} from '@/components/';
 
 type Route = RouteProp<RootStackParamList, 'Rest'>;
 
-const Rest: React.FC = () => {
+export const Rest: React.FC = () => {
   const totalSeconds = useRoute<Route>().params?.totalSeconds || 10;
   const navigation = useAppNavigation();
 
@@ -50,4 +48,4 @@ const Rest: React.FC = () => {
   );
 };
 
-export default Rest;
+

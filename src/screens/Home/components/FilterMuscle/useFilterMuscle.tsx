@@ -1,17 +1,16 @@
-import {useState} from 'react';
 import {WorkoutType} from '@/models/WorkoutType';
-import {ExerciseType} from '@/models/ExerciseType';
+
 import {useDispatch} from 'react-redux';
 import {
   cancelFilteredWorkout,
   filteredWorkouts,
   setMuscleSelected,
-} from '@/features/WorkoutList/workoutListSlicer';
+} from '@/features';
 
-import {initialsExercises} from '@/utils/initialsExercises';
-import {useGetWorkouts} from '../../../../domains/Workout/useCases/useGetWorkouts';
-import {useGetExercises} from '../../../../domains/Exercise/useCases/useGetExercises';
-import {useAppSelector} from '@/hooks/useAppSelector';
+import {initialsExercises} from '@/utils';
+import {useGetWorkouts, useGetExercises} from '@/domains';
+
+import {useAppSelector} from '@/hooks';
 
 export default function useFilterMuscle() {
   const dispatch = useDispatch();

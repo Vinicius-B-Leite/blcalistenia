@@ -1,11 +1,14 @@
-import {useDeleteExercise} from '../../../../domains/Exercise/useCases/useDeleteExercise';
-import {deleteExercise as deleteExerciseFromState} from '@/features/Exercises/exerciseSlicer';
-import {addExercise} from '@/features/Workout/workoutSlicer';
-import {useAppNavigation} from '@/hooks/useAppNavigation';
-import {useAppSelector} from '@/hooks/useAppSelector';
-import {ExerciseType} from '@/models/ExerciseType';
+import {useDeleteExercise} from '@/domains';
+import {
+  deleteExercise as deleteExerciseFromState,
+  addExerciseToWorkout,
+} from '@/features';
 
-import {initialsExercises} from '@/utils/initialsExercises';
+import {useAppNavigation} from '@/hooks/useAppNavigation';
+
+import {ExerciseType} from '@/models';
+
+import {initialsExercises} from '@/utils';
 import {Alert} from 'react-native';
 import {useDispatch} from 'react-redux';
 
@@ -16,7 +19,7 @@ export default function useExercise() {
 
   const handleAddExercise = (exerciseId: string) => {
     dispatch(
-      addExercise({
+      addExerciseToWorkout({
         exercise_id: exerciseId,
         series: [{rep: 0, rest: 0, serie: 1, done: false}],
         anotation: '',
