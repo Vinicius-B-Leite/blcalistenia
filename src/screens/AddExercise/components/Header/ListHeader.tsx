@@ -2,16 +2,15 @@ import React from 'react';
 
 import AntDesign from 'react-native-vector-icons/AntDesign';
 
-import {useTheme} from 'styled-components/native';
 import {useDispatch} from 'react-redux';
 
 import {setSearchInput} from '@/features';
-import {useAppNavigation, useAppSelector} from '@/hooks';
+import {useAppNavigation, useAppSelector, useAppTheme} from '@/hooks';
 import {BoxPressable, Box, Input} from '@/components';
 
 const ListHeader: React.FC = () => {
   const navigation = useAppNavigation();
-  const theme = useTheme();
+  const theme = useAppTheme();
 
   const searchExerciseInput = useAppSelector(
     state => state.exercise.searchInput,
@@ -27,7 +26,7 @@ const ListHeader: React.FC = () => {
       <BoxPressable onPress={() => navigation.goBack()}>
         <AntDesign
           name="arrowleft"
-          size={theme.sizes.icons.md}
+          size={theme.spacing[24]}
           color={theme.colors.text}
         />
       </BoxPressable>
@@ -41,8 +40,8 @@ const ListHeader: React.FC = () => {
         rightIcon={
           <AntDesign
             name="search1"
-            size={theme.sizes.icons.sm}
-            color={theme.colors.darkText}
+            size={theme.spacing[24]}
+            color={theme.colors.secondText}
             style={{marginLeft: '5%'}}
           />
         }

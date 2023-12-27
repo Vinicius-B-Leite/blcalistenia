@@ -1,14 +1,12 @@
 import React from 'react';
 
-import {useTheme} from 'styled-components/native';
-
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
-import {useAppSelector, useAppNavigation} from '@/hooks';
+import {useAppSelector, useAppNavigation, useAppTheme} from '@/hooks';
 import {Box, BoxPressable, Text} from '@/components';
 
 const GoBackToWorkout: React.FC = () => {
-  const {colors, sizes} = useTheme();
+  const {colors, spacing} = useAppTheme();
   const navigation = useAppNavigation();
 
   const isWorkingout = useAppSelector(state => state.workout.isWorkingout);
@@ -44,11 +42,7 @@ const GoBackToWorkout: React.FC = () => {
           {String(timer % 60).padStart(2, '0')}
         </Text>
       </Box>
-      <Ionicons
-        name="arrow-forward"
-        color={colors.text}
-        size={sizes.icons.xlg}
-      />
+      <Ionicons name="arrow-forward" color={colors.text} size={spacing[24]} />
     </BoxPressable>
   );
 };

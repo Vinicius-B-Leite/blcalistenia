@@ -7,26 +7,26 @@ import {
 } from '@react-navigation/native';
 
 import {Historic} from '@/screens';
-import {useTheme} from 'styled-components/native';
 import Entypo from 'react-native-vector-icons/Entypo';
 import Octicons from 'react-native-vector-icons/Octicons';
 import HomeStack from './HomeStack';
 import {TabParamList} from './Models';
+import {useAppTheme} from '@/hooks';
 
 export const TAB_BAR_HEIGHT = Dimensions.get('screen').height * 0.06;
 const {Navigator, Screen} = createMaterialTopTabNavigator<TabParamList>();
 
 const Routes: React.FC = () => {
-  const theme = useTheme();
+  const theme = useAppTheme();
   const navTheme = useNavTheme();
 
-  navTheme.colors.background = theme.colors.background;
+  navTheme.colors.background = theme.colors.secondBg;
 
   return (
     <NavigationContainer>
       <StatusBar
-        backgroundColor={theme.colors.background}
-        barStyle={theme.name == 'dark' ? 'light-content' : 'dark-content'}
+        backgroundColor={theme.colors.secondBg}
+        barStyle={'light-content'}
       />
       <Navigator
         id="tabBar"
@@ -35,7 +35,7 @@ const Routes: React.FC = () => {
           tabBarIndicatorStyle: {display: 'none'},
           tabBarShowLabel: false,
           tabBarStyle: {
-            backgroundColor: theme.colors.darkBackground,
+            backgroundColor: theme.colors.primaryBg,
             height: TAB_BAR_HEIGHT,
           },
           tabBarActiveTintColor: theme.colors.contrast,
@@ -46,25 +46,17 @@ const Routes: React.FC = () => {
           component={HomeStack}
           options={{
             tabBarIcon: ({color}) => (
-              <Entypo name="home" size={theme.sizes.icons.md} color={color} />
+              <Entypo name="home" size={theme.spacing[24]} color={color} />
             ),
           }}
         />
-        {/* <Screen name='Dashboard' component={Dashboard}
-                    options={{
-                        tabBarIcon: ({ color }) => <Entypo name='bar-graph' size={theme.sizes.icons.md} color={color} />
-                    }}
-                /> */}
+
         <Screen
           name="Historic"
           component={Historic}
           options={{
             tabBarIcon: ({color}) => (
-              <Octicons
-                name="history"
-                size={theme.sizes.icons.md}
-                color={color}
-              />
+              <Octicons name="history" size={theme.spacing[24]} color={color} />
             ),
           }}
         />

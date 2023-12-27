@@ -1,5 +1,4 @@
 import React from 'react';
-import {useTheme} from 'styled-components/native';
 import {category, muscles} from '@/utils';
 
 import useHookCreateExercise from './useCreateExercise';
@@ -7,12 +6,13 @@ import useHookCreateExercise from './useCreateExercise';
 import {FlatList} from 'react-native';
 
 import {Text, Input, Filter, Box, Button} from '@/components';
+import {useAppTheme} from '@/hooks';
 
 type CreateExerciseProps = {
   closeBottomSheet: () => void;
 };
 const CreateExercise: React.FC<CreateExerciseProps> = ({closeBottomSheet}) => {
-  const theme = useTheme();
+  const theme = useAppTheme();
   const {
     selectCategory,
     selectMuscle,
@@ -31,7 +31,7 @@ const CreateExercise: React.FC<CreateExerciseProps> = ({closeBottomSheet}) => {
 
       <Input
         placeholder="Nome do exercício"
-        placeholderTextColor={theme.colors.darkText}
+        placeholderTextColor={theme.colors.secondText}
         onChangeText={onChangeExerciseNameInput}
         value={exerciseNameInput}
         boxProps={{bg: 'secondBg'}}

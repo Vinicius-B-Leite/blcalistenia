@@ -7,16 +7,13 @@ import {useDispatch, useSelector} from 'react-redux';
 
 import {addSerie, removeExercise} from '@/features';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
-import {useTheme} from 'styled-components/native';
-import {useAppNavigation, useAppSelector} from '@/hooks';
 
-import  {BoxPressable, Box,
-  Text, 
-  Button,} from '@/components';
+import {useAppNavigation, useAppSelector, useAppTheme} from '@/hooks';
 
+import {BoxPressable, Box, Text, Button} from '@/components';
 
 const ExerciseList: React.FC = () => {
-  const theme = useTheme();
+  const theme = useAppTheme();
 
   const workout = useAppSelector(state => state.workout.workout);
   const navigation = useAppNavigation();
@@ -50,7 +47,7 @@ const ExerciseList: React.FC = () => {
               <TouchableOpacity onPress={() => dispatch(removeExercise(item))}>
                 <FontAwesome
                   name="trash"
-                  size={theme.sizes.icons.sm}
+                  size={theme.spacing[24]}
                   color={theme.colors.alert}
                 />
               </TouchableOpacity>

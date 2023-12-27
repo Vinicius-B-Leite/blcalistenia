@@ -1,12 +1,11 @@
 import React, {memo} from 'react';
-import {useTheme} from 'styled-components/native';
 import {ExercisesInWorkoutType} from '@/models';
 
 import Serie from '../Serie';
 import {useDispatch} from 'react-redux';
 import {updateAnotation} from '@/features';
 
-import {useAppSelector} from '@/hooks';
+import {useAppSelector, useAppTheme} from '@/hooks';
 import {Box, Text, Input} from '@/components';
 
 type Props = {
@@ -24,7 +23,7 @@ const ExerciseInWorkoutItem: React.FC<Props> = ({
 }) => {
   const {exercise_id, series, anotation} = item;
 
-  const theme = useTheme();
+  const theme = useAppTheme();
 
   const dispatch = useDispatch();
   const isWorkingout = useAppSelector(state => state.workout.isWorkingout);
@@ -41,7 +40,7 @@ const ExerciseInWorkoutItem: React.FC<Props> = ({
       </Box>
       <Input
         placeholder="Anotação"
-        placeholderTextColor={theme.colors.darkText}
+        placeholderTextColor={theme.colors.secondText}
         value={anotation}
         onChangeText={txt =>
           dispatch(

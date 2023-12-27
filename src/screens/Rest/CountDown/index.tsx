@@ -7,11 +7,12 @@ import React, {
 } from 'react';
 import {StyleSheet, View} from 'react-native';
 import {Dimensions} from 'react-native';
-import * as S from './styles';
+
 import {Svg, Circle, G, CircleProps} from 'react-native-svg';
-import {useTheme} from 'styled-components/native';
 import Animated, {useSharedValue, withTiming} from 'react-native-reanimated';
 import {useAnimatedProps} from 'react-native-reanimated';
+import {Text} from '@/components';
+import {useAppTheme} from '@/hooks';
 
 const RADIUS = Dimensions.get('screen').width * 0.4;
 const CIRCUMFERENCE = 2 * Math.PI * RADIUS;
@@ -31,7 +32,7 @@ const AnimatedCircle = Animated.createAnimatedComponent(Circle);
 
 const CountDown = React.forwardRef<CountDownRef, CountDownProps>(
   ({totalSeconds, onFineshed}, ref) => {
-    const theme = useTheme();
+    const theme = useAppTheme();
     const animatedValue = useSharedValue(totalSeconds); //0 desc || totalSeconds asc
     const [counter, setCounter] = useState(totalSeconds);
     const [totalTimer, setTotalTimer] = useState(totalSeconds);
@@ -96,14 +97,14 @@ const CountDown = React.forwardRef<CountDownRef, CountDownProps>(
           height: RADIUS * 2,
         }}>
         <View style={[StyleSheet.absoluteFill, {justifyContent: 'center'}]}>
-          <S.Counter>
+          <Text preset="primaryTitle" textAlign="center">
             {String(Math.floor(counter / 60)).padStart(2, '0')}:
             {String(counter % 60).padStart(2, '0')}
-          </S.Counter>
-          <S.TotalTimes>
+          </Text>
+          <Text preset="pLarge" textAlign="center">
             {String(Math.floor(totalTimer / 60)).padStart(2, '0')}:
             {String(totalTimer % 60).padStart(2, '0')}
-          </S.TotalTimes>
+          </Text>
         </View>
         <Svg
           height={RADIUS * 2}

@@ -1,4 +1,4 @@
-import {BoxType} from '@/components/Box/Box';
+import {BoxType} from '@/components';
 
 export const wrapper: BoxType = {
   backgroundColor: 'primaryBg',

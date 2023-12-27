@@ -1,8 +1,6 @@
 import React, {useEffect} from 'react';
 
-
 import Header from './components/Header';
-import {useTheme} from 'styled-components/native';
 import {StackScreenProps} from '@react-navigation/stack';
 import {RootStackParamList} from '@/routes/Models';
 
@@ -13,14 +11,13 @@ import ChronometerButton from './components/ChronometerButton';
 
 import uuid from 'react-native-uuid';
 import {WorkoutType} from '@/models';
-import {useAppSelector} from '@/hooks';
+import {useAppSelector, useAppTheme} from '@/hooks';
 import {Container, Input} from '@/components';
-
 
 type Navigation = StackScreenProps<RootStackParamList, 'Workout'>;
 
 export const Workout: React.FC<Navigation> = ({route}) => {
-  const theme = useTheme();
+  const theme = useAppTheme();
 
   const dispatch = useDispatch();
   const isTrainig = useAppSelector(state => state.workout?.isWorkingout);
@@ -59,7 +56,7 @@ export const Workout: React.FC<Navigation> = ({route}) => {
         value={workout?.anotation}
         onChangeText={txt => dispatch(setWorkout({...workout, anotation: txt}))}
         placeholder="Anotação"
-        placeholderTextColor={theme.colors.darkText}
+        placeholderTextColor={theme.colors.secondText}
         boxProps={{
           mb: 34,
         }}

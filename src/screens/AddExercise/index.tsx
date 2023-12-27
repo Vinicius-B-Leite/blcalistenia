@@ -1,7 +1,5 @@
 import React, {useEffect, useRef, useState} from 'react';
 
-import {useTheme} from 'styled-components';
-
 import CreateExercise from './components/CreateExercise';
 import FilterExercise from './components/FilterExercise';
 

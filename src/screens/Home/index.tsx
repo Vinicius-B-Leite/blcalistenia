@@ -7,7 +7,6 @@ import Header from './components/Header';
 import WorkoutSuggest from './components/WorkoutSuggest';
 import MyWorkouts from './components/MyWorkouts';
 
-
 import {Container} from '@/components';
 
 export const Home: React.FC = () => {
@@ -15,8 +14,8 @@ export const Home: React.FC = () => {
 
   return (
     <>
+      <CalendarDaysTrained ref={calendarRef} />
       <Container scrollEnabled>
-        <CalendarDaysTrained ref={calendarRef} />
         <Header openCalendar={() => calendarRef.current?.openCalendar()} />
 
         <MyWorkouts />
@@ -27,5 +26,3 @@ export const Home: React.FC = () => {
     </>
   );
 };
-
-

@@ -2,14 +2,13 @@ import React, {useEffect, useRef} from 'react';
 
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import Feather from 'react-native-vector-icons/Feather';
-import {useTheme} from 'styled-components/native';
 
 import useWorkoutHeader from './useWorkoutHeader';
-import {useAppNavigation} from '@/hooks';
+import {useAppNavigation, useAppTheme} from '@/hooks';
 import {BoxPressable, Box, Input, Text} from '@/components';
 
 const Header: React.FC = () => {
-  const theme = useTheme();
+  const theme = useAppTheme();
   const navigation = useAppNavigation();
 
   const {
@@ -26,7 +25,7 @@ const Header: React.FC = () => {
         <BoxPressable onPress={() => navigation.goBack()}>
           <AntDesign
             name="arrowleft"
-            size={theme.sizes.icons.md}
+            size={theme.spacing[24]}
             color={theme.colors.contrast}
           />
         </BoxPressable>
@@ -47,7 +46,7 @@ const Header: React.FC = () => {
         <BoxPressable onPress={handleSelectImage}>
           <Feather
             name="image"
-            size={theme.sizes.icons.sm}
+            size={theme.spacing[24]}
             color={theme.colors.contrast}
           />
         </BoxPressable>

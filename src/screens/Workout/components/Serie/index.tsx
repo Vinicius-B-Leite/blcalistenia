@@ -1,10 +1,10 @@
 import React, {memo} from 'react';
 
 import AntDesign from 'react-native-vector-icons/AntDesign';
-import {useTheme} from 'styled-components/native';
 import {SerieType, ExercisesInWorkoutType} from '@/models';
 import useSerie from './useSerie';
 import {BoxPressable, Box, Input} from '@/components';
+import {useAppTheme} from '@/hooks';
 
 type Props = {
   item: SerieType;
@@ -13,7 +13,7 @@ type Props = {
 };
 
 const Serie: React.FC<Props> = ({item, deleteSerieButton, exercise}) => {
-  const theme = useTheme();
+  const theme = useAppTheme();
 
   const {
     handleCheckSerie,
