@@ -8,7 +8,10 @@ import {FlatList} from 'react-native';
 
 import {Text, Input, Filter, Box, Button} from '@/components';
 
-const CreateExercise: React.FC = () => {
+type CreateExerciseProps = {
+  closeBottomSheet: () => void;
+};
+const CreateExercise: React.FC<CreateExerciseProps> = ({closeBottomSheet}) => {
   const theme = useTheme();
   const {
     selectCategory,
@@ -72,7 +75,14 @@ const CreateExercise: React.FC = () => {
           )}
         />
       </Box>
-      <Button label="Concluir" onPress={handleCreateExercise} mt={24} />
+      <Button
+        label="Concluir"
+        onPress={() => {
+          closeBottomSheet();
+          handleCreateExercise();
+        }}
+        mt={24}
+      />
     </>
   );
 };

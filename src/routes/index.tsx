@@ -39,6 +39,7 @@ const Routes: React.FC = () => {
             height: TAB_BAR_HEIGHT,
           },
           tabBarActiveTintColor: theme.colors.contrast,
+          swipeEnabled: false,
         }}>
         <Screen
           name="HomeStack"

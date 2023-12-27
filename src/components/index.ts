@@ -1,4 +1,3 @@
-export * from './BottomSheet/BottomSheet';
 export * from './Box/Box';
 export * from './Box/types';
 export * from './Button/Button';
