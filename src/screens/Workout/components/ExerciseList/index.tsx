@@ -6,11 +6,10 @@ import ExerciseInWorkoutItem from '../ExerciseInWorkoutItem';
 import {useDispatch, useSelector} from 'react-redux';
 
 import {addSerie, removeExercise} from '@/features';
-import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
 import {useAppNavigation, useAppSelector, useAppTheme} from '@/hooks';
 
-import {BoxPressable, Box, Text, Button} from '@/components';
+import {BoxPressable, Box, Text, Button, Icon} from '@/components';
 
 const ExerciseList: React.FC = () => {
   const theme = useAppTheme();
@@ -45,10 +44,11 @@ const ExerciseList: React.FC = () => {
             showDeleteSerieButton={true}
             deleteExerciseBtn={
               <TouchableOpacity onPress={() => dispatch(removeExercise(item))}>
-                <FontAwesome
+                <Icon
+                  family="FontAwesome"
                   name="trash"
-                  size={theme.spacing[24]}
-                  color={theme.colors.alert}
+                  size={18}
+                  color={'alert'}
                 />
               </TouchableOpacity>
             }

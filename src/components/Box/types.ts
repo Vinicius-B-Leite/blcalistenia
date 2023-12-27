@@ -12,7 +12,7 @@ import {
   BackgroundColorShorthandProps,
 } from '@shopify/restyle';
 import {ScrollViewProps, TouchableOpacityProps} from 'react-native';
-import Box from './Box';
+import {Box} from './Box';
 
 export type ComunmRestyleProps = SpacingProps<Theme> &
   BackgroundColorProps<Theme> &

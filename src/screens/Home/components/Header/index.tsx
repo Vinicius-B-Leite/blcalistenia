@@ -1,11 +1,9 @@
 import React from 'react';
 
-import AntDesign from 'react-native-vector-icons/AntDesign';
-
 import DefaultUserPhoto from '@/assets/defaultUserPhoto.png';
 import {useAppNavigation, useAppTheme} from '@/hooks';
 import {useAuth} from '@/contexts';
-import {BoxPressable, Box, CircleImage, Text} from '@/components';
+import {BoxPressable, Box, CircleImage, Text, Icon} from '@/components';
 
 type HeaderProps = {
   openCalendar: () => void;
@@ -39,11 +37,7 @@ const Header: React.FC<HeaderProps> = ({openCalendar}) => {
       </BoxPressable>
 
       <BoxPressable onPress={openCalendar}>
-        <AntDesign
-          style={{fontSize: 24}}
-          color={theme.colors.text}
-          name="calendar"
-        />
+        <Icon family="AntDesign" color={'text'} size={24} name="calendar" />
       </BoxPressable>
     </Box>
   );

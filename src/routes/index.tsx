@@ -7,11 +7,11 @@ import {
 } from '@react-navigation/native';
 
 import {Historic} from '@/screens';
-import Entypo from 'react-native-vector-icons/Entypo';
-import Octicons from 'react-native-vector-icons/Octicons';
+
 import HomeStack from './HomeStack';
 import {TabParamList} from './Models';
 import {useAppTheme} from '@/hooks';
+import {Icon} from '@/components';
 
 export const TAB_BAR_HEIGHT = Dimensions.get('screen').height * 0.06;
 const {Navigator, Screen} = createMaterialTopTabNavigator<TabParamList>();
@@ -45,8 +45,13 @@ const Routes: React.FC = () => {
           name="HomeStack"
           component={HomeStack}
           options={{
-            tabBarIcon: ({color}) => (
-              <Entypo name="home" size={theme.spacing[24]} color={color} />
+            tabBarIcon: ({focused}) => (
+              <Icon
+                family="Entypo"
+                name="home"
+                size={24}
+                color={focused ? 'contrast' : 'darkContrast'}
+              />
             ),
           }}
         />
@@ -55,8 +60,13 @@ const Routes: React.FC = () => {
           name="Historic"
           component={Historic}
           options={{
-            tabBarIcon: ({color}) => (
-              <Octicons name="history" size={theme.spacing[24]} color={color} />
+            tabBarIcon: ({focused}) => (
+              <Icon
+                family="Octicons"
+                name="history"
+                size={24}
+                color={focused ? 'contrast' : 'darkContrast'}
+              />
             ),
           }}
         />

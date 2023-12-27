@@ -1,9 +1,7 @@
 import React from 'react';
 
-import Ionicons from 'react-native-vector-icons/Ionicons';
-
 import {useAppSelector, useAppNavigation, useAppTheme} from '@/hooks';
-import {Box, BoxPressable, Text} from '@/components';
+import {Box, BoxPressable, Icon, Text} from '@/components';
 
 const GoBackToWorkout: React.FC = () => {
   const {colors, spacing} = useAppTheme();
@@ -42,7 +40,7 @@ const GoBackToWorkout: React.FC = () => {
           {String(timer % 60).padStart(2, '0')}
         </Text>
       </Box>
-      <Ionicons name="arrow-forward" color={colors.text} size={spacing[24]} />
+      <Icon family="Ionicons" name="arrow-forward" color={'text'} size={24} />
     </BoxPressable>
   );
 };

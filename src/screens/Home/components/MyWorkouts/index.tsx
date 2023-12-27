@@ -1,17 +1,15 @@
 import React from 'react';
 
-
 import ListEmptyComponent from '@/screens/Home/components/MyWorkouts/ListEmptyComponent';
 import CreateWorkoutButton from '@/screens/Home/components/MyWorkouts/CreateWorkoutButton';
 import Workout from '@/screens/Home/components/Workout';
-import AntDesign from 'react-native-vector-icons/AntDesign';
 import FilterMuscle from '../FilterMuscle';
 
 import Animated, {FadeInDown, Layout} from 'react-native-reanimated';
 import useMyWorkouts from './useMyWorkouts';
 import {FlatList, Keyboard} from 'react-native';
 
-import {Input, Text, Box} from '@/components';
+import {Input, Text, Box, Icon} from '@/components';
 import {useAppTheme} from '@/hooks';
 
 const MyWorkouts: React.FC = () => {
@@ -32,7 +30,7 @@ const MyWorkouts: React.FC = () => {
         placeholder="Pesquisar treino"
         onEndEditing={Keyboard.dismiss}
         leftIcon={
-          <AntDesign name="search1" color={theme.colors.text} size={20} />
+          <Icon name="search1" color={'text'} size={18} family="AntDesign" />
         }
       />
 

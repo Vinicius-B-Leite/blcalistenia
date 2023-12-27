@@ -12,7 +12,12 @@ type TextProps = RestyleTextProps & {
   children: React.ReactNode;
   bold?: boolean;
 };
-export const Text: React.FC<TextProps> = ({preset, children, bold, ...rest}) => {
+export const Text: React.FC<TextProps> = ({
+  preset,
+  children,
+  bold,
+  ...rest
+}) => {
   return (
     <RestyleText
       fontWeight={bold ? 'bold' : undefined}
@@ -22,5 +27,3 @@ export const Text: React.FC<TextProps> = ({preset, children, bold, ...rest}) => 
     </RestyleText>
   );
 };
-
-
