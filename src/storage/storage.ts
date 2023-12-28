@@ -1,21 +1,24 @@
 import {openRealm} from '@/services';
-import {Storage} from './types';
+import {Keys, Schemas, Storage} from './types';
+import {MMKV} from 'react-native-mmkv';
+
+const mmkv = new MMKV();
 
 export const storage: Storage = {
-  get: async <T>(key: string) => {
+  get: async <T>(key: Schemas) => {
     const realm = await openRealm();
 
     const result = realm.objects(key).toJSON() as T[];
     return result;
   },
-  getById: async <T>(key: string, id: string) => {
+  getById: async <T>(key: Schemas, id: string) => {
     const realm = await openRealm();
 
     const result = realm.objectForPrimaryKey(key, id)?.toJSON() as T;
     return result;
   },
   upset: async <T extends Pick<OmittedRealmTypes<T>, never>>(
-    key: string,
+    key: Schemas,
     data: T,
   ) => {
     const realm = await openRealm();
@@ -38,5 +41,14 @@ export const storage: Storage = {
         realm.delete(objectoToDelete);
       });
     }
+  },
+  getKeyValueItem: async <T>(key: Keys) => {
+    const response = mmkv.getString(key);
+
+    return response ? (response as T) : null;
+  },
+  setKeyValueItem: async (key, theme) => {
+    mmkv.set(key, theme);
+    return;
   },
 };

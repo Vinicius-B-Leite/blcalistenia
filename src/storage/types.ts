@@ -1,13 +1,17 @@
-import {SCHEMA_KEYS} from './config';
+import {ThemeType} from '@/contexts';
+import {SCHEMA_KEYS, KEYS} from './config';
 
-type Keys = keyof typeof SCHEMA_KEYS;
+export type Schemas = keyof typeof SCHEMA_KEYS;
+export type Keys = keyof typeof KEYS;
 
 export type Storage = {
-  get: <T>(key: Keys) => Promise<T[]>;
-  getById: <T>(key: Keys, id: string) => Promise<T>;
+  get: <T>(key: Schemas) => Promise<T[]>;
+  getById: <T>(key: Schemas, id: string) => Promise<T>;
   upset: <T extends Pick<OmittedRealmTypes<T>, never>>(
-    key: Keys,
+    key: Schemas,
     data: T,
   ) => Promise<T>;
-  delete: (key: Keys, id: string) => Promise<void>;
+  delete: (key: Schemas, id: string) => Promise<void>;
+  getKeyValueItem: <T>(key: Keys) => Promise<T | null>;
+  setKeyValueItem: (key: Keys, theme: ThemeType) => Promise<void>;
 };

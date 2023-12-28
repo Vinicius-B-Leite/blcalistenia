@@ -7,3 +7,7 @@ export const SCHEMA_KEYS = {
   User: 'User',
   Workout: 'Workout',
 };
+
+export const KEYS = {
+  theme: '@theme',
+};
