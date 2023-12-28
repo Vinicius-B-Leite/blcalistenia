@@ -1,7 +1,7 @@
-import { SerieType } from "./SerieType"
+import {SerieType} from './SerieType';
 
 export type ExercisesInWorkoutType = {
-    exercise_id: string,
-    anotation?: string,
-    series: SerieType[]
-}
+  exercise_id: string;
+  anotation?: string;
+  series: SerieType[];
+};

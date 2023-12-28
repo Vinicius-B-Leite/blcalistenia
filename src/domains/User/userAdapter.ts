@@ -6,6 +6,9 @@ function adapter(user: any): UserType {
     avatar: user?.photoURI || '',
     uid: user?._id || uuid.v4().toString(),
     username: user?.username || 'Desconhecido',
+    createdAt: user?.createdAt || new Date(),
+    deletedAt: user?.deletedAt,
+    updatedAt: user?.updatedAt,
   };
 }
 

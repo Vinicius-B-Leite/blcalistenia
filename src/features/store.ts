@@ -4,6 +4,8 @@ import {workoutListReducer} from './WorkoutList/workoutListSlicer';
 import {exerciseReducer} from './Exercises/exerciseSlicer';
 
 export const store = configureStore({
+  middleware: getDefaultMiddleware =>
+    getDefaultMiddleware({serializableCheck: false}),
   reducer: {
     workout: WorkoutReducer,
     workoutList: workoutListReducer,

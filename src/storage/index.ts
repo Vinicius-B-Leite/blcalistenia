@@ -4,7 +4,7 @@ export * from './schemas/ExerciseSchema';
 export * from './schemas/ExerciseWorkoutSchema';
 export * from './schemas/HistoricSchema';
 export * from './schemas/SerieSchema';
-export * from './schemas/SuggestWorkoutSchema';
+
 export * from './schemas/UserSchema';
 export * from './schemas/WorkoutSchema';
 

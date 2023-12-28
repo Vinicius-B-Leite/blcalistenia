@@ -7,28 +7,23 @@ export const workoutService = {
     const workoutsObject = await storage.get('Workout');
 
     const workouts = workoutsObject.map(workoutAdapter.adapter);
+
     return workouts;
   },
-  createWorkout: async ({
-    _id,
-    banner,
-    exercises,
-    title,
-    user_id,
-    anotation,
-  }: WorkoutType) => {
-    const workoutCreated = await storage.upset('Workout', {
-      _id: _id,
-      anotation: anotation,
-      exercises: exercises,
-      title: title || 'Novo Treino',
-      banner: banner || '',
-      user_id: user_id,
-    });
+  getWorkoutById: async (workoutId: string) => {
+    const workoutObject = await storage.getById('Workout', workoutId);
+
+    const workout = workoutObject
+      ? workoutAdapter.adapter(workoutObject)
+      : null;
+    return workout;
+  },
+  createWorkout: async (props: WorkoutType) => {
+    const workoutCreated = await storage.upset('Workout', props);
 
     return workoutCreated;
   },
-  deleteWorkout: async (exerciseId: string) => {
-    await storage.delete('Workout', exerciseId);
+  deleteWorkout: async (workoutId: string) => {
+    await storage.delete('Workout', workoutId);
   },
 };

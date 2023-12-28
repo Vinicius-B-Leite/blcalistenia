@@ -7,7 +7,8 @@ export function useGetWorkouts() {
 
   const fetchWorkouts = async () => {
     const workoutResponse = await workoutService.getWorkouts();
-    setWorkouts(workoutResponse);
+    const workoutsWitoutDeleted = workoutResponse.filter(v => !v?.deletedAt);
+    setWorkouts(workoutsWitoutDeleted);
   };
 
   useEffect(() => {

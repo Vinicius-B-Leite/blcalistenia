@@ -10,6 +10,9 @@ export class ExerciseSchema extends Realm.Object {
       categories: 'string[]',
       muscles: 'string[]',
       user_id: 'string',
+      createdAt: 'date',
+      updatedAt: 'date?',
+      deletedAt: 'date?',
     },
     primaryKey: '_id',
   };

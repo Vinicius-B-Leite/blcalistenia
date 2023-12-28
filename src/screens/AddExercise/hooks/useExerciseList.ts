@@ -7,6 +7,7 @@ import {useDispatch} from 'react-redux';
 
 export function useExerciseList() {
   const {exercises} = useGetExercises();
+
   const searchExerciseInput = useAppSelector(
     state => state.exercise.searchInput,
   );

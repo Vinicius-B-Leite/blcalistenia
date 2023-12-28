@@ -8,6 +8,9 @@ function adapter(workout: any): WorkoutType {
     title: workout.title,
     user_id: workout.user_id,
     anotation: workout.anotation,
+    createdAt: workout.createdAt,
+    deletedAt: workout.deletedAt,
+    updatedAt: workout.updatedAt,
   };
 }
 

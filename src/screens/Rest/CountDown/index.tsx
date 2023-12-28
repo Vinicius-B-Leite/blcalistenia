@@ -47,7 +47,6 @@ const CountDown = React.forwardRef<CountDownRef, CountDownProps>(
       const porcentageTimerInTotalSeconds = (timer * 100) / totalSeconds;
       const timerPorcentageOfCircumference =
         (CIRCUMFERENCE * porcentageTimerInTotalSeconds) / 100;
-      console.log(timerPorcentageOfCircumference);
 
       animatedValue.value = withTiming(timerPorcentageOfCircumference, {
         duration: 1000,
