@@ -13,6 +13,7 @@ import Animated, {useSharedValue, withTiming} from 'react-native-reanimated';
 import {useAnimatedProps} from 'react-native-reanimated';
 import {Text} from '@/components';
 import {useAppTheme} from '@/hooks';
+import {getMinutesFromSeconds, getSeconds} from '@/utils';
 
 const RADIUS = Dimensions.get('screen').width * 0.4;
 const CIRCUMFERENCE = 2 * Math.PI * RADIUS;
@@ -97,12 +98,10 @@ const CountDown = React.forwardRef<CountDownRef, CountDownProps>(
         }}>
         <View style={[StyleSheet.absoluteFill, {justifyContent: 'center'}]}>
           <Text preset="primaryTitle" textAlign="center">
-            {String(Math.floor(counter / 60)).padStart(2, '0')}:
-            {String(counter % 60).padStart(2, '0')}
+            {getMinutesFromSeconds(counter)}:{getSeconds(counter)}
           </Text>
           <Text preset="pLarge" textAlign="center">
-            {String(Math.floor(totalTimer / 60)).padStart(2, '0')}:
-            {String(totalTimer % 60).padStart(2, '0')}
+            {getMinutesFromSeconds(totalTimer)}:{getSeconds(totalTimer)}
           </Text>
         </View>
         <Svg

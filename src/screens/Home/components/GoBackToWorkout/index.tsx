@@ -2,6 +2,7 @@ import React from 'react';
 
 import {useAppSelector, useAppNavigation, useAppTheme} from '@/hooks';
 import {Box, BoxPressable, Icon, Text} from '@/components';
+import {getMinutesFromSeconds, getSeconds} from '@/utils';
 
 const GoBackToWorkout: React.FC = () => {
   const {colors, spacing} = useAppTheme();
@@ -36,8 +37,7 @@ const GoBackToWorkout: React.FC = () => {
           Voltar ao treino
         </Text>
         <Text preset="pMedium">
-          {String(Math.floor(timer / 60)).padStart(2, '0')}:
-          {String(timer % 60).padStart(2, '0')}
+          {getMinutesFromSeconds(timer)}:{getSeconds(timer)}
         </Text>
       </Box>
       <Icon family="Ionicons" name="arrow-forward" color={'text'} size={24} />

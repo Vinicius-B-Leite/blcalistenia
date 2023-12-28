@@ -3,7 +3,7 @@ import {useAppNavigation, useAppSelector} from '@/hooks';
 import {useDispatch} from 'react-redux';
 import BackgroundService from 'react-native-background-actions';
 import {resetTimer, setWorkout, updateTimer} from '@/features';
-import {options, sleep} from '@/utils';
+import {getMinutesFromSeconds, getSeconds, options, sleep} from '@/utils';
 
 import {WorkoutType} from '@/models';
 import {Alert} from 'react-native';
@@ -21,10 +21,7 @@ export default function useChronometer() {
     for (let i = 0; BackgroundService.isRunning(); i++) {
       dispatch(updateTimer(i));
       BackgroundService.updateNotification({
-        taskDesc: `Tempo atual: ${String(Math.floor(i / 60)).padStart(
-          2,
-          '0',
-        )}:${String(i % 60).padStart(2, '0')}`,
+        taskDesc: `Tempo atual: ${getMinutesFromSeconds(i)}:${getSeconds(i)}`,
       });
       await sleep(1000);
     }

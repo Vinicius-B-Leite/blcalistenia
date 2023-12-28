@@ -1,8 +1,8 @@
 import React from 'react';
 
 import {WorkoutType, HistoricType} from '@/models';
-import  {BoxPressable, Box, Text} from '@/components';
-
+import {BoxPressable, Box, Text} from '@/components';
+import {getMinutesFromSeconds, getSeconds} from '@/utils';
 
 type Props = {
   item: HistoricType;
@@ -20,15 +20,8 @@ const HistoricItem: React.FC<Props> = ({item, onClick}) => {
   const firtsRep = exercises[0]?.series[0]?.rep;
   const exerciseName = exercises[0]?.exercise_id;
 
-  const minutes = String((item.timerInSeconds / 60).toFixed(0)).padStart(
-    2,
-    '0',
-  );
-  const seconds = String((item.timerInSeconds % 60).toFixed(0)).padStart(
-    2,
-    '0',
-  );
-
+  const minutes = getMinutesFromSeconds(item.timerInSeconds);
+  const seconds = getSeconds(item.timerInSeconds);
   return (
     <BoxPressable
       bg="primaryBg"
