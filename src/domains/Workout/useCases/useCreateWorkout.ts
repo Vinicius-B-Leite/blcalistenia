@@ -2,9 +2,9 @@ import {WorkoutType} from '@/models';
 import {workoutService} from '../workoutService';
 import {useAuth} from '@/contexts';
 
-export function useCreateWorkout() {
+export function useUpsertWorkout() {
   const {user} = useAuth();
-  const handleCreateWorkout = async (
+  const upsertWorkout = async (
     props: Omit<WorkoutType, 'user_id' | 'createdAt'>,
   ) => {
     let workout = {} as WorkoutType;
@@ -30,6 +30,6 @@ export function useCreateWorkout() {
   };
 
   return {
-    handleCreateWorkout,
+    upsertWorkout,
   };
 }

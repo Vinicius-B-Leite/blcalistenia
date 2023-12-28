@@ -7,13 +7,13 @@ import {options, sleep} from '@/utils';
 
 import {WorkoutType} from '@/models';
 import {Alert} from 'react-native';
-import {useCreateWorkout, useCreateHistoric} from '@/domains';
+import {useUpsertWorkout, useCreateHistoric} from '@/domains';
 
 export default function useChronometer() {
   const dispatch = useDispatch();
 
   const workout = useAppSelector(state => state.workout.workout);
-  const {handleCreateWorkout} = useCreateWorkout();
+  const {upsertWorkout} = useUpsertWorkout();
   const {handleCreateHistoric} = useCreateHistoric();
   const navigation = useAppNavigation();
 
@@ -40,7 +40,7 @@ export default function useChronometer() {
       });
 
       if (!isWorkoutSuggest) {
-        await handleCreateWorkout({
+        await upsertWorkout({
           _id: workout._id,
           anotation: workout.anotation,
           exercises: workout.exercises,

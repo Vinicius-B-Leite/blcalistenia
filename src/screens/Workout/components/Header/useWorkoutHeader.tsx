@@ -8,14 +8,14 @@ import {Alert} from 'react-native';
 import {useEffect, useRef} from 'react';
 import {useAppNavigation, useAppSelector} from '@/hooks';
 
-import {useCreateWorkout} from '@/domains';
+import {useUpsertWorkout} from '@/domains';
 import {upsetWorkout} from '@/features';
 import {useAuth} from '@/contexts';
 
 export default function useWorkoutHeader() {
   const navigation = useAppNavigation();
   const {user} = useAuth();
-  const {handleCreateWorkout} = useCreateWorkout();
+  const {upsertWorkout} = useUpsertWorkout();
 
   const dispatch = useDispatch();
 
@@ -50,7 +50,7 @@ export default function useWorkoutHeader() {
     const isWorkoutSuggest = workoutRef.current._id.includes('suggestWorkout');
     if (isWorkoutSuggest) return;
 
-    const workoutCreated = await handleCreateWorkout({
+    const workoutCreated = await upsertWorkout({
       ...workoutRef.current,
     });
     dispatch(upsetWorkout(workoutCreated));
