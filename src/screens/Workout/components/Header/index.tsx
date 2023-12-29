@@ -1,11 +1,11 @@
 import React, {useEffect, useRef} from 'react';
 
 import useWorkoutHeader from './useWorkoutHeader';
-import {useAppNavigation, useAppTheme} from '@/hooks';
+import {useAppNavigation, useAppSelector} from '@/hooks';
 import {BoxPressable, Box, Input, Text, Icon} from '@/components';
 
 const Header: React.FC = () => {
-  const theme = useAppTheme();
+  const canEditWorkout = useAppSelector(state => state.workout.canEdit);
   const navigation = useAppNavigation();
 
   const {
@@ -34,6 +34,7 @@ const Header: React.FC = () => {
           boxProps={{
             flex: 1,
           }}
+          editable={canEditWorkout}
         />
       </Box>
       {isWorkingout ? (

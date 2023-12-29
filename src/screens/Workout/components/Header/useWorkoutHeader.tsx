@@ -14,7 +14,7 @@ import {useAuth} from '@/contexts';
 
 export default function useWorkoutHeader() {
   const navigation = useAppNavigation();
-  const {user} = useAuth();
+  const canEditWorkout = useAppSelector(state => state.workout.canEdit);
   const {upsertWorkout} = useUpsertWorkout();
 
   const dispatch = useDispatch();
@@ -26,7 +26,10 @@ export default function useWorkoutHeader() {
   isWorkingoutRef.current = isWorkingout;
 
   const workoutRef = useRef(workout);
+
   workoutRef.current = workout;
+  const canEditWorkoutRef = useRef(canEditWorkout);
+  canEditWorkoutRef.current = canEditWorkout;
 
   const cancelWorkout = () => {
     Alert.alert('Deseja cancelar o treino', 'Você deseja cancelar o treino?', [
@@ -48,7 +51,7 @@ export default function useWorkoutHeader() {
 
   const saveWorkout = async () => {
     const isWorkoutSuggest = workoutRef.current._id.includes('suggestWorkout');
-    if (isWorkoutSuggest) return;
+    if (isWorkoutSuggest || !canEditWorkoutRef) return;
 
     const workoutCreated = await upsertWorkout({
       ...workoutRef.current,
@@ -60,6 +63,7 @@ export default function useWorkoutHeader() {
 
   const handleSelectImage = async () => {
     try {
+      if (!canEditWorkout) return;
       const res = await pickeImage();
       if (res.assets && res.assets[0].uri) {
         dispatch(setWorkout({...workout, banner: res.assets[0].uri}));

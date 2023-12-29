@@ -5,6 +5,7 @@ export type RootStackParamList = {
   Home: undefined;
   Workout: {
     workout?: WorkoutType | undefined;
+    canEdit?: boolean;
   };
   AddExercise: undefined;
 

@@ -24,9 +24,14 @@ export const Historic: React.FC = () => {
   );
 
   const navigateToWorkout = (item: HistoricType) => {
+    console.log(JSON.parse(item.workout));
+
     navigation.navigate('HomeStack', {
       screen: 'Workout',
-      params: JSON.parse(item.workout),
+      params: {
+        workout: JSON.parse(item.workout),
+        canEdit: false,
+      },
     });
   };
 

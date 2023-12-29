@@ -4,6 +4,7 @@ import {useAuth} from '@/contexts';
 
 export function useUpsertWorkout() {
   const {user} = useAuth();
+
   const upsertWorkout = async (
     props: Omit<WorkoutType, 'user_id' | 'createdAt'>,
   ) => {
@@ -14,7 +15,9 @@ export function useUpsertWorkout() {
 
     if (isUpdatig) {
       workout = await workoutService.createWorkout({
-        ...workoutAlreadyExists,
+        ...props,
+        createdAt: workoutAlreadyExists.createdAt,
+        user_id: workoutAlreadyExists.user_id,
         updatedAt: new Date(),
       });
       return workout;

@@ -12,7 +12,7 @@ import {useAppNavigation, useAppSelector, useAppTheme} from '@/hooks';
 import {BoxPressable, Box, Text, Button, Icon} from '@/components';
 
 const ExerciseList: React.FC = () => {
-  const theme = useAppTheme();
+  const canEditWorkout = useAppSelector(state => state.workout.canEdit);
 
   const workout = useAppSelector(state => state.workout.workout);
   const navigation = useAppNavigation();
@@ -30,44 +30,53 @@ const ExerciseList: React.FC = () => {
           <ExerciseInWorkoutItem
             item={item}
             createSerieBtn={
-              <Button
-                label="+"
-                onPress={() => dispatch(addSerie(item))}
-                bg="contrast"
-                width={25}
-                height={25}
-                alignSelf="center"
-                borderRadius={'full'}
-                marginVertical={14}
-              />
-            }
-            showDeleteSerieButton={true}
-            deleteExerciseBtn={
-              <TouchableOpacity onPress={() => dispatch(removeExercise(item))}>
-                <Icon
-                  family="FontAwesome"
-                  name="trash"
-                  size={18}
-                  color={'alert'}
+              canEditWorkout && (
+                <Button
+                  label="+"
+                  onPress={() => dispatch(addSerie(item))}
+                  bg="contrast"
+                  width={25}
+                  height={25}
+                  alignSelf="center"
+                  borderRadius={'full'}
+                  marginVertical={14}
                 />
-              </TouchableOpacity>
+              )
+            }
+            showDeleteSerieButton={canEditWorkout}
+            deleteExerciseBtn={
+              canEditWorkout && (
+                <TouchableOpacity
+                  onPress={() => dispatch(removeExercise(item))}>
+                  <Icon
+                    family="FontAwesome"
+                    name="trash"
+                    size={18}
+                    color={'alert'}
+                  />
+                </TouchableOpacity>
+              )
             }
           />
         )}
-        ListFooterComponent={() => (
-          <BoxPressable
-            alignSelf="center"
-            onPress={() =>
-              navigation.navigate('HomeStack', {screen: 'AddExercise'})
-            }>
-            <Text
-              preset="pMedium"
-              textDecorationLine="underline"
-              color="contrast">
-              Adiconar exercício
-            </Text>
-          </BoxPressable>
-        )}
+        ListFooterComponent={() =>
+          canEditWorkout ? (
+            <BoxPressable
+              alignSelf="center"
+              onPress={() =>
+                navigation.navigate('HomeStack', {screen: 'AddExercise'})
+              }>
+              <Text
+                preset="pMedium"
+                textDecorationLine="underline"
+                color="contrast">
+                Adiconar exercício
+              </Text>
+            </BoxPressable>
+          ) : (
+            <></>
+          )
+        }
       />
     </Box>
   );

@@ -1,6 +1,6 @@
 import React, {useRef} from 'react';
 import {TextInput, TextInputProps, View} from 'react-native';
-import  {BoxPressable, Box} from '../Box/Box';
+import {BoxPressable, Box} from '../Box/Box';
 import {useAppTheme} from '@/hooks';
 import {textsVariantsStyles} from '../Text/variants';
 import {BoxType} from '../Box/types';
@@ -32,6 +32,7 @@ export const Input: React.FC<InputProps> = ({
       alignItems="center"
       paddingHorizontal={14}
       gap={4}
+      activeOpacity={1}
       {...boxProps}>
       {leftIcon}
       <TextInput
@@ -50,5 +51,3 @@ export const Input: React.FC<InputProps> = ({
     </BoxPressable>
   );
 };
-
-

@@ -3,7 +3,7 @@ import React, {memo} from 'react';
 import {SerieType, ExercisesInWorkoutType} from '@/models';
 import useSerie from './useSerie';
 import {BoxPressable, Box, Input, Icon} from '@/components';
-import {useAppTheme} from '@/hooks';
+import {useAppSelector} from '@/hooks';
 
 type Props = {
   item: SerieType;
@@ -12,7 +12,7 @@ type Props = {
 };
 
 const Serie: React.FC<Props> = ({item, deleteSerieButton, exercise}) => {
-  const theme = useAppTheme();
+  const canEditWorkout = useAppSelector(state => state.workout.canEdit);
 
   const {
     handleCheckSerie,
@@ -60,6 +60,7 @@ const Serie: React.FC<Props> = ({item, deleteSerieButton, exercise}) => {
           bg: undefined,
           height: 40,
         }}
+        editable={canEditWorkout}
       />
 
       {showSucessButton ? (
@@ -85,6 +86,7 @@ const Serie: React.FC<Props> = ({item, deleteSerieButton, exercise}) => {
             bg: undefined,
             height: 40,
           }}
+          editable={canEditWorkout}
         />
       )}
     </Box>
