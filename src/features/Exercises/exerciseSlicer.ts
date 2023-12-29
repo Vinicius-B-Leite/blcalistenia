@@ -3,12 +3,10 @@ import {ExerciseType} from '@/models';
 
 type InitialStateType = {
   exercises: ExerciseType[];
-  searchInput: string;
 };
 
 const initialState: InitialStateType = {
   exercises: [],
-  searchInput: '',
 };
 
 export const exerciseSlicer = createSlice({
@@ -17,9 +15,6 @@ export const exerciseSlicer = createSlice({
   reducers: {
     setExercises: (state, action: PayloadAction<ExerciseType[]>) => {
       state.exercises = action.payload;
-    },
-    setSearchInput: (state, action: PayloadAction<string>) => {
-      state.searchInput = action.payload;
     },
     addExercise: (
       state,
@@ -43,6 +38,6 @@ export const exerciseSlicer = createSlice({
   },
 });
 
-export const {setExercises, setSearchInput, addExercise, deleteExercise} =
+export const {setExercises, addExercise, deleteExercise} =
   exerciseSlicer.actions;
 export const exerciseReducer = exerciseSlicer.reducer;

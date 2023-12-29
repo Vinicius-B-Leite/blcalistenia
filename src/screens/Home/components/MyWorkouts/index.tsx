@@ -9,14 +9,20 @@ import Animated, {FadeInDown, Layout} from 'react-native-reanimated';
 import useMyWorkouts from './useMyWorkouts';
 import {FlatList, Keyboard} from 'react-native';
 
-import {Input, Text, Box, Icon} from '@/components';
-import {useAppTheme} from '@/hooks';
+import {Input, Text, Box, Icon, FormInput} from '@/components';
+import {zodResolver} from '@hookform/resolvers/zod';
+import {useForm} from 'react-hook-form';
+import {SearchWorkoutSchema, searchWorkoutSchema} from './schema';
 
 const MyWorkouts: React.FC = () => {
-  const theme = useAppTheme();
+  const {control, watch} = useForm<SearchWorkoutSchema>({
+    resolver: zodResolver(searchWorkoutSchema),
+    defaultValues: {
+      workoutName: '',
+    },
+  });
 
-  const {workoutList, onChangeSearchWorkoutInput, searchWorkoutInput} =
-    useMyWorkouts();
+  const {workoutList} = useMyWorkouts(watch('workoutName'));
 
   return (
     <Box marginVertical={24}>
@@ -24,9 +30,9 @@ const MyWorkouts: React.FC = () => {
         Seus treinos
       </Text>
 
-      <Input
-        value={searchWorkoutInput}
-        onChangeText={onChangeSearchWorkoutInput}
+      <FormInput
+        name={'workoutName'}
+        control={control}
         placeholder="Pesquisar treino"
         onEndEditing={Keyboard.dismiss}
         leftIcon={

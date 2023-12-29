@@ -5,7 +5,7 @@ import {useAppTheme} from '@/hooks';
 import {textsVariantsStyles} from '../Text/variants';
 import {BoxType} from '../Box/types';
 
-type InputProps = TextInputProps & {
+export type InputProps = TextInputProps & {
   leftIcon?: React.ReactNode;
   rightIcon?: React.ReactNode;
   boxProps?: BoxType;

@@ -5,23 +5,27 @@ import useHookCreateExercise from './useCreateExercise';
 
 import {FlatList} from 'react-native';
 
-import {Text, Input, Filter, Box, Button} from '@/components';
+import {Text, Input, Filter, Box, Button, FormInput} from '@/components';
 import {useAppTheme} from '@/hooks';
+import {Controller, useForm} from 'react-hook-form';
+import {CreateExerciseSchema, createExericseSchema} from './schema';
+import {zodResolver} from '@hookform/resolvers/zod';
 
 type CreateExerciseProps = {
   closeBottomSheet: () => void;
 };
 const CreateExercise: React.FC<CreateExerciseProps> = ({closeBottomSheet}) => {
   const theme = useAppTheme();
-  const {
-    selectCategory,
-    selectMuscle,
-    categoriesSelected,
-    musclesSelected,
-    onChangeExerciseNameInput,
-    exerciseNameInput,
-    handleCreateExercise,
-  } = useHookCreateExercise();
+  const {control, handleSubmit, reset} = useForm<CreateExerciseSchema>({
+    defaultValues: {
+      categories: [],
+      muscles: [],
+      exerciseName: '',
+    },
+    resetOptions: {keepDefaultValues: true},
+    resolver: zodResolver(createExericseSchema),
+  });
+  const {selectItem, handleCreateExercise} = useHookCreateExercise(control);
 
   return (
     <>
@@ -29,11 +33,11 @@ const CreateExercise: React.FC<CreateExerciseProps> = ({closeBottomSheet}) => {
         Criar exercício
       </Text>
 
-      <Input
+      <FormInput
+        control={control}
+        name="exerciseName"
         placeholder="Nome do exercício"
         placeholderTextColor={theme.colors.secondText}
-        onChangeText={onChangeExerciseNameInput}
-        value={exerciseNameInput}
         boxProps={{bg: 'secondBg'}}
       />
 
@@ -44,13 +48,25 @@ const CreateExercise: React.FC<CreateExerciseProps> = ({closeBottomSheet}) => {
           keyExtractor={item => item}
           numColumns={3}
           renderItem={({item: c}) => (
-            <Filter
-              label={c}
-              key={c}
-              onPress={() => selectCategory(c)}
-              isActive={categoriesSelected.includes(c)}
-              mr={14}
-              mt={8}
+            <Controller
+              control={control}
+              name={'categories'}
+              render={({field}) => (
+                <Filter
+                  label={c}
+                  key={c}
+                  onPress={() =>
+                    selectItem({
+                      item: c,
+                      onChange: field.onChange,
+                      field: 'categories',
+                    })
+                  }
+                  isActive={field.value.includes(c)}
+                  mr={14}
+                  mt={8}
+                />
+              )}
             />
           )}
         />
@@ -64,23 +80,36 @@ const CreateExercise: React.FC<CreateExerciseProps> = ({closeBottomSheet}) => {
           keyExtractor={item => item}
           numColumns={3}
           renderItem={({item: m}) => (
-            <Filter
-              key={m}
-              onPress={() => selectMuscle(m)}
-              isActive={musclesSelected.includes(m)}
-              label={m}
-              mr={14}
-              mt={8}
+            <Controller
+              control={control}
+              name={'muscles'}
+              render={({field}) => (
+                <Filter
+                  key={m}
+                  onPress={() =>
+                    selectItem({
+                      field: 'muscles',
+                      item: m,
+                      onChange: field.onChange,
+                    })
+                  }
+                  isActive={field.value.includes(m)}
+                  label={m}
+                  mr={14}
+                  mt={8}
+                />
+              )}
             />
           )}
         />
       </Box>
       <Button
         label="Concluir"
-        onPress={() => {
+        onPress={handleSubmit(formData => {
           closeBottomSheet();
-          handleCreateExercise();
-        }}
+          handleCreateExercise(formData);
+          reset();
+        })}
         mt={24}
       />
     </>

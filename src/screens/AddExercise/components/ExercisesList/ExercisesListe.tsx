@@ -14,16 +14,17 @@ import {BoxPressable, Box, Text} from '@/components';
 
 type Props = {
   openModal: () => void;
+  exerciseNameSearched: string;
 };
-const ExercisesList: React.FC<Props> = ({openModal}) => {
-  const {exercisList, exercisesSearched, searchExerciseInput} =
-    useExerciseList();
+const ExercisesList: React.FC<Props> = ({openModal, exerciseNameSearched}) => {
+  const {exercisList, exercisesSearched} =
+    useExerciseList(exerciseNameSearched);
 
   return (
     <Box mt={24} flex={1}>
       <FlashList
         estimatedItemSize={exercisList?.length || 30}
-        data={searchExerciseInput ? exercisesSearched : exercisList}
+        data={exerciseNameSearched ? exercisesSearched : exercisList}
         keyExtractor={item => String(item.name)}
         renderItem={({item}) => (
           <Animated.View

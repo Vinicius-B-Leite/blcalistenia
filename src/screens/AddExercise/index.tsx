@@ -10,11 +10,20 @@ import ListHeader from './components/Header/ListHeader';
 import {Button, Container} from '@/components';
 import BottomSheet from '@gorhom/bottom-sheet';
 import {useAppTheme} from '@/hooks';
+import {useForm} from 'react-hook-form';
+import {FilterExerciseSchema} from './schema';
 
 export type FilterType = {category: string; muscles: string};
 
 export const AddExercise: React.FC = () => {
   const theme = useAppTheme();
+  const {control, watch} = useForm<FilterExerciseSchema>({
+    defaultValues: {
+      category: '',
+      exerciseName: '',
+      muscle: '',
+    },
+  });
 
   const bottomSheetRef = useRef<BottomSheet>(null);
   const [filterExerciseVisible, setFilterExercciseVisible] = useState(false);
@@ -30,8 +39,11 @@ export const AddExercise: React.FC = () => {
       <Container
         bg={bottomsheetIsVisible ? 'secondBg' : 'thirdBg'}
         opacity={bottomsheetIsVisible ? 0.5 : 1}>
-        <ListHeader />
-        <ExercisesList openModal={() => setFilterExercciseVisible(true)} />
+        <ListHeader control={control} />
+        <ExercisesList
+          exerciseNameSearched={watch('exerciseName')}
+          openModal={() => setFilterExercciseVisible(true)}
+        />
 
         <Button
           label="+"
@@ -44,6 +56,7 @@ export const AddExercise: React.FC = () => {
         />
 
         <FilterExercise
+          control={control}
           modalProps={{
             visible: filterExerciseVisible,
             transparent: true,

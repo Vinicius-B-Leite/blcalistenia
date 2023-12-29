@@ -2,61 +2,48 @@ import {useCreateExercise as useDomainCreateExercise} from '@/domains';
 import {useState} from 'react';
 import {useDispatch} from 'react-redux';
 import {addExercise} from '@/features';
+import {Control, Field} from 'react-hook-form';
+import {CreateExerciseSchema} from './schema';
 
-export default function useCreateExercise() {
+type SelectItemProps = {
+  item: string;
+  onChange: (item: string[]) => void;
+  field: keyof Pick<CreateExerciseSchema, 'categories' | 'muscles'>;
+};
+export default function useCreateExercise(
+  control: Control<CreateExerciseSchema>,
+) {
   const {createExercise} = useDomainCreateExercise();
   const dispatch = useDispatch();
 
-  const [categoriesSelected, setCategoriesSelected] = useState<string[]>([]);
-  const [musclesSelected, setMusclesSelected] = useState<string[]>([]);
-  const [exerciseNameInput, setExerciseNameInput] = useState('');
+  const selectItem = ({field, item, onChange}: SelectItemProps) => {
+    const itemsSelecteds = control._fields[field]?._f.value;
 
-  const selectCategory = (category: string) => {
-    if (categoriesSelected.includes(category)) {
-      const index = categoriesSelected.indexOf(category);
-      categoriesSelected.splice(index, 1);
-      setCategoriesSelected([...categoriesSelected]);
+    if (itemsSelecteds.includes(item)) {
+      const index = itemsSelecteds.indexOf(item);
+      itemsSelecteds.splice(index, 1);
+      onChange([...itemsSelecteds]);
       return;
     }
-    setCategoriesSelected(oldCategorySelected => [
-      ...oldCategorySelected,
-      category,
-    ]);
+    onChange([...itemsSelecteds, item]);
   };
 
-  const selectMuscle = (muscle: string) => {
-    if (musclesSelected.includes(muscle)) {
-      const index = musclesSelected.indexOf(muscle);
-      musclesSelected.splice(index, 1);
-      setMusclesSelected([...musclesSelected]);
-      return;
-    }
-    setMusclesSelected(oldMusclesSelected => [...oldMusclesSelected, muscle]);
-  };
-  const handleCreateExercise = async () => {
-    if (exerciseNameInput && categoriesSelected && musclesSelected) {
-      const exercisesCreated = await createExercise({
-        categories: categoriesSelected.map(m => m.toLocaleLowerCase()),
-        muscles: musclesSelected.map(c => c.toLocaleLowerCase()),
-        name: exerciseNameInput,
-      });
-      setCategoriesSelected([]);
-      setMusclesSelected([]);
-      setExerciseNameInput('');
+  const handleCreateExercise = async ({
+    categories,
+    exerciseName,
+    muscles,
+  }: CreateExerciseSchema) => {
+    const exercisesCreated = await createExercise({
+      categories: categories.map(m => m.toLocaleLowerCase()),
+      muscles: muscles.map(c => c.toLocaleLowerCase()),
+      name: exerciseName,
+    });
 
-      dispatch(addExercise(exercisesCreated));
-    }
+    dispatch(addExercise(exercisesCreated));
   };
-
-  const onChangeExerciseNameInput = (txt: string) => setExerciseNameInput(txt);
 
   return {
-    selectCategory,
-    selectMuscle,
-    categoriesSelected,
-    musclesSelected,
-    onChangeExerciseNameInput,
-    exerciseNameInput,
     handleCreateExercise,
+    selectItem,
   };
 }

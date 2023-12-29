@@ -5,7 +5,7 @@ import {initialsExercises} from '@/constants';
 import {useEffect, useMemo} from 'react';
 import {useDispatch} from 'react-redux';
 
-export function useExerciseList() {
+export function useExerciseList(exerciseNameSearched: string) {
   const {exercises} = useGetExercises();
 
   const searchExerciseInput = useAppSelector(
@@ -28,13 +28,12 @@ export function useExerciseList() {
     return exercisesFiltered?.filter(e =>
       e.name
         .toLocaleLowerCase()
-        .includes(searchExerciseInput?.toLocaleLowerCase()),
+        .includes(exerciseNameSearched?.toLocaleLowerCase()),
     );
-  }, [searchExerciseInput, exercises]);
+  }, [exerciseNameSearched, exercises]);
 
   return {
     exercisList,
     exercisesSearched,
-    searchExerciseInput,
   };
 }

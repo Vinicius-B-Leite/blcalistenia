@@ -4,11 +4,15 @@ import {useDispatch} from 'react-redux';
 
 import {setSearchInput} from '@/features';
 import {useAppNavigation, useAppSelector, useAppTheme} from '@/hooks';
-import {BoxPressable, Box, Input, Icon} from '@/components';
+import {BoxPressable, Box, Input, Icon, FormInput} from '@/components';
+import {Control} from 'react-hook-form';
+import {FilterExerciseSchema} from '../../schema';
 
-const ListHeader: React.FC = () => {
+type ListHeaderProps = {
+  control: Control<FilterExerciseSchema>;
+};
+const ListHeader: React.FC<ListHeaderProps> = ({control}) => {
   const navigation = useAppNavigation();
-  const theme = useAppTheme();
 
   const searchExerciseInput = useAppSelector(
     state => state.exercise.searchInput,
@@ -25,9 +29,11 @@ const ListHeader: React.FC = () => {
         <Icon family="AntDesign" name="arrowleft" size={24} color={'text'} />
       </BoxPressable>
 
-      <Input
-        value={searchExerciseInput}
-        onChangeText={text => dispatch(setSearchInput(text))}
+      <FormInput
+        // value={searchExerciseInput}
+        // onChangeText={text => dispatch(setSearchInput(text))}
+        control={control}
+        name="exerciseName"
         placeholder="Pesquisar exercício"
         textAlign="right"
         boxProps={{flex: 1}}

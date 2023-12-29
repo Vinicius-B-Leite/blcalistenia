@@ -4,7 +4,7 @@ import {useGetWorkouts} from '@/domains';
 import {useDispatch} from 'react-redux';
 import {setWorkouts} from '@/features';
 
-export default function useMyWorkouts() {
+export default function useMyWorkouts(workoutName: string) {
   const dispatch = useDispatch();
   const filteredWorkouts = useAppSelector(
     state => state.workoutList.filteredWorkouts,
@@ -15,18 +15,15 @@ export default function useMyWorkouts() {
 
   const workouts = useAppSelector(state => state.workoutList.workouts);
   const {workouts: workoutsStorage} = useGetWorkouts();
-  const [searchWorkoutInput, setSearchWorkoutInput] = useState('');
 
   const searchWorkout = useMemo(() => {
     return workouts.filter(val =>
-      val.title
-        .toLocaleLowerCase()
-        .includes(searchWorkoutInput.toLocaleLowerCase()),
+      val.title.toLocaleLowerCase().includes(workoutName.toLocaleLowerCase()),
     );
-  }, [searchWorkoutInput]);
+  }, [workoutName]);
 
   const workoutList = useMemo(() => {
-    const isSearching = searchWorkoutInput.length > 0;
+    const isSearching = workoutName.length > 0;
     const isFiltering = muscleSelected.length > 0;
 
     if (isSearching) {
@@ -37,15 +34,13 @@ export default function useMyWorkouts() {
     }
 
     return [...workouts];
-  }, [searchWorkoutInput, filteredWorkouts, workoutsStorage, workouts]);
+  }, [workoutName, filteredWorkouts, workoutsStorage, workouts]);
 
   useEffect(() => {
     dispatch(setWorkouts([...workoutsStorage]));
   }, [workoutsStorage]);
 
   return {
-    searchWorkoutInput,
-    onChangeSearchWorkoutInput: setSearchWorkoutInput,
     workoutList,
   };
 }
