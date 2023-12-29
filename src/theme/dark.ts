@@ -5,8 +5,8 @@ import {Dimensions} from 'react-native';
 export const dark = createTheme({
   colors: {
     primaryBg: pallet.black,
-    secondBg: pallet.thirdBalck,
-    thirdBg: pallet.secondBlack,
+    secondBg: pallet.secondBlack,
+    thirdBg: pallet.thirdBalck,
 
     contrast: pallet.orange,
     darkContrast: pallet.darkOrange,

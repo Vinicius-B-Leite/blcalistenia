@@ -16,13 +16,13 @@ const ChangeUsername: React.FC<ChangeUsernameProps> = ({
     <Modal {...props}>
       <BoxPressable
         onPress={props.onRequestClose}
-        backgroundColor="thirdBg"
+        backgroundColor="secondBg"
         borderTopLeftRadius={10}
         borderTopRightRadius={10}
         style={StyleSheet.absoluteFill}
       />
       <Box
-        bg="primaryBg"
+        bg="thirdBg"
         paddingHorizontal={24}
         paddingVertical={34}
         style={{marginTop: 'auto'}}>

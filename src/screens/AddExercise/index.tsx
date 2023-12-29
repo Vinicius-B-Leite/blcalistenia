@@ -18,14 +18,18 @@ export const AddExercise: React.FC = () => {
 
   const bottomSheetRef = useRef<BottomSheet>(null);
   const [filterExerciseVisible, setFilterExercciseVisible] = useState(false);
+  const [bottomsheetIsVisible, setBottomsheetIsVisible] = useState(false);
 
   const openBottomSheet = () => {
+    setBottomsheetIsVisible(true);
     bottomSheetRef.current?.expand();
   };
 
   return (
     <>
-      <Container>
+      <Container
+        bg={bottomsheetIsVisible ? 'secondBg' : 'thirdBg'}
+        opacity={bottomsheetIsVisible ? 0.5 : 1}>
         <ListHeader />
         <ExercisesList openModal={() => setFilterExercciseVisible(true)} />
 
@@ -57,8 +61,9 @@ export const AddExercise: React.FC = () => {
           backgroundColor: theme.colors.contrast,
         }}
         backgroundStyle={{
-          backgroundColor: theme.colors.primaryBg,
+          backgroundColor: theme.colors.thirdBg,
         }}
+        onClose={() => setBottomsheetIsVisible(false)}
         enablePanDownToClose
         ref={bottomSheetRef}
         index={-1}

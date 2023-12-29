@@ -2,8 +2,7 @@ import React, {useContext} from 'react';
 import {Modal, ModalProps} from 'react-native';
 import {ThemeContext, ThemeType} from '@/contexts';
 
-import  {BoxPressable, Box, Text} from '@/components';
-
+import {BoxPressable, Box, Text} from '@/components';
 
 type Props = ModalProps;
 const ThemeSelect: React.FC<Props> = props => {
@@ -14,14 +13,14 @@ const ThemeSelect: React.FC<Props> = props => {
   return (
     <Modal {...props}>
       <BoxPressable
-        bg="thirdBg"
+        bg="secondBg"
         flex={1}
         zIndex={-1}
         justifyContent="center"
         alignItems="center"
         onPress={props.onRequestClose}>
         <Box
-          bg="secondBg"
+          bg="thirdBg"
           width={300}
           height={200}
           borderRadius={10}

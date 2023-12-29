@@ -20,13 +20,13 @@ const Routes: React.FC = () => {
   const theme = useAppTheme();
   const navTheme = useNavTheme();
 
-  navTheme.colors.background = theme.colors.secondBg;
+  navTheme.colors.background = theme.colors.thirdBg;
 
   return (
-    <Box flex={1} bg="primaryBg">
+    <Box flex={1} bg="thirdBg">
       <NavigationContainer>
         <StatusBar
-          backgroundColor={theme.colors.secondBg}
+          backgroundColor={theme.colors.thirdBg}
           barStyle={'light-content'}
         />
         <Navigator

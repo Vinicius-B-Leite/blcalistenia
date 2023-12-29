@@ -33,7 +33,7 @@ const ExercisesList: React.FC<Props> = ({openModal}) => {
           </Animated.View>
         )}
         ListHeaderComponent={() => (
-          <BoxPressable onPress={openModal}>
+          <BoxPressable onPress={openModal} width={80} alignItems="center">
             <Text
               preset="pLarge"
               bold
