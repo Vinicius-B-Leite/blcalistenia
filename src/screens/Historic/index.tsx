@@ -24,14 +24,30 @@ export const Historic: React.FC = () => {
   );
 
   const navigateToWorkout = (item: HistoricType) => {
-    console.log(JSON.parse(item.workout));
-
-    navigation.navigate('HomeStack', {
-      screen: 'Workout',
-      params: {
-        workout: JSON.parse(item.workout),
-        canEdit: false,
-      },
+    navigation.reset({
+      index: 1,
+      type: 'tab',
+      routes: [
+        {
+          name: 'HomeStack',
+          state: {
+            index: 1,
+            type: 'stack',
+            routes: [
+              {
+                name: 'Home',
+              },
+              {
+                name: 'Workout',
+                params: {
+                  workout: JSON.parse(item.workout),
+                  canEdit: false,
+                },
+              },
+            ],
+          },
+        },
+      ],
     });
   };
 

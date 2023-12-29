@@ -11,7 +11,7 @@ import {Historic} from '@/screens';
 import HomeStack from './HomeStack';
 import {TabParamList} from './Models';
 import {useAppTheme} from '@/hooks';
-import {Icon} from '@/components';
+import {Box, Container, Icon} from '@/components';
 
 export const TAB_BAR_HEIGHT = Dimensions.get('screen').height * 0.06;
 const {Navigator, Screen} = createMaterialTopTabNavigator<TabParamList>();
@@ -23,55 +23,57 @@ const Routes: React.FC = () => {
   navTheme.colors.background = theme.colors.secondBg;
 
   return (
-    <NavigationContainer>
-      <StatusBar
-        backgroundColor={theme.colors.secondBg}
-        barStyle={'light-content'}
-      />
-      <Navigator
-        id="tabBar"
-        tabBarPosition="bottom"
-        screenOptions={{
-          tabBarIndicatorStyle: {display: 'none'},
-          tabBarShowLabel: false,
-          tabBarStyle: {
-            backgroundColor: theme.colors.primaryBg,
-            height: TAB_BAR_HEIGHT,
-          },
-          tabBarActiveTintColor: theme.colors.contrast,
-          swipeEnabled: false,
-        }}>
-        <Screen
-          name="HomeStack"
-          component={HomeStack}
-          options={{
-            tabBarIcon: ({focused}) => (
-              <Icon
-                family="Entypo"
-                name="home"
-                size={24}
-                color={focused ? 'contrast' : 'darkContrast'}
-              />
-            ),
-          }}
+    <Box flex={1} bg="primaryBg">
+      <NavigationContainer>
+        <StatusBar
+          backgroundColor={theme.colors.secondBg}
+          barStyle={'light-content'}
         />
+        <Navigator
+          id="tabBar"
+          tabBarPosition="bottom"
+          screenOptions={{
+            tabBarIndicatorStyle: {display: 'none'},
+            tabBarShowLabel: false,
+            tabBarStyle: {
+              backgroundColor: theme.colors.primaryBg,
+              height: TAB_BAR_HEIGHT,
+            },
+            tabBarActiveTintColor: theme.colors.contrast,
+            swipeEnabled: false,
+          }}>
+          <Screen
+            name="HomeStack"
+            component={HomeStack}
+            options={{
+              tabBarIcon: ({focused}) => (
+                <Icon
+                  family="Entypo"
+                  name="home"
+                  size={24}
+                  color={focused ? 'contrast' : 'darkContrast'}
+                />
+              ),
+            }}
+          />
 
-        <Screen
-          name="Historic"
-          component={Historic}
-          options={{
-            tabBarIcon: ({focused}) => (
-              <Icon
-                family="Octicons"
-                name="history"
-                size={24}
-                color={focused ? 'contrast' : 'darkContrast'}
-              />
-            ),
-          }}
-        />
-      </Navigator>
-    </NavigationContainer>
+          <Screen
+            name="Historic"
+            component={Historic}
+            options={{
+              tabBarIcon: ({focused}) => (
+                <Icon
+                  family="Octicons"
+                  name="history"
+                  size={24}
+                  color={focused ? 'contrast' : 'darkContrast'}
+                />
+              ),
+            }}
+          />
+        </Navigator>
+      </NavigationContainer>
+    </Box>
   );
 };
 

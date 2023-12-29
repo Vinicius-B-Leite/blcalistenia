@@ -51,7 +51,8 @@ export default function useWorkoutHeader() {
 
   const saveWorkout = async () => {
     const isWorkoutSuggest = workoutRef.current._id.includes('suggestWorkout');
-    if (isWorkoutSuggest || !canEditWorkoutRef) return;
+
+    if (isWorkoutSuggest || !canEditWorkoutRef.current) return;
 
     const workoutCreated = await upsertWorkout({
       ...workoutRef.current,
