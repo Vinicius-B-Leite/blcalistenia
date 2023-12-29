@@ -8,5 +8,6 @@ export * from './Form/FormInput';
 export * from './Icon/Icon';
 export * from './Image/Image';
 export * from './Input/Input';
+export * from './ModalBase/ModalBase';
 export * from './Spiner/Spiner';
 export * from './Text/Text';

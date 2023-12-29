@@ -57,13 +57,11 @@ export const AddExercise: React.FC = () => {
 
         <FilterExercise
           control={control}
-          modalProps={{
-            visible: filterExerciseVisible,
-            transparent: true,
-            onRequestClose: () => setFilterExercciseVisible(false),
-            animationType: 'fade',
-          }}
-          closeModal={() => setFilterExercciseVisible(false)}
+          visible={filterExerciseVisible}
+          transparent={true}
+          onRequestClose={() => setFilterExercciseVisible(false)}
+          animationType={'fade'}
+          onFilter={() => setFilterExercciseVisible(false)}
         />
       </Container>
       <BottomSheet
