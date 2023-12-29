@@ -13,7 +13,7 @@ export function useCreateExercise() {
       ...exercise,
       _id: uuid.v4().toString(),
       user_id: user!.uid,
-      createdAt: new Date(),
+      createdAt: new Date().getTime(),
     });
   };
 

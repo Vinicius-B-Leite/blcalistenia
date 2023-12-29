@@ -10,9 +10,9 @@ export const WorkoutSchema = {
     exercises: 'ExerciseWorkout[]', //id exerciese[]
     anotation: 'string?',
     user_id: 'string',
-    createdAt: 'date',
-    updatedAt: 'date?',
-    deletedAt: 'date?',
+    createdAt: 'int',
+    updatedAt: 'int?',
+    deletedAt: 'int?',
   },
   primaryKey: '_id',
 };

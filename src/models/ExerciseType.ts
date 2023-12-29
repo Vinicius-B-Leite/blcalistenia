@@ -4,7 +4,7 @@ export type ExerciseType = {
   categories: String[];
   muscles: String[];
   user_id: string;
-  createdAt: Date;
-  updatedAt?: Date;
-  deletedAt?: Date;
+  createdAt: number;
+  updatedAt?: number;
+  deletedAt?: number;
 };

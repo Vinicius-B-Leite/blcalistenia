@@ -18,7 +18,7 @@ export function useUpsertWorkout() {
         ...props,
         createdAt: workoutAlreadyExists.createdAt,
         user_id: workoutAlreadyExists.user_id,
-        updatedAt: new Date(),
+        updatedAt: new Date().getTime(),
       });
       return workout;
     }
@@ -26,7 +26,7 @@ export function useUpsertWorkout() {
     workout = await workoutService.createWorkout({
       ...props,
       user_id: user!.uid,
-      createdAt: new Date(),
+      createdAt: new Date().getTime(),
     });
 
     return workout;

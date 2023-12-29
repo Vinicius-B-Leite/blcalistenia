@@ -7,7 +7,7 @@ export function useDeleteWorkout() {
     if (workout) {
       await workoutService.createWorkout({
         ...workout,
-        deletedAt: new Date(),
+        deletedAt: new Date().getTime(),
       });
     }
   };

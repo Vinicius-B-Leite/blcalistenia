@@ -11,7 +11,15 @@ type WorkoutState = {
 const initalState: WorkoutState = {
   timer: null,
   isWorkingout: false,
-  workout: {} as WorkoutType,
+  workout: {
+    _id: '',
+    banner: '',
+    exercises: [],
+    title: '',
+    anotation: '',
+    user_id: '',
+    createdAt: new Date().getTime(),
+  },
   canEdit: true,
 };
 

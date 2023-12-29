@@ -11,9 +11,9 @@ export const HistoricSchema: Realm.ObjectSchema = {
     timerInSeconds: 'int',
     date: 'date',
     user_id: 'string',
-    createdAt: 'date',
-    updatedAt: 'date?',
-    deletedAt: 'date?',
+    createdAt: 'int',
+    updatedAt: 'int?',
+    deletedAt: 'int?',
   },
   primaryKey: '_id',
 };

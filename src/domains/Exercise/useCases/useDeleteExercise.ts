@@ -5,7 +5,7 @@ export function useDeleteExercise() {
     const exercise = await exerciseService.getExerciseById(exerciseId);
     await exerciseService.upsertExercise({
       ...exercise,
-      deletedAt: new Date(),
+      deletedAt: new Date().getTime(),
     });
   };
 
