@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {muscles} from '@/utils';
+import {muscles} from '@/constants';
 
 import useFilterMuscle from '@/screens/Home/components/FilterMuscle/useFilterMuscle';
 import {Filter} from '@/components';

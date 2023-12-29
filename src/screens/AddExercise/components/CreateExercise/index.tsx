@@ -1,5 +1,5 @@
 import React from 'react';
-import {category, muscles} from '@/utils';
+import {category, muscles} from '@/constants';
 
 import useHookCreateExercise from './useCreateExercise';
 

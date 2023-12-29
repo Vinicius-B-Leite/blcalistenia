@@ -1,7 +1,7 @@
 import {useGetExercises} from '@/domains';
 import {addExercise} from '@/features';
 import {useAppSelector} from '@/hooks';
-import {initialsExercises} from '@/utils';
+import {initialsExercises} from '@/constants';
 import {useEffect, useMemo} from 'react';
 import {useDispatch} from 'react-redux';
 

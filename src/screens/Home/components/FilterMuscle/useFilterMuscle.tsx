@@ -7,7 +7,7 @@ import {
   setMuscleSelected,
 } from '@/features';
 
-import {initialsExercises} from '@/utils';
+import {initialsExercises} from '@/constants';
 import {useGetWorkouts, useGetExercises} from '@/domains';
 
 import {useAppSelector} from '@/hooks';

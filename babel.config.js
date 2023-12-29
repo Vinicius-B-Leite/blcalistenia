@@ -24,6 +24,7 @@ module.exports = {
           '@/hooks': './src/hooks',
           '@/domains': './src/domains',
           '@/storage': './src/storage',
+          '@/constants': './src/constants',
         },
       },
     ],

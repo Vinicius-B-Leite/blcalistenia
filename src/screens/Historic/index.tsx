@@ -1,4 +1,4 @@
-import React, {useCallback, } from 'react';
+import React, {useCallback} from 'react';
 
 import {HistoricType} from '@/models/HistoricType';
 import HistoricItem from './components/HistoricItem';
@@ -11,8 +11,10 @@ import {useGetHistoric} from '@/domains';
 import {useFocusEffect} from '@react-navigation/native';
 import {Container} from '@/components';
 import Header from './components/Header/Header';
+import {useAppNavigation} from '@/hooks';
 
 export const Historic: React.FC = () => {
+  const navigation = useAppNavigation();
   const {historic, fetchHistoric} = useGetHistoric();
 
   useFocusEffect(
@@ -21,7 +23,12 @@ export const Historic: React.FC = () => {
     }, []),
   );
 
-  const navigateToWorkout = (item: HistoricType) => {};
+  const navigateToWorkout = (item: HistoricType) => {
+    navigation.navigate('HomeStack', {
+      screen: 'Workout',
+      params: JSON.parse(item.workout),
+    });
+  };
 
   return (
     <GestureHandlerRootView style={{flex: 1}}>
@@ -43,4 +50,3 @@ export const Historic: React.FC = () => {
     </GestureHandlerRootView>
   );
 };
-

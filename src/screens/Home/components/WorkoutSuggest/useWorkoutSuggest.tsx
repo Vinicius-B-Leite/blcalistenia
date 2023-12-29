@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { suggests } from '@/utils';
+import { suggests } from '@/constants';
 import { WorkoutType, WorkoutLevel } from '@/models';
 
 

@@ -8,7 +8,7 @@ import {useAppNavigation} from '@/hooks/useAppNavigation';
 
 import {ExerciseType} from '@/models';
 
-import {initialsExercises} from '@/utils';
+import {initialsExercises} from '@/constants';
 import {Alert} from 'react-native';
 import {useDispatch} from 'react-redux';
 
