@@ -1,6 +1,7 @@
 import {WorkoutType} from '@/models';
 import {workoutService} from '../workoutService';
 import {useAuth} from '@/contexts';
+import Toast from 'react-native-toast-message';
 
 export function useUpsertWorkout() {
   const {user} = useAuth();
@@ -12,6 +13,11 @@ export function useUpsertWorkout() {
 
     const workoutAlreadyExists = await workoutService.getWorkoutById(props._id);
     const isUpdatig = !!workoutAlreadyExists;
+
+    Toast.show({
+      type: 'success',
+      props: {message: 'Treino salvo com sucesso!'},
+    });
 
     if (isUpdatig) {
       workout = await workoutService.createWorkout({

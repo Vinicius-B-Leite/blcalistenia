@@ -30,12 +30,6 @@ export default function useChronometer() {
   const finishWorkout = (timer: number) => {
     const isWorkoutSuggest = workout._id.includes('suggestWorkout');
     BackgroundService.stop().then(async () => {
-      await handleCreateHistoric({
-        workout: JSON.stringify(workout),
-        date: new Date(),
-        timerInSeconds: timer,
-      });
-
       if (!isWorkoutSuggest) {
         await upsertWorkout({
           _id: workout._id,
@@ -45,7 +39,11 @@ export default function useChronometer() {
           banner: workout.banner || '',
         });
       }
-
+      await handleCreateHistoric({
+        workout: JSON.stringify(workout),
+        date: new Date(),
+        timerInSeconds: timer,
+      });
       dispatch(resetTimer());
       dispatch(setWorkout({} as WorkoutType));
       navigation.navigate('HomeStack', {screen: 'Home'});

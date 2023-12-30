@@ -2,6 +2,7 @@ import React, {createContext, useState, useEffect, useContext} from 'react';
 
 import {UserType} from '@/models';
 import {useGetUser, useUpdateUser} from '@/domains';
+import Toast from 'react-native-toast-message';
 
 type UserContextType = {
   user: UserType | null;
@@ -22,6 +23,10 @@ const UserContextProvider = ({children}: {children: React.ReactNode}) => {
   const updateUser = async (newUser: UserType) => {
     setUser(newUser);
     await updateUserFromStorage(newUser);
+    Toast.show({
+      type: 'success',
+      props: {message: 'Usuário atualizado com sucesso!'},
+    });
   };
 
   return (

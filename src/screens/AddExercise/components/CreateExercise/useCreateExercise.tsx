@@ -1,9 +1,10 @@
 import {useCreateExercise as useDomainCreateExercise} from '@/domains';
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 import {useDispatch} from 'react-redux';
 import {addExercise} from '@/features';
-import {Control, Field} from 'react-hook-form';
+import {Control, Field, FieldErrors} from 'react-hook-form';
 import {CreateExerciseSchema} from './schema';
+import Toast from 'react-native-toast-message';
 
 type SelectItemProps = {
   item: string;
@@ -12,6 +13,7 @@ type SelectItemProps = {
 };
 export default function useCreateExercise(
   control: Control<CreateExerciseSchema>,
+  errors?: FieldErrors<CreateExerciseSchema>,
 ) {
   const {createExercise} = useDomainCreateExercise();
   const dispatch = useDispatch();
@@ -41,6 +43,18 @@ export default function useCreateExercise(
 
     dispatch(addExercise(exercisesCreated));
   };
+
+  useEffect(() => {
+    const errorMessage =
+      errors?.exerciseName?.message ||
+      errors?.categories?.message ||
+      errors?.muscles?.message;
+    if (!errorMessage) return;
+    Toast.show({
+      type: 'error',
+      props: {message: errorMessage},
+    });
+  }, [errors]);
 
   return {
     handleCreateExercise,

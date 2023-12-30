@@ -11,4 +11,6 @@ export const pallet = {
   white: '#FFFFFF',
 
   gray: '#B3B3B3',
+
+  green: '#08bf2c',
 };

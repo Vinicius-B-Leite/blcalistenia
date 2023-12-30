@@ -7,6 +7,9 @@ import {AppProvider} from '@realm/react';
 import SplashScreen from 'react-native-splash-screen';
 import UserContextProvider from '@/contexts/AuthContext';
 
+import Toast from 'react-native-toast-message';
+import {toastConfig} from '@/components';
+
 const App = () => {
   useEffect(() => {
     SplashScreen.hide();

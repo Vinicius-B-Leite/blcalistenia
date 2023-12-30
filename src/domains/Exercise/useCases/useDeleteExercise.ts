@@ -1,3 +1,4 @@
+import Toast from 'react-native-toast-message';
 import {exerciseService} from '../exerciseService';
 
 export function useDeleteExercise() {
@@ -6,6 +7,10 @@ export function useDeleteExercise() {
     await exerciseService.upsertExercise({
       ...exercise,
       deletedAt: new Date().getTime(),
+    });
+    Toast.show({
+      type: 'success',
+      props: {message: 'Exercício deletado com sucesso!'},
     });
   };
 

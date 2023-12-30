@@ -10,4 +10,5 @@ export * from './Image/Image';
 export * from './Input/Input';
 export * from './ModalBase/ModalBase';
 export * from './Spiner/Spiner';
+export * from './Toast/ToastConfig';
 export * from './Text/Text';

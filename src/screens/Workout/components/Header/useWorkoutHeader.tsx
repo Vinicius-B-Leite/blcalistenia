@@ -11,6 +11,7 @@ import {useAppNavigation, useAppSelector} from '@/hooks';
 import {useUpsertWorkout} from '@/domains';
 import {upsetWorkout} from '@/features';
 import {useAuth} from '@/contexts';
+import Toast from 'react-native-toast-message';
 
 export default function useWorkoutHeader() {
   const navigation = useAppNavigation();
@@ -67,6 +68,10 @@ export default function useWorkoutHeader() {
       if (!canEditWorkout) return;
       const res = await pickeImage();
       if (res.assets && res.assets[0].uri) {
+        Toast.show({
+          type: 'success',
+          props: {message: 'Imagem selecionada!'},
+        });
         dispatch(setWorkout({...workout, banner: res.assets[0].uri}));
       }
     } catch (error) {

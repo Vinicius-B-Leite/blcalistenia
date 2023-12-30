@@ -16,16 +16,22 @@ type CreateExerciseProps = {
 };
 const CreateExercise: React.FC<CreateExerciseProps> = ({closeBottomSheet}) => {
   const theme = useAppTheme();
-  const {control, handleSubmit, reset} = useForm<CreateExerciseSchema>({
-    defaultValues: {
-      categories: [],
-      muscles: [],
-      exerciseName: '',
-    },
-    resetOptions: {keepDefaultValues: true},
-    resolver: zodResolver(createExericseSchema),
-  });
-  const {selectItem, handleCreateExercise} = useHookCreateExercise(control);
+  const {control, handleSubmit, reset, formState} =
+    useForm<CreateExerciseSchema>({
+      defaultValues: {
+        categories: [],
+        muscles: [],
+        exerciseName: '',
+      },
+      resetOptions: {keepDefaultValues: true},
+
+      resolver: zodResolver(createExericseSchema),
+    });
+  const {selectItem, handleCreateExercise} = useHookCreateExercise(
+    control,
+    formState.errors,
+  );
+  console.log(formState.errors);
 
   return (
     <>
