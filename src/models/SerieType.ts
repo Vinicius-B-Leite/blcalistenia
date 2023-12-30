@@ -1,6 +1,6 @@
 export type SerieType = {
-  serie: Number;
-  rep: Number;
-  rest: number;
+  serie: number;
+  rep: string;
+  rest: string;
   done?: boolean;
 };

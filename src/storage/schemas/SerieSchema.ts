@@ -3,7 +3,7 @@ export const SerieSchema = {
   embedded: true,
   properties: {
     serie: 'int',
-    rep: 'int',
-    rest: 'double',
+    rep: 'string',
+    rest: 'string',
   },
 };

@@ -4,12 +4,14 @@ import {BoxPressable, Box} from '../Box/Box';
 import {useAppTheme} from '@/hooks';
 import {textsVariantsStyles} from '../Text/variants';
 import {BoxType} from '../Box/types';
+import {inputMasks} from './constants';
 
 export type InputProps = TextInputProps & {
   leftIcon?: React.ReactNode;
   rightIcon?: React.ReactNode;
   boxProps?: BoxType;
   textPreset?: keyof typeof textsVariantsStyles;
+  mask?: keyof typeof inputMasks;
 };
 
 export const Input: React.FC<InputProps> = ({
@@ -17,10 +19,25 @@ export const Input: React.FC<InputProps> = ({
   rightIcon,
   boxProps,
   textPreset = 'pMedium',
+  mask,
+  onChangeText,
   ...inputProps
 }) => {
   const theme = useAppTheme();
   const inputRef = useRef<TextInput>(null);
+
+  const handleTextChange = (text: string) => {
+    if (mask) {
+      const formattedText = inputMasks[mask](text);
+      inputRef.current?.setNativeProps({text: formattedText});
+      if (onChangeText) {
+        onChangeText(formattedText);
+      }
+      return;
+    }
+
+    onChangeText && onChangeText(text);
+  };
 
   return (
     <BoxPressable
@@ -37,7 +54,6 @@ export const Input: React.FC<InputProps> = ({
       {leftIcon}
       <TextInput
         ref={inputRef}
-        placeholder="askdnakjsndajk"
         style={{
           ...textsVariantsStyles[textPreset],
           color: theme.colors.text,
@@ -45,6 +61,7 @@ export const Input: React.FC<InputProps> = ({
         }}
         cursorColor={theme.colors.contrast}
         placeholderTextColor={theme.colors.secondText}
+        onChangeText={handleTextChange}
         {...inputProps}
       />
       {rightIcon}

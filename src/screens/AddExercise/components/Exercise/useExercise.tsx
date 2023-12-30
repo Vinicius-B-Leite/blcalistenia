@@ -21,7 +21,7 @@ export default function useExercise() {
     dispatch(
       addExerciseToWorkout({
         exercise_id: exerciseId,
-        series: [{rep: 0, rest: 0, serie: 1, done: false}],
+        series: [{rep: '', rest: '', serie: 1, done: false}],
         anotation: '',
       }),
     );

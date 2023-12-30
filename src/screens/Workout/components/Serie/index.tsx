@@ -53,7 +53,8 @@ const Serie: React.FC<Props> = ({item, deleteSerieButton, exercise}) => {
       />
       <Input
         textAlign="center"
-        value={String(rep)}
+        value={rep}
+        placeholder="0"
         onChangeText={handleOnChangeRep}
         boxProps={{
           width: 90,
@@ -79,7 +80,9 @@ const Serie: React.FC<Props> = ({item, deleteSerieButton, exercise}) => {
       ) : (
         <Input
           textAlign="center"
-          value={String(rest)}
+          mask="mm:ss"
+          placeholder="0"
+          value={rest}
           onChangeText={handleOnChangeRest}
           boxProps={{
             width: 90,

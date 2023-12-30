@@ -66,7 +66,7 @@ const ExerciseInWorkoutItem: React.FC<Props> = ({
         </Box>
         <Box width={90}>
           <Text preset="pSmall" bold textAlign="center">
-            {isWorkingout ? 'Concluída' : 'Descanso(s)'}
+            {isWorkingout ? 'Concluída' : 'Descanso'}
           </Text>
         </Box>
       </Box>

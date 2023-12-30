@@ -23,8 +23,8 @@ export default function useSerie({
   const dispatch = useDispatch();
   const showSucessButton = useAppSelector(state => state.workout.isWorkingout);
 
-  const [rep, setRep] = useState(item?.rep || 0);
-  const [rest, setRest] = useState(item?.rest || 0);
+  const [rep, setRep] = useState(item?.rep || '');
+  const [rest, setRest] = useState(item?.rest || '');
   const [done, setDone] = useState(item?.done || false);
 
   useEffect(() => {
@@ -32,9 +32,9 @@ export default function useSerie({
       const newSerie: SerieType = {rep, rest, done, serie: item.serie};
       dispatch(
         updateSerie({
-          exercise_id: exercise.exercise_id as string,
+          exercise_id: exercise.exercise_id,
           newSerie,
-          serieNumber: item.serie as number,
+          serieNumber: item.serie,
         }),
       );
     }
@@ -43,16 +43,26 @@ export default function useSerie({
   const handleCheckSerie = () => {
     dispatch(
       updateSerie({
-        exercise_id: exercise.exercise_id as string,
+        exercise_id: exercise.exercise_id,
         newSerie: {...item, done: !done},
-        serieNumber: item.serie as number,
+        serieNumber: item.serie,
       }),
     );
     setDone(!done);
     if (!done) {
+      const numericValue = item.rest.replace(/\D/g, '');
+      let totalSeconds = 0;
+      if (numericValue.length <= 2) {
+        totalSeconds = Number(numericValue);
+      } else {
+        const minutes = Number(item.rest.slice(0, 2)) * 60;
+        const seconds = Number(item.rest.slice(3, 5));
+
+        totalSeconds = Number(minutes + seconds);
+      }
       navigation.navigate('HomeStack', {
         screen: 'Rest',
-        params: {totalSeconds: item.rest},
+        params: {totalSeconds},
       });
     }
   };
@@ -66,9 +76,9 @@ export default function useSerie({
     );
   };
 
-  const handleOnChangeRep = (txt: string) => setRep(Number(txt));
+  const handleOnChangeRep = (txt: string) => setRep(txt);
 
-  const handleOnChangeRest = (txt: string) => setRest(Number(txt));
+  const handleOnChangeRest = (txt: string) => setRest(txt);
 
   return {
     handleCheckSerie,
