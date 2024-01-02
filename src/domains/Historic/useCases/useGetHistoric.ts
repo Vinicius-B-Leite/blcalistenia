@@ -17,6 +17,6 @@ export function useGetHistoric() {
 
   return {
     historic,
-    fetchHistoric,
+    refetchHistoric: fetchHistoric,
   };
 }

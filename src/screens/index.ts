@@ -1,5 +1,7 @@
 export * from './AddExercise';
 
+export * from './Dashboard/DashboardScreen';
+
 export * from './Historic';
 export * from './Home';
 

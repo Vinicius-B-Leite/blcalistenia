@@ -6,7 +6,7 @@ import {
   useTheme as useNavTheme,
 } from '@react-navigation/native';
 
-import {Historic} from '@/screens';
+import {Historic, DashboardScreen} from '@/screens';
 
 import HomeStack from './HomeStack';
 import {TabParamList} from './Models';
@@ -46,6 +46,20 @@ const Routes: React.FC = () => {
                 <Icon
                   family="Entypo"
                   name="home"
+                  size={24}
+                  color={focused ? 'contrast' : 'darkContrast'}
+                />
+              ),
+            }}
+          />
+          <Screen
+            name="Dashboard"
+            component={DashboardScreen}
+            options={{
+              tabBarIcon: ({focused}) => (
+                <Icon
+                  family="Entypo"
+                  name="bar-graph"
                   size={24}
                   color={focused ? 'contrast' : 'darkContrast'}
                 />

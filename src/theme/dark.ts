@@ -1,6 +1,7 @@
 import {createTheme} from '@shopify/restyle';
 import {pallet} from './pallete';
 import {Dimensions} from 'react-native';
+import {hexToRgb} from '@/utils/hexToRgb';
 
 export const dark = createTheme({
   colors: {
@@ -8,6 +9,8 @@ export const dark = createTheme({
     thirdBg: pallet.thirdBalck,
 
     contrast: pallet.orange,
+    secondContrast: hexToRgb(pallet.orange, 0.3),
+    thirdContrast: hexToRgb(pallet.orange, 0.7),
     darkContrast: pallet.darkOrange,
 
     alert: pallet.red,

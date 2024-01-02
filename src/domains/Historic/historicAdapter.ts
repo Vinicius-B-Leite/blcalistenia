@@ -6,7 +6,7 @@ const adapter = (historic: any): HistoricType => {
     date: historic.date,
     timerInSeconds: historic.timerInSeconds,
     user_id: historic.user,
-    workout: historic.workout,
+    workout: JSON.parse(historic.workout),
     createdAt: historic.createdAt,
     deletedAt: historic.deletedAt,
     updatedAt: historic.updatedAt,

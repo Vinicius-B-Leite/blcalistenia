@@ -40,7 +40,7 @@ export default function useChronometer() {
         });
       }
       await handleCreateHistoric({
-        workout: JSON.stringify(workout),
+        workout: workout,
         date: new Date(),
         timerInSeconds: timer,
       });

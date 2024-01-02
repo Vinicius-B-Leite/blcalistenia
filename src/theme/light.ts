@@ -1,3 +1,4 @@
+import {hexToRgb} from '@/utils/hexToRgb';
 import {Theme, dark} from './dark';
 import {pallet} from './pallete';
 
@@ -9,6 +10,8 @@ export const light: Theme = {
     thirdBg: pallet.secondGray,
 
     contrast: pallet.blue,
+    secondContrast: hexToRgb(pallet.blue, 0.3),
+    thirdContrast: hexToRgb(pallet.blue, 0.7),
     darkContrast: pallet.darkBlue,
 
     alert: pallet.red,

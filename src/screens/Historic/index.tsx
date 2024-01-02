@@ -15,11 +15,11 @@ import {useAppNavigation} from '@/hooks';
 
 export const Historic: React.FC = () => {
   const navigation = useAppNavigation();
-  const {historic, fetchHistoric} = useGetHistoric();
+  const {historic, refetchHistoric} = useGetHistoric();
 
   useFocusEffect(
     useCallback(() => {
-      fetchHistoric();
+      refetchHistoric();
     }, []),
   );
 
@@ -40,7 +40,7 @@ export const Historic: React.FC = () => {
               {
                 name: 'Workout',
                 params: {
-                  workout: JSON.parse(item.workout),
+                  workout: item.workout,
                   canEdit: false,
                 },
               },

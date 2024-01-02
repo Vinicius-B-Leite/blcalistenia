@@ -1,5 +1,7 @@
+import {WorkoutType} from './WorkoutType';
+
 export type HistoricType = {
-  workout: string;
+  workout: WorkoutType;
   timerInSeconds: number;
   date: Date;
   _id: string;
