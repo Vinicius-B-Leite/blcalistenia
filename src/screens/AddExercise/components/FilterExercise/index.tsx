@@ -25,9 +25,7 @@ const FilterExercise: React.FC<FilterExerciseProps> = ({
   const {exercises} = useGetExercises();
 
   const filterExercises = (data: FilterExerciseSchema) => {
-    const exerciesesRealm = [...exercises, ...initialsExercises];
-
-    const exericesesFiltered = exerciesesRealm.filter(v => {
+    const exericesesFiltered = exercises.filter(v => {
       let copy = v;
       const categoryFiltered = copy.categories.includes(
         data.category.toLowerCase(),

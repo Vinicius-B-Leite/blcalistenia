@@ -8,8 +8,6 @@ type RepsRange = {
   name: '1 - 4' | '5 - 8' | '9 - 12' | '13 +';
   porcentage: number;
   color: string;
-  legendFontColor: string;
-  legendFontSize: number;
 };
 
 export function useRepsRange() {
@@ -40,29 +38,21 @@ export function useRepsRange() {
         name: '1 - 4',
         porcentage: getIterval(1, 4),
         color: theme.colors.contrast,
-        legendFontColor: theme.colors.text,
-        legendFontSize: 15,
       },
       {
         name: '5 - 8',
         porcentage: getIterval(5, 8),
         color: theme.colors.darkContrast,
-        legendFontColor: theme.colors.text,
-        legendFontSize: 15,
       },
       {
         name: '9 - 12',
         porcentage: getIterval(9, 12),
         color: theme.colors.secondContrast,
-        legendFontColor: theme.colors.text,
-        legendFontSize: 15,
       },
       {
         name: '13 +',
         porcentage: getIterval(13, Infinity),
         color: theme.colors.thirdContrast,
-        legendFontColor: theme.colors.text,
-        legendFontSize: 15,
       },
     ]);
   };

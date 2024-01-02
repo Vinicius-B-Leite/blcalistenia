@@ -30,9 +30,6 @@ export default function useFilterMuscle() {
 
     const exercisesHaveMuscleSelected = [
       ...exercises.filter(e => e.muscles.includes(muscle.toLowerCase())),
-      ...initialsExercises.filter(e =>
-        e.muscles.includes(muscle.toLowerCase()),
-      ),
     ];
 
     let workoutsWithMuscleSelected: WorkoutType[] = [];

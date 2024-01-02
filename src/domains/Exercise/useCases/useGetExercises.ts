@@ -1,6 +1,7 @@
 import {useEffect, useState} from 'react';
 import {exerciseService} from '../exerciseService';
 import {ExerciseType} from '@/models';
+import {initialsExercises} from '@/constants';
 
 type UseGetExercisesProps = keyof Pick<ExerciseType, 'deletedAt'>;
 
@@ -9,11 +10,21 @@ export function useGetExercises(filter?: UseGetExercisesProps) {
 
   const fetchExercises = async () => {
     const storageExercises = await exerciseService.getExercise();
-    let filteredExercises = storageExercises.filter(v => !v?.deletedAt);
+    const exercisesStorageWithInitials = [
+      ...storageExercises,
+      ...initialsExercises,
+    ];
+    let filteredExercises = exercisesStorageWithInitials.filter(
+      v => !v?.deletedAt,
+    );
     if (filter) {
-      filteredExercises = storageExercises.filter(v => v[filter]);
+      filteredExercises = exercisesStorageWithInitials.filter(v => v[filter]);
     }
-    setExercises(filteredExercises);
+
+    const sortedByAlphabetical = filteredExercises.sort((a, b) =>
+      a.name > b.name ? 1 : -1,
+    );
+    setExercises(sortedByAlphabetical);
   };
 
   useEffect(() => {

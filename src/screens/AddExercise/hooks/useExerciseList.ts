@@ -8,9 +8,6 @@ import {useDispatch} from 'react-redux';
 export function useExerciseList(exerciseNameSearched: string) {
   const {exercises} = useGetExercises();
 
-  const searchExerciseInput = useAppSelector(
-    state => state.exercise.searchInput,
-  );
   const dispatch = useDispatch();
   const exercisList = useAppSelector(state => state.exercise.exercises);
 
@@ -18,12 +15,12 @@ export function useExerciseList(exerciseNameSearched: string) {
     const exerciseListIsEmpty =
       exercises.length >= 0 && exercisList.length === 0;
     if (exerciseListIsEmpty) {
-      dispatch(addExercise([...exercises, ...initialsExercises]));
+      dispatch(addExercise([...exercises]));
     }
   }, [exercises]);
 
   const exercisesSearched = useMemo(() => {
-    const exercisesFiltered = [...exercises, ...initialsExercises];
+    const exercisesFiltered = [...exercises];
 
     return exercisesFiltered?.filter(e =>
       e.name

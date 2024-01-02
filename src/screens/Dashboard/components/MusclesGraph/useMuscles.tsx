@@ -4,13 +4,6 @@ import {useAppSelector} from '@/hooks';
 import {useEffect, useState} from 'react';
 import {LineChartData} from 'react-native-chart-kit/dist/line-chart/LineChart';
 
-/**
- * Filtrar por musculo
- *
- * pegar totos os exercicios e dividir por musculo em %
- *
- */
-
 export function useMuscles() {
   const [muslces, setMuscles] = useState<LineChartData>();
 
@@ -22,10 +15,7 @@ export function useMuscles() {
       .map(h => h.workout.exercises.map(e => e))
       .flat();
 
-    const exercisesWereTrained = [
-      ...storageExercises,
-      ...initialsExercises,
-    ].filter(v => {
+    const exercisesWereTrained = storageExercises.filter(v => {
       const index = exercisesInWokout.findIndex(e => e.exercise_id == v.name);
       return index > -1 ? true : false;
     });
