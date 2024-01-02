@@ -14,7 +14,7 @@ export const Filter: React.FC<FilterProps> = ({isActive, label, ...rest}) => {
     <BoxPressable
       paddingVertical={4}
       paddingHorizontal={14}
-      bg={isActive ? 'contrast' : 'secondBg'}
+      bg={isActive ? 'contrast' : 'primaryBg'}
       borderRadius={'full'}
       {...rest}>
       <Text
@@ -26,5 +26,3 @@ export const Filter: React.FC<FilterProps> = ({isActive, label, ...rest}) => {
     </BoxPressable>
   );
 };
-
-

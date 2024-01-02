@@ -30,7 +30,7 @@ export const ModalBase: React.FC<ModalBaseProps> = ({
     <Modal {...modalProps}>
       <Box
         flex={1}
-        bg="secondBg"
+        bg="blackOpacity"
         justifyContent={positionMap[position]}
         alignItems="center">
         <BoxPressable

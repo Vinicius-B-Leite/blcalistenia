@@ -25,10 +25,6 @@ const Routes: React.FC = () => {
   return (
     <Box flex={1} bg="thirdBg">
       <NavigationContainer>
-        <StatusBar
-          backgroundColor={theme.colors.thirdBg}
-          barStyle={'light-content'}
-        />
         <Navigator
           id="tabBar"
           tabBarPosition="bottom"

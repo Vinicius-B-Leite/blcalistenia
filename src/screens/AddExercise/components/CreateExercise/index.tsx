@@ -44,7 +44,6 @@ const CreateExercise: React.FC<CreateExerciseProps> = ({closeBottomSheet}) => {
         name="exerciseName"
         placeholder="Nome do exercício"
         placeholderTextColor={theme.colors.secondText}
-        boxProps={{bg: 'secondBg'}}
       />
 
       <Box mt={24}>

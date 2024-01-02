@@ -37,7 +37,7 @@ export const AddExercise: React.FC = () => {
   return (
     <>
       <Container
-        bg={bottomsheetIsVisible ? 'secondBg' : 'thirdBg'}
+        bg={bottomsheetIsVisible ? 'blackOpacity' : 'thirdBg'}
         opacity={bottomsheetIsVisible ? 0.5 : 1}>
         <ListHeader control={control} />
         <ExercisesList

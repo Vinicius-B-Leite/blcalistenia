@@ -45,9 +45,6 @@ const ChangeUsername: React.FC<ChangeUsernameProps> = ({
         control={control}
         name="newUsername"
         placeholder="Digite seu novo nome"
-        boxProps={{
-          backgroundColor: 'secondBg',
-        }}
       />
 
       <Button

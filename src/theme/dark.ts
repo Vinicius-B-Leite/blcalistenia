@@ -5,7 +5,6 @@ import {Dimensions} from 'react-native';
 export const dark = createTheme({
   colors: {
     primaryBg: pallet.black,
-    secondBg: pallet.secondBlack,
     thirdBg: pallet.thirdBalck,
 
     contrast: pallet.orange,
@@ -17,6 +16,8 @@ export const dark = createTheme({
     secondText: pallet.gray,
 
     success: pallet.green,
+
+    blackOpacity: pallet.blackOpacty30,
   },
   spacing: {
     4: 4,
