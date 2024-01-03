@@ -58,7 +58,9 @@ export default function useWorkoutHeader() {
     const workoutCreated = await upsertWorkout({
       ...workoutRef.current,
     });
-    dispatch(upsetWorkout(workoutCreated));
+    if (workoutCreated) {
+      dispatch(upsetWorkout(workoutCreated));
+    }
 
     navigation.navigate('HomeStack', {screen: 'Home'});
   };

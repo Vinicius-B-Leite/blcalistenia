@@ -10,7 +10,7 @@ export function useUpsertWorkout() {
     props: Omit<WorkoutType, 'user_id' | 'createdAt'>,
   ) => {
     let workout = {} as WorkoutType;
-
+    if (props?.exercises?.length === 0) return;
     const workoutAlreadyExists = await workoutService.getWorkoutById(props._id);
     const isUpdatig = !!workoutAlreadyExists;
 
@@ -32,6 +32,7 @@ export function useUpsertWorkout() {
     workout = await workoutService.createWorkout({
       ...props,
       user_id: user!.uid,
+      title: props.title || 'Desconhecido',
       createdAt: new Date().getTime(),
     });
 

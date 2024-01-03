@@ -14,7 +14,7 @@ export * from './User/userService';
 export * from './User/useCases/useGetUser';
 export * from './User/useCases/useUpdateUser';
 
-export * from './Workout/useCases/useCreateWorkout';
+export * from './Workout/useCases/useUpsertWorkout';
 export * from './Workout/useCases/useDeleteWorkout';
 export * from './Workout/useCases/useGetWorkouts';
 export * from './Workout/workoutService';
