@@ -1,4 +1,4 @@
-import Workout from '@/screens/Home/components/Workout';
+import Workout from '@/screens/HomeScreen/components/Workout';
 import useWorkoutSuggest from './useWorkoutSuggest';
 import {BoxPressable, Box, Text} from '@/components';
 

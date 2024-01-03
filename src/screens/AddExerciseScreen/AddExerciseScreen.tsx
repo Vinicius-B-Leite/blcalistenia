@@ -15,7 +15,7 @@ import {FilterExerciseSchema} from './schema';
 
 export type FilterType = {category: string; muscles: string};
 
-export const AddExercise: React.FC = () => {
+export const AddExerciseScreen: React.FC = () => {
   const theme = useAppTheme();
   const {control, watch} = useForm<FilterExerciseSchema>({
     defaultValues: {

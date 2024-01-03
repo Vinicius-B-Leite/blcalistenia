@@ -16,7 +16,7 @@ import {Container, Input} from '@/components';
 
 type Navigation = StackScreenProps<RootStackParamList, 'Workout'>;
 
-export const Workout: React.FC<Navigation> = ({route}) => {
+export const WorkoutScreen: React.FC<Navigation> = ({route}) => {
   const theme = useAppTheme();
 
   const dispatch = useDispatch();
@@ -71,5 +71,3 @@ export const Workout: React.FC<Navigation> = ({route}) => {
     </Container>
   );
 };
-
-export default Workout;

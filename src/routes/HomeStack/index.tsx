@@ -3,8 +3,14 @@ import {
   CardStyleInterpolators,
 } from '@react-navigation/stack';
 import React from 'react';
-import {Rest, Profile, Workout, Home, AddExercise} from '@/screens';
 import {RootStackParamList} from '../Models';
+import {
+  AddExerciseScreen,
+  HomeScreen,
+  ProfileScreen,
+  RestScreen,
+  WorkoutScreen,
+} from '@/screens';
 
 const {Navigator, Screen} = createStackNavigator<RootStackParamList>();
 
@@ -19,11 +25,11 @@ const HomeStack: React.FC = () => {
           backgroundColor: 'transparent',
         },
       }}>
-      <Screen name="Home" component={Home} />
-      <Screen name="AddExercise" component={AddExercise} />
-      <Screen name="Workout" component={Workout} />
-      <Screen name="Rest" component={Rest} />
-      <Screen name="Profile" component={Profile} />
+      <Screen name="Home" component={HomeScreen} />
+      <Screen name="AddExercise" component={AddExerciseScreen} />
+      <Screen name="Workout" component={WorkoutScreen} />
+      <Screen name="Rest" component={RestScreen} />
+      <Screen name="Profile" component={ProfileScreen} />
     </Navigator>
   );
 };

@@ -9,7 +9,7 @@ import MyWorkouts from './components/MyWorkouts';
 
 import {Container} from '@/components';
 
-export const Home: React.FC = () => {
+export const HomeScreen: React.FC = () => {
   const calendarRef = useRef<CalendarRef>(null);
 
   return (

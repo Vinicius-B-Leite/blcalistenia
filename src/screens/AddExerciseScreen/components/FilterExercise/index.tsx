@@ -1,6 +1,6 @@
 import React, {memo, useState} from 'react';
 import {Modal, ModalProps, FlatList} from 'react-native';
-import {FilterType} from '../../index';
+import {FilterType} from '../../AddExerciseScreen';
 import {category, muscles, initialsExercises} from '@/constants';
 
 import {useDispatch} from 'react-redux';

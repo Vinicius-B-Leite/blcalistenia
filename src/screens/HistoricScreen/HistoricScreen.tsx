@@ -13,7 +13,7 @@ import {Container} from '@/components';
 import Header from './components/Header/Header';
 import {useAppNavigation} from '@/hooks';
 
-export const Historic: React.FC = () => {
+export const HistoricScreen: React.FC = () => {
   const navigation = useAppNavigation();
   const {historic, refetchHistoric} = useGetHistoric();
 

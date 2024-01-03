@@ -10,7 +10,7 @@ import {Container, Box, Button} from '@/components/';
 
 type Route = RouteProp<RootStackParamList, 'Rest'>;
 
-export const Rest: React.FC = () => {
+export const RestScreen: React.FC = () => {
   const totalSeconds = useRoute<Route>().params?.totalSeconds || 10;
   const navigation = useAppNavigation();
 
@@ -47,5 +47,3 @@ export const Rest: React.FC = () => {
     </Container>
   );
 };
-
-

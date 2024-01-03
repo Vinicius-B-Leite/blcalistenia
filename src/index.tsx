@@ -1,6 +1,6 @@
 import React, {useContext} from 'react';
 import {ThemeContext} from '@/contexts/ThemeContext';
-import Routes from '@/routes';
+import Routes from '@/routes/routes';
 
 import {Provider} from 'react-redux';
 

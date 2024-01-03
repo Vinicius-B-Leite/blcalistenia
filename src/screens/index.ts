@@ -1,10 +1,10 @@
-export * from './AddExercise';
+export * from './AddExerciseScreen/AddExerciseScreen';
 
-export * from './Dashboard/DashboardScreen';
+export * from './DashboardScreen/DashboardScreen';
 
-export * from './Historic';
-export * from './Home';
+export * from './HistoricScreen/HistoricScreen';
+export * from './HomeScreen/HomeScreen';
 
-export * from './Profile';
-export * from './Rest';
-export * from './Workout';
+export * from './ProfileScreen/ProfileScreen';
+export * from './RestScreen/RestScreen';
+export * from './WorkoutScreen/WorkoutScreen';

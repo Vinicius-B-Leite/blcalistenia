@@ -2,7 +2,7 @@ import React from 'react';
 
 import {muscles} from '@/constants';
 
-import useFilterMuscle from '@/screens/Home/components/FilterMuscle/useFilterMuscle';
+import useFilterMuscle from '@/screens/HomeScreen/components/FilterMuscle/useFilterMuscle';
 import {Filter} from '@/components';
 
 import {useAppTheme} from '@/hooks';

@@ -1,8 +1,8 @@
 import React from 'react';
 
-import ListEmptyComponent from '@/screens/Home/components/MyWorkouts/ListEmptyComponent';
-import CreateWorkoutButton from '@/screens/Home/components/MyWorkouts/CreateWorkoutButton';
-import Workout from '@/screens/Home/components/Workout';
+import ListEmptyComponent from '@/screens/HomeScreen/components/MyWorkouts/ListEmptyComponent';
+import CreateWorkoutButton from '@/screens/HomeScreen/components/MyWorkouts/CreateWorkoutButton';
+import Workout from '@/screens/HomeScreen/components/Workout';
 import FilterMuscle from '../FilterMuscle';
 
 import Animated, {FadeInDown, Layout} from 'react-native-reanimated';

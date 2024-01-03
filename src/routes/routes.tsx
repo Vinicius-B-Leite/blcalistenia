@@ -6,7 +6,7 @@ import {
   useTheme as useNavTheme,
 } from '@react-navigation/native';
 
-import {Historic, DashboardScreen} from '@/screens';
+import {HistoricScreen, DashboardScreen} from '@/screens';
 
 import HomeStack from './HomeStack';
 import {TabParamList} from './Models';
@@ -69,7 +69,7 @@ const Routes: React.FC = () => {
 
           <Screen
             name="Historic"
-            component={Historic}
+            component={HistoricScreen}
             options={{
               tabBarIcon: ({focused}) => (
                 <Icon

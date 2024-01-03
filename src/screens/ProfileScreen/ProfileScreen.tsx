@@ -11,7 +11,7 @@ import Avatar from './components/Avatar/Avatar';
 import Header from './components/Header/Header';
 import Options from './components/Options/Options';
 
-export const Profile: React.FC = () => {
+export const ProfileScreen: React.FC = () => {
   const [showThemeSelect, setShowThemeSelect] = useState(false);
   const {user} = useAuth();
   const {
@@ -59,5 +59,3 @@ export const Profile: React.FC = () => {
     </Container>
   );
 };
-
-
