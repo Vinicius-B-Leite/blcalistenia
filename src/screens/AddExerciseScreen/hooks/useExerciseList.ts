@@ -20,14 +20,14 @@ export function useExerciseList(exerciseNameSearched: string) {
   }, [exercises]);
 
   const exercisesSearched = useMemo(() => {
-    const exercisesFiltered = [...exercises];
+    const exercisesFiltered = [...exercisList];
 
     return exercisesFiltered?.filter(e =>
       e.name
         .toLocaleLowerCase()
         .includes(exerciseNameSearched?.toLocaleLowerCase()),
     );
-  }, [exerciseNameSearched, exercises]);
+  }, [exerciseNameSearched, exercisList]);
 
   return {
     exercisList,
