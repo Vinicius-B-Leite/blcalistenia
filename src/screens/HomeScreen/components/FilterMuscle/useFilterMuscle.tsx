@@ -38,9 +38,12 @@ export default function useFilterMuscle() {
         const index = exercisesHaveMuscleSelected.findIndex(
           v => v.name == e.exercise_id,
         );
-        if (index > -1) workoutsWithMuscleSelected.push(w);
+        const alreadyExists =
+          workoutsWithMuscleSelected.findIndex(v => v._id === w._id) > -1;
+        if (index > -1 && !alreadyExists) workoutsWithMuscleSelected.push(w);
       });
     });
+
     dispatch(filteredWorkouts(workoutsWithMuscleSelected));
   };
 
