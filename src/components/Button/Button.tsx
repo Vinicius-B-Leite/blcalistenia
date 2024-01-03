@@ -6,7 +6,7 @@ import {Spiner} from '../Spiner/Spiner';
 import {BoxPressableProps} from '../Box/types';
 import {variants as textVariants} from '../Text/variants';
 
-type ButtonProps = BoxPressableProps & {
+export type ButtonProps = BoxPressableProps & {
   label: string;
   isLoading?: boolean;
   textPreset?: keyof typeof textVariants;
