@@ -7,12 +7,12 @@ import useWorkout from './useWorkout';
 import ImageNotFound from '@/assets/imageNotFound.png';
 import {BoxPressable, BoxType, Text, Image} from '@/components';
 
-
 type Props = BoxType & {
   workout: WorkoutType;
+  scrollToTop: () => void | undefined;
 };
 
-const Workout: React.FC<Props> = ({workout, ...props}) => {
+const Workout: React.FC<Props> = ({workout, scrollToTop, ...props}) => {
   const navigation = useAppNavigation();
   const {handleDelete} = useWorkout();
 
@@ -31,7 +31,7 @@ const Workout: React.FC<Props> = ({workout, ...props}) => {
       onPress={navigateToWorkout}
       marginHorizontal={14}
       zIndex={-1}
-      onLongPress={() => handleDelete(workout.title, workout._id)}
+      onLongPress={() => handleDelete(workout.title, workout._id, scrollToTop)}
       {...props}>
       <Image
         height={160}

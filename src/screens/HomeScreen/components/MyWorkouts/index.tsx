@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useRef} from 'react';
 
 import ListEmptyComponent from '@/screens/HomeScreen/components/MyWorkouts/ListEmptyComponent';
 import CreateWorkoutButton from '@/screens/HomeScreen/components/MyWorkouts/CreateWorkoutButton';
@@ -15,6 +15,7 @@ import {useForm} from 'react-hook-form';
 import {SearchWorkoutSchema, searchWorkoutSchema} from './schema';
 
 const MyWorkouts: React.FC = () => {
+  const flatlistRef = useRef<FlatList>(null);
   const {control, watch} = useForm<SearchWorkoutSchema>({
     resolver: zodResolver(searchWorkoutSchema),
     defaultValues: {
@@ -23,6 +24,11 @@ const MyWorkouts: React.FC = () => {
   });
 
   const {workoutList} = useMyWorkouts(watch('workoutName'));
+
+  const scrollToTop = () =>
+    flatlistRef.current?.scrollToIndex({
+      index: 0,
+    });
 
   return (
     <Box marginVertical={24}>
@@ -42,7 +48,9 @@ const MyWorkouts: React.FC = () => {
 
       <FilterMuscle />
       <FlatList
+        ref={flatlistRef}
         data={workoutList}
+        extraData={workoutList}
         horizontal
         keyExtractor={item => item._id}
         showsHorizontalScrollIndicator={false}
@@ -55,7 +63,11 @@ const MyWorkouts: React.FC = () => {
           <Animated.View
             entering={FadeInDown.delay(index * 100)}
             layout={Layout.springify()}>
-            <Workout workout={item} marginLeft={index === 0 ? 34 : undefined} />
+            <Workout
+              scrollToTop={scrollToTop}
+              workout={item}
+              marginLeft={index === 0 ? 34 : undefined}
+            />
           </Animated.View>
         )}
       />

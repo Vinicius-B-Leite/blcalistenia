@@ -12,11 +12,16 @@ export default function useWorkout() {
     dispatch(deleteWorkout({workoutId}));
     await deleteStorageWorkout(workoutId);
   };
-  const handleDelete = (workoutTitle: string, workoutId: string) => {
+  const handleDelete = (
+    workoutTitle: string,
+    workoutId: string,
+    onSuccess: () => void,
+  ) => {
     Alert.alert('Deletar', 'Deseja deletar o treino ' + workoutTitle + '?', [
       {
         text: 'Sim',
-        onPress: () => handleDeleteWorkout(workoutId),
+        onPress: async () =>
+          await handleDeleteWorkout(workoutId).then(onSuccess),
       },
       {
         text: 'Não',
