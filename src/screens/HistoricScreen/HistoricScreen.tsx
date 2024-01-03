@@ -63,7 +63,8 @@ export const HistoricScreen: React.FC = () => {
           keyExtractor={item => String(item._id)}
           data={historic}
           renderItem={({item, index}) => (
-            <Animated.View entering={FadeInDown.delay(index * 400)}>
+            <Animated.View
+              entering={FadeInDown.delay(index > 5 ? index * 400 : 1000)}>
               <HistoricItem item={item} onClick={navigateToWorkout} />
             </Animated.View>
           )}
