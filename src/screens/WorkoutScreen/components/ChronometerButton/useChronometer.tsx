@@ -45,7 +45,17 @@ export default function useChronometer() {
         timerInSeconds: timer,
       });
       dispatch(resetTimer());
-      dispatch(setWorkout({} as WorkoutType));
+      dispatch(
+        setWorkout({
+          _id: '',
+          banner: '',
+          exercises: [],
+          title: '',
+          anotation: '',
+          user_id: '',
+          createdAt: new Date().getTime(),
+        }),
+      );
       navigation.navigate('HomeStack', {screen: 'Home'});
     });
   };

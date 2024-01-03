@@ -45,10 +45,19 @@ export const WorkoutScreen: React.FC<Navigation> = ({route}) => {
     }
     return () => {
       if (!isTrainig) {
-        dispatch(setWorkout({} as WorkoutType));
+        dispatch(
+          setWorkout({
+            _id: '',
+            banner: '',
+            exercises: [],
+            title: '',
+            anotation: '',
+            user_id: '',
+            createdAt: new Date().getTime(),
+          }),
+        );
       }
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isTrainig]);
 
   return (
