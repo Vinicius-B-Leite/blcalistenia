@@ -33,10 +33,12 @@ const ChangeUsername: React.FC<ChangeUsernameProps> = ({
   });
 
   useEffect(() => {
-    Toast.show({
-      type: 'error',
-      props: {message: errors.newUsername?.message},
-    });
+    if (errors.newUsername?.message) {
+      Toast.show({
+        type: 'error',
+        props: {message: errors.newUsername?.message},
+      });
+    }
   }, [errors]);
   return (
     <ModalBase
