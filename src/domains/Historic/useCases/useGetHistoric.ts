@@ -7,8 +7,10 @@ export function useGetHistoric() {
 
   const fetchHistoric = async () => {
     const historicResponse = await historicService.getHistoric();
-
-    setHistoric(historicResponse);
+    const historicOrdenedByDate = historicResponse.sort((a, b) =>
+      a.date > b.date ? -1 : 1,
+    );
+    setHistoric(historicOrdenedByDate);
   };
 
   useEffect(() => {
