@@ -62,6 +62,8 @@ const ExerciseList: React.FC = () => {
         ListFooterComponent={() =>
           canEditWorkout ? (
             <BoxPressable
+              mb={34}
+              mt={24}
               alignSelf="center"
               onPress={() =>
                 navigation.navigate('HomeStack', {screen: 'AddExercise'})
