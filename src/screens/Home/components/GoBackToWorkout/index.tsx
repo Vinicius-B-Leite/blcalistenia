@@ -24,6 +24,7 @@ const GoBackToWorkout: React.FC = () => {
       borderTopRightRadius={10}
       p={14}
       justifyContent="space-between"
+      alignItems="center"
       onPress={() =>
         navigation.navigate('HomeStack', {
           screen: 'Workout',
@@ -40,7 +41,7 @@ const GoBackToWorkout: React.FC = () => {
           {getMinutesFromSeconds(timer)}:{getSeconds(timer)}
         </Text>
       </Box>
-      <Icon family="Ionicons" name="arrow-forward" color={'text'} size={24} />
+      <Icon family="Ionicons" name="arrow-forward" color={'text'} size={34} />
     </BoxPressable>
   );
 };

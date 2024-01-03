@@ -58,6 +58,7 @@ export const Historic: React.FC = () => {
 
         <FlashList
           nestedScrollEnabled
+          showsVerticalScrollIndicator={false}
           estimatedItemSize={historic.length || 10}
           keyExtractor={item => String(item._id)}
           data={historic}

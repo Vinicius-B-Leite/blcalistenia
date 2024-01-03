@@ -12,6 +12,7 @@ export const iconSizes = {
   16: 16,
   18: 18,
   24: 24,
+  34: 34,
 };
 
 export const iconFamily = {
