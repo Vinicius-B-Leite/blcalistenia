@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {Modal, ModalProps, StyleSheet} from 'react-native';
 
 import {
@@ -12,6 +12,7 @@ import {
 import {useForm} from 'react-hook-form';
 import {ChangeUserNameSchema, changeUserNameSchema} from './schema';
 import {zodResolver} from '@hookform/resolvers/zod';
+import Toast from 'react-native-toast-message';
 
 type ChangeUsernameProps = ModalProps & {
   changeName: (newName: string) => Promise<void>;
@@ -20,12 +21,23 @@ const ChangeUsername: React.FC<ChangeUsernameProps> = ({
   changeName,
   ...modalProps
 }) => {
-  const {control, handleSubmit} = useForm<ChangeUserNameSchema>({
+  const {
+    control,
+    handleSubmit,
+    formState: {errors},
+  } = useForm<ChangeUserNameSchema>({
     defaultValues: {
       newUsername: '',
     },
     resolver: zodResolver(changeUserNameSchema),
   });
+
+  useEffect(() => {
+    Toast.show({
+      type: 'error',
+      props: {message: errors.newUsername?.message},
+    });
+  }, [errors]);
   return (
     <ModalBase
       {...modalProps}
