@@ -53,7 +53,7 @@ const MyWorkouts: React.FC = () => {
         ListHeaderComponent={() => <CreateWorkoutButton />}
         renderItem={({item, index}) => (
           <Animated.View
-            entering={FadeInDown.delay(index > 5 ? index * 400 : 1000)}
+            entering={FadeInDown.delay(index * 100)}
             layout={Layout.springify()}>
             <Workout workout={item} marginLeft={index === 0 ? 34 : undefined} />
           </Animated.View>
