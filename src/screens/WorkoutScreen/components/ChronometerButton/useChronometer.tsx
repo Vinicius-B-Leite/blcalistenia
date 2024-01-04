@@ -2,7 +2,7 @@ import {useAppNavigation, useAppSelector} from '@/hooks';
 
 import {useDispatch} from 'react-redux';
 import BackgroundService from 'react-native-background-actions';
-import {resetTimer, setWorkout, updateTimer} from '@/features';
+import {resetTimer, setWorkout, updateTimer, upsetWorkout} from '@/features';
 import {getMinutesFromSeconds, getSeconds, options, sleep} from '@/utils';
 
 import {WorkoutType} from '@/models';
@@ -31,14 +31,16 @@ export default function useChronometer() {
     const isWorkoutSuggest = workout._id.includes('suggestWorkout');
     BackgroundService.stop().then(async () => {
       if (!isWorkoutSuggest) {
-        await upsertWorkout({
+        const workoutUpdated = await upsertWorkout({
           _id: workout._id,
           anotation: workout.anotation,
           exercises: workout.exercises,
           title: workout.title,
           banner: workout.banner || '',
         });
+        workoutUpdated && dispatch(upsetWorkout(workoutUpdated));
       }
+
       await handleCreateHistoric({
         workout: workout,
         date: new Date(),

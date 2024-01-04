@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useRef} from 'react';
 
 import Header from './components/Header';
 import {StackScreenProps} from '@react-navigation/stack';
@@ -24,12 +24,15 @@ export const WorkoutScreen: React.FC<Navigation> = ({route}) => {
   const workout = useAppSelector(state => state.workout?.workout);
   const canEditWorkout = useAppSelector(state => state.workout.canEdit);
 
+  const isTrainingRef = useRef(isTrainig);
+  isTrainingRef.current = isTrainig;
+
   useEffect(() => {
     const isEditingWorkout = route.params.workout?._id;
     dispatch(
       setCanEditWorkout(route.params.canEdit === undefined ? true : false),
     );
-    if (isEditingWorkout) {
+    if (isEditingWorkout && !isTrainig) {
       dispatch(setWorkout({...route.params.workout}));
     } else {
       if (!isTrainig) {
@@ -37,14 +40,13 @@ export const WorkoutScreen: React.FC<Navigation> = ({route}) => {
         dispatch(
           setWorkout({
             ...workout,
-            user_id: '',
             _id,
           }),
         );
       }
     }
     return () => {
-      if (!isTrainig) {
+      if (!isTrainingRef) {
         dispatch(
           setWorkout({
             _id: '',
