@@ -11,12 +11,13 @@ import {useGetHistoric} from '@/domains';
 import {useFocusEffect} from '@react-navigation/native';
 import {Container} from '@/components';
 import Header from './components/Header/Header';
-import {useAppNavigation} from '@/hooks';
+import {useAppNavigation, useAppSelector} from '@/hooks';
+import Toast from 'react-native-toast-message';
 
 export const HistoricScreen: React.FC = () => {
   const navigation = useAppNavigation();
   const {historic, refetchHistoric} = useGetHistoric();
-
+  const isWorkingout = useAppSelector(state => state.workout.isWorkingout);
   useFocusEffect(
     useCallback(() => {
       refetchHistoric();
@@ -24,6 +25,13 @@ export const HistoricScreen: React.FC = () => {
   );
 
   const navigateToWorkout = (item: HistoricType) => {
+    if (isWorkingout) {
+      Toast.show({
+        type: 'error',
+        props: {message: 'Termine seu treino para ver o histórico'},
+      });
+      return;
+    }
     navigation.reset({
       index: 1,
       type: 'tab',
