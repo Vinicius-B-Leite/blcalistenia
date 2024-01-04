@@ -58,7 +58,9 @@ const CountDown = React.forwardRef<CountDownRef, CountDownProps>(
       setTimeout(() => {
         if (counter !== 0) {
           animate(totalSeconds - counter + 1);
-          setCounter(old => old - 1);
+          setCounter(old => {
+            return old - 1 < 0 ? 0 : old - 1;
+          });
         } else {
           if (onFineshed) onFineshed();
         }
@@ -78,7 +80,7 @@ const CountDown = React.forwardRef<CountDownRef, CountDownProps>(
     const lessSecond = (seconds: number) => {
       setCounter(old => {
         setTotalTimer(oldT => oldT - seconds);
-        if (old - seconds < 0) {
+        if (old - seconds <= 0) {
           return 0;
         }
         return old - seconds;
