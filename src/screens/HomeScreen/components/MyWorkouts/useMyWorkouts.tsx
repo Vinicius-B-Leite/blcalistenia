@@ -3,9 +3,11 @@ import {useAppSelector} from '@/hooks';
 import {useGetWorkouts} from '@/domains';
 import {useDispatch} from 'react-redux';
 import {setWorkouts} from '@/features';
+import {useIsFocused} from '@react-navigation/native';
 
 export default function useMyWorkouts(workoutName: string) {
   const dispatch = useDispatch();
+  const isFocus = useIsFocused();
   const filteredWorkouts = useAppSelector(
     state => state.workoutList.filteredWorkouts,
   );
@@ -14,7 +16,7 @@ export default function useMyWorkouts(workoutName: string) {
   );
 
   const workouts = useAppSelector(state => state.workoutList.workouts);
-  const {workouts: workoutsStorage} = useGetWorkouts();
+  const {workouts: workoutsStorage, fetchWorkouts} = useGetWorkouts();
 
   const searchWorkout = useMemo(() => {
     return workouts.filter(val =>
@@ -37,9 +39,13 @@ export default function useMyWorkouts(workoutName: string) {
   }, [workoutName, filteredWorkouts, workoutsStorage, workouts]);
 
   useEffect(() => {
+    if (!isFocus) return;
+    fetchWorkouts();
+  }, [isFocus]);
+
+  useEffect(() => {
     dispatch(setWorkouts([...workoutsStorage]));
   }, [workoutsStorage]);
-
   return {
     workoutList,
   };

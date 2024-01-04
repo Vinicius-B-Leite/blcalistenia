@@ -2,9 +2,13 @@ import {WorkoutType} from '@/models';
 import {useEffect, useState} from 'react';
 import {workoutService} from '../workoutService';
 
-export function useGetWorkouts() {
-  const [workouts, setWorkouts] = useState<WorkoutType[]>([]);
+type useGetWorkoutsProps = {
+  dependencies?: any[];
+};
 
+export function useGetWorkouts(props?: useGetWorkoutsProps) {
+  const [workouts, setWorkouts] = useState<WorkoutType[]>([]);
+  const dependencies = props?.dependencies || [];
   const fetchWorkouts = async () => {
     const workoutResponse = await workoutService.getWorkouts();
     const workoutsWitoutDeleted = workoutResponse.filter(v => !v?.deletedAt);
@@ -13,9 +17,10 @@ export function useGetWorkouts() {
 
   useEffect(() => {
     fetchWorkouts();
-  }, []);
+  }, [...dependencies]);
 
   return {
     workouts,
+    fetchWorkouts,
   };
 }
