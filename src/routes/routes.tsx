@@ -13,7 +13,6 @@ import {TabParamList} from './Models';
 import {useAppTheme} from '@/hooks';
 import {Box, Container, Icon} from '@/components';
 
-export const TAB_BAR_HEIGHT = Dimensions.get('screen').height * 0.06;
 const {Navigator, Screen} = createMaterialTopTabNavigator<TabParamList>();
 
 const Routes: React.FC = () => {
@@ -33,7 +32,7 @@ const Routes: React.FC = () => {
             tabBarShowLabel: false,
             tabBarStyle: {
               backgroundColor: theme.colors.primaryBg,
-              height: TAB_BAR_HEIGHT,
+              paddingVertical: theme.spacing[4],
             },
             tabBarActiveTintColor: theme.colors.contrast,
             swipeEnabled: false,

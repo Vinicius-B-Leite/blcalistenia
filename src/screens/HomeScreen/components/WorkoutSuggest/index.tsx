@@ -16,7 +16,7 @@ const WorkoutSuggest: React.FC = () => {
       <Box flexDirection="row" alignItems="center" pb={14} gap={24}>
         <Box flex={1}>
           <Text preset="pLarge" bold color="contrast" numberOfLines={1}>
-            Treinos recomendado
+            Treinos recomendados
           </Text>
         </Box>
         <BoxPressable onPress={handleChangeWorkoutLevel}>
