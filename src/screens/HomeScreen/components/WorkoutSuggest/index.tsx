@@ -12,17 +12,15 @@ const WorkoutSuggest: React.FC = () => {
   } = useWorkoutSuggest();
 
   return (
-    <Box>
-      <Box
-        flexDirection="row"
-        justifyContent="space-between"
-        alignItems="center"
-        mb={14}>
-        <Text preset="pLarge" bold color="contrast">
-          Treinos recomendados
-        </Text>
+    <Box pb={44}>
+      <Box flexDirection="row" alignItems="center" pb={14} gap={24}>
+        <Box flex={1}>
+          <Text preset="pLarge" bold color="contrast" numberOfLines={1}>
+            Treinos recomendado
+          </Text>
+        </Box>
         <BoxPressable onPress={handleChangeWorkoutLevel}>
-          <Text preset="pSmall" bold color="contrast">
+          <Text preset="pSmall" bold color="contrast" numberOfLines={1}>
             {workoutLeveSuggest === 'begginer' ? 'iniciante' : 'intermediário'}
           </Text>
         </BoxPressable>

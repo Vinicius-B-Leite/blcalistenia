@@ -28,6 +28,7 @@ export const dark = createTheme({
     14: 14,
     24: 24,
     34: 34,
+    44: 44,
   },
   borderRadii: {
     0: 0,
