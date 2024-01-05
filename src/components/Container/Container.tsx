@@ -16,7 +16,12 @@ export const Container: React.FC<ContainerProps> = ({
   const Wrapper = scrollEnabled ? BoxScroll : Box;
 
   return (
-    <Wrapper backgroundColor="thirdBg" p={24} flex={1} {...rest}>
+    <Wrapper
+      backgroundColor="thirdBg"
+      p={24}
+      flex={1}
+      showsVerticalScrollIndicator={false}
+      {...rest}>
       {children}
     </Wrapper>
   );
