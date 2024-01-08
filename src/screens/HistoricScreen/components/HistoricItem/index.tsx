@@ -35,9 +35,15 @@ const HistoricItem: React.FC<Props> = ({item, onClick}) => {
         flexDirection="row"
         justifyContent="space-between"
         alignItems="center">
-        <Text preset="pMedium" bold textTransform="capitalize">
-          {title}
-        </Text>
+        <Box maxWidth={'70%'}>
+          <Text
+            preset="pMedium"
+            bold
+            textTransform="capitalize"
+            numberOfLines={1}>
+            {title}
+          </Text>
+        </Box>
         <Text preset="pSmall">
           {day}/{month}/{year}
         </Text>

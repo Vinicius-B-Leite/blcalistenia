@@ -7,5 +7,5 @@ export const wrapper: BoxType = {
   alignItems: 'center',
   gap: 14,
   borderRadius: 10,
-  mb: 14,
+  mt: 14,
 };

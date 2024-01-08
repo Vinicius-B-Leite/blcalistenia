@@ -28,9 +28,9 @@ const Header: React.FC<HeaderProps> = ({openCalendar}) => {
           source={user?.avatar ? {uri: user.avatar} : DefaultUserPhoto}
         />
 
-        <Box justifyContent="center">
+        <Box justifyContent="center" maxWidth={'70%'}>
           <Text preset="pSmall">Bem-vindo</Text>
-          <Text preset="pMedium" bold>
+          <Text preset="pMedium" bold numberOfLines={1}>
             {user?.username}
           </Text>
         </Box>

@@ -28,7 +28,7 @@ export const ProfileScreen: React.FC = () => {
       <Header />
       <Avatar avatar={user?.avatar || ''} handlePickImage={handlePickImage} />
 
-      <Text preset="pLarge" textAlign="center" mt={14} mb={24}>
+      <Text numberOfLines={1} preset="pLarge" textAlign="center" mb={14}>
         {user?.username}
       </Text>
 

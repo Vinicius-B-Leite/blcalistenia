@@ -19,7 +19,7 @@ const Exercise: React.FC<Prosp> = ({item}) => {
       p={14}
       onPress={() => handleAddExercise(item.name)}
       onLongPress={() => handleDelete(item)}>
-      <Text preset="pMedium" textTransform="capitalize">
+      <Text preset="pMedium" textTransform="capitalize" numberOfLines={1}>
         {item.name}
       </Text>
       <FlatList

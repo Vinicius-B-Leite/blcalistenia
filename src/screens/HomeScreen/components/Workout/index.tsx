@@ -44,7 +44,7 @@ const Workout: React.FC<Props> = ({
       }
       {...props}>
       <Image
-        height={160}
+        height={170}
         borderTopLeftRadius={10}
         borderTopRightRadius={10}
         source={
@@ -56,7 +56,9 @@ const Workout: React.FC<Props> = ({
       <Text
         preset="pMedium"
         textAlignVertical="center"
-        style={{flex: 1, alignSelf: 'center'}}>
+        style={{flex: 1, alignSelf: 'center'}}
+        numberOfLines={1}
+        marginHorizontal={24}>
         {workout?.title}
       </Text>
     </BoxPressable>
