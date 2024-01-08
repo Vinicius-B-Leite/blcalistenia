@@ -81,7 +81,7 @@ const Serie: React.FC<Props> = ({item, deleteSerieButton, exercise}) => {
         <Input
           textAlign="center"
           mask="mm:ss"
-          placeholder="0"
+          placeholder="00:00"
           value={rest}
           onChangeText={handleOnChangeRest}
           boxProps={{

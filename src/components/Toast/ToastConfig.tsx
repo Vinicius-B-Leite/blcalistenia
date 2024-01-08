@@ -1,4 +1,4 @@
-import Toast from './ToastSucess';
+import Toast from './Toast';
 
 export const toastConfig = {
   success: ({props}: {props: {message: string}}) => {
