@@ -12,6 +12,7 @@ import HomeStack from './HomeStack';
 import {TabParamList} from './Models';
 import {useAppTheme} from '@/hooks';
 import {Box, Container, Icon} from '@/components';
+import {getScreenOptions} from './constants';
 
 const {Navigator, Screen} = createMaterialTopTabNavigator<TabParamList>();
 
@@ -27,16 +28,7 @@ const Routes: React.FC = () => {
         <Navigator
           id="tabBar"
           tabBarPosition="bottom"
-          screenOptions={{
-            tabBarIndicatorStyle: {display: 'none'},
-            tabBarShowLabel: false,
-            tabBarStyle: {
-              backgroundColor: theme.colors.primaryBg,
-              paddingVertical: theme.spacing[4],
-            },
-            tabBarActiveTintColor: theme.colors.contrast,
-            swipeEnabled: false,
-          }}>
+          screenOptions={getScreenOptions({theme})}>
           <Screen
             name="HomeStack"
             component={HomeStack}
