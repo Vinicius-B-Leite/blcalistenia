@@ -48,7 +48,7 @@ export const WorkoutScreen: React.FC<Navigation> = ({route}) => {
       }
     }
     return () => {
-      if (!isTrainingRef) {
+      if (!isTrainingRef.current) {
         dispatch(
           setWorkout({
             _id: '',
