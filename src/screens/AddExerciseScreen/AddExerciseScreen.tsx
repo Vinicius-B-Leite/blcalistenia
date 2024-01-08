@@ -31,7 +31,7 @@ export const AddExerciseScreen: React.FC = () => {
 
   const openBottomSheet = () => {
     setBottomsheetIsVisible(true);
-    bottomSheetRef.current?.expand();
+    bottomSheetRef.current?.snapToIndex(1);
   };
 
   return (
@@ -78,7 +78,7 @@ export const AddExerciseScreen: React.FC = () => {
         enablePanDownToClose
         ref={bottomSheetRef}
         index={-1}
-        snapPoints={['50%', '75%']}>
+        snapPoints={['50%', '75%', '100%']}>
         <CreateExercise
           closeBottomSheet={() => bottomSheetRef.current?.close()}
         />
