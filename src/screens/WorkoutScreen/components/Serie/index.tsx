@@ -53,6 +53,7 @@ const Serie: React.FC<Props> = ({item, deleteSerieButton, exercise}) => {
       />
       <Input
         textAlign="center"
+        keyboardType="numeric"
         value={rep}
         placeholder="0"
         onChangeText={handleOnChangeRep}
@@ -81,6 +82,7 @@ const Serie: React.FC<Props> = ({item, deleteSerieButton, exercise}) => {
         <Input
           textAlign="center"
           mask="mm:ss"
+          keyboardType="numeric"
           placeholder="00:00"
           value={rest}
           onChangeText={handleOnChangeRest}
