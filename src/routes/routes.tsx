@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useMemo} from 'react';
 import {StatusBar, Dimensions} from 'react-native';
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
 import {
@@ -11,7 +11,7 @@ import {HistoricScreen, DashboardScreen} from '@/screens';
 import HomeStack from './HomeStack';
 import {TabParamList} from './Models';
 import {useAppTheme} from '@/hooks';
-import {Box, Container, Icon} from '@/components';
+import {Box, Icon} from '@/components';
 import {getScreenOptions} from './constants';
 
 const {Navigator, Screen} = createMaterialTopTabNavigator<TabParamList>();
@@ -22,13 +22,15 @@ const Routes: React.FC = () => {
 
   navTheme.colors.background = theme.colors.thirdBg;
 
+  const screenOptions = useMemo(() => getScreenOptions({theme}), [theme]);
+
   return (
     <Box flex={1} bg="thirdBg">
       <NavigationContainer>
         <Navigator
           id="tabBar"
           tabBarPosition="bottom"
-          screenOptions={getScreenOptions({theme})}>
+          screenOptions={screenOptions}>
           <Screen
             name="HomeStack"
             component={HomeStack}
