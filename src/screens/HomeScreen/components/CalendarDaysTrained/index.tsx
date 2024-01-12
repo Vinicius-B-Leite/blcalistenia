@@ -1,5 +1,10 @@
-import React, {forwardRef, memo, useImperativeHandle, useState} from 'react';
-import {Calendar} from 'react-native-calendars';
+import React, {
+  forwardRef,
+  memo,
+  useCallback,
+  useContext,
+  useImperativeHandle,
+} from 'react';
 import {StyleSheet, TouchableOpacity, Dimensions} from 'react-native';
 import Animated, {
   useAnimatedStyle,
@@ -7,9 +12,11 @@ import Animated, {
   withTiming,
 } from 'react-native-reanimated';
 
-import {getDatesTrained} from '@/utils/';
 import {useGetHistoric} from '@/domains';
-import {useAppTheme} from '@/hooks';
+
+import {ThemeContext} from '@/contexts';
+import DarkCalendar from './darkCalendar';
+import LightCalendar from './lightCalendar';
 
 export type CalendarRef = {
   openCalendar: () => void;
@@ -17,7 +24,8 @@ export type CalendarRef = {
 };
 
 const CalendarDaysTrained = forwardRef<CalendarRef>(({}, ref) => {
-  const theme = useAppTheme();
+  const {theme} = useContext(ThemeContext);
+  const Calendar = theme === 'dark' ? DarkCalendar : LightCalendar;
   const top = useSharedValue(-Dimensions.get('screen').height);
   const {historic} = useGetHistoric();
 
@@ -27,12 +35,12 @@ const CalendarDaysTrained = forwardRef<CalendarRef>(({}, ref) => {
     };
   });
 
-  const openCalendar = () => {
+  const openCalendar = useCallback(() => {
     top.value = withTiming(0, {duration: 1000});
-  };
-  const closeCalendar = () => {
+  }, [top]);
+  const closeCalendar = useCallback(() => {
     top.value = withTiming(-Dimensions.get('screen').height, {duration: 1000});
-  };
+  }, [top]);
   useImperativeHandle(ref, () => ({openCalendar, closeCalendar}), [
     openCalendar,
     closeCalendar,
@@ -40,36 +48,7 @@ const CalendarDaysTrained = forwardRef<CalendarRef>(({}, ref) => {
 
   return (
     <Animated.View style={[animatedStyle, styles.container]}>
-      <Calendar
-        theme={{
-          backgroundColor: theme.colors.primaryBg,
-          arrowColor: theme.colors.darkContrast,
-          calendarBackground: theme.colors.primaryBg,
-          todayTextColor: theme.colors.text,
-          dayTextColor: theme.colors.text,
-          textSectionTitleColor: theme.colors.darkContrast,
-          textDisabledColor: theme.colors.secondText,
-          monthTextColor: theme.colors.contrast,
-          todayBackgroundColor: theme.colors.contrast,
-        }}
-        style={{
-          backgroundColor: theme.colors.primaryBg,
-        }}
-        initialDate={new Date().toString()}
-        monthFormat={'MMMM'}
-        firstDay={1}
-        onPressArrowLeft={subtractMonth => subtractMonth()}
-        onPressArrowRight={addMonth => addMonth()}
-        markedDates={getDatesTrained(
-          {
-            selected: false,
-            marked: true,
-            dotColor: theme.colors.contrast,
-          },
-          historic,
-        )}
-      />
-
+      <Calendar historic={historic} />
       <TouchableOpacity
         activeOpacity={0}
         style={[styles.closeButton]}
