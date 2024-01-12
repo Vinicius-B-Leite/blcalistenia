@@ -18,7 +18,6 @@ import {useHideTabBar} from '@/hooks/useHideTabBar';
 type Navigation = StackScreenProps<RootStackParamList, 'Workout'>;
 
 export const WorkoutScreen: React.FC<Navigation> = ({route}) => {
-  useHideTabBar();
   const theme = useAppTheme();
 
   const dispatch = useDispatch();

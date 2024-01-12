@@ -1,4 +1,4 @@
-import {useEffect, useLayoutEffect} from 'react';
+import {useEffect, useLayoutEffect, useRef} from 'react';
 import {useAppNavigation} from './useAppNavigation';
 import {getScreenOptions} from '@/routes/constants';
 import {useAppTheme} from './useAppTheme';
@@ -8,13 +8,19 @@ export function useHideTabBar() {
   const navigaion = useAppNavigation();
   const theme = useAppTheme();
 
-  useLayoutEffect(() => {
+  const themeRef = useRef(theme);
+  themeRef.current = theme;
+  useEffect(() => {
     const tabBar = navigaion.getParent('tabBar');
 
-    tabBar?.setOptions(getScreenOptions({theme, showTabBar: false}));
+    tabBar?.setOptions(
+      getScreenOptions({theme: themeRef.current, showTabBar: false}),
+    );
 
     return () => {
-      tabBar?.setOptions(getScreenOptions({theme}));
+      console.log(themeRef);
+
+      tabBar?.setOptions(getScreenOptions({theme: themeRef.current}));
     };
   }, []);
 }

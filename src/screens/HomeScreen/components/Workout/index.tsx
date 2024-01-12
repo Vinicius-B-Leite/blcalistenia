@@ -27,6 +27,7 @@ const Workout: React.FC<Props> = ({
     navigation.navigate('HomeStack', {
       screen: 'Workout',
       params: {workout: workout},
+      initial: true,
     });
   };
   return (
