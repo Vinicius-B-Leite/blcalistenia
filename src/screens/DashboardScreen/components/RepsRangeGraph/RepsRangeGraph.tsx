@@ -2,12 +2,10 @@ import {Box, Text} from '@/components';
 import {useAppTheme} from '@/hooks';
 import {hexToRgb} from '@/utils/hexToRgb';
 import React from 'react';
-import {Dimensions, FlatList, View} from 'react-native';
+import {Dimensions} from 'react-native';
 import {PieChart} from 'react-native-chart-kit';
 import Circle from './components/Circle';
 import {useRepsRange} from './useRepsRange';
-
-// import { Container } from './styles';
 
 const RepsRange: React.FC = () => {
   const theme = useAppTheme();
@@ -34,12 +32,13 @@ const RepsRange: React.FC = () => {
             backgroundGradientFromOpacity: 0,
             backgroundGradientTo: theme.colors.thirdBg,
             backgroundGradientToOpacity: 0.5,
-            color: (opacity = 1) => hexToRgb(theme.colors.contrast, 0),
+            color: () => hexToRgb(theme.colors.contrast, 0),
           }}
           hasLegend={false}
           accessor={'porcentage'}
           backgroundColor={'transparent'}
-          center={[50, 0]}></PieChart>
+          center={[50, 0]}
+        />
         <Box>
           {range.map(item => (
             <Box

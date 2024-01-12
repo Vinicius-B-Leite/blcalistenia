@@ -2,7 +2,7 @@ import {HistoricType} from '@/models';
 import {useEffect, useState} from 'react';
 import {historicService} from '../historicService';
 
-export function useGetHistoric() {
+export function useGetHistoric<T>(dependencies: T[] = []) {
   const [historic, setHistoric] = useState<HistoricType[]>([]);
 
   const fetchHistoric = async () => {
@@ -15,7 +15,7 @@ export function useGetHistoric() {
 
   useEffect(() => {
     fetchHistoric();
-  }, []);
+  }, dependencies);
 
   return {
     historic,

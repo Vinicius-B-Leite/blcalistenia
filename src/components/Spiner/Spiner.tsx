@@ -3,11 +3,11 @@ import {Theme} from '@/theme';
 import React from 'react';
 import {ActivityIndicator, ActivityIndicatorProps} from 'react-native';
 
-type SpinerPros = ActivityIndicatorProps & {
+export type SpinerProps = ActivityIndicatorProps & {
   color?: keyof Theme['colors'];
 };
 
-export const Spiner: React.FC<SpinerPros> = ({
+export const Spiner: React.FC<SpinerProps> = ({
   color = 'text',
   size = 'small',
   ...rest
@@ -18,5 +18,3 @@ export const Spiner: React.FC<SpinerPros> = ({
     <ActivityIndicator color={theme.colors[color]} size={size} {...rest} />
   );
 };
-
-

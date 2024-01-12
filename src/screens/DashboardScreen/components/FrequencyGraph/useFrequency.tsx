@@ -1,14 +1,15 @@
 import {months} from '@/constants';
 import {useGetHistoric} from '@/domains';
-import {useEffect, useState} from 'react';
+import {useFocusEffect, useIsFocused} from '@react-navigation/native';
+import {useCallback, useEffect, useState} from 'react';
 import {ChartData} from 'react-native-chart-kit/dist/HelperTypes';
 
-//TODO: buscar todas as vezes que o usuario treinou e filtrar por mes
 export function useFrequency() {
+  const isFocused = useIsFocused();
+  const {historic} = useGetHistoric([isFocused]);
   const [historicFiltered, setHistoricFiltered] = useState<ChartData | null>(
     null,
   );
-  const {historic} = useGetHistoric();
 
   useEffect(() => {
     orderByMonth();
@@ -32,5 +33,5 @@ export function useFrequency() {
     });
   };
 
-  return {historicFiltered};
+  return {historicFiltered, refresh: orderByMonth};
 }

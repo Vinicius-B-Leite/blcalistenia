@@ -29,9 +29,10 @@ export function useGetExercises(filter?: UseGetExercisesProps) {
 
   useEffect(() => {
     fetchExercises();
-  }, []);
+  }, [filter]);
 
   return {
     exercises,
+    refetchExercises: fetchExercises,
   };
 }

@@ -1,11 +1,13 @@
 import React from 'react';
-import {View} from 'react-native';
 import {BoxScroll, Box} from '../Box/Box';
-import {BoxType} from '../Box/types';
+import {BoxScrollProps, BoxType} from '../Box/types';
 
-type ContainerProps = BoxType & {
+type WrapperProps =
+  | ({scrollEnabled?: false} & BoxType)
+  | ({scrollEnabled: true} & BoxScrollProps);
+
+type ContainerProps = WrapperProps & {
   children: React.ReactNode;
-  scrollEnabled?: boolean;
 };
 
 export const Container: React.FC<ContainerProps> = ({

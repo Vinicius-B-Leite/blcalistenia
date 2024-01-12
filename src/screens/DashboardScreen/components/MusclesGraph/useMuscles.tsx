@@ -1,13 +1,14 @@
-import {initialsExercises, muscles} from '@/constants';
+import {muscles} from '@/constants';
 import {useGetExercises, useGetHistoric} from '@/domains';
-import {useAppSelector} from '@/hooks';
-import {useEffect, useState} from 'react';
+
+import {useFocusEffect, useIsFocused} from '@react-navigation/native';
+import {useCallback, useEffect, useState} from 'react';
 import {LineChartData} from 'react-native-chart-kit/dist/line-chart/LineChart';
 
 export function useMuscles() {
   const [muslces, setMuscles] = useState<LineChartData>();
-
-  const {historic} = useGetHistoric();
+  const isFocused = useIsFocused();
+  const {historic} = useGetHistoric([isFocused]);
   const {exercises: storageExercises} = useGetExercises();
 
   const filterByMuscles = () => {

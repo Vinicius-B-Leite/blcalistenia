@@ -1,7 +1,7 @@
 import {useGetHistoric} from '@/domains';
 import {useAppTheme} from '@/hooks';
 import {Theme} from '@/theme';
-import {useFocusEffect} from '@react-navigation/native';
+import {useFocusEffect, useIsFocused} from '@react-navigation/native';
 import {useCallback, useEffect, useState} from 'react';
 import {PieChart} from 'react-native-chart-kit';
 
@@ -13,7 +13,8 @@ type RepsRange = {
 
 export function useRepsRange() {
   const [repsRange, setRepsRange] = useState<RepsRange[]>();
-  const {historic} = useGetHistoric();
+  const isFocused = useIsFocused();
+  const {historic} = useGetHistoric([isFocused]);
   const theme = useAppTheme();
   const range: {name: RepsRange['name']; color: keyof Theme['colors']}[] = [
     {name: '1 - 4', color: 'contrast'},
@@ -58,11 +59,9 @@ export function useRepsRange() {
     ]);
   };
 
-  useFocusEffect(
-    useCallback(() => {
-      filterByRepsRange();
-    }, [historic, theme]),
-  );
+  useEffect(() => {
+    filterByRepsRange();
+  }, [historic, theme]);
 
   return {
     repsRange,
