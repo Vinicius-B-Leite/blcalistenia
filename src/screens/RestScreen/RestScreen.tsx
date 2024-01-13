@@ -11,7 +11,7 @@ import {Container, Box, Button} from '@/components/';
 type Route = RouteProp<RootStackParamList, 'Rest'>;
 
 export const RestScreen: React.FC = () => {
-  const totalSeconds = useRoute<Route>().params?.totalSeconds || 10;
+  const totalSeconds = useRoute<Route>().params?.totalSeconds || 30;
   const navigation = useAppNavigation();
 
   const countDownRef = useRef<CountDownRef>(null);
