@@ -27,6 +27,7 @@ const ExerciseInWorkoutItem: React.FC<Props> = ({
 
   const dispatch = useDispatch();
   const isWorkingout = useAppSelector(state => state.workout.isWorkingout);
+  const canEdit = useAppSelector(state => state.workout.canEdit);
 
   return (
     <Box>
@@ -47,7 +48,7 @@ const ExerciseInWorkoutItem: React.FC<Props> = ({
             updateAnotation({exerciseID: exercise_id, newAnotation: txt}),
           )
         }
-        editable={!!createSerieBtn}
+        editable={canEdit}
         textPreset="pSmall"
         boxProps={{
           height: 40,
