@@ -1,5 +1,5 @@
 import React, {useMemo} from 'react';
-import {StatusBar, Dimensions} from 'react-native';
+
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
 import {
   NavigationContainer,
@@ -34,8 +34,6 @@ const Routes: React.FC = () => {
             const shouldHideTabBar = route.params?.screen
               ? routesToHideTabBar.includes(route.params?.screen)
               : false;
-
-            console.log(route.params?.screen, shouldHideTabBar);
 
             return {
               tabBarIndicatorStyle: {display: 'none'},

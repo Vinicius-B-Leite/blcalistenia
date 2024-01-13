@@ -13,7 +13,6 @@ import uuid from 'react-native-uuid';
 import {WorkoutType} from '@/models';
 import {useAppSelector, useAppTheme} from '@/hooks';
 import {Container, Input} from '@/components';
-import {useHideTabBar} from '@/hooks/useHideTabBar';
 
 type Navigation = StackScreenProps<RootStackParamList, 'Workout'>;
 
