@@ -11,13 +11,27 @@ import {ExerciseType} from '@/models';
 import {initialsExercises} from '@/constants';
 import {Alert} from 'react-native';
 import {useDispatch} from 'react-redux';
+import {useAppSelector} from '@/hooks';
+import Toast from 'react-native-toast-message';
 
 export default function useExercise() {
   const navigation = useAppNavigation();
   const dispatch = useDispatch();
   const {deleteExercise} = useDeleteExercise();
+  const workout = useAppSelector(state => state.workout.workout);
 
   const handleAddExercise = (exerciseId: string) => {
+    const exerciseAlreadyExistsInWorkout = workout.exercises.some(
+      exercise => exercise.exercise_id === exerciseId,
+    );
+
+    if (exerciseAlreadyExistsInWorkout) {
+      Toast.show({
+        type: 'error',
+        props: {message: 'Este exerciso já está no treino!'},
+      });
+      return;
+    }
     dispatch(
       addExerciseToWorkout({
         exercise_id: exerciseId,
