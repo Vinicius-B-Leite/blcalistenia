@@ -14,7 +14,7 @@ import {useAppSelector} from '@/hooks';
 
 export default function useFilterMuscle() {
   const dispatch = useDispatch();
-  const {workouts} = useGetWorkouts();
+  const workouts = useAppSelector(state => state.workoutList.workouts);
   const {exercises} = useGetExercises();
   const muscleFilterSelected = useAppSelector(
     state => state.workoutList.musclesSelected,

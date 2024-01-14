@@ -11,6 +11,7 @@ export default function useMyWorkouts(workoutName: string) {
   const filteredWorkouts = useAppSelector(
     state => state.workoutList.filteredWorkouts,
   );
+
   const muscleSelected = useAppSelector(
     state => state.workoutList.musclesSelected,
   );
@@ -22,7 +23,7 @@ export default function useMyWorkouts(workoutName: string) {
     return workouts.filter(val =>
       val.title.toLocaleLowerCase().includes(workoutName.toLocaleLowerCase()),
     );
-  }, [workoutName]);
+  }, [workoutName, workouts]);
 
   const workoutList = useMemo(() => {
     const isSearching = workoutName.length > 0;
