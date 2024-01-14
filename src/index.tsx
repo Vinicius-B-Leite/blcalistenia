@@ -1,34 +1,36 @@
-import React, { useContext } from 'react';
-import { ThemeProvider } from 'styled-components/native';
-import { ThemeContext } from '@/contexts/ThemeContext';
-import Routes from '@/routes';
-import { darkMode } from '@/theme/darkMode';
-import { lightMode } from '@/theme/lightMode';
-import { UserProvider } from '@realm/react';
-import { RealmProvider, syncConfig } from '@/services/realm/realm';
-import { Provider } from 'react-redux';
-import Login from '@/screens/Login';
-import { store } from '@/features/store';
+import React, {useContext} from 'react';
+import {ThemeContext} from '@/contexts/ThemeContext';
+import Routes from '@/routes/routes';
 
+import {Provider} from 'react-redux';
 
-
+import {store} from '@/features/store';
+import {ThemeProvider} from '@shopify/restyle';
+import {dark} from './theme/dark';
+import Toast from 'react-native-toast-message';
+import {toastConfig} from './components';
+import {light} from './theme/light';
+import {StatusBar} from 'react-native';
 
 const Index: React.FC = () => {
+  const {theme} = useContext(ThemeContext);
 
-    const { theme } = useContext(ThemeContext)
-
-    return (
-        <ThemeProvider theme={theme == 'dark' ? darkMode : lightMode}>
-            <UserProvider fallback={<Login />}>
-                <RealmProvider sync={syncConfig} >
-                    <Provider store={store}>
-                        <Routes />
-                    </Provider>
-                </RealmProvider>
-            </UserProvider>
-        </ThemeProvider>
-
-    )
-}
+  const themes = {
+    dark: dark,
+    light: light,
+  };
+  return (
+    <Provider store={store}>
+      <ThemeProvider theme={themes[theme]}>
+        <StatusBar
+          backgroundColor={themes[theme].colors.thirdBg}
+          barStyle={theme === 'dark' ? 'light-content' : 'dark-content'}
+        />
+        <Routes />
+        <Toast config={toastConfig} visibilityTime={1500} />
+      </ThemeProvider>
+    </Provider>
+  );
+};
 
 export default Index;

@@ -1,32 +1,29 @@
-import React, { useEffect } from 'react';
+import React, {useEffect} from 'react';
 import ThemeContextProvider from '@/contexts/ThemeContext';
 import Index from '@/index';
-import '@/services/calendarConfig'
-import { AppProvider } from '@realm/react';
-import { GoogleSignin } from '@react-native-google-signin/google-signin';
+import '@/services/calendarConfig';
+import {AppProvider} from '@realm/react';
+
 import SplashScreen from 'react-native-splash-screen';
+import UserContextProvider from '@/contexts/AuthContext';
 
-
-
-GoogleSignin.configure({
-  webClientId: "80963280941-oncq7jrtuj5b4slm20okbhtonvvc211t.apps.googleusercontent.com",
-});
-
+import Toast from 'react-native-toast-message';
+import {toastConfig} from '@/components';
 
 const App = () => {
-
   useEffect(() => {
     SplashScreen.hide();
   }, []);
 
   return (
     <ThemeContextProvider>
-      <AppProvider id='application-0-fcyzd'>
-        <Index />
+      <AppProvider id="application-0-fcyzd">
+        <UserContextProvider>
+          <Index />
+        </UserContextProvider>
       </AppProvider>
     </ThemeContextProvider>
-  )
-}
-
+  );
+};
 
 export default App;
