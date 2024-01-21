@@ -1,6 +1,6 @@
 ## BL Calistenia
 
-Este aplicativo permite que você crie e analise seus próprios treinos ao longo do tempo, adicione exercícios específicos, acompanhe sua frequência de treino em um calendário e visualize todo o seu histórico de treinos. Uma funcionalidade futura incluirá gráficos para acompanhar seu desempenho.
+Este aplicativo permite que você crie e analise seus próprios treinos ao longo do tempo, adicione exercícios específicos, acompanhe sua frequência de treino em um calendário e visualize todo o seu histórico de treinos. Uma funcionalidade futura incluirá backup em nuvem para salvar seus dados.
 
 ## Tecnologias
 
@@ -22,22 +22,12 @@ Este aplicativo permite que você crie e analise seus próprios treinos ao longo
 - react-redux: ^8.0.5,
 - realm: ^11.3.2,
 
-## Serviços usados
+### Principais telas
 
-- Github
-
-## Prints
-
-![imagem do home](github/home.jpeg)
-![calendar](github/calendario.jpeg)
-![perfil](github/perfil.jpeg)
-![modo claro](github/modo%20claro.jpeg)
-![criar treino](github/criar%20treino.jpeg)
-![exercicios](github/exercicios.jpeg)
-![criar exercicios](github/criar%20exercicio.jpeg)
-![treino](github/treino.jpeg)
-![cronometro](github/cronometro.jpeg)
-![historico](github/historico.jpeg)
+|       |                  Home                   |                  Dashboard                   |                  Perfil                   | Histórico                                    | Treino                                     | Add Exercicio                                  |
+| :---: | :-------------------------------------: | :------------------------------------------: | :---------------------------------------: | -------------------------------------------- | ------------------------------------------ | ---------------------------------------------- |
+| Light | ![](github/screens/light/homeLight.png) | ![](github/screens/light/dashboardLight.png) | ![](github/screens/light/perfilLight.png) | ![](github/screens/light/historicoLight.png) | ![](github/screens/light/workoutLight.png) | ![](github/screens/light/addExerciseLight.png) |
+| Dark  | ![](github/screens/dark/HOME_DARK.png)  |    ![](github/screens/dark/DASHBOARD.png)    | ![](github/screens/dark/HOME_PERFIL.png)  | ![](github/screens/dark/HISTORICO.png)       | ![](github/screens/dark/HOME_TREINO.png)   | ![](github/screens/dark/ADD_EXERCICIO.png)     |
 
 ## Funcionalidades
 
