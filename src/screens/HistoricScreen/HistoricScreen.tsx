@@ -32,30 +32,13 @@ export const HistoricScreen: React.FC = () => {
       });
       return;
     }
-    navigation.reset({
-      index: 1,
-      type: 'tab',
-      routes: [
-        {
-          name: 'HomeStack',
-          state: {
-            index: 1,
-            type: 'stack',
-            routes: [
-              {
-                name: 'Home',
-              },
-              {
-                name: 'Workout',
-                params: {
-                  workout: item.workout,
-                  canEdit: false,
-                },
-              },
-            ],
-          },
-        },
-      ],
+    navigation.navigate('HomeStack', {
+      screen: 'Workout',
+      initial: true,
+      params: {
+        canEdit: false,
+        workout: item.workout,
+      },
     });
   };
 
