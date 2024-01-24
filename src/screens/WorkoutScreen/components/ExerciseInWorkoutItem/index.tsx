@@ -7,6 +7,7 @@ import {updateAnotation} from '@/features';
 
 import {useAppSelector, useAppTheme} from '@/hooks';
 import {Box, Text, Input} from '@/components';
+import {WIDTH} from '../Serie/constants';
 
 type Props = {
   item: ExercisesInWorkoutType;
@@ -55,17 +56,17 @@ const ExerciseInWorkoutItem: React.FC<Props> = ({
         }}
       />
       <Box flexDirection="row" justifyContent="space-evenly" mt={8}>
-        <Box width={90}>
+        <Box width={WIDTH}>
           <Text preset="pSmall" bold textAlign="center">
             Série
           </Text>
         </Box>
-        <Box width={90}>
+        <Box width={WIDTH}>
           <Text preset="pSmall" bold textAlign="center">
             Repetições
           </Text>
         </Box>
-        <Box width={90}>
+        <Box width={WIDTH}>
           <Text preset="pSmall" bold textAlign="center">
             {isWorkingout ? 'Concluída' : 'Descanso'}
           </Text>

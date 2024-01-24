@@ -23,6 +23,7 @@ export const dark = createTheme({
     blackOpacity: pallet.blackOpacty30,
   },
   spacing: {
+    0: 0,
     4: 4,
     8: 8,
     14: 14,

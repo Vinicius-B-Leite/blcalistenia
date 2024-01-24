@@ -2,8 +2,9 @@ import React, {memo} from 'react';
 
 import {SerieType, ExercisesInWorkoutType} from '@/models';
 import useSerie from './useSerie';
-import {BoxPressable, Box, Input, Icon} from '@/components';
+import {BoxPressable, Box, Input, Icon, Text} from '@/components';
 import {useAppSelector} from '@/hooks';
+import {WIDTH} from './constants';
 
 type Props = {
   item: SerieType;
@@ -41,16 +42,16 @@ const Serie: React.FC<Props> = ({item, deleteSerieButton, exercise}) => {
         </BoxPressable>
       )}
 
-      <Input
-        textAlign="center"
-        editable={false}
-        defaultValue={String(item.serie)}
-        boxProps={{
-          width: 90,
-          bg: undefined,
-          height: 40,
-        }}
-      />
+      <Box
+        width={WIDTH}
+        gap={0}
+        padding={0}
+        paddingHorizontal={0}
+        height={40}
+        justifyContent="center"
+        alignItems="center">
+        <Text preset="pMedium">{item.serie}</Text>
+      </Box>
       <Input
         textAlign="center"
         keyboardType="numeric"
@@ -58,7 +59,10 @@ const Serie: React.FC<Props> = ({item, deleteSerieButton, exercise}) => {
         placeholder="0"
         onChangeText={handleOnChangeRep}
         boxProps={{
-          width: 90,
+          width: WIDTH,
+          gap: 0,
+          padding: 0,
+          paddingHorizontal: 0,
           bg: undefined,
           height: 40,
         }}
@@ -66,7 +70,11 @@ const Serie: React.FC<Props> = ({item, deleteSerieButton, exercise}) => {
       />
 
       {showSucessButton ? (
-        <Box width={90} height={40} justifyContent="center" alignItems="center">
+        <Box
+          width={WIDTH}
+          height={40}
+          justifyContent="center"
+          alignItems="center">
           <BoxPressable
             onPress={handleCheckSerie}
             width={30}
@@ -87,7 +95,10 @@ const Serie: React.FC<Props> = ({item, deleteSerieButton, exercise}) => {
           value={rest}
           onChangeText={handleOnChangeRest}
           boxProps={{
-            width: 90,
+            width: WIDTH,
+            gap: 0,
+            padding: 0,
+            paddingHorizontal: 0,
             bg: undefined,
             height: 40,
           }}
