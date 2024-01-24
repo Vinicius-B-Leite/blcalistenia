@@ -55,7 +55,7 @@ const CountDown = React.forwardRef<CountDownRef, CountDownProps>(
     }, []);
 
     useEffect(() => {
-      setTimeout(() => {
+      const timoutHandler = setTimeout(() => {
         if (counter !== 0) {
           animate(totalSeconds - counter + 1);
           setCounter(old => {
@@ -65,6 +65,10 @@ const CountDown = React.forwardRef<CountDownRef, CountDownProps>(
           if (onFineshed) onFineshed();
         }
       }, 1000);
+
+      return () => {
+        clearTimeout(timoutHandler);
+      };
     }, [counter]);
 
     const addSecond = (seconds: number) => {
