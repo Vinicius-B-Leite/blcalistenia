@@ -44,20 +44,24 @@ const CountDown = React.forwardRef<CountDownRef, CountDownProps>(
       };
     });
 
-    const animate = useCallback((timer: number) => {
-      const porcentageTimerInTotalSeconds = (timer * 100) / totalSeconds;
-      const timerPorcentageOfCircumference =
-        (CIRCUMFERENCE * porcentageTimerInTotalSeconds) / 100;
+    const animate = useCallback(
+      (timer: number) => {
+        const porcentageTimerInTotalSeconds = (timer * 100) / totalTimer;
 
-      animatedValue.value = withTiming(timerPorcentageOfCircumference, {
-        duration: 1000,
-      });
-    }, []);
+        const timerPorcentageOfCircumference =
+          (CIRCUMFERENCE * porcentageTimerInTotalSeconds) / 100;
+
+        animatedValue.value = withTiming(timerPorcentageOfCircumference, {
+          duration: 1000,
+        });
+      },
+      [totalTimer],
+    );
 
     useEffect(() => {
       const timoutHandler = setTimeout(() => {
         if (counter !== 0) {
-          animate(totalSeconds - counter + 1);
+          animate(totalTimer - counter + 1);
           setCounter(old => {
             return old - 1 < 0 ? 0 : old - 1;
           });
@@ -69,16 +73,11 @@ const CountDown = React.forwardRef<CountDownRef, CountDownProps>(
       return () => {
         clearTimeout(timoutHandler);
       };
-    }, [counter]);
+    }, [counter, totalTimer]);
 
     const addSecond = (seconds: number) => {
-      setCounter(old => {
-        if (old + seconds > totalSeconds) {
-          return old;
-        }
-        setTotalTimer(oldT => oldT + seconds);
-        return old + seconds;
-      });
+      setCounter(old => old + seconds);
+      setTotalTimer(oldT => oldT + seconds);
     };
 
     const lessSecond = (seconds: number) => {
