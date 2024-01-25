@@ -1,9 +1,19 @@
+import UserContextProvider from '@/contexts/AuthContext';
 import {dark} from '@/theme';
 import {ThemeProvider} from '@shopify/restyle';
-import {RenderOptions, render} from '@testing-library/react-native';
+import {
+  RenderHookOptions,
+  RenderOptions,
+  render,
+  renderHook,
+} from '@testing-library/react-native';
 
 const AllProviders = ({children}: React.PropsWithChildren) => {
-  return <ThemeProvider theme={dark}>{children}</ThemeProvider>;
+  return (
+    <UserContextProvider>
+      <ThemeProvider theme={dark}>{children}</ThemeProvider>
+    </UserContextProvider>
+  );
 };
 
 const customRender = <T,>(
@@ -13,5 +23,13 @@ const customRender = <T,>(
   return render(component, {wrapper: AllProviders, ...options});
 };
 
+const customRenderHook = <Result, Props>(
+  renderCallback: (props: Props) => Result,
+  options?: Omit<RenderHookOptions<Props>, 'wrapper'>,
+) => {
+  return renderHook(renderCallback, {wrapper: AllProviders, ...options});
+};
+
 export * from '@testing-library/react-native';
 export {customRender as render};
+export {customRenderHook as renderHook};

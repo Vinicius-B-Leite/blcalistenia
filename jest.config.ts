@@ -5,7 +5,7 @@ const config: Config = {
   preset: 'react-native',
   setupFilesAfterEnv: ['./jest-setup.ts'],
   transformIgnorePatterns: [
-    'node_modules/(?!((jest-)?react-native|@react-native(-community)?|react-native-image-picker)/)',
+    'node_modules/(?!((jest-)?react-native|@react-native(-community)?|react-native-image-picker|react-native-calendars|react-native-swipe-gestures)/)',
   ],
   testPathIgnorePatterns: ['__mocks__'],
 };
