@@ -25,6 +25,7 @@ module.exports = {
           '@/domains': './src/domains',
           '@/storage': './src/storage',
           '@/constants': './src/constants',
+          '@/test': './src/test',
         },
       },
     ],
