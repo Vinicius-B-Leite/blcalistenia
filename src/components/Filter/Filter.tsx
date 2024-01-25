@@ -12,6 +12,7 @@ type FilterProps = BoxPressableProps & {
 export const Filter: React.FC<FilterProps> = ({isActive, label, ...rest}) => {
   return (
     <BoxPressable
+      testID="filter-component"
       paddingVertical={4}
       paddingHorizontal={14}
       bg={isActive ? 'contrast' : 'primaryBg'}
