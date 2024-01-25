@@ -3,7 +3,8 @@ import {act, renderHook, waitFor} from '@/test';
 import {useCreateExercise} from '../useCreateExercise';
 
 import {ExerciseType} from '@/models';
-
+import Toast from 'react-native-toast-message';
+import {exerciseService} from '../../exerciseService';
 jest.mock('@/contexts', () => ({
   ...jest.requireActual('@/contexts'),
   useAuth: () => ({
@@ -13,6 +14,7 @@ jest.mock('@/contexts', () => ({
   }),
 }));
 
+const toastMocked = jest.mocked(Toast.show);
 describe('useCase: useCreateExercise', () => {
   afterAll(() => {
     jest.clearAllMocks();
@@ -32,6 +34,7 @@ describe('useCase: useCreateExercise', () => {
     rerender({});
 
     expect(returnedExercise).toMatchObject(newExercise);
+    expect(toastMocked).toHaveBeenCalled();
     unmount();
   });
 });

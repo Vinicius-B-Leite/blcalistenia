@@ -6,7 +6,7 @@ export function useDeleteExercise() {
     const exercise = await exerciseService.getExerciseById(exerciseId);
     await exerciseService.upsertExercise({
       ...exercise,
-      deletedAt: new Date().getTime(),
+      deletedAt: Date.now(),
     });
     Toast.show({
       type: 'success',
