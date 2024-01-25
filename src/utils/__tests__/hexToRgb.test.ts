@@ -1,6 +1,6 @@
 import {hexToRgb} from '../hexToRgb';
 
-describe('hexToRgb', () => {
+describe('utils: hexToRgb', () => {
   it('should convert hex color to rgba correctly', () => {
     const result = hexToRgb('#ffffff', 1);
     expect(result).toBe('rgba(255, 255, 255, 1)');
