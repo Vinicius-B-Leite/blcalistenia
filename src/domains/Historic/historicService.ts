@@ -14,6 +14,6 @@ export const historicService = {
       ...historic,
       workout: JSON.stringify(historic.workout),
     });
-    return historicCreated;
+    return historicAdapter.adapter(historicCreated);
   },
 };

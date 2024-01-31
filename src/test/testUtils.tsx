@@ -8,11 +8,9 @@ import {
   renderHook,
 } from '@testing-library/react-native';
 
-const AllProviders = ({children}: React.PropsWithChildren) => {
-  return (
-    <UserContextProvider>
-      <ThemeProvider theme={dark}>{children}</ThemeProvider>
-    </UserContextProvider>
+const AllProviders = () => {
+  return ({children}: React.PropsWithChildren) => (
+    <ThemeProvider theme={dark}>{children}</ThemeProvider>
   );
 };
 
@@ -20,14 +18,14 @@ const customRender = <T,>(
   component: React.ReactElement<T>,
   options?: Omit<RenderOptions, 'wrapper'>,
 ) => {
-  return render(component, {wrapper: AllProviders, ...options});
+  return render(component, {wrapper: AllProviders(), ...options});
 };
 
 const customRenderHook = <Result, Props>(
   renderCallback: (props: Props) => Result,
   options?: Omit<RenderHookOptions<Props>, 'wrapper'>,
 ) => {
-  return renderHook(renderCallback, {wrapper: AllProviders, ...options});
+  return renderHook(renderCallback, {wrapper: AllProviders(), ...options});
 };
 
 export * from '@testing-library/react-native';

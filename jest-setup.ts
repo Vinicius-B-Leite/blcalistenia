@@ -13,7 +13,3 @@ jest.mock('react-native-toast-message', () => ({
   show: jest.fn(),
   hide: jest.fn(),
 }));
-jest.mock('react-native-uuid', () => ({
-  ...jest.requireActual('react-native-uuid'),
-  v4: () => Math.floor(Math.random()),
-}));

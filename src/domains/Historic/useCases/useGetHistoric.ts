@@ -2,7 +2,8 @@ import {HistoricType} from '@/models';
 import {useEffect, useState} from 'react';
 import {historicService} from '../historicService';
 
-export function useGetHistoric<T>(dependencies: T[] = []) {
+export function useGetHistoric<T>(dependenciesProp?: T[]) {
+  const dependencies = dependenciesProp || [];
   const [historic, setHistoric] = useState<HistoricType[]>([]);
 
   const fetchHistoric = async () => {
