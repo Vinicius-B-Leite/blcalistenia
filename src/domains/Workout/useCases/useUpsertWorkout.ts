@@ -24,7 +24,7 @@ export function useUpsertWorkout() {
         ...props,
         createdAt: workoutAlreadyExists.createdAt,
         user_id: workoutAlreadyExists.user_id,
-        updatedAt: new Date().getTime(),
+        updatedAt: Date.now(),
       });
       return workout;
     }
@@ -33,7 +33,7 @@ export function useUpsertWorkout() {
       ...props,
       user_id: user!.uid,
       title: props.title || 'Desconhecido',
-      createdAt: new Date().getTime(),
+      createdAt: Date.now(),
     });
 
     return workout;
