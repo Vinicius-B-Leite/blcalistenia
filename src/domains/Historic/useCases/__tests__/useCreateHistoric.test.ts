@@ -6,7 +6,7 @@ import {HistoricType} from '@/models';
 
 import uuid from 'react-native-uuid';
 import Toast from 'react-native-toast-message';
-import {mocks} from './__mocks__/mocks';
+import {mocks} from './__mocks__/historicMocks';
 
 jest.spyOn(Date, 'now').mockReturnValue(mocks.mockedDatetime);
 const mockedToastShow = jest.mocked(Toast.show);

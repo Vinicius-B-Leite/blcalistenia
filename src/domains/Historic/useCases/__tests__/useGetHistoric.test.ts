@@ -1,7 +1,7 @@
 import {renderHook, waitFor} from '@/test';
 import {useGetHistoric} from '../useGetHistoric';
 import {historicService} from '../../historicService';
-import {mocks} from './__mocks__/mocks';
+import {mocks} from './__mocks__/historicMocks';
 
 describe('useCase: useGetHistoric', () => {
   it('should return the historic list in date order', async () => {
