@@ -46,6 +46,7 @@ export const AddExerciseScreen: React.FC = () => {
         />
 
         <Button
+          testID="openBottomSheetBtn"
           label="+"
           width={100}
           height={100}

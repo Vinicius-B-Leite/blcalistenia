@@ -1,8 +1,5 @@
 import React from 'react';
 
-import {useDispatch} from 'react-redux';
-
-import {setSearchInput} from '@/features';
 import {useAppNavigation, useAppSelector, useAppTheme} from '@/hooks';
 import {BoxPressable, Box, Input, Icon, FormInput} from '@/components';
 import {Control} from 'react-hook-form';
@@ -13,11 +10,6 @@ type ListHeaderProps = {
 };
 const ListHeader: React.FC<ListHeaderProps> = ({control}) => {
   const navigation = useAppNavigation();
-
-  const searchExerciseInput = useAppSelector(
-    state => state.exercise.searchInput,
-  );
-  const dispatch = useDispatch();
 
   return (
     <Box
@@ -30,8 +22,6 @@ const ListHeader: React.FC<ListHeaderProps> = ({control}) => {
       </BoxPressable>
 
       <FormInput
-        // value={searchExerciseInput}
-        // onChangeText={text => dispatch(setSearchInput(text))}
         control={control}
         name="exerciseName"
         placeholder="Pesquisar exercício"

@@ -1,8 +1,8 @@
 export type ExerciseType = {
   _id: string;
   name: string;
-  categories: String[];
-  muscles: String[];
+  categories: string[];
+  muscles: string[];
   user_id: string;
   createdAt: number;
   updatedAt?: number;

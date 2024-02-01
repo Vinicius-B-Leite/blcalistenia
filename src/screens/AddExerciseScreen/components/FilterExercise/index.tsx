@@ -53,6 +53,7 @@ const FilterExercise: React.FC<FilterExerciseProps> = ({
 
   return (
     <ModalBase
+      testID="modal-filter-exercise"
       position="center"
       boxProps={{
         p: 24,
