@@ -18,6 +18,7 @@ export const HistoricScreen: React.FC = () => {
   const navigation = useAppNavigation();
   const {historic, refetchHistoric} = useGetHistoric();
   const isWorkingout = useAppSelector(state => state.workout.isWorkingout);
+
   useFocusEffect(
     useCallback(() => {
       refetchHistoric();
@@ -48,6 +49,7 @@ export const HistoricScreen: React.FC = () => {
         <Header />
 
         <FlashList
+          testID="historic-list"
           nestedScrollEnabled
           showsVerticalScrollIndicator={false}
           estimatedItemSize={historic.length || 10}
