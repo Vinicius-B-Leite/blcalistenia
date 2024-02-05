@@ -1,10 +1,10 @@
 import {historicAdapter} from './historicAdapter';
 import {storage} from '@/storage';
-import {HistoricType} from '@/models';
+import {HistoricType, HistoricTypeStorage} from '@/models';
 
 export const historicService = {
   getHistoric: async () => {
-    const historicObj = await storage.get<HistoricType>('Historic');
+    const historicObj = await storage.get<HistoricTypeStorage>('Historic');
     const historic = historicObj.map(historicAdapter.adapter);
 
     return historic;

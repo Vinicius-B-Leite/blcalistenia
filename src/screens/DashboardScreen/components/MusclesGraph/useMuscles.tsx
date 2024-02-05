@@ -6,7 +6,7 @@ import {useCallback, useEffect, useState} from 'react';
 import {LineChartData} from 'react-native-chart-kit/dist/line-chart/LineChart';
 
 export function useMuscles() {
-  const [muslces, setMuscles] = useState<LineChartData>();
+  const [muslces, setMuscles] = useState<LineChartData | null>(null);
   const isFocused = useIsFocused();
   const {historic} = useGetHistoric([isFocused]);
   const {exercises: storageExercises} = useGetExercises();
