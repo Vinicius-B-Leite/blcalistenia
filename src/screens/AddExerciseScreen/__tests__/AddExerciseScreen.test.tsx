@@ -14,6 +14,7 @@ import Toast from 'react-native-toast-message';
 import {mocks} from './__mocks__/addExerciseScreen';
 import * as exerciseActions from '@/features';
 import {Alert, AlertButton} from 'react-native';
+import {storage} from '@/storage';
 
 const mockedShowToast = jest.mocked(Toast.show);
 
@@ -39,7 +40,7 @@ describe('integration: AddExerciseScreen', () => {
     jest.spyOn(userService, 'getUser').mockResolvedValue(mocks.user);
   });
   it('should render exercise list with initials exercises', async () => {
-    jest.spyOn(exerciseService, 'getExercise').mockResolvedValue([]);
+    jest.spyOn(storage, 'get').mockResolvedValue([]);
 
     const {queryByText, findByText} = renderScreen(<AddExerciseScreen />);
 
@@ -48,7 +49,7 @@ describe('integration: AddExerciseScreen', () => {
   });
 
   it('should render exercise list with exercises searched', async () => {
-    jest.spyOn(exerciseService, 'getExercise').mockResolvedValue([]);
+    jest.spyOn(storage, 'get').mockResolvedValue([]);
 
     const {queryByText, findByText, getByTestId, getByPlaceholderText} =
       renderScreen(<AddExerciseScreen />);
@@ -62,7 +63,7 @@ describe('integration: AddExerciseScreen', () => {
   });
 
   it('should filter by muscle and category', async () => {
-    jest.spyOn(exerciseService, 'getExercise').mockResolvedValue([]);
+    jest.spyOn(storage, 'get').mockResolvedValue([]);
 
     const {findAllByTestId, findByText, findByTestId, findAllByText} =
       renderScreen(<AddExerciseScreen />);
@@ -102,7 +103,8 @@ describe('integration: AddExerciseScreen', () => {
       createdAt: Date.now(),
       user_id: '1',
     };
-    jest.spyOn(exerciseService, 'getExercise').mockResolvedValue([]);
+    jest.spyOn(storage, 'get').mockResolvedValue([]);
+
     const mockedUpsetExercise = jest
       .spyOn(exerciseService, 'upsertExercise')
       .mockResolvedValue(newExercise);
@@ -129,7 +131,8 @@ describe('integration: AddExerciseScreen', () => {
     });
   });
   it('should create a new exercise', async () => {
-    jest.spyOn(exerciseService, 'getExercise').mockResolvedValue([]);
+    jest.spyOn(storage, 'get').mockResolvedValue([]);
+
     const mockedUpsetExercise = jest
       .spyOn(exerciseService, 'upsertExercise')
       .mockResolvedValue(mocks.newExercise);
@@ -190,9 +193,8 @@ describe('integration: AddExerciseScreen', () => {
         },
       },
     });
-    jest
-      .spyOn(exerciseService, 'getExercise')
-      .mockResolvedValue([mocks.newExercise]);
+    jest.spyOn(storage, 'get').mockResolvedValue([mocks.newExercise]);
+
     const {findByTestId, findByText, getByText} = renderScreen(
       <AddExerciseScreen />,
       {
@@ -227,9 +229,9 @@ describe('integration: AddExerciseScreen', () => {
         },
       },
     });
-    jest
-      .spyOn(exerciseService, 'getExercise')
-      .mockResolvedValue([mocks.newExercise]);
+
+    jest.spyOn(storage, 'get').mockResolvedValue([mocks.newExercise]);
+
     const {findByTestId, findByText, getByText} = renderScreen(
       <AddExerciseScreen />,
       {
@@ -254,9 +256,7 @@ describe('integration: AddExerciseScreen', () => {
         }
       });
 
-    jest
-      .spyOn(exerciseService, 'getExercise')
-      .mockResolvedValue([mocks.newExercise]);
+    jest.spyOn(storage, 'get').mockResolvedValue([mocks.newExercise]);
 
     const {findByText, queryByText} = renderScreen(<AddExerciseScreen />);
 
