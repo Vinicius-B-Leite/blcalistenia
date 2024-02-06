@@ -48,6 +48,7 @@ const MyWorkouts: React.FC = () => {
 
       <FilterMuscle />
       <FlatList
+        testID="myWorkoutsFlatList"
         ref={flatlistRef}
         data={workoutList}
         extraData={workoutList}

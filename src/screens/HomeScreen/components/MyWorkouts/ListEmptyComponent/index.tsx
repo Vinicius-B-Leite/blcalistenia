@@ -5,10 +5,7 @@ import {RootStackParamList} from '@/routes/Models';
 import {useAppNavigation} from '@/hooks';
 import NewWorkoutBanner from '@/assets/newWorkoutBanner.png';
 
-import {Image, Box, Text, BoxPressable} from '@/components/';
-
-
-type Navigation = StackNavigationProp<RootStackParamList, 'Home'>;
+import {Image, Text, BoxPressable} from '@/components/';
 
 const ListEmptyComponent: React.FC = () => {
   const navigation = useAppNavigation();
