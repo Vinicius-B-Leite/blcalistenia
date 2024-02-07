@@ -1,8 +1,8 @@
 import {combineReducers, configureStore} from '@reduxjs/toolkit';
 import {WorkoutReducer, workoutListReducer, exerciseReducer} from '@/features';
-import {dark} from '@/theme';
+import {dark, light} from '@/theme';
 import {NavigationContainer} from '@react-navigation/native';
-import {ThemeProvider} from '@shopify/restyle';
+
 import {
   RenderHookOptions,
   RenderOptions,
@@ -11,7 +11,9 @@ import {
 } from '@testing-library/react-native';
 import {Provider} from 'react-redux';
 import UserContextProvider from '@/contexts/AuthContext';
-import ThemeContextProvider from '@/contexts/ThemeContext';
+import ThemeContextProvider, {ThemeContext} from '@/contexts/ThemeContext';
+import {useContext} from 'react';
+import {ThemeProvider} from '@shopify/restyle';
 
 const AllProviders = () => {
   return ({children}: React.PropsWithChildren) => (
@@ -44,13 +46,22 @@ export function setupStore(preloadedState?: Partial<RootState>) {
   });
 }
 const ScreensProviders = (store: AppStore) => {
+  const Children = ({children}: React.PropsWithChildren) => {
+    const {theme} = useContext(ThemeContext);
+
+    return (
+      <ThemeProvider theme={theme === 'dark' ? dark : light}>
+        {children}
+      </ThemeProvider>
+    );
+  };
   return ({children}: React.PropsWithChildren) => (
     <UserContextProvider>
       <Provider store={store}>
         <NavigationContainer>
-          <ThemeProvider theme={dark}>
-            <ThemeContextProvider>{children}</ThemeContextProvider>
-          </ThemeProvider>
+          <ThemeContextProvider>
+            <Children>{children}</Children>
+          </ThemeContextProvider>
         </NavigationContainer>
       </Provider>
     </UserContextProvider>

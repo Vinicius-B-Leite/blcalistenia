@@ -11,6 +11,7 @@ const Avatar: React.FC<AvatarProps> = ({avatar, handlePickImage}) => {
   return (
     <BoxPressable alignSelf="center" onPress={handlePickImage} mb={24}>
       <CircleImage
+        testID="avatar-image"
         source={
           avatar?.length > 0
             ? {
