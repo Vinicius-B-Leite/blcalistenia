@@ -36,7 +36,7 @@ const Header: React.FC<HeaderProps> = ({openCalendar}) => {
         </Box>
       </BoxPressable>
 
-      <BoxPressable onPress={openCalendar}>
+      <BoxPressable onPress={openCalendar} testID="openCalendarBtn">
         <Icon family="AntDesign" color={'text'} size={24} name="calendar" />
       </BoxPressable>
     </Box>

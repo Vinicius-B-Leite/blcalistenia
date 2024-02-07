@@ -11,6 +11,7 @@ import {
 } from '@testing-library/react-native';
 import {Provider} from 'react-redux';
 import UserContextProvider from '@/contexts/AuthContext';
+import ThemeContextProvider from '@/contexts/ThemeContext';
 
 const AllProviders = () => {
   return ({children}: React.PropsWithChildren) => (
@@ -47,7 +48,9 @@ const ScreensProviders = (store: AppStore) => {
     <UserContextProvider>
       <Provider store={store}>
         <NavigationContainer>
-          <ThemeProvider theme={dark}>{children}</ThemeProvider>
+          <ThemeProvider theme={dark}>
+            <ThemeContextProvider>{children}</ThemeContextProvider>
+          </ThemeProvider>
         </NavigationContainer>
       </Provider>
     </UserContextProvider>

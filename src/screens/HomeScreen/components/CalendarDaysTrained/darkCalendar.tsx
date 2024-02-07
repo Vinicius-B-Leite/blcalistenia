@@ -7,6 +7,7 @@ import {CalendarProps} from './types';
 const DarkCalendar: React.FC<CalendarProps> = ({historic}) => {
   return (
     <Calendar
+      testID="calendar"
       theme={{
         backgroundColor: dark.colors.primaryBg,
         arrowColor: dark.colors.darkContrast,
