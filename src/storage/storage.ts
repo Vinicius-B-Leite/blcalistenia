@@ -1,3 +1,4 @@
+import Realm from 'realm';
 import {openRealm} from '@/services';
 import {Keys, Schemas, Storage} from './types';
 import {MMKV} from 'react-native-mmkv';

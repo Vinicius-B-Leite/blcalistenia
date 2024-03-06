@@ -1,19 +1,17 @@
-export class ExerciseSchema extends Realm.Object {
-  static schema = {
-    name: 'Exercise',
-    properties: {
-      _id: 'string',
-      name: {
-        type: 'string',
-        indexed: true,
-      },
-      categories: 'string[]',
-      muscles: 'string[]',
-      user_id: 'string',
-      createdAt: 'int',
-      updatedAt: 'int?',
-      deletedAt: 'int?',
+export const ExerciseSchema = {
+  name: 'Exercise',
+  properties: {
+    _id: 'string',
+    name: {
+      type: 'string',
+      indexed: true,
     },
-    primaryKey: '_id',
-  };
-}
+    categories: 'string[]',
+    muscles: 'string[]',
+    user_id: 'string',
+    createdAt: 'int',
+    updatedAt: 'int?',
+    deletedAt: 'int?',
+  },
+  primaryKey: '_id',
+};

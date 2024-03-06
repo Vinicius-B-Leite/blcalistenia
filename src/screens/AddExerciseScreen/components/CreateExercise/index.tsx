@@ -31,7 +31,6 @@ const CreateExercise: React.FC<CreateExerciseProps> = ({closeBottomSheet}) => {
     control,
     formState.errors,
   );
-  console.log(formState.errors);
 
   return (
     <>
@@ -109,6 +108,7 @@ const CreateExercise: React.FC<CreateExerciseProps> = ({closeBottomSheet}) => {
         />
       </Box>
       <Button
+        testID="createExerciseSubmitBtn"
         label="Concluir"
         onPress={handleSubmit(formData => {
           closeBottomSheet();

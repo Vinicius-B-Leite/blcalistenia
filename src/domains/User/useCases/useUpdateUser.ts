@@ -5,7 +5,7 @@ export function useUpdateUser() {
   const updateUser = async (user: UserType) => {
     await userService.updateUser({
       ...user,
-      updatedAt: new Date().getTime(),
+      updatedAt: Date.now(),
     });
   };
 

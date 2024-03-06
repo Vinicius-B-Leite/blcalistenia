@@ -9,6 +9,7 @@ type useGetWorkoutsProps = {
 export function useGetWorkouts(props?: useGetWorkoutsProps) {
   const [workouts, setWorkouts] = useState<WorkoutType[]>([]);
   const dependencies = props?.dependencies || [];
+
   const fetchWorkouts = async () => {
     const workoutResponse = await workoutService.getWorkouts();
     const workoutsWitoutDeleted = workoutResponse.filter(v => !v?.deletedAt);

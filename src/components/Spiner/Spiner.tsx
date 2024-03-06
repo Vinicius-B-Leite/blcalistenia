@@ -15,6 +15,11 @@ export const Spiner: React.FC<SpinerProps> = ({
   const theme = useAppTheme();
 
   return (
-    <ActivityIndicator color={theme.colors[color]} size={size} {...rest} />
+    <ActivityIndicator
+      testID="spinner"
+      color={theme.colors[color]}
+      size={size}
+      {...rest}
+    />
   );
 };

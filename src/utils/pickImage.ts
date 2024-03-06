@@ -1,13 +1,12 @@
-import { launchImageLibrary } from 'react-native-image-picker';
-import { ImageLibraryOptions } from 'react-native-image-picker/lib/typescript/types';
+import {launchImageLibrary} from 'react-native-image-picker';
+import {ImageLibraryOptions} from 'react-native-image-picker/lib/typescript/types';
 
 export const pickeImage = async () => {
+  const opt: ImageLibraryOptions = {
+    mediaType: 'photo',
+    presentationStyle: 'popover',
+    includeExtra: true,
+  };
 
-    const opt: ImageLibraryOptions = {
-        mediaType: 'photo',
-        presentationStyle: 'popover',
-        includeExtra: true
-    }
-
-    return await launchImageLibrary(opt)
-}
+  return await launchImageLibrary(opt);
+};

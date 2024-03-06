@@ -8,7 +8,7 @@ export function useDeleteWorkout() {
     if (workout) {
       await workoutService.createWorkout({
         ...workout,
-        deletedAt: new Date().getTime(),
+        deletedAt: Date.now(),
       });
       Toast.show({
         type: 'success',

@@ -25,7 +25,10 @@ import {
   visible,
 } from '@shopify/restyle';
 
-export type ImageProps = Pick<FastImageProps, 'source' | 'resizeMode'>;
+export type ImageProps = Pick<
+  FastImageProps,
+  'source' | 'resizeMode' | 'testID'
+>;
 
 type RSImageProps = SpacingProps<Theme> &
   BackgroundColorProps<Theme> &

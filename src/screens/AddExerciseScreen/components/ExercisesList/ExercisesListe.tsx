@@ -36,6 +36,7 @@ const ExercisesList: React.FC<Props> = ({openModal, exerciseNameSearched}) => {
         ListHeaderComponent={() => (
           <BoxPressable onPress={openModal} width={80} alignItems="center">
             <Text
+              testID="filter-button"
               preset="pLarge"
               bold
               color="contrast"

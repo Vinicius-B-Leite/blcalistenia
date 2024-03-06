@@ -1,7 +1,7 @@
 import React from 'react';
 
 import {ImageProps, Image} from '../Image/Image';
-import { BoxType } from '../Box/types';
+import {BoxType} from '../Box/types';
 
 type CircleImageProps = ImageProps & {
   size: BoxType['width'];
@@ -11,6 +11,7 @@ export const CircleImage: React.FC<CircleImageProps> = ({
   size,
   resizeMode,
   source,
+  ...imageProps
 }) => {
   return (
     <Image
@@ -19,8 +20,7 @@ export const CircleImage: React.FC<CircleImageProps> = ({
       width={size}
       height={size}
       borderRadius={'full'}
+      {...imageProps}
     />
   );
 };
-
-

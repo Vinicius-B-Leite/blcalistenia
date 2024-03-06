@@ -20,6 +20,7 @@ const FilterMuscle: React.FC = () => {
       keyExtractor={item => item}
       renderItem={({item}) => (
         <Filter
+          testID={`filterMuscle-${item}`}
           label={item}
           isActive={muscleFilterSelected == item}
           onPress={() => filterWorkoutsByMuscle(item)}

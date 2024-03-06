@@ -29,31 +29,41 @@ export function useRepsRange() {
       .flat()
       .flat();
 
-    return allSeries.filter(
-      serie => Number(serie.rep) >= min && Number(serie.rep) <= max,
-    ).length;
+    return {
+      interval: allSeries.filter(
+        serie => Number(serie.rep) >= min && Number(serie.rep) <= max,
+      ).length,
+      absolutTotal: allSeries.length,
+    };
+  };
+
+  const getPorcentage = (min: number, max: number) => {
+    const {absolutTotal, interval} = getIterval(min, max);
+    const porcentage = interval / absolutTotal;
+
+    return porcentage;
   };
 
   const filterByRepsRange = () => {
     setRepsRange([
       {
         name: '1 - 4',
-        porcentage: getIterval(1, 4),
+        porcentage: getPorcentage(1, 4),
         color: theme.colors.contrast,
       },
       {
         name: '5 - 8',
-        porcentage: getIterval(5, 8),
+        porcentage: getPorcentage(5, 8),
         color: theme.colors.darkContrast,
       },
       {
         name: '9 - 12',
-        porcentage: getIterval(9, 12),
+        porcentage: getPorcentage(9, 12),
         color: theme.colors.secondContrast,
       },
       {
         name: '13 +',
-        porcentage: getIterval(13, Infinity),
+        porcentage: getPorcentage(13, Infinity),
         color: theme.colors.thirdContrast,
       },
     ]);

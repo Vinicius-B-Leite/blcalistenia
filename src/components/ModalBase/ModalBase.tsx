@@ -24,7 +24,6 @@ export const ModalBase: React.FC<ModalBaseProps> = ({
     center: 'center',
     bottom: 'flex-end',
   };
-  console.log(modalProps);
 
   return (
     <Modal {...modalProps}>

@@ -7,6 +7,7 @@ import {light} from '@/theme';
 const LightCalendar: React.FC<CalendarProps> = ({historic}) => {
   return (
     <Calendar
+      testID="calendar"
       theme={{
         backgroundColor: light.colors.primaryBg,
         arrowColor: light.colors.darkContrast,

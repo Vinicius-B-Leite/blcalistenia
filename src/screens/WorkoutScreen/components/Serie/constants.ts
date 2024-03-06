@@ -1,1 +1,1 @@
-export const WIDTH = 75;
+export const WIDTH = 90;
