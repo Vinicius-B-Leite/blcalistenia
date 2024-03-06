@@ -39,6 +39,10 @@ export function useRepsRange() {
 
   const getPorcentage = (min: number, max: number) => {
     const {absolutTotal, interval} = getIterval(min, max);
+    if (absolutTotal === 0) {
+      return 0;
+    }
+
     const porcentage = interval / absolutTotal;
 
     return porcentage;
