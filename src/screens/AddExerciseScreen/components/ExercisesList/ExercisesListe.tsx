@@ -1,8 +1,8 @@
-import {FlashList} from '@shopify/flash-list';
-import React, {useMemo} from 'react';
+import React, {useCallback, useMemo} from 'react';
 
 import Exercise from '../Exercise';
 
+import {FlashList} from '@shopify/flash-list';
 import Animated, {
   FadeInDown,
   Layout,
@@ -20,6 +20,22 @@ const ExercisesList: React.FC<Props> = ({openModal, exerciseNameSearched}) => {
   const {exercisList, exercisesSearched} =
     useExerciseList(exerciseNameSearched);
 
+  const ListHeaderComponent = useCallback(
+    () => (
+      <BoxPressable onPress={openModal} mb={14} alignSelf="flex-start">
+        <Text
+          testID="filter-button"
+          preset="pLarge"
+          bold
+          color="contrast"
+          textDecorationLine="underline">
+          Filtros
+        </Text>
+      </BoxPressable>
+    ),
+    [openModal],
+  );
+
   return (
     <Box mt={24} flex={1}>
       <FlashList
@@ -33,19 +49,8 @@ const ExercisesList: React.FC<Props> = ({openModal, exerciseNameSearched}) => {
             <Exercise item={item} />
           </Animated.View>
         )}
-        ListHeaderComponent={() => (
-          <BoxPressable onPress={openModal} width={80} alignItems="center">
-            <Text
-              testID="filter-button"
-              preset="pLarge"
-              bold
-              color="contrast"
-              textDecorationLine="underline"
-              mb={14}>
-              Filtros
-            </Text>
-          </BoxPressable>
-        )}
+        ListHeaderComponent={ListHeaderComponent}
+        ListHeaderComponentStyle={{}}
         showsVerticalScrollIndicator={false}
       />
     </Box>

@@ -1,9 +1,7 @@
 import React from 'react';
 
-
 import {useAppNavigation} from '@/hooks';
 import {BoxPressable, Text} from '@/components';
-
 
 const CreateWorkoutButton: React.FC = () => {
   const navigation = useAppNavigation();
@@ -20,8 +18,10 @@ const CreateWorkoutButton: React.FC = () => {
       borderWidth={1}
       borderColor="contrast"
       borderRadius={'full'}
-      width={30}
-      height={30}
+      width={undefined}
+      height={undefined}
+      paddingVertical={4}
+      paddingHorizontal={10}
       alignItems="center"
       justifyContent="center"
       onPress={navigateToWorkout}>

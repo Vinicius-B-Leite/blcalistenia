@@ -10,8 +10,10 @@ const CreateSerie: React.FC<Pick<ButtonProps, 'onPress'>> = ({onPress}) => {
       label="+"
       onPress={onPress}
       bg="contrast"
-      width={25}
-      height={25}
+      width={undefined}
+      height={undefined}
+      paddingVertical={2}
+      paddingHorizontal={10}
       alignSelf="center"
       borderRadius={'full'}
       marginVertical={14}

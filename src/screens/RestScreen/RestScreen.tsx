@@ -28,9 +28,9 @@ export const RestScreen: React.FC = () => {
     navigation.goBack();
   };
   return (
-    <Container justifyContent="center">
+    <Container justifyContent="center" alignItems="center">
       <CountDown
-        totalSeconds={totalSeconds as number}
+        totalSeconds={totalSeconds}
         ref={countDownRef}
         onFineshed={onChronometerFineshed}
       />

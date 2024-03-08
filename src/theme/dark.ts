@@ -24,8 +24,10 @@ export const dark = createTheme({
   },
   spacing: {
     0: 0,
+    2: 2,
     4: 4,
     8: 8,
+    10: 10,
     14: 14,
     24: 24,
     34: 34,

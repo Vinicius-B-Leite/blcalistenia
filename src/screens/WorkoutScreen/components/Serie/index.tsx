@@ -64,7 +64,8 @@ const Serie: React.FC<Props> = ({item, deleteSerieButton, exercise}) => {
           padding: 0,
           paddingHorizontal: 0,
           bg: undefined,
-          height: 40,
+          height: undefined,
+          paddingVertical: 2,
         }}
         editable={canEditWorkout}
       />
@@ -100,7 +101,8 @@ const Serie: React.FC<Props> = ({item, deleteSerieButton, exercise}) => {
             padding: 0,
             paddingHorizontal: 0,
             bg: undefined,
-            height: 40,
+            height: undefined,
+            paddingVertical: 2,
           }}
           editable={canEditWorkout}
         />
