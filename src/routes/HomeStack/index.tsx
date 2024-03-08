@@ -17,7 +17,6 @@ const {Navigator, Screen} = createStackNavigator<RootStackParamList>();
 const HomeStack: React.FC = () => {
   return (
     <Navigator
-      initialRouteName="Rest"
       screenOptions={{
         cardOverlayEnabled: true,
         cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
